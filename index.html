@@ -411,17 +411,53 @@ function openMenu(){ document.getElementById('menu').classList.add('show'); }
 function closeMenu(){ document.getElementById('menu').classList.remove('show'); }
 
 // ─── menu build ───
+
+// ═══ Мапа меню старого сайту ═══
+const MENU_DEF = [
+  {n:'Літній асортимент', c:['Літо']},
+  {n:'Боді', c:['Боді','Боді-гольф','Комплекти з боді']},
+  {n:'Сукні', c:['Сукні']},
+  {n:'Ромпери', c:['Ромпер']},
+  {n:'Панами, косинки, бейси', c:['Панама','Косинки, панами']},
+  {n:'Костюми', c:['Костюм','Костюм утеплений']},
+  {n:'Футболки, лосіни, шорти', c:['Шорти, футболки','Лосіни, футболки','Лосіни утеплені']},
+  {n:'Шапки', c:['Шапки']},
+  {n:"Пов'язки/мокси", c:["Пов'язки"]},
+  {n:'Гольфи', c:['гольфи','Гольф']},
+  {n:'Одяг на хрещення', c:['Одяг для Хрещення']},
+  {n:'Взуття', c:['Пінетки']},
+  {n:'Шкарпетки', c:['носки','носки махра']},
+  {n:'Колготи', c:['Капронові','колготи махра','колготи демі']},
+  {n:'Сарафани', c:['сарафан']},
+  {n:'Аксесуари', c:['чалма','чалма одинарна','Тонка бінні']},
+];
+function findIdsByNames(names){
+  const ids = new Set();
+  for(const t of TREE){
+    if(names.includes(t.raw) || names.includes(t.name)){
+      ids.add(t.id);
+      (t.children||[]).forEach(c=>ids.add(c.id));
+    }
+    for(const c of (t.children||[])){
+      if(names.includes(c.raw) || names.includes(c.name)) ids.add(c.id);
+    }
+  }
+  return ids;
+}
+function openMenuCat(idx){
+  const def = MENU_DEF[idx];
+  closeMenu();
+  const ids = findIdsByNames(def.c);
+  curCatId = '__multi__';
+  curProds = P.filter(p=>p.cats.some(c=>ids.has(c)));
+  curCatName = def.n;
+  initCat(def.n);
+}
 function buildMenu(){
   let h = `<div class="mi" onclick="toggleSub(event,'subCatalog')">Каталог товарів <span class="arr">▾</span></div>
     <div class="mnu-sub" id="subCatalog">
       <div class="msi" onclick="openCatAll()">Всі товари</div>`;
-  for(const t of TREE){
-    if(t.raw==='sale' || t.raw==='Подарункові комплекти') continue;
-    h += `<div class="msi" onclick="openCat('${t.id}')">${t.name}</div>`;
-    if(t.children && t.children.length){
-      for(const c of t.children) h += `<div class="msi sub2" onclick="openCat('${c.id}')">${c.name}</div>`;
-    }
-  }
+  MENU_DEF.forEach((d,i)=>{ h += `<div class="msi" onclick="openMenuCat(${i})">${d.n}</div>`; });
   h += `</div>`;
   const sale = TREE.find(t=>t.raw==='sale');
   if(sale) h += `<div class="mi" onclick="openCat('${sale.id}')">Sale</div>`;
@@ -477,7 +513,7 @@ function initCat(nm){
 
 // ─── filters for current category ───
 function curFilters(){
-  if(curCatId==='__all__'){
+  if(curCatId==='__all__' || curCatId==='__multi__'){
     // aggregate: розмір+колір з усіх товарів
     const sizes = new Set(), colors = new Set();
     curProds.forEach(p=>{ p.sizes.forEach(s=>sizes.add(s)); if(p.color) colors.add(p.color); });
@@ -663,19 +699,24 @@ function submitOrder(){
 
 // ─── home cats ───
 function buildHome(){
-  const picks = ['Боді','Одяг','Шапки','Подарункові комплекти','Літо'];
   let h = '';
-  const saleT = TREE.find(t=>t.raw==='sale');
-  picks.forEach((nm,i)=>{
-    const t = TREE.find(x=>x.name===nm);
-    if(!t) return;
-    const pr = P.find(p=>p.cats.includes(t.id) && p.photo);
+  MENU_DEF.forEach((d,i)=>{
+    const ids = findIdsByNames(d.c);
+    const prods = P.filter(p=>p.cats.some(c=>ids.has(c)));
+    if(!prods.length) return;
+    const pr = prods.find(p=>p.photo);
     const img = pr ? `<img src="images/${pr.photo}" loading="lazy">` : '';
-    h += `<div class="hc" onclick="openCat('${t.id}')">${img}<span>${nm}</span></div>`;
+    h += `<div class="hc" onclick="openMenuCat(${i})">${img}<span>${d.n} · ${prods.length}</span></div>`;
   });
-  if(saleT){
-    const pr = P.find(p=>p.cats.includes(saleT.id) && p.photo && p.old);
-    h += `<div class="hc" onclick="openCat('${saleT.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy">`:''}<span>Sale 🔥</span></div>`;
+  const sale = TREE.find(t=>t.raw==='sale');
+  if(sale){
+    const pr = P.find(p=>p.cats.includes(sale.id) && p.photo && p.old);
+    h += `<div class="hc" onclick="openCat('${sale.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy">`:''}<span style="background:var(--rose-d);color:#fff">Sale 🔥 · ${sale.n}</span></div>`;
+  }
+  const gifts = TREE.find(t=>t.raw==='Подарункові комплекти');
+  if(gifts){
+    const pr = P.find(p=>p.cats.includes(gifts.id) && p.photo);
+    h += `<div class="hc" onclick="openCat('${gifts.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy">`:''}<span>Подарункові набори · ${gifts.n}</span></div>`;
   }
   document.getElementById('homeCats').innerHTML = h;
 }
