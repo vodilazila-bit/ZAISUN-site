@@ -839,6 +839,36 @@ P.forEach(p=>{
   p.season = s;
 });
 buildMenu(); buildHome();
+
+// ═══ Свайп назад / кнопка назад: інтеграція з історією браузера ═══
+let NAVSILENT = false, NAVDEPTH = 0;
+function pushNav(st){ if(NAVSILENT) return; NAVDEPTH++; history.pushState(st,''); }
+const _openCat = openCat, _openCatAll = openCatAll, _openMenuCat = openMenuCat, _openProd = openProd, _closeProd = closeProd;
+openCat = function(id){ _openCat(id); pushNav({v:'cat', m:'id', id}); };
+openCatAll = function(){ _openCatAll(); pushNav({v:'cat', m:'all'}); };
+openMenuCat = function(i){ _openMenuCat(i); pushNav({v:'cat', m:'menu', i}); };
+openProd = function(id){ _openProd(id); pushNav({v:'prod', id}); };
+closeProd = function(){
+  if(NAVDEPTH > 0) history.back();
+  else _closeProd();
+};
+window.addEventListener('popstate', e => {
+  NAVDEPTH = Math.max(0, NAVDEPTH - 1);
+  const st = e.state || {v:'home'};
+  NAVSILENT = true;
+  try{
+    closeMenu(); closeSheet(); closeCart(); closeSearch(); closeOrder();
+    if(st.v === 'prod') _openProd(st.id);
+    else if(st.v === 'cat'){
+      if(st.m === 'all') _openCatAll();
+      else if(st.m === 'menu') _openMenuCat(st.i);
+      else _openCat(st.id);
+    }
+    else go('home');
+  } finally { NAVSILENT = false; }
+});
+history.replaceState({v:'home'}, '');
+
 </script>
 </body>
 </html>
