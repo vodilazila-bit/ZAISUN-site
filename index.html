@@ -13,9 +13,9 @@ a{color:inherit;text-decoration:none}
 
 .hdr{background:#FBEFE1;display:flex;align-items:center;justify-content:space-between;padding:10px 20px 12px;position:sticky;top:0;z-index:100}
 .hdr-logo{cursor:pointer;line-height:1.15}
-.hl-bunny{font-size:1.05rem;line-height:1}
-.hl-name{font-weight:700;font-size:1.1rem;letter-spacing:.03em;color:#3E362E}
-.hl-sub{font-size:.42rem;letter-spacing:.14em;color:#9A8C7C;text-transform:uppercase}
+
+
+.hl-img{height:58px;display:block}
 .hdr-burger{background:none;border:none;padding:8px;cursor:pointer}
 
 .burger{background:none;border:none;color:var(--ink);padding:10px;cursor:pointer}
@@ -199,9 +199,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <header class="hdr">
   <div class="hdr-logo" onclick="go('home')">
-    <div class="hl-bunny">🐰</div>
-    <div class="hl-name">ZaiSun</div>
-    <div class="hl-sub">бренд дитячого одягу</div>
+    <img src="logo.png" alt="ZaiSun" class="hl-img">
   </div>
   <button class="hdr-burger" onclick="openMenu()">
     <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4A4038" stroke-width="1.6"><path d="M4 8h16M4 15h16"/></svg>
@@ -234,7 +232,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 <!-- MENU -->
 <div class="menu" id="menu">
   <div class="menu-top">
-    <div class="menu-logo"><div class="m">🐰 ZaiSun</div><div class="s">бренд дитячого одягу</div></div>
+    <div class="menu-logo"><img src="logo.png" alt="ZaiSun" style="height:54px;display:block"></div>
     <button class="menu-x" onclick="closeMenu()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
   </div>
   <div class="menu-list" id="menuList"></div>
