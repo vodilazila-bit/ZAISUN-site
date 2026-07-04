@@ -502,6 +502,7 @@ function openCatAll(){
   initCat('Всі товари');
 }
 function initCat(nm){
+  curProds.sort((a,b)=>b.season-a.season);
   fSel = {}; pFrom=null; pTo=null;
   const prices = curProds.map(p=>p.price).filter(x=>x>0);
   catMin = prices.length?Math.floor(Math.min(...prices)):0;
@@ -700,22 +701,28 @@ function submitOrder(){
 // ─── home cats ───
 function buildHome(){
   let h = '';
+  const coverOf = prods => (prods.find(p=>p.photo && p.season===2) || prods.find(p=>p.photo && p.season===1) || prods.find(p=>p.photo));
+  // Всі товари — перша картка
+  const allCover = coverOf(P);
+  h += `<div class="hc" onclick="openCatAll()">${allCover?`<img src="images/${allCover.photo}" loading="lazy">`:''}<span>Всі товари · ${P.length}</span></div>`;
   MENU_DEF.forEach((d,i)=>{
     const ids = findIdsByNames(d.c);
     const prods = P.filter(p=>p.cats.some(c=>ids.has(c)));
     if(!prods.length) return;
-    const pr = prods.find(p=>p.photo);
+    const pr = coverOf(prods);
     const img = pr ? `<img src="images/${pr.photo}" loading="lazy">` : '';
     h += `<div class="hc" onclick="openMenuCat(${i})">${img}<span>${d.n} · ${prods.length}</span></div>`;
   });
   const sale = TREE.find(t=>t.raw==='sale');
   if(sale){
-    const pr = P.find(p=>p.cats.includes(sale.id) && p.photo && p.old);
+    const sp = P.filter(p=>p.cats.includes(sale.id));
+    const pr = coverOf(sp.filter(p=>p.old)) || coverOf(sp);
     h += `<div class="hc" onclick="openCat('${sale.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy">`:''}<span style="background:var(--rose-d);color:#fff">Sale 🔥 · ${sale.n}</span></div>`;
   }
   const gifts = TREE.find(t=>t.raw==='Подарункові комплекти');
   if(gifts){
-    const pr = P.find(p=>p.cats.includes(gifts.id) && p.photo);
+    const gp = P.filter(p=>p.cats.includes(gifts.id));
+    const pr = coverOf(gp);
     h += `<div class="hc" onclick="openCat('${gifts.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy">`:''}<span>Подарункові набори · ${gifts.n}</span></div>`;
   }
   document.getElementById('homeCats').innerHTML = h;
@@ -820,6 +827,17 @@ function doSearch(){
 }
 updCartBdg();
 
+
+// ═══ Сезонність: літні товари першими ═══
+const WINTER_IDS = findIdsByNames(['Зима','Новий Рік','Костюм утеплений','Чобітки утеплені','Лосіни утеплені','колготи махра','носки махра','Холодна осінь та холодна весна','День Валентина','тепла весна']);
+const SUMMER_IDS = findIdsByNames(['Літо']);
+P.forEach(p=>{
+  const n = p.name.toLowerCase();
+  let s = 1;
+  if(p.cats.some(c=>SUMMER_IDS.has(c)) || /літн|муслін|панам|шорти|сарафан|пісочник|косинк|бейс/.test(n)) s = 2;
+  if(p.cats.some(c=>WINTER_IDS.has(c)) || /зимов|утеплен|хутр|фліс|махра|снуд|новорічн|święt/.test(n)) s = 0;
+  p.season = s;
+});
 buildMenu(); buildHome();
 </script>
 </body>
