@@ -816,7 +816,11 @@ function doSearch(){
   const q = document.getElementById('soInput').value.trim().toLowerCase();
   const grid = document.getElementById('soGrid'), hint = document.getElementById('soHint');
   if(q.length<2){ grid.innerHTML=''; hint.style.display='block'; hint.textContent='Почни вводити назву товару'; return; }
-  const r = P.filter(p=>p.name.toLowerCase().includes(q)).slice(0,40);
+  const words = q.split(/\s+/).filter(w=>w.length>=2);
+  const r = P.filter(p=>{
+    const hay = (p.name+' '+(p.color||'')+' '+p.catn.join(' ')).toLowerCase();
+    return words.every(w=>hay.includes(w));
+  }).slice(0,60);
   if(!r.length){ grid.innerHTML=''; hint.style.display='block'; hint.textContent='Нічого не знайдено'; return; }
   hint.style.display='none';
   grid.innerHTML = r.map(p=>{
