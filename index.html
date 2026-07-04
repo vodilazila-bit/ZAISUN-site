@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZaiSun — дитячий одяг ручної роботи</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:#FDFAF6;color:#3A3028;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:root{--cream:#FBEFE1;--petal:#F9F0E7;--blush:#EFDCCB;--rose:#D9A990;--rose-d:#C2826A;--ink:#3A3028;--mid:#6E6157;--soft:#9E9189;--line:rgba(58,48,40,.1);--serif:'Cormorant Garamond',serif}
+
+.top{background:var(--ink);color:#F0E8DF;text-align:center;font-size:.7rem;letter-spacing:.08em;padding:8px 16px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 14px;height:58px;background:rgba(253,250,246,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100}
+.burger{background:none;border:none;color:var(--ink);padding:10px;cursor:pointer}
+.logo{font-family:var(--serif);font-size:1.5rem;display:flex;align-items:center;gap:8px;position:absolute;left:50%;transform:translateX(-50%);cursor:pointer}
+.sun{width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FAE5CC,var(--rose) 80%)}
+.ico{width:40px;height:40px;border:none;background:none;display:grid;place-items:center;color:var(--ink);cursor:pointer}
+
+.page{display:none}.page.show{display:block}
+
+/* ═══ HOME ═══ */
+.hero{position:relative;height:74vh;min-height:460px;overflow:hidden}
+.hero-img{position:absolute;inset:0;background:linear-gradient(160deg,#F6E8DA 0%,#EDD5C0 45%,#E2C3AB 100%)}
+.hero-img::after{content:'ФОТО ДИТИНИ';position:absolute;inset:0;display:grid;place-items:center;color:rgba(58,48,40,.18);font-size:.7rem;letter-spacing:.3em}
+.hero-fade{position:absolute;inset:0;background:linear-gradient(to top,rgba(253,250,246,.97) 0%,rgba(253,250,246,.4) 30%,transparent 55%)}
+.hero-content{position:absolute;bottom:0;left:0;right:0;padding:0 22px 34px;text-align:center}
+.hk{font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--rose-d);margin-bottom:12px}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:2.3rem;line-height:1.1;margin-bottom:12px}
+.hero h1 em{font-style:italic;color:var(--rose-d)}
+.hero p{font-size:.9rem;color:var(--mid);line-height:1.65;max-width:30em;margin:0 auto 22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 30px;border-radius:40px;font-weight:600;font-size:.94rem;background:var(--ink);color:#fff;border:none;width:100%;max-width:340px;cursor:pointer;font-family:inherit}
+.btn:active{background:var(--rose-d)}
+.strip{display:flex;gap:26px;padding:16px 18px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line)}
+.strip::-webkit-scrollbar{display:none}
+.strip span{white-space:nowrap;font-size:.76rem;color:var(--mid);display:flex;align-items:center;gap:7px}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--rose);flex:none}
+section{padding:34px 18px}
+.sec-k{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rose-d);margin-bottom:8px;text-align:center}
+.sec-t{font-family:var(--serif);font-weight:300;font-size:1.75rem;text-align:center;margin-bottom:22px}
+.sec-t em{font-style:italic}
+.home-cats{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:600px;margin:0 auto}
+.hc{aspect-ratio:4/3;border-radius:16px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:14px;cursor:pointer}
+.hc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hc::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(40,30,22,.5),transparent 60%)}
+.hc span{position:relative;z-index:2;color:#fff;font-family:var(--serif);font-style:italic;font-size:1.05rem}
+.hc.wide{grid-column:span 2;aspect-ratio:2.2/1}
+
+/* ═══ MENU OVERLAY ═══ */
+.menu{position:fixed;inset:0;z-index:900;background:var(--cream);overflow-y:auto;display:none}
+.menu.show{display:block}
+.menu-top{display:flex;align-items:flex-start;justify-content:space-between;padding:22px 24px 4px}
+.menu-logo{font-family:var(--serif);text-align:center}
+.menu-logo .m{font-size:1.35rem}
+.menu-logo .s{font-size:.5rem;letter-spacing:.14em;color:var(--mid)}
+.menu-x{background:none;border:none;color:var(--ink);padding:6px;cursor:pointer}
+.menu-list{display:flex;flex-direction:column;align-items:stretch;padding:6px 26px 44px;max-width:480px;margin:0 auto}
+.mi{font-size:1.3rem;color:#5C544B;padding:12px 6px;text-align:center;cursor:pointer;position:relative}
+.mi:active{color:var(--rose-d)}
+.mi .arr{font-size:.85rem;color:var(--soft);margin-left:8px}
+.msub{display:none;flex-direction:column;padding-bottom:6px}
+.msub.open{display:flex}
+.msi{font-size:1.02rem;color:#8A8074;padding:8px;text-align:center;cursor:pointer}
+.msi:active{color:var(--rose-d)}
+.menu-gap{height:22px}
+.mi.sale{color:var(--rose-d);font-weight:600}
+
+/* ═══ CATALOG ═══ */
+.phead{padding:18px 18px 2px;text-align:center}
+.pk{font-size:.64rem;letter-spacing:.32em;text-transform:uppercase;color:var(--rose-d);margin-bottom:6px}
+.phead h1{font-family:var(--serif);font-weight:300;font-size:1.9rem}
+.pcount{font-size:.78rem;color:var(--soft);margin-top:4px}
+.frow-top{display:flex;gap:8px;padding:14px 18px 10px}
+.fbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-family:inherit;font-size:.88rem;font-weight:500;color:var(--ink);cursor:pointer}
+.fbtn .bdg{background:var(--rose-d);color:#fff;min-width:19px;height:19px;border-radius:10px;font-size:.66rem;display:none;place-items:center;padding:0 5px}
+.fbtn .bdg.show{display:grid}
+.sortsel{flex:1;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-family:inherit;font-size:.85rem;color:var(--ink);outline:none;-webkit-appearance:none;text-align:center}
+.fpills{display:flex;gap:6px;padding:0 18px 10px;overflow-x:auto;scrollbar-width:none}
+.fpills::-webkit-scrollbar{display:none}
+.fpills:empty{display:none}
+.fpill{display:flex;align-items:center;gap:6px;white-space:nowrap;padding:6px 12px;border-radius:20px;font-size:.76rem;background:var(--petal);color:var(--mid);flex:none}
+.fpill .cd{width:12px;height:12px;border-radius:50%;border:1px solid var(--line)}
+.fpill button{border:none;background:none;color:var(--soft);font-size:1.05rem;line-height:1;padding:0 0 0 2px;cursor:pointer}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:4px 18px 0;max-width:940px;margin:0 auto}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}
+.pc{display:block;cursor:pointer}
+.pt{aspect-ratio:3/4;border-radius:14px;position:relative;overflow:hidden;margin-bottom:8px;background:var(--petal)}
+.pt img{width:100%;height:100%;object-fit:cover;display:block}
+.pt .noimg{position:absolute;inset:0;display:grid;place-items:center;color:var(--soft);font-size:.62rem;letter-spacing:.15em;background:linear-gradient(150deg,#F0E0CE,#DCC4A8)}
+.badge{position:absolute;top:8px;left:8px;background:rgba(253,250,246,.92);font-size:.6rem;font-weight:700;letter-spacing:.05em;padding:3px 9px;border-radius:20px;text-transform:uppercase;z-index:2}
+.badge.s{background:var(--rose-d);color:#fff}
+.csw{position:absolute;bottom:8px;right:8px;width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.9);box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:2}
+.pn{font-family:var(--serif);font-size:.95rem;line-height:1.2;margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pm{font-size:.72rem;color:var(--soft);margin-bottom:4px}
+.pp{font-size:.88rem;font-weight:600}
+.pp s{font-weight:400;color:var(--soft);font-size:.76rem;margin-left:5px}
+.nores{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--soft)}
+.nores h3{font-family:var(--serif);font-weight:300;font-size:1.4rem;color:var(--ink);margin-bottom:8px}
+.botpad{height:44px}
+.back{display:flex;align-items:center;gap:6px;padding:14px 18px;font-size:.88rem;color:var(--mid);background:none;border:none;font-family:inherit;cursor:pointer}
+
+/* ═══ SHEET ═══ */
+.ovl{position:fixed;inset:0;z-index:400;background:rgba(58,48,40,.45);opacity:0;pointer-events:none;transition:.3s}
+.ovl.open{opacity:1;pointer-events:all}
+.sheet{position:fixed;bottom:0;left:50%;transform:translate(-50%,100%);width:100%;max-width:560px;z-index:500;background:#FDFAF6;border-radius:24px 24px 0 0;transition:transform .35s cubic-bezier(.32,.72,0,1);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 -10px 40px -10px rgba(58,48,40,.25)}
+.sheet.open{transform:translate(-50%,0)}
+.handle{width:36px;height:4px;border-radius:2px;background:var(--blush);margin:12px auto 6px;flex:none}
+.sbody{overflow-y:auto;padding:0 20px;flex:1}
+.ssec{border-bottom:1px solid var(--line);padding:15px 0}
+.ssec:last-child{border:none}
+.shead-row{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.shead-row h4{font-size:1.02rem;font-weight:500}
+.shead-row svg{color:var(--mid);transition:.25s}
+.ssec.closed .shead-row svg{transform:rotate(180deg)}
+.sbody-in{padding-top:12px}
+.ssec.closed .sbody-in{display:none}
+.chk{display:flex;align-items:center;gap:12px;padding:9px 4px;cursor:pointer;user-select:none}
+.box{width:22px;height:22px;border:1.5px solid var(--soft);border-radius:6px;flex:none;display:grid;place-items:center;transition:.15s;background:#fff}
+.chk.on .box{background:var(--ink);border-color:var(--ink)}
+.chk.on .box::after{content:'✓';color:#fff;font-size:.8rem;font-weight:700}
+.chk .lbl{font-size:.95rem;color:var(--mid);display:flex;align-items:center;gap:9px}
+.chk.on .lbl{color:var(--ink)}
+.chk .cd{width:17px;height:17px;border-radius:50%;border:1px solid var(--line);flex:none}
+.chk .cnt{margin-left:auto;font-size:.76rem;color:var(--soft)}
+.prow2{display:flex;gap:10px;margin-bottom:14px}
+.prow2 input{flex:1;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;font-size:.92rem;font-family:inherit;outline:none;text-align:center;background:#fff}
+.prow2 input:focus{border-color:var(--rose-d)}
+.abar{flex:none;display:flex;align-items:center;gap:14px;padding:14px 20px max(16px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#FDFAF6}
+.apply{flex:1;padding:15px;background:var(--rose);color:#fff;border:none;border-radius:40px;font-family:inherit;font-size:1rem;font-weight:600;cursor:pointer}
+.clearall{border:none;background:none;color:var(--mid);font-size:.88rem;font-family:inherit;text-decoration:underline;cursor:pointer}
+
+/* ═══ PRODUCT ═══ */
+.phero{width:100%;max-width:560px;margin:0 auto;aspect-ratio:3/4;background:var(--petal);position:relative}
+.phero img{width:100%;height:100%;object-fit:cover}
+.phero .noimg{position:absolute;inset:0;display:grid;place-items:center;color:var(--soft);font-size:.7rem;letter-spacing:.2em;background:linear-gradient(150deg,#F0E0CE,#DCC4A8)}
+.pinfo{padding:20px 18px 34px;max-width:560px;margin:0 auto}
+.pcat2{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--rose-d);margin-bottom:8px}
+.ptit{font-family:var(--serif);font-size:1.55rem;font-weight:300;line-height:1.15;margin-bottom:10px}
+.ppr{font-size:1.35rem;font-weight:700;margin-bottom:14px}
+.ppr s{font-size:.95rem;font-weight:400;color:var(--soft);margin-left:8px}
+.ptags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.ptag{display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:20px;background:var(--petal);font-size:.8rem;color:var(--mid)}
+.ptag .cd{width:14px;height:14px;border-radius:50%;border:1px solid var(--line)}
+.sizesel{margin-bottom:18px}
+.sizesel h5{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-bottom:10px;font-weight:600}
+.szrow{display:flex;gap:8px;flex-wrap:wrap}
+.szc{padding:9px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:.84rem;cursor:pointer;background:#fff;user-select:none;text-align:center}
+.szc small{display:block;font-size:.68rem;color:var(--soft);margin-top:2px}
+.szc.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.szc.on small{color:rgba(255,255,255,.75)}
+.szc.oos{opacity:.4;text-decoration:line-through;pointer-events:none}
+.pdesc{font-size:.88rem;color:var(--mid);line-height:1.75;margin-bottom:26px}
+.buy{width:100%;padding:16px;background:var(--ink);color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:1rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.buy:active{background:var(--rose-d)}
+
+/* ═══ ORDER ═══ */
+.movl{position:fixed;inset:0;z-index:600;background:rgba(58,48,40,.5);display:none;place-items:end center}
+.movl.open{display:grid}
+.modal{background:#FDFAF6;border-radius:22px 22px 0 0;width:100%;max-width:520px;animation:up .3s ease;max-height:92vh;overflow-y:auto;padding-bottom:max(16px,env(safe-area-inset-bottom))}
+@keyframes up{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
+.mhead{padding:20px 20px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.mhead h3{font-family:var(--serif);font-weight:300;font-size:1.3rem}
+.mclose{background:none;border:none;color:var(--soft);padding:4px;cursor:pointer}
+.mprod{display:flex;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.mprod img{width:58px;height:74px;border-radius:10px;object-fit:cover;flex:none;background:var(--petal)}
+.mprod .in{font-size:.85rem}
+.mprod .in strong{display:block;margin-bottom:3px}
+.mprod .in .pr{color:var(--rose-d);font-weight:700}
+.mform{padding:16px 20px 0}
+.fld{margin-bottom:13px}
+.fld label{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin-bottom:6px;font-weight:600}
+.fld input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:.95rem;outline:none;background:#fff}
+.fld input:focus{border-color:var(--rose-d)}
+.frw{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.msub{width:100%;padding:15px;background:var(--ink);color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:1rem;font-weight:600;margin-top:4px;cursor:pointer}
+.mnote{font-size:.72rem;color:var(--soft);text-align:center;margin-top:10px}
+.succ{display:none;flex-direction:column;align-items:center;text-align:center;padding:36px 24px 20px}
+.succ.show{display:flex}
+.sic{width:60px;height:60px;border-radius:50%;background:var(--petal);display:grid;place-items:center;margin-bottom:16px;color:var(--rose-d)}
+.succ h3{font-family:var(--serif);font-weight:300;font-size:1.4rem;margin-bottom:8px}
+.succ p{color:var(--mid);font-size:.88rem;line-height:1.7;margin-bottom:22px}
+footer{background:var(--ink);color:#C9BCAC;padding:36px 22px 22px;text-align:center;margin-top:36px}
+.flogo{font-family:var(--serif);color:#fff;font-size:1.4rem;margin-bottom:10px}
+footer p{font-size:.82rem;color:#9A8F80;margin-bottom:14px}
+.fbot{font-size:.72rem;color:#786E60;border-top:1px solid rgba(255,255,255,.1);padding-top:14px}
+</style>
+</head>
+<body>
+
+<div class="top">Безкоштовна доставка від 1500 ₴ · Нова Пошта</div>
+<nav>
+  <button class="burger" onclick="openMenu()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <div class="logo" onclick="go('home')"><span class="sun"></span> ZaiSun</div>
+  <button class="ico" onclick="window.open('https://instagram.com/zaisun.ua','_blank')">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4"/></svg>
+  </button>
+</nav>
+
+<!-- HOME -->
+<div class="page show" id="pgHome">
+  <div class="hero">
+    <div class="hero-img"></div>
+    <div class="hero-fade"></div>
+    <div class="hero-content">
+      <div class="hk">Власна майстерня · Луцьк</div>
+      <h1>Ніжність у кожному <em>шві</em></h1>
+      <p>Дитячий одяг ручної роботи з натуральних тканин — шиємо з любов'ю з 2019 року</p>
+      <button class="btn" onclick="openMenu()">Каталог товарів</button>
+    </div>
+  </div>
+  <div class="strip">
+    <span><span class="dot"></span>Власне виробництво</span>
+    <span><span class="dot"></span>Натуральні тканини</span>
+    <span><span class="dot"></span>50 000+ мам з нами</span>
+    <span><span class="dot"></span>Обмін 14 днів</span>
+  </div>
+  <section>
+    <div class="sec-k">Каталог</div>
+    <h2 class="sec-t">Популярні <em>категорії</em></h2>
+    <div class="home-cats" id="homeCats"></div>
+  </section>
+  <footer>
+    <div class="flogo">☀ ZaiSun</div>
+    <p>Дитячий одяг ручної роботи з Луцька</p>
+    <div class="fbot">© 2026 ZaiSun · +380 73 812 12 52</div>
+  </footer>
+</div>
+
+<!-- MENU -->
+<div class="menu" id="menu">
+  <div class="menu-top">
+    <div class="menu-logo"><div class="m">🐰 ZaiSun</div><div class="s">бренд дитячого одягу</div></div>
+    <button class="menu-x" onclick="closeMenu()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="menu-list" id="menuList"></div>
+</div>
+
+<!-- CATALOG -->
+<div class="page" id="pgCat">
+  <button class="back" onclick="go('home')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Головна</button>
+  <div class="phead">
+    <div class="pk">Каталог</div>
+    <h1 id="catTitle"></h1>
+    <div class="pcount" id="cnt"></div>
+  </div>
+  <div class="frow-top">
+    <button class="fbtn" onclick="openSheet()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+      Фільтри <span class="bdg" id="fbdg">0</span>
+    </button>
+    <select class="sortsel" id="sortsel" onchange="apply()">
+      <option value="default">Сортування</option>
+      <option value="asc">Дешевші ↑</option>
+      <option value="desc">Дорожчі ↓</option>
+    </select>
+  </div>
+  <div class="fpills" id="fpills"></div>
+  <div class="grid" id="grid"></div>
+  <div class="botpad"></div>
+</div>
+
+<!-- PRODUCT -->
+<div class="page" id="pgProd">
+  <button class="back" onclick="backToCat()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Назад до каталогу</button>
+  <div class="phero" id="phero"></div>
+  <div class="pinfo">
+    <div class="pcat2" id="pcat"></div>
+    <div class="ptit" id="ptit"></div>
+    <div class="ppr" id="ppr"></div>
+    <div class="ptags" id="ptags"></div>
+    <div class="sizesel" id="sizesel"></div>
+    <div class="pdesc" id="pdesc"></div>
+    <button class="buy" onclick="openOrder()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      Купити
+    </button>
+  </div>
+</div>
+
+<div class="ovl" id="ovl" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet">
+  <div class="handle"></div>
+  <div class="sbody" id="sbody"></div>
+  <div class="abar">
+    <button class="apply" id="applyBtn" onclick="closeSheet()">Застосувати</button>
+    <button class="clearall" onclick="resetAll()">Очистити все</button>
+  </div>
+</div>
+
+<div class="movl" id="movl" onclick="if(event.target===this)closeOrder()">
+  <div class="modal">
+    <div id="fview">
+      <div class="mhead"><h3>Оформити замовлення</h3>
+        <button class="mclose" onclick="closeOrder()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="mprod"><img id="mimg" src=""><div class="in"><strong id="mname"></strong><div id="mmeta" style="color:var(--soft);font-size:.78rem;margin-bottom:3px"></div><div class="pr" id="mprice"></div></div></div>
+      <div class="mform">
+        <div class="fld"><label>Ваше ім'я</label><input type="text" id="fName" placeholder="Ольга"></div>
+        <div class="fld"><label>Телефон</label><input type="tel" id="fPhone" placeholder="+380"></div>
+        <div class="frw">
+          <div class="fld"><label>Місто</label><input type="text" id="fCity" placeholder="Луцьк"></div>
+          <div class="fld"><label>Розмір</label><input type="text" id="fSize"></div>
+        </div>
+        <div class="fld"><label>Коментар</label><input type="text" id="fComm" placeholder="Необов'язково"></div>
+        <button class="msub" onclick="submitOrder()">Підтвердити замовлення</button>
+        <div class="mnote">Ми зв'яжемося з вами для підтвердження</div>
+      </div>
+    </div>
+    <div class="succ" id="sview">
+      <div class="sic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
+      <h3>Замовлення прийнято!</h3>
+      <p>Дякуємо! Незабаром зв'яжемося з вами для підтвердження.</p>
+      <button class="msub" style="max-width:240px" onclick="closeOrder()">Чудово</button>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+const P = DATA.products, TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
+let curCatId = null, curCatName = '', curProds = [], cur = null, selSize = null;
+let fSel = {}, pFrom = null, pTo = null, catMin = 0, catMax = 0;
+
+function money(v){ return v.toLocaleString('uk-UA') + ' ₴'; }
+
+// ─── navigation ───
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
+  document.getElementById('pg'+page.charAt(0).toUpperCase()+page.slice(1)).classList.add('show');
+  window.scrollTo(0,0);
+}
+function openMenu(){ document.getElementById('menu').classList.add('show'); }
+function closeMenu(){ document.getElementById('menu').classList.remove('show'); }
+
+// ─── menu build ───
+function buildMenu(){
+  let h = `<div class="mi" onclick="openCatAll()">Всі товари</div>`;
+  for(const t of TREE){
+    if(t.raw === 'sale') continue;
+    const hasCh = t.children && t.children.length;
+    if(hasCh){
+      h += `<div class="mi" onclick="toggleSub(event,'sub${t.id}')">${t.name} <span class="arr">▾</span></div>
+            <div class="msub" id="sub${t.id}">
+              <div class="msi" onclick="openCat('${t.id}')">Усі ${t.name.toLowerCase()} (${t.n})</div>
+              ${t.children.map(c=>`<div class="msi" onclick="openCat('${c.id}')">${c.name} (${c.n})</div>`).join('')}
+            </div>`;
+    } else {
+      h += `<div class="mi" onclick="openCat('${t.id}')">${t.name}</div>`;
+    }
+  }
+  h += `<div class="menu-gap"></div>`;
+  const sale = TREE.find(t=>t.raw==='sale');
+  if(sale) h += `<div class="mi sale" onclick="openCat('${sale.id}')">Sale</div>`;
+  document.getElementById('menuList').innerHTML = h;
+}
+function toggleSub(e, id){
+  e.stopPropagation();
+  document.getElementById(id).classList.toggle('open');
+}
+
+// ─── open category ───
+function catAndChildren(id){
+  const ids = [id];
+  for(const t of TREE){
+    if(t.id===id && t.children) t.children.forEach(c=>ids.push(c.id));
+  }
+  return ids;
+}
+function openCat(id){
+  closeMenu();
+  curCatId = id;
+  const ids = new Set(catAndChildren(id));
+  curProds = P.filter(p=>p.cats.some(c=>ids.has(c)));
+  let nm = '';
+  for(const t of TREE){ if(t.id===id) nm=t.name; if(t.children) for(const c of t.children) if(c.id===id) nm=c.name; }
+  curCatName = nm;
+  initCat(nm);
+}
+function openCatAll(){
+  closeMenu();
+  curCatId = '__all__';
+  curProds = P.slice();
+  curCatName = 'Всі товари';
+  initCat('Всі товари');
+}
+function initCat(nm){
+  fSel = {}; pFrom=null; pTo=null;
+  const prices = curProds.map(p=>p.price).filter(x=>x>0);
+  catMin = prices.length?Math.floor(Math.min(...prices)):0;
+  catMax = prices.length?Math.ceil(Math.max(...prices)):0;
+  document.getElementById('catTitle').textContent = nm;
+  document.getElementById('sortsel').value='default';
+  go('cat'); apply();
+}
+
+// ─── filters for current category ───
+function curFilters(){
+  if(curCatId==='__all__'){
+    // aggregate: розмір+колір з усіх товарів
+    const sizes = new Set(), colors = new Set();
+    curProds.forEach(p=>{ p.sizes.forEach(s=>sizes.add(s)); if(p.color) colors.add(p.color); });
+    return [
+      {name:'Колір', type:'color', values:[...colors].sort()},
+      {name:'Розмір', type:'size', values:[...sizes].sort()},
+    ];
+  }
+  return (FILT[curCatId]||[]).slice();
+}
+function prodMatchesFilter(p, fname, vals){
+  if(fname==='Розмір') return p.sizes.some(s=>vals.has(s));
+  if(fname==='Колір') return p.color && vals.has(p.color);
+  const ov = p.opts[fname];
+  return ov && ov.some(v=>vals.has(v));
+}
+function filtered(){
+  let r = curProds.filter(p=>{
+    for(const [fn, vals] of Object.entries(fSel)){
+      if(vals.size && !prodMatchesFilter(p, fn, vals)) return false;
+    }
+    if(pFrom!==null && p.price<pFrom) return false;
+    if(pTo!==null && p.price>pTo) return false;
+    return true;
+  });
+  const s=document.getElementById('sortsel').value;
+  if(s==='asc') r.sort((a,b)=>a.price-b.price);
+  if(s==='desc') r.sort((a,b)=>b.price-a.price);
+  return r;
+}
+function nf(){
+  let n=0; for(const v of Object.values(fSel)) n+=v.size;
+  if(pFrom!==null||pTo!==null) n++;
+  return n;
+}
+
+// ─── sheet ───
+function chev(){ return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>`; }
+function buildSheet(){
+  const fl = curFilters();
+  let h = `
+    <div class="ssec" id="sPrice"><div class="shead-row" onclick="tglSec('sPrice')"><h4>Ціна, ₴</h4>${chev()}</div>
+      <div class="sbody-in"><div class="prow2">
+        <input type="number" id="pf" placeholder="від ${catMin}" value="${pFrom??''}" oninput="onPrice()">
+        <input type="number" id="pt2" placeholder="до ${catMax}" value="${pTo??''}" oninput="onPrice()">
+      </div></div>
+    </div>`;
+  fl.forEach((f,i)=>{
+    const cnts = {};
+    f.values.forEach(v=>{
+      cnts[v] = curProds.filter(p=>prodMatchesFilter(p, f.name, new Set([v]))).length;
+    });
+    const rows = f.values.map(v=>{
+      const on = fSel[f.name]?.has(v)?'on':'';
+      const dot = f.type==='color' ? `<span class="cd" style="background:${HEX[v]||'#D8C8B8'}"></span>` : '';
+      return `<div class="chk ${on}" onclick="tglF('${f.name.replace(/'/g,"\\'")}','${v.replace(/'/g,"\\'")}')">
+        <div class="box"></div><div class="lbl">${dot}${v}</div><span class="cnt">${cnts[v]}</span></div>`;
+    }).join('');
+    h += `<div class="ssec ${i>0?'closed':''}" id="sF${i}">
+      <div class="shead-row" onclick="tglSec('sF${i}')"><h4>${f.name}</h4>${chev()}</div>
+      <div class="sbody-in">${rows}</div></div>`;
+  });
+  document.getElementById('sbody').innerHTML = h;
+  updApply();
+}
+function tglSec(id){ document.getElementById(id).classList.toggle('closed'); }
+function tglF(fn, v){
+  fSel[fn] = fSel[fn] || new Set();
+  fSel[fn].has(v) ? fSel[fn].delete(v) : fSel[fn].add(v);
+  buildSheet(); updBdg();
+}
+function onPrice(){
+  const a = document.getElementById('pf').value, b = document.getElementById('pt2').value;
+  pFrom = a===''?null:+a; pTo = b===''?null:+b;
+  updBdg(); updApply();
+}
+function updBdg(){
+  const b=document.getElementById('fbdg');
+  b.textContent=nf(); b.classList.toggle('show',nf()>0);
+}
+function updApply(){
+  const el=document.getElementById('applyBtn'); if(el) el.textContent=`Застосувати (${filtered().length})`;
+}
+function resetAll(){ fSel={}; pFrom=null; pTo=null; buildSheet(); updBdg(); apply(); }
+function openSheet(){ buildSheet(); document.getElementById('sheet').classList.add('open'); document.getElementById('ovl').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeSheet(){ document.getElementById('sheet').classList.remove('open'); document.getElementById('ovl').classList.remove('open'); document.body.style.overflow=''; apply(); }
+
+// ─── pills + grid ───
+function renderPills(){
+  let h='';
+  for(const [fn, vals] of Object.entries(fSel)){
+    for(const v of vals){
+      const dot = HEX[v]?`<span class="cd" style="background:${HEX[v]}"></span>`:'';
+      h+=`<span class="fpill">${dot}${v}<button onclick="tglF('${fn.replace(/'/g,"\\'")}','${v.replace(/'/g,"\\'")}');apply()">×</button></span>`;
+    }
+  }
+  if(pFrom!==null||pTo!==null) h+=`<span class="fpill">${pFrom??catMin}–${pTo??catMax} ₴<button onclick="pFrom=null;pTo=null;updBdg();apply()">×</button></span>`;
+  document.getElementById('fpills').innerHTML=h;
+}
+function apply(){
+  const r=filtered();
+  document.getElementById('cnt').textContent=r.length+' товарів';
+  renderPills(); updBdg();
+  const el=document.getElementById('grid');
+  if(!r.length){ el.innerHTML=`<div class="nores"><h3>Нічого не знайдено</h3><p>Спробуйте змінити фільтри</p></div>`; return; }
+  el.innerHTML=r.map(p=>{
+    const badge=p.old?`<span class="badge s">Sale</span>`:'';
+    const img = p.photo ? `<img src="images/${p.photo}" alt="" loading="lazy">` : `<div class="noimg">ФОТО СКОРО</div>`;
+    const sw=p.hex?`<span class="csw" style="background:${p.hex}"></span>`:'';
+    const price=p.old?`${money(p.price)} <s>${money(p.old)}</s>`:money(p.price);
+    const sz = p.sizes.length ? (p.sizes.length>1 ? p.sizes[0]+' – '+p.sizes[p.sizes.length-1] : p.sizes[0]) : '';
+    return `<a class="pc" onclick="openProd(${p.id})">
+      <div class="pt">${badge}${img}${sw}</div>
+      <div class="pn">${p.name}</div>
+      <div class="pm">${sz}</div>
+      <div class="pp">${price}</div>
+    </a>`;
+  }).join('');
+}
+
+// ─── product ───
+function openProd(id){
+  cur = P.find(p=>p.id===id); selSize=null;
+  document.getElementById('phero').innerHTML = cur.photo ? `<img src="images/${cur.photo}">` : `<div class="noimg">ФОТО СКОРО</div>`;
+  document.getElementById('pcat').textContent = cur.catn.filter(c=>c!=='sale').join(' · ') || cur.catn.join(' · ');
+  document.getElementById('ptit').textContent = cur.name;
+  updPrice(cur.price, cur.old);
+  let tags = '';
+  if(cur.color) tags += `<span class="ptag"><span class="cd" style="background:${cur.hex}"></span>${cur.color}</span>`;
+  for(const [k,v] of Object.entries(cur.opts)){
+    if(k!=='Колір') tags += `<span class="ptag">${k}: ${v.join(', ')}</span>`;
+  }
+  if(cur.stock) tags += `<span class="ptag" style="background:#E8F2EA;color:#3A6B4A">В наявності ✓</span>`;
+  document.getElementById('ptags').innerHTML = tags;
+  // size selector with variant prices
+  if(cur.sizes.length){
+    const chips = cur.sizes.map(s=>{
+      const v = cur.var[s];
+      const pr = v ? money(v.p) : '';
+      const oos = v && !v.s ? 'oos' : '';
+      return `<span class="szc ${oos}" onclick="selSz(this,'${s.replace(/'/g,"\\'")}')">${s}${pr?`<small>${pr}</small>`:''}</span>`;
+    }).join('');
+    document.getElementById('sizesel').innerHTML = `<h5>Оберіть розмір</h5><div class="szrow">${chips}</div>`;
+  } else {
+    document.getElementById('sizesel').innerHTML = '';
+  }
+  document.getElementById('pdesc').textContent = cur.desc || '';
+  go('prod');
+}
+function updPrice(p, o){
+  document.getElementById('ppr').innerHTML = o ? `${money(p)} <s>${money(o)}</s>` : money(p);
+}
+function selSz(el, s){
+  selSize = s;
+  document.querySelectorAll('.szc').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  const v = cur.var[s];
+  if(v) updPrice(v.p, v.o);
+}
+function backToCat(){ go('cat'); }
+
+// ─── order ───
+function openOrder(){
+  const v = selSize ? cur.var[selSize] : null;
+  document.getElementById('mimg').src = cur.photo ? 'images/'+cur.photo : '';
+  document.getElementById('mname').textContent = cur.name;
+  document.getElementById('mmeta').textContent = (cur.color||'') + (selSize?' · '+selSize:'');
+  document.getElementById('mprice').textContent = money(v?v.p:cur.price);
+  document.getElementById('fSize').value = selSize || (cur.sizes[0]||'');
+  document.getElementById('fview').style.display='block';
+  document.getElementById('sview').classList.remove('show');
+  document.getElementById('movl').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeOrder(){ document.getElementById('movl').classList.remove('open'); document.body.style.overflow=''; }
+function submitOrder(){
+  const n=document.getElementById('fName').value.trim(), p=document.getElementById('fPhone').value.trim();
+  if(!n||!p){ alert("Заповніть ім'я та телефон"); return; }
+  document.getElementById('fview').style.display='none';
+  document.getElementById('sview').classList.add('show');
+}
+
+// ─── home cats ───
+function buildHome(){
+  const picks = ['Боді','Одяг','Шапки','Подарункові комплекти','Літо'];
+  let h = '';
+  const saleT = TREE.find(t=>t.raw==='sale');
+  picks.forEach((nm,i)=>{
+    const t = TREE.find(x=>x.name===nm);
+    if(!t) return;
+    const pr = P.find(p=>p.cats.includes(t.id) && p.photo);
+    const img = pr ? `<img src="images/${pr.photo}" loading="lazy">` : '';
+    h += `<div class="hc ${i===0?'wide':''}" onclick="openCat('${t.id}')">${img}<span>${nm}</span></div>`;
+  });
+  if(saleT){
+    const pr = P.find(p=>p.cats.includes(saleT.id) && p.photo && p.old);
+    h += `<div class="hc" onclick="openCat('${saleT.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy">`:''}<span>Sale 🔥</span></div>`;
+  }
+  document.getElementById('homeCats').innerHTML = h;
+}
+
+buildMenu(); buildHome();
+</script>
+</body>
+</html>
