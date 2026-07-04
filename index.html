@@ -231,7 +231,16 @@ section{padding:26px 18px 34px}
 .sic{width:60px;height:60px;border-radius:50%;background:var(--petal);display:grid;place-items:center;margin-bottom:16px;color:var(--rose-d)}
 .succ h3{font-family:var(--serif);font-weight:700;font-size:1.2rem;margin-bottom:8px}
 .succ p{color:var(--mid);font-size:.88rem;line-height:1.7;margin-bottom:22px}
-footer{background:#8A7663;color:#EFE5DA;padding:36px 22px 22px;text-align:center;margin-top:36px}
+.ig-sec{background:#F8EDE0;text-align:center;padding:40px 18px 30px;margin-top:36px}
+.ig-k{font-size:.68rem;letter-spacing:.4em;color:#C9987E;margin-bottom:12px;font-weight:600}
+.ig-h{font-size:1.5rem;font-weight:700;color:#4A4038;margin-bottom:10px}
+.ig-p{font-size:.88rem;color:#8A7D6F;line-height:1.6;max-width:26em;margin:0 auto 20px}
+.ig-btn{display:inline-flex;align-items:center;gap:9px;padding:14px 32px;border-radius:40px;background:#4A4038;color:#fff;border:none;font-family:inherit;font-size:.92rem;font-weight:600;cursor:pointer;margin-bottom:26px}
+.ig-btn:active{background:var(--rose-d)}
+.ig-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:520px;margin:0 auto}
+.ig-grid a{aspect-ratio:1/1;border-radius:16px;overflow:hidden;display:block}
+.ig-grid img{width:100%;height:100%;object-fit:cover;display:block}
+footer{background:#8A7663;color:#EFE5DA;padding:36px 22px 22px;text-align:center;margin-top:0}
 .flogo{font-family:var(--serif);font-weight:700;color:#fff;font-size:1.2rem;margin-bottom:10px}
 footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 .fbot{font-size:.72rem;color:#D8C9BA;border-top:1px solid rgba(255,255,255,.1);padding-top:14px}
@@ -260,7 +269,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- HOME -->
 <div class="page show" id="pgHome">
-  <div class="hero2"><img src="hero.jpg" alt="ZaiSun"></div>
+  <div class="hero2"><img src="hero2.jpg" alt="ZaiSun"></div>
   <div class="tagline">
     <p>Ми постійно працюємо над покращенням наших товарів і послуг, для досягнення найкращих результатів. Наші цінності - це унікальний дизайн та висока якість продукції</p>
   </div>
@@ -273,6 +282,16 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <section>
     <h2 class="cats-h">КАТЕГОРІЇ</h2>
     <div class="home-cats" id="homeCats"></div>
+  </section>
+  <section class="ig-sec">
+    <div class="ig-k">INSTAGRAM</div>
+    <h3 class="ig-h">@zaisun_kids</h3>
+    <p class="ig-p">Нові моделі, живе листування з мамами та заглядання в майстерню</p>
+    <button class="ig-btn" onclick="window.open('https://instagram.com/zaisun_kids','_blank')">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4"/></svg>
+      Підписатися
+    </button>
+    <div class="ig-grid" id="igGrid"></div>
   </section>
   <footer>
     <div class="flogo">☀ ZaiSun</div>
@@ -842,7 +861,12 @@ P.forEach(p=>{
   if(p.cats.some(c=>WINTER_IDS.has(c)) || /зимов|утеплен|хутр|фліс|махра|снуд|новорічн|święt/.test(n)) s = 0;
   p.season = s;
 });
-buildMenu(); buildHome();
+function buildIG(){
+  const el = document.getElementById('igGrid'); if(!el) return;
+  const pics = P.filter(p=>p.photo && p.season===2).slice(0,4);
+  el.innerHTML = pics.map(p=>`<a href="https://instagram.com/zaisun_kids" target="_blank"><img src="images/${p.photo}" loading="lazy"></a>`).join('');
+}
+buildMenu(); buildHome(); buildIG();
 
 // ═══ Свайп назад / кнопка назад: інтеграція з історією браузера ═══
 let NAVSILENT = false, NAVDEPTH = 0;
