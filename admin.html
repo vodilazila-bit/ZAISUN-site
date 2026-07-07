@@ -357,7 +357,15 @@ function initAdd(){
 function pickColor(el){document.querySelectorAll('#a_colors .chip').forEach(x=>x.classList.remove('on'));el.classList.add('on');$('a_ncolor').value=''}
 function addOptRow(){const d=document.createElement('div');d.className='optrow';d.innerHTML=`<input type="text" placeholder="Назва (Склад)"><input type="text" placeholder="Значення"><button class="btn sec sm" onclick="this.parentNode.remove()">✕</button>`;$('a_opts').appendChild(d)}
 
-function getSizes(){return $('a_sizes').value.split(',').map(s=>s.trim()).filter(Boolean)}
+function normSize(s){
+  s=s.trim().replace(/\s+/g,' ').replace(/\//g,'-').replace(/\s*-\s*/g,'-');
+  s=s.replace(/\s*см\.?$/i,'').trim();
+  s=s.replace(/(\d)\s+(міс|рок|рік|р\b)/g,'$1$2').replace(/(рік|роки|років)$/,'р');
+  s=s.replace(/\(\s*([\d\.,]+)\s*см\s*\)/g,'($1см)').replace(/\s*\(/g,'(');
+  return s;
+}
+function isAge(s){return /(міс|(^|\-|\d)р\b)/i.test(s)}
+function getSizes(){return $('a_sizes').value.split(',').map(s=>normSize(s)).filter(Boolean)}
 function buildVarTable(){
   const sz=getSizes();if(!sz.length){$('a_vars').innerHTML='';return}
   $('a_vars').innerHTML=`<table class="vt"><tr><th>Розмір</th><th>Ціна</th><th>Стара</th></tr>`+
@@ -414,11 +422,11 @@ async function saveNew(){
     DATA.tree.forEach(bump);
     // фільтри: додати колір/розмір у values категорій
     cats.forEach(c=>{
-      if(!DATA.filters[c.id])DATA.filters[c.id]=[{name:'Розмір',type:'size',values:[]},{name:'Колір',type:'color',values:[]}];
-      DATA.filters[c.id].forEach(f=>{
-        if(f.name==='Розмір')sizes.forEach(s=>{if(!f.values.includes(s))f.values.push(s)});
-        if(f.name==='Колір'&&color&&!f.values.includes(color))f.values.push(color);
-      });
+      if(!DATA.filters[c.id])DATA.filters[c.id]=[{name:'Розмір',type:'size',values:[]},{name:'Вік',type:'size',values:[]},{name:'Колір',type:'color',values:[]}];
+      const ensure=(nm,tp)=>{let f=DATA.filters[c.id].find(x=>x.name===nm);if(!f){f={name:nm,type:tp,values:[]};DATA.filters[c.id].push(f)}return f};
+      const fSz=ensure('Розмір','size'), fAge=ensure('Вік','size'), fCol=ensure('Колір','color');
+      sizes.forEach(s=>{const t=isAge(s)?fAge:fSz;if(!t.values.includes(s))t.values.push(s)});
+      if(color&&!fCol.values.includes(color))fCol.values.push(color);
     });
     await commitData(`admin: додано товар #${id} ${name}`);
     toast(`✓ Товар #${id} додано! Сайт оновиться за 1–3 хв`,'ok');
