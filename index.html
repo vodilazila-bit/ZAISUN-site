@@ -97,8 +97,10 @@ section{padding:26px 18px 34px}
 
 
 /* ═══ MENU OVERLAY ═══ */
-.menu{position:fixed;inset:0;z-index:900;background:var(--cream);overflow-y:auto;display:none}
-.menu.show{display:block}
+.menu-ovl{position:fixed;inset:0;z-index:890;background:rgba(58,48,40,.35);opacity:0;pointer-events:none;transition:opacity .25s}
+.menu-ovl.show{opacity:1;pointer-events:auto}
+.menu{position:fixed;top:0;bottom:0;left:0;width:85%;max-width:340px;z-index:900;background:var(--cream);overflow-y:auto;transform:translateX(-102%);transition:transform .28s cubic-bezier(.25,.8,.3,1);box-shadow:6px 0 24px rgba(0,0,0,.12)}
+.menu.show{transform:translateX(0)}
 .menu-top{display:flex;align-items:flex-start;justify-content:space-between;padding:22px 24px 4px}
 .menu-logo{font-family:var(--serif);font-weight:700;text-align:center}
 .menu-logo .m{font-size:1.35rem}
@@ -333,6 +335,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 </div>
 
 <!-- MENU -->
+<div class="menu-ovl" id="menuOvl" onclick="closeMenu()"></div>
 <div class="menu" id="menu">
   <div class="menu-top">
     <div class="menu-logo"><img src="logo.png" alt="ZaiSun" style="height:54px;display:block"></div>
@@ -460,8 +463,8 @@ function go(page){
   document.getElementById('pg'+page.charAt(0).toUpperCase()+page.slice(1)).classList.add('show');
   window.scrollTo(0,0);
 }
-function openMenu(){ document.getElementById('menu').classList.add('show'); }
-function closeMenu(){ document.getElementById('menu').classList.remove('show'); }
+function openMenu(){ document.getElementById('menu').classList.add('show'); document.getElementById('menuOvl').classList.add('show'); document.body.style.overflow='hidden'; }
+function closeMenu(){ document.getElementById('menu').classList.remove('show'); document.getElementById('menuOvl').classList.remove('show'); if(!document.querySelector('.movl.open,.sheet.open')) document.body.style.overflow=''; }
 
 // ─── menu build ───
 
@@ -1084,13 +1087,22 @@ function buildIG(){
 buildMenu(); buildHome(); buildIG();
 
 // ═══ Свайп назад / кнопка назад: інтеграція з історією браузера ═══
-let NAVSILENT = false, NAVDEPTH = 0;
-function pushNav(st, url){ if(NAVSILENT) return; NAVDEPTH++; history.pushState(st,'', url||location.pathname); }
+let NAVSILENT = false, NAVDEPTH = 0, LASTVIEW = {v:'home'};
+function pushNav(st, url){ if(NAVSILENT) return; NAVDEPTH++; LASTVIEW = st.o ? LASTVIEW : st; history.pushState(st,'', url||location.pathname); }
 const _openCat = openCat, _openCatAll = openCatAll, _openMenuCat = openMenuCat, _openProd = openProd, _closeProd = closeProd;
+const _openMenu = openMenu, _openCart = openCart, _openSearch = openSearch, _openSheet = openSheet, _openOrder = openOrder, _checkoutCart = checkoutCart;
 openCat = function(id){ _openCat(id); pushNav({v:'cat', m:'id', id}); };
 openCatAll = function(){ _openCatAll(); pushNav({v:'cat', m:'all'}); };
 openMenuCat = function(i){ _openMenuCat(i); pushNav({v:'cat', m:'menu', i}); };
 openProd = function(id){ _openProd(id); pushNav({v:'prod', id}, location.pathname + '?p=' + id); };
+// накладки: пушимо стан-дублікат поточного екрана з позначкою o (overlay),
+// щоб жест "назад" закривав накладку і лишав той самий екран
+openMenu = function(){ _openMenu(); pushNav({...LASTVIEW, o:1}); };
+openCart = function(){ _openCart(); pushNav({...LASTVIEW, o:1}); };
+openSearch = function(){ _openSearch(); pushNav({...LASTVIEW, o:1}); };
+openSheet = function(){ _openSheet(); pushNav({...LASTVIEW, o:1}); };
+openOrder = function(){ _openOrder(); pushNav({...LASTVIEW, o:1}); };
+checkoutCart = function(){ _checkoutCart(); if(CART.length) pushNav({...LASTVIEW, o:1}); };
 closeProd = function(){
   if(NAVDEPTH > 0) history.back();
   else _closeProd();
@@ -1098,6 +1110,7 @@ closeProd = function(){
 window.addEventListener('popstate', e => {
   NAVDEPTH = Math.max(0, NAVDEPTH - 1);
   const st = e.state || {v:'home'};
+  LASTVIEW = {v:st.v||'home', m:st.m, id:st.id, i:st.i};
   NAVSILENT = true;
   try{
     closeMenu(); closeSheet(); closeCart(); closeSearch(); closeOrder();
