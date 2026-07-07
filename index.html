@@ -641,7 +641,7 @@ function buildSheet(){
       return `<div class="chk ${on}" onclick="tglF('${f.name.replace(/'/g,"\\'")}','${v.replace(/'/g,"\\'")}')">
         <div class="box"></div><div class="lbl">${dot}${v}</div><span class="cnt">${cnts[v]}</span></div>`;
     }).join('');
-    h += `<div class="ssec ${i>0?'closed':''}" id="sF${i}">
+    h += `<div class="ssec closed" id="sF${i}">
       <div class="shead-row" onclick="tglSec('sF${i}')"><h4>${f.name}</h4>${chev()}</div>
       <div class="sbody-in">${rows}</div></div>`;
   });
@@ -1122,7 +1122,8 @@ window.addEventListener('popstate', e => {
     else go('home');
   } finally { NAVSILENT = false; }
 });
-history.replaceState({v:'home'}, '', location.pathname);
+history.replaceState({v:'root'}, '', location.pathname);
+history.pushState({v:'home'}, '', location.pathname);
 // прямий лінк на товар: /?p=123 (для Merchant Center та шерингу)
 (function(){
   const pid = parseInt(new URLSearchParams(location.search).get('p'));
