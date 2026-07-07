@@ -617,7 +617,7 @@ function chev(){ return `<svg width="18" height="18" viewBox="0 0 24 24" fill="n
 function buildSheet(){
   const fl = curFilters();
   let h = `
-    <div class="ssec" id="sPrice"><div class="shead-row" onclick="tglSec('sPrice')"><h4>Ціна, ₴</h4>${chev()}</div>
+    <div class="ssec closed" id="sPrice"><div class="shead-row" onclick="tglSec('sPrice')"><h4>Ціна, ₴</h4>${chev()}</div>
       <div class="sbody-in">
         <div class="rng" id="rng">
           <div class="rng-track"></div><div class="rng-fill" id="rngFill"></div>
@@ -1086,6 +1086,7 @@ function buildIG(){
 buildMenu(); buildHome(); buildIG();
 
 // ═══ Свайп назад / кнопка назад: інтеграція з історією браузера ═══
+function closeProd(){ if(curCatId) go('cat'); else go('home'); }
 let NAVSILENT = false, NAVDEPTH = 0, LASTVIEW = {v:'home'};
 function pushNav(st, url){ if(NAVSILENT) return; NAVDEPTH++; LASTVIEW = st.o ? LASTVIEW : st; history.pushState(st,'', url||location.pathname); }
 const _openCat = openCat, _openCatAll = openCatAll, _openMenuCat = openMenuCat, _openProd = openProd, _closeProd = closeProd;
@@ -1122,8 +1123,7 @@ window.addEventListener('popstate', e => {
     else go('home');
   } finally { NAVSILENT = false; }
 });
-history.replaceState({v:'root'}, '', location.pathname);
-history.pushState({v:'home'}, '', location.pathname);
+history.replaceState({v:'home'}, '', location.pathname);
 // прямий лінк на товар: /?p=123 (для Merchant Center та шерингу)
 (function(){
   const pid = parseInt(new URLSearchParams(location.search).get('p'));
