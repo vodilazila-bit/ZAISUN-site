@@ -711,11 +711,10 @@ function apply(){
   el.innerHTML=r.map(p=>{
     const badge=p.old?`<span class="badge s">Sale</span>`:'';
     const img = p.photo ? `<img src="images/${p.photo}" alt="" loading="lazy">` : `<div class="noimg">ФОТО СКОРО</div>`;
-    const sw=p.hex?`<span class="csw" style="background:${p.hex}"></span>`:'';
     const price=p.old?`${money(p.price)} <s>${money(p.old)}</s>`:money(p.price);
     const sz = p.sizes.length ? (p.sizes.length>1 ? p.sizes[0]+' – '+p.sizes[p.sizes.length-1] : p.sizes[0]) : '';
     return `<a class="pc" onclick="openProd(${p.id})">
-      <div class="pt">${badge}${img}${sw}</div>
+      <div class="pt">${badge}${img}</div>
       <div class="pn">${p.name}</div>
       <div class="pm">${sz}</div>
       <div class="pp">${price}</div>
