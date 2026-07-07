@@ -19,8 +19,8 @@ body{font-family:'Montserrat',sans-serif;background:#FDFAF6;color:#3A3028;-webki
 a{color:inherit;text-decoration:none}
 :root{--cream:#FBEFE1;--petal:#F9F0E7;--blush:#EFDCCB;--rose:#D9A990;--rose-d:#C2826A;--ink:#6B5D50;--mid:#8A7D6F;--soft:#9E9189;--line:rgba(58,48,40,.1);--serif:'Montserrat',sans-serif}
 
-.hdr{background:#FBEFE1;display:flex;align-items:center;justify-content:space-between;padding:10px 20px 12px;position:sticky;top:0;z-index:100}
-.hdr-logo{cursor:pointer;line-height:1.15}
+.hdr{background:#FBEFE1;display:flex;align-items:center;justify-content:flex-end;padding:10px 20px 12px;position:sticky;top:0;z-index:100;min-height:78px;position:sticky}
+.hdr-logo{cursor:pointer;line-height:1.15;position:absolute;left:50%;transform:translateX(-50%)}
 
 
 .hl-img{height:58px;display:block}
@@ -90,7 +90,7 @@ section{padding:26px 18px 34px}
 .sec-t{font-family:var(--serif);font-weight:700;font-size:1.45rem;text-align:center;margin-bottom:22px}
 .sec-t em{font-style:normal}
 .home-cats{display:grid;grid-template-columns:1fr;gap:14px;max-width:600px;margin:0 auto}
-.hc{aspect-ratio:4/3.4;border-radius:14px;position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding:14px;cursor:pointer}
+.hc{aspect-ratio:4/3.4;border-radius:14px;position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding:14px 14px 32px;cursor:pointer}
 .hc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 
 .hc span{position:relative;z-index:2;background:rgba(247,232,214,.95);color:#6B5D50;font-weight:600;font-size:.9rem;padding:9px 22px;border-radius:30px}
