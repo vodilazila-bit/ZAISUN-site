@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZaiSun — дитячий одяг ручної роботи</title>
 <meta name="description" content="ZaiSun — дитячий одяг власного виробництва: боді, сукні, костюми, панами, шапки. Доставка Новою Поштою по Україні.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZaiSun">
+<meta property="og:title" content="ZaiSun — дитячий одяг ручної роботи">
+<meta property="og:description" content="Дитячий одяг власного виробництва. Замовлення на сайті або в Instagram @zaisun_kids. Доставка Новою Поштою.">
+<meta property="og:image" content="https://zaisun.com.ua/hero2.jpg">
+<meta property="og:url" content="https://zaisun.com.ua/">
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WW35PFT');</script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -209,6 +215,19 @@ section{padding:26px 18px 34px}
 .szc.on small{color:rgba(255,255,255,.75)}
 .szc.oos{opacity:.4;text-decoration:line-through;pointer-events:none}
 .pdesc{font-size:.88rem;color:var(--mid);line-height:1.75;margin-bottom:26px}
+.prel-h{font-family:var(--serif);font-size:1.05rem;color:var(--ink);margin:30px 0 14px}
+.prel-row{display:flex;gap:12px;overflow-x:auto;padding-bottom:10px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.prel-row::-webkit-scrollbar{display:none}
+.prel-c{flex:0 0 132px;text-decoration:none}
+.prel-c img{width:132px;height:158px;object-fit:cover;border-radius:14px;background:var(--petal);display:block}
+.prel-n{font-size:.74rem;color:var(--ink);line-height:1.35;margin-top:7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.prel-p{font-size:.8rem;font-weight:600;color:var(--ink);margin-top:3px}
+.sugg{position:relative}
+.sugg-list{position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid var(--line);border-radius:12px;margin-top:4px;max-height:210px;overflow-y:auto;z-index:30;box-shadow:0 6px 20px rgba(0,0,0,.1);display:none}
+.sugg-list.show{display:block}
+.sugg-it{padding:11px 13px;font-size:.86rem;cursor:pointer;border-bottom:1px solid var(--line)}
+.sugg-it:last-child{border-bottom:none}
+.sugg-it:active{background:var(--petal)}
 .buy{width:100%;padding:16px;background:var(--rose);color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:1rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
 .buy:active{background:var(--rose-d)}
 .buy.tocart{background:#fff;color:var(--ink);border:1.5px solid var(--rose);}
@@ -364,6 +383,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       </button>
       <button class="buy" onclick="openOrder()">Купити</button>
     </div>
+    <div id="prel"></div>
   </div>
 </div>
 
@@ -388,10 +408,10 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
         <div class="fld"><label>Ваше ім'я *</label><input type="text" id="fName" placeholder="Ольга"></div>
         <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" placeholder="+380"></div>
         <div class="frw">
-          <div class="fld"><label>Місто *</label><input type="text" id="fCity" placeholder="Луцьк"></div>
+          <div class="fld sugg"><label>Місто *</label><input type="text" id="fCity" placeholder="Луцьк" autocomplete="off" oninput="npCity(this.value)"><div class="sugg-list" id="cityList"></div></div>
           <div class="fld"><label>Розмір</label><input type="text" id="fSize"></div>
         </div>
-        <div class="fld"><label>Відділення Нової Пошти *</label><input type="text" id="fNP" placeholder="Відділення №1 або адреса"></div>
+        <div class="fld sugg"><label>Відділення Нової Пошти *</label><input type="text" id="fNP" placeholder="Почни вводити номер або вулицю" autocomplete="off" oninput="npWh(this.value)" onfocus="npWh(this.value)"><div class="sugg-list" id="npList"></div></div>
         <div class="fld"><label>Коментар</label><input type="text" id="fComm" placeholder="Необов'язково"></div>
         <button class="osub" id="osubBtn" onclick="submitOrder()">Оформити замовлення</button>
         <div class="mnote">Оплата при отриманні (накладений платіж) або за реквізитами. Ми зв'яжемося з вами для підтвердження.</div>
@@ -542,6 +562,11 @@ function initCat(nm){
   catMax = prices.length?Math.ceil(Math.max(...prices)):0;
   document.getElementById('catTitle').textContent = nm;
   document.getElementById('sortsel').value='default';
+  try{
+    window.dataLayer=window.dataLayer||[];
+    window.dataLayer.push({ecommerce:null});
+    window.dataLayer.push({event:'view_item_list',ecommerce:{item_list_name:nm,items:curProds.slice(0,10).map(p=>({item_id:String(p.id),item_name:p.name,price:p.price}))}});
+  }catch(e){}
   go('cat'); apply();
 }
 
@@ -740,7 +765,24 @@ function openProd(id){
     document.getElementById('sizesel').innerHTML = '';
   }
   document.getElementById('pdesc').textContent = cur.desc || '';
+  try{
+    window.dataLayer=window.dataLayer||[];
+    window.dataLayer.push({ecommerce:null});
+    window.dataLayer.push({event:'view_item',ecommerce:{currency:'UAH',value:cur.price,items:[{item_id:String(cur.id),item_name:cur.name,price:cur.price,item_category:(cur.catn&&cur.catn[0])||''}]}});
+  }catch(e){}
+  renderRelated();
   go('prod');
+}
+function renderRelated(){
+  const box=document.getElementById('prel'); if(!box) return;
+  const mainCat=(cur.cats||[]).find(c=>{const n=(cur.catn||[])[cur.cats.indexOf(c)];return n&&n.toLowerCase()!=='sale'})||cur.cats[0];
+  let rel=P.filter(p=>p.id!==cur.id && p.photo && p.stock && p.cats.includes(mainCat));
+  rel.sort((a,b)=>(b.season===cur.season)-(a.season===cur.season));
+  rel=rel.slice(0,8);
+  if(!rel.length){box.innerHTML='';return}
+  box.innerHTML=`<h4 class="prel-h">Схожі товари</h4><div class="prel-row">`+
+    rel.map(p=>`<a class="prel-c" href="?p=${p.id}" onclick="event.preventDefault();openProd(${p.id});document.getElementById('prodView')?.scrollTo?.(0,0);window.scrollTo(0,0)">
+      <img src="images/${p.photo}" loading="lazy"><div class="prel-n">${p.name}</div><div class="prel-p">${money(p.price)}</div></a>`).join('')+`</div>`;
 }
 function updPrice(p, o){
   document.getElementById('ppr').innerHTML = o ? `${money(p)} <s>${money(o)}</s>` : money(p);
@@ -756,6 +798,12 @@ function backToCat(){ go('cat'); }
 
 // ─── order ───
 function openOrder(){
+  try{
+    const vv = selSize && cur.var[selSize] ? cur.var[selSize] : {p:cur.price};
+    window.dataLayer=window.dataLayer||[];
+    window.dataLayer.push({ecommerce:null});
+    window.dataLayer.push({event:'begin_checkout',ecommerce:{currency:'UAH',value:vv.p,items:[{item_id:String(cur.id),item_name:cur.name,price:vv.p}]}});
+  }catch(e){}
   const v = selSize ? cur.var[selSize] : null;
   document.getElementById('mimg').src = cur.photo ? 'images/'+cur.photo : '';
   document.getElementById('mname').textContent = cur.name;
@@ -769,6 +817,61 @@ function openOrder(){
 }
 function closeOrder(){ document.getElementById('movl').classList.remove('open'); document.body.style.overflow=''; }
 const ORDER_EMAIL = 'Vodilazila@gmail.com';
+// ─── Нова Пошта: підказки міст і відділень ───
+let npCityRef = null, npT1 = null, npT2 = null, npDead = false;
+async function npApi(model, method, props){
+  const r = await fetch('https://api.novaposhta.ua/v2.0/json/', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({apiKey:'', modelName:model, calledMethod:method, methodProperties:props})
+  });
+  const j = await r.json();
+  if(!j.success) throw new Error('np');
+  return j.data;
+}
+function npCity(q){
+  npCityRef = null;
+  clearTimeout(npT1);
+  const box = document.getElementById('cityList');
+  if(npDead || q.trim().length < 2){ box.classList.remove('show'); return; }
+  npT1 = setTimeout(async ()=>{
+    try{
+      const d = await npApi('Address','searchSettlements',{CityName:q.trim(), Limit:'6'});
+      const list = (d[0] && d[0].Addresses) || [];
+      box.innerHTML = list.map(a=>`<div class="sugg-it" onclick="pickCity('${a.DeliveryCity}','${(a.Present||'').replace(/'/g,'')}')">${a.Present}</div>`).join('');
+      box.classList.toggle('show', list.length>0);
+    }catch(e){ npDead = true; box.classList.remove('show'); }
+  }, 300);
+}
+function pickCity(ref, name){
+  npCityRef = ref;
+  document.getElementById('fCity').value = name;
+  document.getElementById('cityList').classList.remove('show');
+  document.getElementById('fNP').focus();
+}
+function npWh(q){
+  clearTimeout(npT2);
+  const box = document.getElementById('npList');
+  if(npDead || !npCityRef){ box.classList.remove('show'); return; }
+  npT2 = setTimeout(async ()=>{
+    try{
+      const props = {CityRef:npCityRef, Limit:'12', Page:'1'};
+      if(q && q.trim()) props.FindByString = q.trim();
+      const d = await npApi('AddressGeneral','getWarehouses',props);
+      box.innerHTML = d.map(w=>`<div class="sugg-it" onclick="pickWh('${(w.Description||'').replace(/'/g,'')}')">${w.Description}</div>`).join('');
+      box.classList.toggle('show', d.length>0);
+    }catch(e){ box.classList.remove('show'); }
+  }, 300);
+}
+function pickWh(name){
+  document.getElementById('fNP').value = name;
+  document.getElementById('npList').classList.remove('show');
+}
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.sugg')){
+    document.getElementById('cityList')?.classList.remove('show');
+    document.getElementById('npList')?.classList.remove('show');
+  }
+});
 async function submitOrder(){
   const n=document.getElementById('fName').value.trim(), p=document.getElementById('fPhone').value.trim();
   const city=document.getElementById('fCity').value.trim(), np=document.getElementById('fNP').value.trim();
@@ -916,6 +1019,11 @@ function checkoutCart(){
   cartMode = true;
   closeCart();
   const total = CART.reduce((s,it)=>s+cartPrice(it)*it.qty,0);
+  try{
+    window.dataLayer=window.dataLayer||[];
+    window.dataLayer.push({ecommerce:null});
+    window.dataLayer.push({event:'begin_checkout',ecommerce:{currency:'UAH',value:total,items:CART.map(it=>{const p=P.find(x=>x.id===it.id);return{item_id:String(it.id),item_name:p?p.name:'',price:cartPrice(it),quantity:it.qty}})}});
+  }catch(e){}
   const first = P.find(x=>x.id===CART[0].id);
   document.getElementById('mimg').src = first && first.photo ? 'images/'+first.photo : '';
   document.getElementById('mname').textContent = CART.reduce((s,i)=>s+i.qty,0) + ' товар(ів) у кошику';
