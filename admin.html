@@ -183,8 +183,22 @@ table.vt input{padding:8px;font-size:14px}
           <input type="text" id="g_q" placeholder="Фільтр по назві файлу…" oninput="renderGallery()" style="margin-top:10px">
           <div id="g_grid" class="ggrid"></div>
         </div>
-        <label>Ціни по розмірах</label>
+        <label>Колір</label>
+        <div class="chips" id="e_colors"></div>
+        <div class="row" style="margin-top:8px">
+          <input type="text" id="e_ncolor" placeholder="Новий колір (назва)" oninput="if(this.value)document.querySelectorAll('#e_colors .chip').forEach(x=>x.classList.remove('on'))">
+          <input type="color" id="e_nhex" value="#D8C8B8" style="flex:0 0 56px;padding:4px;height:46px">
+        </div>
+        <label>Розміри та ціни</label>
         <div id="e_vars"></div>
+        <div class="row" style="margin-top:8px">
+          <input type="text" id="e_nsize" placeholder="Новий розмір: 74 або 6-12міс">
+          <button class="btn sec sm" style="flex:0 0 110px" onclick="addSizeRow()">+ Розмір</button>
+        </div>
+        <div class="flx" style="margin-top:14px">
+          <label class="sw2" style="margin:0"><input type="checkbox" id="e_cover"><span></span></label>
+          <span style="font-size:13px;font-weight:600">⭐ Головний у категорії — його фото стане обкладинкою</span>
+        </div>
         <div class="row" style="margin-top:16px">
           <button class="btn" onclick="saveEdit()">💾 Зберегти</button>
           <button class="btn dng" onclick="delProduct()">🗑 Видалити</button>
@@ -493,8 +507,32 @@ function openEdit(id){
   editPhotoBlob=null;editPhotoPick=null;$('e_gal').style.display='none';
   showEPreview(p.photo?'images/'+p.photo:null);
   $('e_name').value=p.name;$('e_desc').value=p.desc||'';$('e_stock').checked=!!p.stock;
-  $('e_vars').innerHTML=`<table class="vt"><tr><th>Розмір</th><th>Ціна</th><th>Стара</th><th>Є</th></tr>`+
-    p.sizes.map(s=>{const v=p.var[s]||{p:p.price,o:p.old,s:true};return`<tr data-s="${s}"><td class="szn">${s}</td><td><input type="number" class="vp" value="${v.p??''}"></td><td><input type="number" class="vo" value="${v.o??''}"></td><td><input type="checkbox" class="vs" ${v.s?'checked':''}></td></tr>`}).join('')+`</table>`;
+  $('e_cover').checked=!!p.cover;
+  $('e_ncolor').value='';
+  renderEColors(p);
+  $('e_vars').innerHTML=`<table class="vt"><tr><th>Розмір</th><th>Ціна</th><th>Стара</th><th>Є</th><th></th></tr>`+
+    p.sizes.map(s=>{const v=p.var[s]||{p:p.price,o:p.old,s:true};return sizeRowHtml(s,v)}).join('')+`</table>`;
+}
+function sizeRowHtml(s,v){
+  return `<tr data-s="${s}"><td class="szn">${s}</td><td><input type="number" class="vp" value="${v.p??''}"></td><td><input type="number" class="vo" value="${v.o??''}"></td><td><input type="checkbox" class="vs" ${v.s?'checked':''}></td><td><button class="btn sec sm" onclick="if(confirm('Прибрати розмір ${s}?'))this.closest('tr').remove()">✕</button></td></tr>`;
+}
+function addSizeRow(){
+  const s=normSize($('e_nsize').value);
+  if(!s){toast('Введи розмір','err');return}
+  if(document.querySelector(`#e_vars tr[data-s="${s}"]`)){toast('Такий розмір вже є','err');return}
+  const p=DATA.products.find(x=>x.id===editId);
+  const tbl=document.querySelector('#e_vars table');
+  tbl.insertAdjacentHTML('beforeend', sizeRowHtml(s,{p:p.price,o:p.old,s:true}));
+  $('e_nsize').value='';
+}
+function renderEColors(p){
+  const names=Object.keys(DATA.colorhex||{}).sort();
+  $('e_colors').innerHTML = `<span class="chip ${!p.color?'on':''}" data-c="" onclick="pickEColor(this)">Без кольору</span>` +
+    names.map(c=>`<span class="chip ${p.color===c?'on':''}" data-c="${c}" data-h="${DATA.colorhex[c]}" onclick="pickEColor(this)">${c}</span>`).join('');
+}
+function pickEColor(el){
+  document.querySelectorAll('#e_colors .chip').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');$('e_ncolor').value='';
 }
 function closeEdit(){$('e_form').style.display='none';$('e_list').style.display='block';$('e_q').parentNode.style.display='block';editId=null}
 function showEPreview(src,note){
@@ -544,11 +582,32 @@ async function saveEdit(){
       p.photo=editPhotoPick; // '' = прибрати фото
     }
   }catch(e){toast('Помилка фото: '+e.message,'err');return}
+  // розміри: перебудувати зі строк таблиці (враховує додані і прибрані)
+  const newVar={}, newSizes=[];
   document.querySelectorAll('#e_vars tr[data-s]').forEach(tr=>{
     const s=tr.dataset.s;
-    p.var[s]={p:parseFloat(tr.querySelector('.vp').value)||0,o:parseFloat(tr.querySelector('.vo').value)||null,s:tr.querySelector('.vs').checked};
+    newSizes.push(s);
+    newVar[s]={p:parseFloat(tr.querySelector('.vp').value)||0,o:parseFloat(tr.querySelector('.vo').value)||null,s:tr.querySelector('.vs').checked};
   });
+  if(!newSizes.length){toast('Має лишитись хоча б один розмір','err');return}
+  p.sizes=newSizes; p.var=newVar;
   p.price=Math.min(...Object.values(p.var).map(v=>v.p).filter(x=>x>0));
+  // колір
+  const nc=$('e_ncolor').value.trim();
+  const selC=document.querySelector('#e_colors .chip.on');
+  if(nc){ p.color=nc; p.hex=$('e_nhex').value; DATA.colorhex[nc]=p.hex; }
+  else if(selC){ p.color=selC.dataset.c||''; p.hex=selC.dataset.h||''; }
+  if(p.color){ p.opts=p.opts||{}; p.opts['Колір']=[p.color]; } else if(p.opts) delete p.opts['Колір'];
+  // обкладинка категорії
+  p.cover=$('e_cover').checked;
+  // оновити фільтри категорій (нові розміри/колір)
+  (p.cats||[]).forEach(cid=>{
+    if(!DATA.filters[cid])DATA.filters[cid]=[];
+    const ensure=(nm,tp)=>{let f=DATA.filters[cid].find(x=>x.name===nm);if(!f){f={name:nm,type:tp,values:[]};DATA.filters[cid].push(f)}return f};
+    const fSz=ensure('Розмір','size'), fAge=ensure('Вік','size'), fCol=ensure('Колір','color');
+    p.sizes.forEach(s=>{const t=isAge(s)?fAge:fSz;if(!t.values.includes(s))t.values.push(s)});
+    if(p.color&&!fCol.values.includes(p.color))fCol.values.push(p.color);
+  });
   try{await commitData(`admin: змінено товар #${p.id}`);toast('✓ Збережено! Сайт оновиться за 1–3 хв','ok');closeEdit();renderList()}
   catch(e){toast('Помилка: '+e.message,'err')}
 }

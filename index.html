@@ -922,7 +922,7 @@ async function submitOrder(){
 // ─── home cats ───
 function buildHome(){
   let h = '';
-  const coverOf = prods => (prods.find(p=>p.photo && p.season===2) || prods.find(p=>p.photo && p.season===1) || prods.find(p=>p.photo));
+  const coverOf = prods => (prods.find(p=>p.cover && p.photo) || prods.find(p=>p.photo && p.season===2) || prods.find(p=>p.photo && p.season===1) || prods.find(p=>p.photo));
   // Всі товари — перша картка. Головне фото: залий своє в images/cover.jpg — підхопиться саме воно
   const allCover = coverOf(P);
   const fallbackCover = (P.find(p=>p.id===244 && p.photo) || allCover);
