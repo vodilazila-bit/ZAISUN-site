@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZaiSun — дитячий одяг ручної роботи</title>
+<meta name="description" content="ZaiSun — дитячий одяг власного виробництва: боді, сукні, костюми, панами, шапки. Доставка Новою Поштою по Україні.">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WW35PFT');</script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -173,6 +175,13 @@ section{padding:26px 18px 34px}
 .chk .cd{width:17px;height:17px;border-radius:50%;border:1px solid var(--line);flex:none}
 .chk .cnt{margin-left:auto;font-size:.76rem;color:var(--soft)}
 .prow2{display:flex;gap:10px;margin-bottom:14px}
+.rng{position:relative;height:32px;margin:6px 8px 12px}
+.rng-track{position:absolute;top:14px;left:0;right:0;height:4px;border-radius:4px;background:var(--blush)}
+.rng-fill{position:absolute;top:14px;height:4px;border-radius:4px;background:var(--rose-d)}
+.rng input[type=range]{position:absolute;top:0;left:0;width:100%;height:32px;margin:0;background:none;pointer-events:none;-webkit-appearance:none;appearance:none}
+.rng input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;pointer-events:auto;width:22px;height:22px;border-radius:50%;background:#fff;border:2.5px solid var(--rose-d);box-shadow:0 1px 4px rgba(0,0,0,.18);cursor:pointer}
+.rng input[type=range]::-moz-range-thumb{pointer-events:auto;width:22px;height:22px;border-radius:50%;background:#fff;border:2.5px solid var(--rose-d);box-shadow:0 1px 4px rgba(0,0,0,.18);cursor:pointer}
+.rng input[type=range]::-moz-range-track{background:none}
 .prow2 input{flex:1;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;font-size:.92rem;font-family:inherit;outline:none;text-align:center;background:#fff}
 .prow2 input:focus{border-color:var(--rose-d)}
 .abar{flex:none;display:flex;align-items:center;gap:14px;padding:14px 20px max(16px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#FDFAF6}
@@ -224,7 +233,8 @@ section{padding:26px 18px 34px}
 .fld input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:.95rem;outline:none;background:#fff}
 .fld input:focus{border-color:var(--rose-d)}
 .frw{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.msub{width:100%;padding:15px;background:var(--rose);color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:1rem;font-weight:600;margin-top:4px;cursor:pointer}
+.osub{width:100%;padding:15px;background:var(--rose);color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:1rem;font-weight:600;margin-top:4px;cursor:pointer}
+.osub:disabled{opacity:.6}
 .mnote{font-size:.72rem;color:var(--soft);text-align:center;margin-top:10px}
 .succ{display:none;flex-direction:column;align-items:center;text-align:center;padding:36px 24px 20px}
 .succ.show{display:flex}
@@ -247,6 +257,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 </style>
 </head>
 <body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WW35PFT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <header class="hdr">
   <div class="hdr-logo" onclick="go('home')">
@@ -296,7 +307,9 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <footer>
     <div class="flogo">☀ ZaiSun</div>
     <p>Дитячий одяг ручної роботи з Луцька</p>
-    <div class="fbot">© 2026 ZaiSun · +380 73 812 12 52</div>
+    <p style="margin-top:6px"><a href="dostavka.html" style="text-decoration:underline">Оплата і доставка</a> · <a href="kontakty.html" style="text-decoration:underline">Контакти</a> · <a href="oferta.html" style="text-decoration:underline">Публічна оферта</a></p>
+    <p>ФОП Занчук М.В. · Код 3397114540</p>
+    <div class="fbot">© 2026 ZaiSun · <a href="tel:+380738121252">+380 73 812 12 52</a></div>
   </footer>
 </div>
 
@@ -372,22 +385,23 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       </div>
       <div class="mprod"><img id="mimg" src=""><div class="in"><strong id="mname"></strong><div id="mmeta" style="color:var(--soft);font-size:.78rem;margin-bottom:3px"></div><div class="pr" id="mprice"></div></div></div>
       <div class="mform">
-        <div class="fld"><label>Ваше ім'я</label><input type="text" id="fName" placeholder="Ольга"></div>
-        <div class="fld"><label>Телефон</label><input type="tel" id="fPhone" placeholder="+380"></div>
+        <div class="fld"><label>Ваше ім'я *</label><input type="text" id="fName" placeholder="Ольга"></div>
+        <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" placeholder="+380"></div>
         <div class="frw">
-          <div class="fld"><label>Місто</label><input type="text" id="fCity" placeholder="Луцьк"></div>
+          <div class="fld"><label>Місто *</label><input type="text" id="fCity" placeholder="Луцьк"></div>
           <div class="fld"><label>Розмір</label><input type="text" id="fSize"></div>
         </div>
+        <div class="fld"><label>Відділення Нової Пошти *</label><input type="text" id="fNP" placeholder="Відділення №1 або адреса"></div>
         <div class="fld"><label>Коментар</label><input type="text" id="fComm" placeholder="Необов'язково"></div>
-        <button class="msub" onclick="submitOrder()">Підтвердити замовлення</button>
-        <div class="mnote">Ми зв'яжемося з вами для підтвердження</div>
+        <button class="osub" id="osubBtn" onclick="submitOrder()">Оформити замовлення</button>
+        <div class="mnote">Оплата при отриманні (накладений платіж) або за реквізитами. Ми зв'яжемося з вами для підтвердження.</div>
       </div>
     </div>
     <div class="succ" id="sview">
       <div class="sic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
       <h3>Замовлення прийнято!</h3>
       <p>Дякуємо! Незабаром зв'яжемося з вами для підтвердження.</p>
-      <button class="msub" style="max-width:240px" onclick="closeOrder()">Чудово</button>
+      <button class="osub" style="max-width:240px" onclick="closeOrder()">Чудово</button>
     </div>
   </div>
 </div>
@@ -576,10 +590,17 @@ function buildSheet(){
   const fl = curFilters();
   let h = `
     <div class="ssec" id="sPrice"><div class="shead-row" onclick="tglSec('sPrice')"><h4>Ціна, ₴</h4>${chev()}</div>
-      <div class="sbody-in"><div class="prow2">
-        <input type="number" id="pf" placeholder="від ${catMin}" value="${pFrom??''}" oninput="onPrice()">
-        <input type="number" id="pt2" placeholder="до ${catMax}" value="${pTo??''}" oninput="onPrice()">
-      </div></div>
+      <div class="sbody-in">
+        <div class="rng" id="rng">
+          <div class="rng-track"></div><div class="rng-fill" id="rngFill"></div>
+          <input type="range" id="rLo" min="${catMin}" max="${catMax}" value="${pFrom??catMin}" oninput="onSlide()">
+          <input type="range" id="rHi" min="${catMin}" max="${catMax}" value="${pTo??catMax}" oninput="onSlide()">
+        </div>
+        <div class="prow2">
+          <input type="number" id="pf" placeholder="від ${catMin}" value="${pFrom??''}" oninput="onPrice();syncSlide()">
+          <input type="number" id="pt2" placeholder="до ${catMax}" value="${pTo??''}" oninput="onPrice();syncSlide()">
+        </div>
+      </div>
     </div>`;
   fl.forEach((f,i)=>{
     const cnts = {};
@@ -610,6 +631,26 @@ function onPrice(){
   pFrom = a===''?null:+a; pTo = b===''?null:+b;
   updBdg(); updApply();
 }
+function onSlide(){
+  const lo=document.getElementById('rLo'), hi=document.getElementById('rHi');
+  let a=+lo.value, b=+hi.value;
+  if(a>b){ const t=a; a=b; b=t; }
+  pFrom = a<=catMin?null:a; pTo = b>=catMax?null:b;
+  document.getElementById('pf').value = pFrom??'';
+  document.getElementById('pt2').value = pTo??'';
+  drawFill(a,b); updBdg(); updApply();
+}
+function syncSlide(){
+  const lo=document.getElementById('rLo'), hi=document.getElementById('rHi');
+  if(!lo) return;
+  const a = pFrom??catMin, b = pTo??catMax;
+  lo.value=a; hi.value=b; drawFill(a,b);
+}
+function drawFill(a,b){
+  const f=document.getElementById('rngFill'); if(!f||catMax<=catMin) return;
+  const l=(a-catMin)/(catMax-catMin)*100, r=(b-catMin)/(catMax-catMin)*100;
+  f.style.left=l+'%'; f.style.width=Math.max(0,r-l)+'%';
+}
 function updBdg(){
   const b=document.getElementById('fbdg');
   b.textContent=nf(); b.classList.toggle('show',nf()>0);
@@ -617,8 +658,8 @@ function updBdg(){
 function updApply(){
   const el=document.getElementById('applyBtn'); if(el) el.textContent=`Застосувати (${filtered().length})`;
 }
-function resetAll(){ fSel={}; pFrom=null; pTo=null; buildSheet(); updBdg(); apply(); }
-function openSheet(){ buildSheet(); document.getElementById('sheet').classList.add('open'); document.getElementById('ovl').classList.add('open'); document.body.style.overflow='hidden'; }
+function resetAll(){ fSel={}; pFrom=null; pTo=null; buildSheet(); syncSlide(); updBdg(); apply(); }
+function openSheet(){ buildSheet(); syncSlide(); document.getElementById('sheet').classList.add('open'); document.getElementById('ovl').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeSheet(){ document.getElementById('sheet').classList.remove('open'); document.getElementById('ovl').classList.remove('open'); document.body.style.overflow=''; apply(); }
 
 // ─── pills + grid ───
@@ -657,6 +698,24 @@ function apply(){
 // ─── product ───
 function openProd(id){
   cur = P.find(p=>p.id===id); selSize=null;
+  // schema.org Product для Merchant Center
+  try{
+    let ld = document.getElementById('pjsonld');
+    if(!ld){ ld = document.createElement('script'); ld.type='application/ld+json'; ld.id='pjsonld'; document.head.appendChild(ld); }
+    const prices = Object.values(cur.var||{}).map(v=>v.p).filter(x=>x>0);
+    const lo = prices.length?Math.min(...prices):cur.price, hi = prices.length?Math.max(...prices):cur.price;
+    ld.textContent = JSON.stringify({
+      "@context":"https://schema.org","@type":"Product",
+      "name":cur.name,
+      "description":(cur.desc||cur.name).slice(0,500),
+      "image":cur.photo?location.origin+location.pathname.replace(/[^/]*$/,'')+"images/"+cur.photo:undefined,
+      "sku":String(cur.id),
+      "brand":{"@type":"Brand","name":"ZaiSun"},
+      "offers":{"@type":"AggregateOffer","priceCurrency":"UAH","lowPrice":lo,"highPrice":hi,
+        "availability":cur.stock?"https://schema.org/InStock":"https://schema.org/OutOfStock",
+        "url":location.origin+location.pathname+"?p="+cur.id}
+    });
+  }catch(e){}
   document.getElementById('phero').innerHTML = cur.photo ? `<img src="images/${cur.photo}">` : `<div class="noimg">ФОТО СКОРО</div>`;
   document.getElementById('pcat').textContent = cur.catn.filter(c=>c!=='sale').join(' · ') || cur.catn.join(' · ');
   document.getElementById('ptit').textContent = cur.name;
@@ -709,21 +768,60 @@ function openOrder(){
   document.body.style.overflow='hidden';
 }
 function closeOrder(){ document.getElementById('movl').classList.remove('open'); document.body.style.overflow=''; }
-function submitOrder(){
+const ORDER_EMAIL = 'Vodilazila@gmail.com';
+async function submitOrder(){
   const n=document.getElementById('fName').value.trim(), p=document.getElementById('fPhone').value.trim();
-  if(!n||!p){ alert("Заповніть ім'я та телефон"); return; }
-  if(cartMode){ CART=[]; saveCart(); cartMode=false; }
-  document.getElementById('fview').style.display='none';
-  document.getElementById('sview').classList.add('show');
+  const city=document.getElementById('fCity').value.trim(), np=document.getElementById('fNP').value.trim();
+  const size=document.getElementById('fSize').value.trim(), comm=document.getElementById('fComm').value.trim();
+  if(!n||!p||!city||!np){ alert("Заповніть ім'я, телефон, місто та відділення Нової Пошти"); return; }
+  // склад замовлення
+  let itemsTxt='', total=0;
+  if(cartMode && CART.length){
+    itemsTxt = CART.map(it=>{
+      const pr=P.find(x=>x.id===it.id); const price=cartPrice(it);
+      total += price*it.qty;
+      return `#${it.id} ${pr?pr.name:''} | розмір: ${it.size||'-'} | ${it.qty} шт × ${price} грн`;
+    }).join('\n');
+  } else if(cur){
+    const v = size && cur.var && cur.var[size] ? cur.var[size] : {p:cur.price};
+    total = v.p;
+    itemsTxt = `#${cur.id} ${cur.name} | розмір: ${size||'-'} | 1 шт × ${v.p} грн`;
+  }
+  const btn=document.getElementById('osubBtn');
+  btn.disabled=true; btn.textContent='Надсилаю…';
+  try{
+    const r = await fetch('https://formsubmit.co/ajax/'+ORDER_EMAIL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({
+        _subject:'🛍 Нове замовлення з сайту ZaiSun — '+total+' грн',
+        _template:'box',
+        "Ім'я": n, "Телефон": p, "Місто": city, "Відділення НП": np,
+        "Товари": itemsTxt, "Сума": total+' грн', "Коментар": comm||'-'
+      })
+    });
+    if(!r.ok) throw new Error('send failed');
+    try{
+      window.dataLayer=window.dataLayer||[];
+      window.dataLayer.push({event:'generate_lead', currency:'UAH', value: total});
+    }catch(e){}
+    if(cartMode){ CART=[]; saveCart(); cartMode=false; }
+    document.getElementById('fview').style.display='none';
+    document.getElementById('sview').classList.add('show');
+  }catch(e){
+    alert('Не вдалося надіслати замовлення. Напишіть нам в Instagram @zaisun_kids або зателефонуйте +380 73 812 12 52 — приймемо вручну.');
+  }
+  btn.disabled=false; btn.textContent='Оформити замовлення';
 }
 
 // ─── home cats ───
 function buildHome(){
   let h = '';
   const coverOf = prods => (prods.find(p=>p.photo && p.season===2) || prods.find(p=>p.photo && p.season===1) || prods.find(p=>p.photo));
-  // Всі товари — перша картка
+  // Всі товари — перша картка. Головне фото: залий своє в images/cover.jpg — підхопиться саме воно
   const allCover = coverOf(P);
-  h += `<div class="hc" onclick="openCatAll()">${allCover?`<img src="images/${allCover.photo}" loading="lazy">`:''}<span>Всі товари · ${P.length}</span></div>`;
+  const fallbackCover = (P.find(p=>p.id===244 && p.photo) || allCover);
+  h += `<div class="hc" onclick="openCatAll()"><img src="images/cover.jpg" onerror="this.onerror=null;this.src='images/${fallbackCover?fallbackCover.photo:''}'" loading="lazy"><span>Всі товари · ${P.length}</span></div>`;
   MENU_DEF.forEach((d,i)=>{
     const ids = findIdsByNames(d.c);
     const prods = P.filter(p=>p.cats.some(c=>ids.has(c)));
@@ -769,6 +867,15 @@ function addToCart(){
   const size = selSize || (cur.sizes[0]||'');
   const ex = CART.find(i=>i.id===cur.id && i.size===size);
   if(ex) ex.qty++; else CART.push({id:cur.id, size, qty:1});
+  try{
+    const v = (cur.var && cur.var[size]) ? cur.var[size] : {p: cur.price};
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ecommerce:null});
+    window.dataLayer.push({
+      event:'add_to_cart',
+      ecommerce:{currency:'UAH', value:v.p, items:[{item_id:String(cur.id), item_name:cur.name, price:v.p, item_variant:size, item_category:(cur.catn&&cur.catn[0])||'', quantity:1}]}
+    });
+  }catch(e){}
   saveCart(); openCart();
 }
 function openCart(){
@@ -870,12 +977,12 @@ buildMenu(); buildHome(); buildIG();
 
 // ═══ Свайп назад / кнопка назад: інтеграція з історією браузера ═══
 let NAVSILENT = false, NAVDEPTH = 0;
-function pushNav(st){ if(NAVSILENT) return; NAVDEPTH++; history.pushState(st,''); }
+function pushNav(st, url){ if(NAVSILENT) return; NAVDEPTH++; history.pushState(st,'', url||location.pathname); }
 const _openCat = openCat, _openCatAll = openCatAll, _openMenuCat = openMenuCat, _openProd = openProd, _closeProd = closeProd;
 openCat = function(id){ _openCat(id); pushNav({v:'cat', m:'id', id}); };
 openCatAll = function(){ _openCatAll(); pushNav({v:'cat', m:'all'}); };
 openMenuCat = function(i){ _openMenuCat(i); pushNav({v:'cat', m:'menu', i}); };
-openProd = function(id){ _openProd(id); pushNav({v:'prod', id}); };
+openProd = function(id){ _openProd(id); pushNav({v:'prod', id}, location.pathname + '?p=' + id); };
 closeProd = function(){
   if(NAVDEPTH > 0) history.back();
   else _closeProd();
@@ -895,7 +1002,12 @@ window.addEventListener('popstate', e => {
     else go('home');
   } finally { NAVSILENT = false; }
 });
-history.replaceState({v:'home'}, '');
+history.replaceState({v:'home'}, '', location.pathname);
+// прямий лінк на товар: /?p=123 (для Merchant Center та шерингу)
+(function(){
+  const pid = parseInt(new URLSearchParams(location.search).get('p'));
+  if(pid && P.find(p=>p.id===pid)) openProd(pid);
+})();
 
 </script>
 </body>
