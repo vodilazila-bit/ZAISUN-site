@@ -76,10 +76,30 @@ table.vt input{padding:8px;font-size:14px}
 <div class="wrap">
 
 <div class="card" id="authCard">
-  <label>GitHub токен (Contents: Read & Write для ZAISUN-site)</label>
-  <input type="password" id="tok" placeholder="github_pat_...">
-  <div class="hint">Токен зберігається тільки в цьому браузері (localStorage).</div>
-  <div style="margin-top:12px"><button class="btn" onclick="connect()">Підключитися</button></div>
+  <div id="loginView" style="display:none">
+    <label>Логін</label>
+    <input type="text" id="lg_user" autocomplete="username">
+    <label>Пароль</label>
+    <input type="password" id="lg_pass" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="flx" style="margin-top:12px">
+      <label class="sw2" style="margin:0"><input type="checkbox" id="lg_rem" checked><span></span></label>
+      <span style="font-size:13px">Запам'ятати мене</span>
+    </div>
+    <div style="margin-top:14px"><button class="btn" style="width:100%;padding:14px" onclick="doLogin()">Увійти</button></div>
+    <div class="hint" style="margin-top:10px;text-align:center"><span style="text-decoration:underline;cursor:pointer" onclick="showSetup()">Перше налаштування</span></div>
+  </div>
+  <div id="setupView">
+    <b style="font-size:14px">Перше налаштування кабінету</b>
+    <div class="hint">Робиться один раз на цьому телефоні. Далі — вхід за логіном і паролем.</div>
+    <label>GitHub токен</label>
+    <input type="password" id="tok" placeholder="github_pat_...">
+    <label>Придумай логін</label>
+    <input type="text" id="su_user" placeholder="myroslava">
+    <label>Придумай пароль (мін. 8 символів)</label>
+    <input type="password" id="su_pass" placeholder="надійний пароль">
+    <div style="margin-top:12px"><button class="btn" onclick="doSetup()">Зберегти і увійти</button></div>
+    <div class="hint">Токен шифрується цим паролем і зберігається тільки в цьому браузері.</div>
+  </div>
 </div>
 
 <div id="app" style="display:none">
@@ -185,8 +205,53 @@ table.vt input{padding:8px;font-size:14px}
 <script>
 const OWNER='vodilazila-bit', REPO='ZAISUN-site', BRANCH='main';
 const API=`https://api.github.com/repos/${OWNER}/${REPO}`;
-let TOKEN=localStorage.getItem('zs_tok')||'';
+let TOKEN='';
 let DATA=null, SHA=null, photoBlob=null, editId=null;
+
+// ─── Вхід: логін/пароль ─→ розшифровка токена (PBKDF2 + AES-GCM) ───
+const VAULT_KEY='zs_vault';
+async function deriveKey(pass, salt){
+  const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:250000,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+}
+async function encTok(token, pass){
+  const salt=crypto.getRandomValues(new Uint8Array(16)), iv=crypto.getRandomValues(new Uint8Array(12));
+  const key=await deriveKey(pass, salt);
+  const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(token));
+  const b=a=>btoa(String.fromCharCode(...new Uint8Array(a)));
+  return {s:b(salt), i:b(iv), c:b(ct)};
+}
+async function decTok(vault, pass){
+  const u=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+  const key=await deriveKey(pass, u(vault.s));
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:u(vault.i)},key,u(vault.c));
+  return new TextDecoder().decode(pt);
+}
+function showSetup(){ $('setupView').style.display='block'; $('loginView').style.display='none'; }
+function showLogin(){ $('setupView').style.display='none'; $('loginView').style.display='block'; }
+async function doSetup(){
+  const t=$('tok').value.trim(), u=$('su_user').value.trim().toLowerCase(), p=$('su_pass').value;
+  if(!t||!u||p.length<8){ toast('Заповни токен, логін і пароль від 8 символів','err'); return; }
+  const vault=await encTok(t,p);
+  vault.u=u;
+  localStorage.setItem(VAULT_KEY, JSON.stringify(vault));
+  localStorage.removeItem('zs_tok'); // старий незашифрований — геть
+  TOKEN=t; sessionStorage.setItem('zs_sess',t); localStorage.setItem('zs_rem',t);
+  toast('Кабінет налаштовано','ok');
+  connect();
+}
+async function doLogin(){
+  const v=JSON.parse(localStorage.getItem(VAULT_KEY)||'null');
+  const u=$('lg_user').value.trim().toLowerCase(), p=$('lg_pass').value;
+  if(!v){ showSetup(); return; }
+  if(u!==v.u){ toast('Невірний логін або пароль','err'); return; }
+  try{
+    TOKEN=await decTok(v,p);
+  }catch(e){ toast('Невірний логін або пароль','err'); return; }
+  sessionStorage.setItem('zs_sess',TOKEN);
+  if($('lg_rem').checked) localStorage.setItem('zs_rem',TOKEN); else localStorage.removeItem('zs_rem');
+  connect();
+}
 
 const $=id=>document.getElementById(id);
 function toast(t,cls){const m=$('msg');m.textContent=t;m.className='msg '+(cls||'');m.style.display='block';clearTimeout(m._t);m._t=setTimeout(()=>m.style.display='none',3500)}
@@ -196,13 +261,10 @@ function b64dec(b64){const bin=atob(b64.replace(/\n/g,''));const b=new Uint8Arra
 function blobToB64(blob){return new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result.split(',')[1]);f.readAsDataURL(blob)})}
 
 async function connect(){
-  const t=$('tok').value.trim();
-  if(t)TOKEN=t;
-  if(!TOKEN){toast('Введи токен','err');return}
-  localStorage.setItem('zs_tok',TOKEN);
+  if(!TOKEN){ toast('Спочатку увійди','err'); return; }
   $('authCard').style.display='none';$('loader').style.display='block';
-  try{await loadData();$('loader').style.display='none';$('app').style.display='block';$('stat').textContent='✓ '+DATA.products.length+' товарів';initAdd();renderList();toast('Підключено','ok')}
-  catch(e){$('loader').style.display='none';$('authCard').style.display='block';toast('Помилка: '+e.message,'err')}
+  try{await loadData();$('loader').style.display='none';$('app').style.display='block';$('stat').textContent='✓ '+DATA.products.length+' товарів';initAdd();renderList();toast('Вітаю в кабінеті ZaiSun!','ok')}
+  catch(e){$('loader').style.display='none';$('authCard').style.display='block';sessionStorage.removeItem('zs_sess');localStorage.removeItem('zs_rem');toast('Помилка доступу: '+e.message,'err')}
 }
 
 async function loadData(){
@@ -263,13 +325,20 @@ function buildFeedXml(){
 }
 async function updateFeed(){
   const xml=buildFeedXml();
-  let sha=null;
+  const smap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    +[`${FEED_SITE}/`,`${FEED_SITE}/dostavka.html`,`${FEED_SITE}/kontakty.html`,`${FEED_SITE}/oferta.html`]
+      .concat(DATA.products.filter(p=>p.photo).map(p=>`${FEED_SITE}/?p=${p.id}`))
+      .map(u=>`  <url><loc>${u.replace(/&/g,'&amp;')}</loc></url>`).join('\n')
+    +'\n</urlset>\n';
+  let feedSha=null, smSha=null;
   try{
     const ls=await fetch(`${API}/contents/?ref=${BRANCH}`,{headers:hdr()});
-    const f=(await ls.json()).find(x=>x.name==='feed.xml');
-    if(f) sha=f.sha;
+    const files=await ls.json();
+    feedSha=(files.find(x=>x.name==='feed.xml')||{}).sha||null;
+    smSha=(files.find(x=>x.name==='sitemap.xml')||{}).sha||null;
   }catch(e){}
-  await commitFile('feed.xml',b64enc(xml),'auto: оновлення feed.xml',sha);
+  await commitFile('feed.xml',b64enc(xml),'auto: оновлення feed.xml',feedSha);
+  await commitFile('sitemap.xml',b64enc(smap),'auto: оновлення sitemap.xml',smSha);
 }
 async function loadDataShaOnly(){
   const ls=await fetch(`${API}/contents/?ref=${BRANCH}`,{headers:hdr()});
@@ -486,7 +555,15 @@ async function delProduct(){
 }
 
 window.addEventListener('beforeunload',e=>{if(PENDING>0){e.preventDefault();e.returnValue='';}});
-if(TOKEN){$('tok').value=TOKEN;connect()}
+// автостарт: жива сесія → "запам'ятати мене" → форма входу → перше налаштування
+(function(){
+  const legacy=localStorage.getItem('zs_tok'); // міграція зі старої версії
+  const sess=sessionStorage.getItem('zs_sess')||localStorage.getItem('zs_rem')||legacy;
+  const hasVault=!!localStorage.getItem(VAULT_KEY);
+  if(sess){ TOKEN=sess; if(legacy&&hasVault)localStorage.removeItem('zs_tok'); connect(); }
+  else if(hasVault){ showLogin(); }
+  else { showSetup(); }
+})();
 </script>
 </body>
 </html>
