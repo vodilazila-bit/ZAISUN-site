@@ -130,7 +130,11 @@ section{padding:26px 18px 34px}
 .pk{font-size:.64rem;letter-spacing:.32em;text-transform:uppercase;color:var(--rose-d);margin-bottom:6px}
 .phead h1{font-family:var(--serif);font-weight:700;font-size:1.55rem}
 .pcount{font-size:.78rem;color:var(--soft);margin-top:4px}
-.frow-top{display:flex;gap:8px;padding:14px 18px 10px}
+.cat-search{display:flex;align-items:center;gap:9px;margin:14px 18px 0;padding:0 14px;background:#fff;border:1px solid var(--line);border-radius:30px}
+.cat-search input{flex:1;border:none;outline:none;padding:13px 0;font-family:inherit;font-size:.92rem;background:transparent;color:var(--ink)}
+.cat-search input::placeholder{color:#B5A996}
+.cq-x{border:none;background:none;color:#B5A996;font-size:1.3rem;padding:0 2px;cursor:pointer;display:none}
+.frow-top{display:flex;gap:8px;padding:12px 18px 10px}
 .fbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-family:inherit;font-size:.88rem;font-weight:500;color:var(--ink);cursor:pointer}
 .fbtn .bdg{background:var(--rose-d);color:#fff;min-width:19px;height:19px;border-radius:10px;font-size:.66rem;display:none;place-items:center;padding:0 5px}
 .fbtn .bdg.show{display:grid}
@@ -352,6 +356,11 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
     <h1 id="catTitle"></h1>
     <div class="pcount" id="cnt"></div>
   </div>
+  <div class="cat-search">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9E9189" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="catQ" placeholder="Пошук у каталозі..." oninput="apply()">
+    <button class="cq-x" id="catQx" onclick="document.getElementById('catQ').value='';apply()">×</button>
+  </div>
   <div class="frow-top">
     <button class="fbtn" onclick="openSheet()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
@@ -359,6 +368,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
     </button>
     <select class="sortsel" id="sortsel" onchange="apply()">
       <option value="default">Сортування</option>
+      <option value="pop">За популярністю</option>
       <option value="asc">Дешевші ↑</option>
       <option value="desc">Дорожчі ↓</option>
     </select>
@@ -452,6 +462,11 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 <script src="data.js"></script>
 <script>
 const P = DATA.products, TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
+let VIEWS = {};
+try{ VIEWS = JSON.parse(localStorage.getItem('zs_views')||'{}'); }catch(e){ VIEWS={}; }
+function popScore(p){
+  return (VIEWS[p.id]||0)*5 + (p.cover?4:0) + (p.old?2:0) + (p.stock?2:0) + (p.season||0);
+}
 let curCatId = null, curCatName = '', curProds = [], cur = null, selSize = null;
 let fSel = {}, pFrom = null, pTo = null, catMin = 0, catMax = 0;
 
@@ -558,6 +573,7 @@ function openCatAll(){
   initCat('Всі товари');
 }
 function initCat(nm){
+  const cq=document.getElementById('catQ'); if(cq) cq.value='';
   curProds.sort((a,b)=>b.season-a.season);
   fSel = {}; pFrom=null; pTo=null;
   const prices = curProds.map(p=>p.price).filter(x=>x>0);
@@ -593,7 +609,14 @@ function prodMatchesFilter(p, fname, vals){
   return ov && ov.some(v=>vals.has(v));
 }
 function filtered(){
+  const cq = (document.getElementById('catQ')?.value||'').trim().toLowerCase();
+  const qw = cq.split(/\s+/).filter(w=>w.length>=2);
+  const xbtn = document.getElementById('catQx'); if(xbtn) xbtn.style.display = cq?'block':'none';
   let r = curProds.filter(p=>{
+    if(qw.length){
+      const hay = (p.name+' '+(p.color||'')).toLowerCase();
+      if(!qw.every(w=>hay.includes(w))) return false;
+    }
     for(const [fn, vals] of Object.entries(fSel)){
       if(vals.size && !prodMatchesFilter(p, fn, vals)) return false;
     }
@@ -604,6 +627,7 @@ function filtered(){
   const s=document.getElementById('sortsel').value;
   if(s==='asc') r.sort((a,b)=>a.price-b.price);
   if(s==='desc') r.sort((a,b)=>b.price-a.price);
+  if(s==='pop') r.sort((a,b)=>popScore(b)-popScore(a));
   return r;
 }
 function nf(){
@@ -725,6 +749,8 @@ function apply(){
 // ─── product ───
 function openProd(id){
   cur = P.find(p=>p.id===id); selSize=null;
+  VIEWS[id]=(VIEWS[id]||0)+1;
+  try{ localStorage.setItem('zs_views', JSON.stringify(VIEWS)); }catch(e){}
   // schema.org Product для Merchant Center
   try{
     let ld = document.getElementById('pjsonld');
