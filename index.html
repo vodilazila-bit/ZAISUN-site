@@ -587,7 +587,7 @@ function curFilters(){
   return (FILT[curCatId]||[]).slice();
 }
 function prodMatchesFilter(p, fname, vals){
-  if(fname==='Розмір') return p.sizes.some(s=>vals.has(s));
+  if(fname==='Розмір' || fname==='Вік') return p.sizes.some(s=>vals.has(s));
   if(fname==='Колір') return p.color && vals.has(p.color);
   const ov = p.opts[fname];
   return ov && ov.some(v=>vals.has(v));
