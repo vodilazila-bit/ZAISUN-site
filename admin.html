@@ -156,9 +156,11 @@ table.vt input{padding:8px;font-size:14px}
   <!-- ================= РЕДАГУВАННЯ ================= -->
   <div id="t-edit">
     <div class="card">
-      <input type="text" id="e_q" placeholder="Пошук по назві або ID…" oninput="renderList()">
+      <input type="text" id="e_q" placeholder="Пошук по назві або ID…" oninput="LIST_LIM=120;renderList()">
+      <select id="e_catf" onchange="LIST_LIM=120;renderList()" style="width:100%;margin-top:8px;padding:11px;border:1.5px solid var(--line,#ddd);border-radius:10px;font-family:inherit;font-size:14px;background:#fff"></select>
     </div>
     <div id="e_list"></div>
+    <div style="text-align:center;padding:6px 0 14px"><button class="btn sec" id="e_more" style="display:none;max-width:240px" onclick="LIST_LIM+=120;renderList()">Показати ще</button></div>
     <div id="e_form" style="display:none">
       <div class="card">
         <div class="flx" style="justify-content:space-between">
@@ -183,7 +185,9 @@ table.vt input{padding:8px;font-size:14px}
           <input type="text" id="g_q" placeholder="Фільтр по назві файлу…" oninput="renderGallery()" style="margin-top:10px">
           <div id="g_grid" class="ggrid"></div>
         </div>
-        <label>Колір</label>
+        <label>Категорії товару (тапни щоб додати/прибрати)</label>
+        <div class="chips" id="e_cats"></div>
+        <label>Кольори (можна вибрати кілька)</label>
         <div class="chips" id="e_colors"></div>
         <div class="row" style="margin-top:8px">
           <input type="text" id="e_ncolor" placeholder="Новий колір (назва)" oninput="if(this.value)document.querySelectorAll('#e_colors .chip').forEach(x=>x.classList.remove('on'))">
@@ -456,9 +460,26 @@ async function saveNew(){
 }
 
 /* ---------- РЕДАГУВАННЯ ---------- */
+let LIST_LIM=120;
+function fillCatFilter(){
+  const sel=$('e_catf'); if(!sel||sel.options.length) return;
+  sel.innerHTML=`<option value="">📂 Всі категорії (${DATA.products.length})</option>`+
+    flatCats().map(c=>{
+      const n=DATA.products.filter(p=>p.cats.includes(c.id)).length;
+      return `<option value="${c.id}">${c.name} (${n})</option>`;
+    }).join('');
+}
 function renderList(){
+  fillCatFilter();
   const q=($('e_q').value||'').toLowerCase();
-  const items=DATA.products.filter(p=>!q||p.name.toLowerCase().includes(q)||String(p.id)===q).slice().reverse().slice(0,60);
+  const cf=$('e_catf').value;
+  const all=DATA.products.filter(p=>{
+    if(cf && !p.cats.includes(cf)) return false;
+    return !q||p.name.toLowerCase().includes(q)||String(p.id)===q;
+  }).slice().reverse();
+  const items=all.slice(0,LIST_LIM);
+  $('e_more').style.display = all.length>LIST_LIM ? 'inline-block' : 'none';
+  $('e_more').textContent = `Показати ще (${all.length-items.length})`;
   $('e_list').innerHTML=items.map(p=>`<div class="pl">
     <div style="display:flex;gap:10px;align-items:center;flex:1;min-width:0" onclick="openEdit(${p.id})">
       ${p.photo?`<img src="images/${p.photo}" loading="lazy">`:`<div class="noi">нема фото</div>`}
@@ -509,6 +530,9 @@ function openEdit(id){
   $('e_name').value=p.name;$('e_desc').value=p.desc||'';$('e_stock').checked=!!p.stock;
   $('e_cover').checked=!!p.cover;
   $('e_ncolor').value='';
+  $('e_cats').innerHTML = flatCats().map(c=>
+    `<span class="chip ${(p.cats||[]).includes(c.id)?'on':''}" data-id="${c.id}" data-nm="${c.name.includes('→')?c.name.split('→')[1].trim():c.name}" onclick="this.classList.toggle('on')">${c.name}</span>`
+  ).join('');
   renderEColors(p);
   $('e_vars').innerHTML=`<table class="vt"><tr><th>Розмір</th><th>Ціна</th><th>Стара</th><th>Є</th><th></th></tr>`+
     p.sizes.map(s=>{const v=p.var[s]||{p:p.price,o:p.old,s:true};return sizeRowHtml(s,v)}).join('')+`</table>`;
@@ -527,12 +551,20 @@ function addSizeRow(){
 }
 function renderEColors(p){
   const names=Object.keys(DATA.colorhex||{}).sort();
-  $('e_colors').innerHTML = `<span class="chip ${!p.color?'on':''}" data-c="" onclick="pickEColor(this)">Без кольору</span>` +
-    names.map(c=>`<span class="chip ${p.color===c?'on':''}" data-c="${c}" data-h="${DATA.colorhex[c]}" onclick="pickEColor(this)">${c}</span>`).join('');
+  const sel=(p.opts&&p.opts['Колір'])||(p.color?[p.color]:[]);
+  $('e_colors').innerHTML = `<span class="chip ${!sel.length?'on':''}" data-c="" onclick="pickEColor(this)">Без кольору</span>` +
+    names.map(c=>`<span class="chip ${sel.includes(c)?'on':''}" data-c="${c}" data-h="${DATA.colorhex[c]}" onclick="pickEColor(this)">${c}</span>`).join('');
 }
 function pickEColor(el){
-  document.querySelectorAll('#e_colors .chip').forEach(x=>x.classList.remove('on'));
-  el.classList.add('on');$('e_ncolor').value='';
+  if(el.dataset.c===''){ // "Без кольору" — зняти все
+    document.querySelectorAll('#e_colors .chip').forEach(x=>x.classList.remove('on'));
+    el.classList.add('on');
+  } else {
+    el.classList.toggle('on');
+    document.querySelector('#e_colors .chip[data-c=""]').classList.remove('on');
+    if(!document.querySelectorAll('#e_colors .chip.on').length)
+      document.querySelector('#e_colors .chip[data-c=""]').classList.add('on');
+  }
 }
 function closeEdit(){$('e_form').style.display='none';$('e_list').style.display='block';$('e_q').parentNode.style.display='block';editId=null}
 function showEPreview(src,note){
@@ -592,12 +624,19 @@ async function saveEdit(){
   if(!newSizes.length){toast('Має лишитись хоча б один розмір','err');return}
   p.sizes=newSizes; p.var=newVar;
   p.price=Math.min(...Object.values(p.var).map(v=>v.p).filter(x=>x>0));
-  // колір
+  // категорії товару
+  const catChips=[...document.querySelectorAll('#e_cats .chip.on')];
+  if(!catChips.length){toast('Вибери хоча б одну категорію','err');return}
+  p.cats=catChips.map(c=>c.dataset.id);
+  p.catn=[...new Set(catChips.map(c=>c.dataset.nm))];
+  // кольори (кілька)
+  const colors=[...document.querySelectorAll('#e_colors .chip.on')].map(c=>c.dataset.c).filter(Boolean);
   const nc=$('e_ncolor').value.trim();
-  const selC=document.querySelector('#e_colors .chip.on');
-  if(nc){ p.color=nc; p.hex=$('e_nhex').value; DATA.colorhex[nc]=p.hex; }
-  else if(selC){ p.color=selC.dataset.c||''; p.hex=selC.dataset.h||''; }
-  if(p.color){ p.opts=p.opts||{}; p.opts['Колір']=[p.color]; } else if(p.opts) delete p.opts['Колір'];
+  if(nc){ DATA.colorhex[nc]=$('e_nhex').value; if(!colors.includes(nc)) colors.push(nc); }
+  if(colors.length){
+    p.opts=p.opts||{}; p.opts['Колір']=colors;
+    p.color=colors[0]; p.hex=DATA.colorhex[colors[0]]||'#D8C8B8';
+  } else { p.color=null; p.hex=null; if(p.opts) delete p.opts['Колір']; }
   // обкладинка категорії
   p.cover=$('e_cover').checked;
   // оновити фільтри категорій (нові розміри/колір)
@@ -606,7 +645,12 @@ async function saveEdit(){
     const ensure=(nm,tp)=>{let f=DATA.filters[cid].find(x=>x.name===nm);if(!f){f={name:nm,type:tp,values:[]};DATA.filters[cid].push(f)}return f};
     const fSz=ensure('Розмір','size'), fAge=ensure('Вік','size'), fCol=ensure('Колір','color');
     p.sizes.forEach(s=>{const t=isAge(s)?fAge:fSz;if(!t.values.includes(s))t.values.push(s)});
-    if(p.color&&!fCol.values.includes(p.color))fCol.values.push(p.color);
+    ((p.opts&&p.opts['Колір'])||[]).forEach(c=>{if(!fCol.values.includes(c))fCol.values.push(c)});
+  });
+  // перерахувати лічильники категорій
+  DATA.tree.forEach(t=>{
+    t.n=DATA.products.filter(x=>x.cats.includes(t.id)).length;
+    (t.children||[]).forEach(c=>{c.n=DATA.products.filter(x=>x.cats.includes(c.id)).length});
   });
   try{await commitData(`admin: змінено товар #${p.id}`);toast('✓ Збережено! Сайт оновиться за 1–3 хв','ok');closeEdit();renderList()}
   catch(e){toast('Помилка: '+e.message,'err')}

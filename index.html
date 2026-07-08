@@ -647,7 +647,10 @@ function curFilters(){
 }
 function prodMatchesFilter(p, fname, vals){
   if(fname==='Розмір' || fname==='Вік') return p.sizes.some(s=>vals.has(s));
-  if(fname==='Колір') return p.color && vals.has(p.color);
+  if(fname==='Колір'){
+    const pc = (p.opts && p.opts['Колір']) || (p.color?[p.color]:[]);
+    return pc.some(v=>vals.has(v));
+  }
   const ov = p.opts[fname];
   return ov && ov.some(v=>vals.has(v));
 }
@@ -817,7 +820,8 @@ function openProd(id){
   document.getElementById('ptit').textContent = cur.name;
   updPrice(cur.price, cur.old);
   let tags = '';
-  if(cur.color) tags += `<span class="ptag"><span class="cd" style="background:${cur.hex}"></span>${cur.color}</span>`;
+  const curColors = (cur.opts && cur.opts['Колір']) || (cur.color?[cur.color]:[]);
+  curColors.forEach(c=>{ tags += `<span class="ptag"><span class="cd" style="background:${HEX[c]||'#D8C8B8'}"></span>${c}</span>`; });
   for(const [k,v] of Object.entries(cur.opts)){
     if(k!=='Колір') tags += `<span class="ptag">${k}: ${v.join(', ')}</span>`;
   }
