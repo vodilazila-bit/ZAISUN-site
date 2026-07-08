@@ -14,7 +14,8 @@
 <meta property="og:description" content="Дитячий одяг власного виробництва. Замовлення на сайті або в Instagram @zaisun_kids. Доставка Новою Поштою.">
 <meta property="og:image" content="https://zaisun.com.ua/hero2.jpg">
 <meta property="og:url" content="https://zaisun.com.ua/">
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WW35PFT');</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R0C1CM969C"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-R0C1CM969C');</script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -303,7 +304,6 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 </style>
 </head>
 <body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WW35PFT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="topbar">Безкоштовна доставка на замовлення від 3000 грн</div>
 <header class="hdr">
@@ -643,9 +643,7 @@ function initCat(nm){
   document.getElementById('sortsel').value='default';
   renderSubs();
   try{
-    window.dataLayer=window.dataLayer||[];
-    window.dataLayer.push({ecommerce:null});
-    window.dataLayer.push({event:'view_item_list',ecommerce:{item_list_name:nm,items:curProds.slice(0,10).map(p=>({item_id:String(p.id),item_name:p.name,price:p.price}))}});
+    gtag('event','view_item_list',{item_list_name:nm,items:curProds.slice(0,10).map(p=>({item_id:String(p.id),item_name:p.name,price:p.price}))});
   }catch(e){}
   go('cat'); apply();
 }
@@ -861,9 +859,7 @@ function openProd(id){
   }
   document.getElementById('pdesc').textContent = cur.desc || '';
   try{
-    window.dataLayer=window.dataLayer||[];
-    window.dataLayer.push({ecommerce:null});
-    window.dataLayer.push({event:'view_item',ecommerce:{currency:'UAH',value:cur.price,items:[{item_id:String(cur.id),item_name:cur.name,price:cur.price,item_category:(cur.catn&&cur.catn[0])||''}]}});
+    gtag('event','view_item',{currency:'UAH',value:cur.price,items:[{item_id:String(cur.id),item_name:cur.name,price:cur.price,item_category:(cur.catn&&cur.catn[0])||''}]});
   }catch(e){}
   renderRelated();
   go('prod');
@@ -896,9 +892,7 @@ function openOrder(){
   const ph=document.getElementById('fPhone'); if(ph && !ph.value.trim()) ph.value='+380';
   try{
     const vv = selSize && cur.var[selSize] ? cur.var[selSize] : {p:cur.price};
-    window.dataLayer=window.dataLayer||[];
-    window.dataLayer.push({ecommerce:null});
-    window.dataLayer.push({event:'begin_checkout',ecommerce:{currency:'UAH',value:vv.p,items:[{item_id:String(cur.id),item_name:cur.name,price:vv.p}]}});
+    gtag('event','begin_checkout',{currency:'UAH',value:vv.p,items:[{item_id:String(cur.id),item_name:cur.name,price:vv.p}]});
   }catch(e){}
   const v = selSize ? cur.var[selSize] : null;
   document.getElementById('mimg').src = cur.photo ? 'images/'+cur.photo : '';
@@ -1001,7 +995,6 @@ async function submitOrder(){
     });
     if(!r.ok) throw new Error('send failed');
     try{
-      window.dataLayer=window.dataLayer||[];
       // items для e-commerce
       let gaItems = [];
       if(cartMode && CART.length){
@@ -1010,12 +1003,11 @@ async function submitOrder(){
         const v = size && cur.var && cur.var[size] ? cur.var[size] : {p:cur.price};
         gaItems = [{item_id:String(cur.id),item_name:cur.name,price:v.p,quantity:1,item_variant:size||''}];
       }
-      window.dataLayer.push({ecommerce:null});
-      window.dataLayer.push({event:'purchase', ecommerce:{
+      gtag('event','purchase',{
         transaction_id: 'ZS-'+Date.now(),
         value: total, currency:'UAH', items: gaItems
-      }});
-      window.dataLayer.push({event:'generate_lead', currency:'UAH', value: total});
+      });
+      gtag('event','generate_lead',{currency:'UAH', value: total});
     }catch(e){}
     if(cartMode){ CART=[]; saveCart(); cartMode=false; }
     document.getElementById('fview').style.display='none';
@@ -1081,12 +1073,7 @@ function addToCart(){
   if(ex) ex.qty++; else CART.push({id:cur.id, size, qty:1});
   try{
     const v = (cur.var && cur.var[size]) ? cur.var[size] : {p: cur.price};
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ecommerce:null});
-    window.dataLayer.push({
-      event:'add_to_cart',
-      ecommerce:{currency:'UAH', value:v.p, items:[{item_id:String(cur.id), item_name:cur.name, price:v.p, item_variant:size, item_category:(cur.catn&&cur.catn[0])||'', quantity:1}]}
-    });
+    gtag('event','add_to_cart',{currency:'UAH', value:v.p, items:[{item_id:String(cur.id), item_name:cur.name, price:v.p, item_variant:size, item_category:(cur.catn&&cur.catn[0])||'', quantity:1}]});
   }catch(e){}
   saveCart(); openCart();
 }
@@ -1129,9 +1116,7 @@ function checkoutCart(){
   closeCart();
   const total = CART.reduce((s,it)=>s+cartPrice(it)*it.qty,0);
   try{
-    window.dataLayer=window.dataLayer||[];
-    window.dataLayer.push({ecommerce:null});
-    window.dataLayer.push({event:'begin_checkout',ecommerce:{currency:'UAH',value:total,items:CART.map(it=>{const p=P.find(x=>x.id===it.id);return{item_id:String(it.id),item_name:p?p.name:'',price:cartPrice(it),quantity:it.qty}})}});
+    gtag('event','begin_checkout',{currency:'UAH',value:total,items:CART.map(it=>{const p=P.find(x=>x.id===it.id);return{item_id:String(it.id),item_name:p?p.name:'',price:cartPrice(it),quantity:it.qty}})});
   }catch(e){}
   const first = P.find(x=>x.id===CART[0].id);
   document.getElementById('mimg').src = first && first.photo ? 'images/'+first.photo : '';
