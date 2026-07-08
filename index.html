@@ -379,6 +379,8 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
     <select class="sortsel" id="sortsel" onchange="apply()">
       <option value="default">Сортування</option>
       <option value="pop">За популярністю</option>
+      <option value="new">Найновіші</option>
+      <option value="oldest">Найстаріші</option>
       <option value="asc">Дешевші ↑</option>
       <option value="desc">Дорожчі ↓</option>
     </select>
@@ -674,6 +676,8 @@ function filtered(){
   if(s==='asc') r.sort((a,b)=>a.price-b.price);
   if(s==='desc') r.sort((a,b)=>b.price-a.price);
   if(s==='pop') r.sort((a,b)=>popScore(b)-popScore(a));
+  if(s==='new') r.sort((a,b)=>b.id-a.id);
+  if(s==='oldest') r.sort((a,b)=>a.id-b.id);
   return r;
 }
 function nf(){
