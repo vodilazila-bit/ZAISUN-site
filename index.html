@@ -135,7 +135,12 @@ section{padding:26px 18px 34px}
 .pk{font-size:.64rem;letter-spacing:.32em;text-transform:uppercase;color:var(--rose-d);margin-bottom:6px}
 .phead h1{font-family:var(--serif);font-weight:700;font-size:1.55rem}
 .pcount{font-size:.78rem;color:var(--soft);margin-top:4px}
-.cat-search{display:flex;align-items:center;gap:9px;margin:14px 18px 0;padding:0 14px;background:#fff;border:1px solid var(--line);border-radius:30px}
+.subcats{display:flex;gap:8px;padding:12px 18px 0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.subcats::-webkit-scrollbar{display:none}
+.subcats:empty{display:none}
+.sc-chip{white-space:nowrap;padding:9px 16px;border-radius:30px;font-size:.82rem;font-weight:500;border:1px solid var(--line);background:#fff;color:#6B5D50;flex:none;cursor:pointer}
+.sc-chip.on{background:#6B5D50;color:#fff;border-color:#6B5D50}
+.cat-search{display:flex;align-items:center;gap:9px;margin:12px 18px 0;padding:0 14px;background:#fff;border:1px solid var(--line);border-radius:30px}
 .cat-search input{flex:1;border:none;outline:none;padding:13px 0;font-family:inherit;font-size:.92rem;background:transparent;color:var(--ink)}
 .cat-search input::placeholder{color:#B5A996}
 .cq-x{border:none;background:none;color:#B5A996;font-size:1.3rem;padding:0 2px;cursor:pointer;display:none}
@@ -360,6 +365,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
     <h1 id="catTitle"></h1>
     <div class="pcount" id="cnt"></div>
   </div>
+  <div class="subcats" id="subcats"></div>
   <div class="cat-search">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9E9189" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     <input type="text" id="catQ" placeholder="Пошук у каталозі..." oninput="apply()">
@@ -473,6 +479,7 @@ function popScore(p){
 }
 let curCatId = null, curCatName = '', curProds = [], cur = null, selSize = null;
 let fSel = {}, pFrom = null, pTo = null, catMin = 0, catMax = 0;
+let curSubs = [], curBase = [], curSub = '';
 
 function money(v){ return v.toLocaleString('uk-UA') + ' ₴'; }
 
@@ -519,12 +526,24 @@ function findIdsByNames(names){
   }
   return ids;
 }
+function subsFromNames(names){
+  const subs = [];
+  for(const t of TREE){
+    if(names.includes(t.raw) || names.includes(t.name)){
+      (t.children||[]).forEach(c=>{ if(c.n>0) subs.push({id:c.id, name:c.name, n:c.n}); });
+    }
+  }
+  return subs;
+}
 function openMenuCat(idx){
   const def = MENU_DEF[idx];
   closeMenu();
   const ids = findIdsByNames(def.c);
   curCatId = '__multi__';
   curProds = P.filter(p=>p.cats.some(c=>ids.has(c)));
+  curBase = curProds.slice();
+  curSubs = subsFromNames(def.c);
+  curSub = '';
   curCatName = def.n;
   initCat(def.n);
 }
@@ -564,6 +583,10 @@ function openCat(id){
   curCatId = id;
   const ids = new Set(catAndChildren(id));
   curProds = P.filter(p=>p.cats.some(c=>ids.has(c)));
+  curBase = curProds.slice();
+  const top = TREE.find(t=>t.id===id);
+  curSubs = top ? (top.children||[]).filter(c=>c.n>0).map(c=>({id:c.id,name:c.name,n:c.n})) : [];
+  curSub = '';
   let nm = '';
   for(const t of TREE){ if(t.id===id) nm=t.name; if(t.children) for(const c of t.children) if(c.id===id) nm=c.name; }
   curCatName = nm;
@@ -573,8 +596,23 @@ function openCatAll(){
   closeMenu();
   curCatId = '__all__';
   curProds = P.slice();
+  curBase = curProds.slice();
+  curSubs = []; curSub = '';
   curCatName = 'Всі товари';
   initCat('Всі товари');
+}
+function renderSubs(){
+  const el = document.getElementById('subcats');
+  if(!curSubs.length){ el.innerHTML=''; return; }
+  el.innerHTML = `<span class="sc-chip ${curSub===''?'on':''}" onclick="subSel('')">Всі</span>` +
+    curSubs.map(s=>`<span class="sc-chip ${curSub===s.id?'on':''}" onclick="subSel('${s.id}')">${s.name} · ${s.n}</span>`).join('');
+}
+function subSel(id){
+  curSub = id;
+  curProds = id ? curBase.filter(p=>p.cats.includes(id)) : curBase.slice();
+  curProds.sort((a,b)=>b.season-a.season);
+  renderSubs();
+  apply();
 }
 function initCat(nm){
   const cq=document.getElementById('catQ'); if(cq) cq.value='';
@@ -585,6 +623,7 @@ function initCat(nm){
   catMax = prices.length?Math.ceil(Math.max(...prices)):0;
   document.getElementById('catTitle').textContent = nm;
   document.getElementById('sortsel').value='default';
+  renderSubs();
   try{
     window.dataLayer=window.dataLayer||[];
     window.dataLayer.push({ecommerce:null});
