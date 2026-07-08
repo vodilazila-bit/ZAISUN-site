@@ -1002,6 +1002,19 @@ async function submitOrder(){
     if(!r.ok) throw new Error('send failed');
     try{
       window.dataLayer=window.dataLayer||[];
+      // items для e-commerce
+      let gaItems = [];
+      if(cartMode && CART.length){
+        gaItems = CART.map(it=>{const pr=P.find(x=>x.id===it.id);return{item_id:String(it.id),item_name:pr?pr.name:'',price:cartPrice(it),quantity:it.qty,item_variant:it.size||''}});
+      } else if(cur){
+        const v = size && cur.var && cur.var[size] ? cur.var[size] : {p:cur.price};
+        gaItems = [{item_id:String(cur.id),item_name:cur.name,price:v.p,quantity:1,item_variant:size||''}];
+      }
+      window.dataLayer.push({ecommerce:null});
+      window.dataLayer.push({event:'purchase', ecommerce:{
+        transaction_id: 'ZS-'+Date.now(),
+        value: total, currency:'UAH', items: gaItems
+      }});
       window.dataLayer.push({event:'generate_lead', currency:'UAH', value: total});
     }catch(e){}
     if(cartMode){ CART=[]; saveCart(); cartMode=false; }
