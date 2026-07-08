@@ -324,7 +324,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <section class="ig-sec">
     <div class="ig-k">INSTAGRAM</div>
     <h3 class="ig-h">@zaisun_kids</h3>
-    <p class="ig-p">Нові моделі, живе листування з мамами та заглядання в майстерню</p>
+    <p class="ig-p">Відвідайте наш інстаграм</p>
     <button class="ig-btn" onclick="window.open('https://instagram.com/zaisun_kids','_blank')">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4"/></svg>
       Підписатися
@@ -1108,8 +1108,7 @@ P.forEach(p=>{
 });
 function buildIG(){
   const el = document.getElementById('igGrid'); if(!el) return;
-  const pics = P.filter(p=>p.photo && p.season===2).slice(0,4);
-  el.innerHTML = pics.map(p=>`<a href="https://instagram.com/zaisun_kids" target="_blank"><img src="images/${p.photo}" loading="lazy"></a>`).join('');
+  el.innerHTML = ['ig1.jpg','ig2.jpg','ig3.jpg','ig4.jpg'].map(f=>`<a href="https://instagram.com/zaisun_kids" target="_blank"><img src="${f}" loading="lazy"></a>`).join('');
 }
 buildMenu(); buildHome(); buildIG();
 
