@@ -430,8 +430,8 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       </div>
       <div class="mprod"><img id="mimg" src=""><div class="in"><strong id="mname"></strong><div id="mmeta" style="color:var(--soft);font-size:.78rem;margin-bottom:3px"></div><div class="pr" id="mprice"></div></div></div>
       <div class="mform">
-        <div class="fld"><label>Ваше ім'я *</label><input type="text" id="fName" placeholder="Ольга"></div>
-        <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" placeholder="+380"></div>
+        <div class="fld"><label>Ваше ім'я *</label><input type="text" id="fName"></div>
+        <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" value="+380"></div>
         <div class="frw">
           <div class="fld sugg"><label>Місто *</label><input type="text" id="fCity" placeholder="Луцьк" autocomplete="off" oninput="npCity(this.value)"><div class="sugg-list" id="cityList"></div></div>
           <div class="fld"><label>Розмір</label><input type="text" id="fSize"></div>
@@ -877,6 +877,7 @@ function backToCat(){ go('cat'); }
 
 // ─── order ───
 function openOrder(){
+  const ph=document.getElementById('fPhone'); if(ph && !ph.value.trim()) ph.value='+380';
   try{
     const vv = selSize && cur.var[selSize] ? cur.var[selSize] : {p:cur.price};
     window.dataLayer=window.dataLayer||[];
