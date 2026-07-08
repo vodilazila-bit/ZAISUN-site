@@ -1176,15 +1176,16 @@ function buildIG(){
 }
 function buildNew(){
   const el = document.getElementById('newRow'); if(!el) return;
-  const sorted = P.slice().sort((a,b)=>b.id-a.id);
-  const perCat = {}, picked = [];
-  for(const p of sorted){
-    if(!p.photo || p.hidden) continue;
-    const key = (p.cats && p.cats[0]) || 'інше';
-    if((perCat[key]||0) >= 3) continue;
-    perCat[key] = (perCat[key]||0) + 1;
-    picked.push(p);
-    if(picked.length >= 10) break;
+  // 1) вручну позначені новинки (🆕 в адмінці) — найновіші перші
+  let picked = P.filter(p=>p.nw && p.photo && !p.hidden).sort((a,b)=>b.id-a.id).slice(0,10);
+  // 2) поки таких нема — випадкові товари з категорії "Літо"
+  if(!picked.length){
+    const lito = TREE.find(t=>t.raw==='Літо'||t.name==='Літо');
+    let pool = lito ? P.filter(p=>p.photo && !p.hidden && p.cats && p.cats.includes(lito.id)) : [];
+    if(!pool.length) pool = P.filter(p=>p.photo && !p.hidden && p.season===2);
+    picked = pool.slice();
+    for(let i=picked.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[picked[i],picked[j]]=[picked[j],picked[i]];}
+    picked = picked.slice(0,10);
   }
   el.innerHTML = picked.map(p=>{
     const price = p.old ? `${money(p.price)} <s>${money(p.old)}</s>` : money(p.price);
