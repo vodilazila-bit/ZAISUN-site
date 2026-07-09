@@ -502,8 +502,19 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 let VIEWS = {};
 try{ VIEWS = JSON.parse(localStorage.getItem('zs_views')||'{}'); }catch(e){ VIEWS={}; }
+function typeBoost(p){
+  const c=(p.catn||[]).join(' ').toLowerCase(), n=(p.name||'').toLowerCase();
+  if(/бейс|кепк/.test(n)) return -3;                 // бейси — в хвіст свого сезону
+  if(/панам|пов.язк|сукн|чалма|бінні|косинк/.test(c+n)) return 3; // ходові літні
+  if(/боді|ромпер|костюм|комплект/.test(c)) return 1;
+  return 0;
+}
+function rankScore(p){
+  // головний ключ — сезон (літо 2 → демі 1 → нейтр 0 → зима -1), домножений, щоб перебивав решту
+  return (p.season||0)*1000 + typeBoost(p)*100 + (VIEWS[p.id]||0)*5 + (p.cover?4:0) + (p.old?2:0) + (p.stock?2:0);
+}
 function popScore(p){
-  return (VIEWS[p.id]||0)*5 + (p.cover?4:0) + (p.old?2:0) + (p.stock?2:0) + (p.season||0);
+  return (VIEWS[p.id]||0)*5 + (p.cover?4:0) + (p.old?2:0) + (p.stock?2:0) + typeBoost(p);
 }
 let curCatId = null, curCatName = '', curProds = [], cur = null, selSize = null;
 let fSel = {}, pFrom = null, pTo = null, catMin = 0, catMax = 0;
@@ -651,14 +662,14 @@ function renderSubs(){
 function subSel(id){
   curSub = id;
   curProds = id ? curBase.filter(p=>p.cats.includes(id)) : curBase.slice();
-  curProds.sort((a,b)=>b.season-a.season);
+  curProds.sort((a,b)=>rankScore(b)-rankScore(a));
   renderSubs();
   apply();
 }
 function initCat(nm){
   document.title = nm + ' — дитячий одяг ZaiSun';
   const cq=document.getElementById('catQ'); if(cq) cq.value='';
-  curProds.sort((a,b)=>b.season-a.season);
+  curProds.sort((a,b)=>rankScore(b)-rankScore(a));
   fSel = {}; pFrom=null; pTo=null;
   const prices = curProds.map(p=>p.price).filter(x=>x>0);
   catMin = prices.length?Math.floor(Math.min(...prices)):0;
