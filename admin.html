@@ -220,6 +220,10 @@ table.vt input{padding:8px;font-size:14px}
           <label class="sw2" style="margin:0"><input type="checkbox" id="e_hid"><span></span></label>
           <span style="font-size:13px;font-weight:600">🙈 Приховати на сайті (товар не видно покупцям)</span>
         </div>
+        <div class="flx" style="margin-top:10px">
+          <label class="sw2" style="margin:0"><input type="checkbox" id="e_covall"><span></span></label>
+          <span style="font-size:13px;font-weight:600">🖼 Обкладинка плитки «Всі товари» на головній</span>
+        </div>
         <div class="row" style="margin-top:16px">
           <button class="btn" onclick="saveEdit()">💾 Зберегти</button>
           <button class="btn dng" onclick="delProduct()">🗑 Видалити</button>
@@ -546,7 +550,7 @@ async function saveNew(){
 let LIST_LIM=120;
 function fillCatFilter(){
   const sel=$('e_catf'); if(!sel||sel.options.length) return;
-  sel.innerHTML=`<option value="">📂 Всі категорії (${DATA.products.length})</option>`+
+  sel.innerHTML=`<option value="">🛍 Всі товари (${DATA.products.length})</option>`+
     flatCats().map(c=>{
       const n=DATA.products.filter(p=>p.cats.includes(c.id)).length;
       return `<option value="${c.id}">${c.name} (${n})</option>`;
@@ -614,6 +618,7 @@ function openEdit(id){
   $('e_cover').checked=!!p.cover;
   $('e_nw').checked=!!p.nw;
   $('e_hid').checked=!!p.hidden;
+  $('e_covall').checked=!!p.coverAll;
   $('e_ncolor').value='';
   $('e_cats').innerHTML = flatCats().map(c=>
     `<span class="chip ${(p.cats||[]).includes(c.id)?'on':''}" data-id="${c.id}" data-nm="${c.name.includes('→')?c.name.split('→')[1].trim():c.name}" onclick="this.classList.toggle('on')">${c.name}</span>`
@@ -727,6 +732,7 @@ async function saveEdit(){
   // новинка на головній
   if($('e_nw').checked) p.nw=1; else delete p.nw;
   if($('e_hid').checked) p.hidden=true; else delete p.hidden;
+  if($('e_covall').checked){ for(const q of DATA.products) delete q.coverAll; p.coverAll=1; } else delete p.coverAll;
   // оновити фільтри категорій (нові розміри/колір)
   (p.cats||[]).forEach(cid=>{
     if(!DATA.filters[cid])DATA.filters[cid]=[];
