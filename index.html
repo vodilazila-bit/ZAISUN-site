@@ -1036,10 +1036,16 @@ async function submitOrder(){
   const btn=document.getElementById('osubBtn');
   btn.disabled=true; btn.textContent='Надсилаю…';
   try{
+    let orderPhotos=[];
+    if(cartMode && CART.length){
+      orderPhotos = CART.map(it=>{const pr=P.find(x=>x.id===it.id);return pr&&pr.photo?('https://zaisun.com.ua/images/'+encodeURIComponent(pr.photo)):null}).filter(Boolean);
+    } else if(cur && cur.photo){
+      orderPhotos = ['https://zaisun.com.ua/images/'+encodeURIComponent(cur.photo)];
+    }
     const payload = Object.assign({
       "Ім'я": n, "Телефон": p, "Місто": city, "Відділення НП": np,
       "Товари": itemsTxt, "Сума": total+' грн', "Коментар": comm||'-'
-    }, (em && em.includes('@')) ? {"Пошта клієнта": em} : {});
+    }, (em && em.includes('@')) ? {"Пошта клієнта": em} : {}, orderPhotos.length ? {"_photos": orderPhotos} : {});
     let sent=false, lastErr='';
     // 1) основний канал: власний приймач на Apps Script
     try{
