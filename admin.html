@@ -610,6 +610,7 @@ function renderList(){
       <div class="pr"><span class="qprice" onclick="event.stopPropagation();quickPrice(${p.id})">${p.price} грн ✎</span>${p.stock?'':' <span class=off>· немає</span>'}</div></div>
     </div>
     <label class="sw2" onclick="event.stopPropagation()"><input type="checkbox" ${p.stock?'checked':''} onchange="quickStock(${p.id},this.checked)"><span></span></label>
+    <button class="mini" style="color:#c0392b;flex:none;font-size:14px;padding:8px 10px" onclick="event.stopPropagation();quickDel(${p.id})">\u{1F5D1}</button>
   </div>`).join('')||'<div class="hint" style="text-align:center;padding:20px">Нічого не знайдено</div>';
 }
 let PENDING=0;
@@ -653,6 +654,15 @@ function renderEPhotos(){
     </div>`).join('')+(editPhotos.length<5?'<button class="add" onclick="document.getElementById(&quot;e_file&quot;).click()">+</button>':'');
 }
 function ephRemove(i){editPhotos.splice(i,1);renderEPhotos()}
+async function quickDel(id){
+  const p=DATA.products.find(x=>x.id===id); if(!p) return;
+  if(!confirm('Видалити товар #'+id+' «'+p.name+'» назавжди?')) return;
+  DATA.products=DATA.products.filter(x=>x.id!==id);
+  const drop=(node)=>{if((p.cats||[]).includes(node.id)&&node.n>0)node.n--;(node.children||[]).forEach(drop)};
+  DATA.tree.forEach(drop);
+  try{await commitData('admin: видалено товар #'+id);toast('✓ Видалено','ok');$('stat').textContent='✓ '+DATA.products.length+' товарів';renderList()}
+  catch(e){toast('Помилка: '+e.message,'err')}
+}
 let ephDrag=null;
 document.addEventListener('pointerdown',e=>{
   const sl=e.target.closest&&e.target.closest('#e_photos .sl');
