@@ -448,8 +448,9 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       <div class="mform">
         <div class="fld"><label>Ваше ім'я *</label><input type="text" id="fName"></div>
         <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" value="+380"></div>
+        <div class="fld"><label>Email <span style="text-transform:none;letter-spacing:0;font-weight:400;opacity:.75">— не обов'язково</span></label><input type="email" id="fEmail" autocomplete="email"></div>
         <div class="frw">
-          <div class="fld sugg"><label>Місто *</label><input type="text" id="fCity" placeholder="Луцьк" autocomplete="off" oninput="npCity(this.value)"><div class="sugg-list" id="cityList"></div></div>
+          <div class="fld sugg"><label>Місто *</label><input type="text" id="fCity" placeholder="Почни вводити місто" autocomplete="off" oninput="npCity(this.value)"><div class="sugg-list" id="cityList"></div></div>
           <div class="fld"><label>Розмір</label><input type="text" id="fSize"></div>
         </div>
         <div class="fld sugg"><label>Відділення Нової Пошти *</label><input type="text" id="fNP" placeholder="Почни вводити номер або вулицю" autocomplete="off" oninput="npWh(this.value)" onfocus="npWh(this.value)"><div class="sugg-list" id="npList"></div></div>
@@ -966,6 +967,7 @@ async function submitOrder(){
   const n=document.getElementById('fName').value.trim(), p=document.getElementById('fPhone').value.trim();
   const city=document.getElementById('fCity').value.trim(), np=document.getElementById('fNP').value.trim();
   const size=document.getElementById('fSize').value.trim(), comm=document.getElementById('fComm').value.trim();
+  const em=(document.getElementById('fEmail')?.value||'').trim();
   if(!n||!p||!city||!np){ alert("Заповніть ім'я, телефон, місто та відділення Нової Пошти"); return; }
   // склад замовлення
   let itemsTxt='', total=0;
@@ -989,7 +991,7 @@ async function submitOrder(){
       body: JSON.stringify({
         _subject:'🛍 Нове замовлення з сайту ZaiSun — '+total+' грн',
         _template:'box',
-        "Ім'я": n, "Телефон": p, "Місто": city, "Відділення НП": np,
+        "Ім'я": n, "Телефон": p, "Email": em||'-', "Місто": city, "Відділення НП": np,
         "Товари": itemsTxt, "Сума": total+' грн', "Коментар": comm||'-'
       })
     });
