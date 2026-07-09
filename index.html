@@ -650,7 +650,8 @@ function renderSubs(){
     const coverOf = prods => (prods.find(p=>p.cover && p.photo) || prods.find(p=>p.photo && p.season===2) || prods.find(p=>p.photo && p.season===1) || prods.find(p=>p.photo));
     el.classList.add('grid');
     el.innerHTML = curSubs.map(s=>{
-      const pr = coverOf(curBase.filter(p=>p.cats.includes(s.id)));
+      const subProds=curBase.filter(p=>p.cats.includes(s.id));
+      const pr = subProds.find(p=>p.coverCat===s.id && p.photo) || coverOf(subProds);
       return `<div class="hc" onclick="subSel('${s.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy">`:''}<span>${s.name} · ${s.n}</span></div>`;
     }).join('');
   } else {
@@ -1084,7 +1085,7 @@ function buildHome(){
     const ids = findIdsByNames(d.c);
     const prods = P.filter(p=>p.cats.some(c=>ids.has(c)));
     if(!prods.length) return;
-    const pr = coverOf(prods);
+    const pr = prods.find(p=>p.coverCat && ids.has(p.coverCat) && p.photo) || coverOf(prods);
     const img = pr ? `<img src="images/${pr.photo}" loading="lazy">` : '';
     h += `<div class="hc" onclick="openMenuCat(${i})">${img}<span>${d.n} · ${prods.length}</span></div>`;
   });
