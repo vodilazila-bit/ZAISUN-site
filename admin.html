@@ -35,6 +35,13 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--acc)}
 .tab.on{background:var(--txt);color:#fff}
 .mini{padding:5px 9px;border-radius:8px;border:1px solid #e5ddd2;background:#faf7f2;font-size:12px;cursor:pointer}
 .mini:disabled{opacity:.35;cursor:default}
+.eph{display:flex;gap:8px;margin-top:8px;touch-action:none;user-select:none}
+.eph .sl{position:relative;width:72px;height:72px;border-radius:10px;overflow:hidden;background:#f0ebe4;flex:none}
+.eph .sl img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.eph .sl .x{position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;border:none;font-size:11px;line-height:20px;text-align:center;cursor:pointer;padding:0}
+.eph .sl.drag{outline:3px solid var(--acc);opacity:.75}
+.eph .sl.main:after{content:'головне';position:absolute;left:0;right:0;bottom:0;background:rgba(201,138,94,.9);color:#fff;font-size:8px;text-align:center;padding:1px 0}
+.eph .add{width:72px;height:72px;border-radius:10px;border:2px dashed var(--bd);background:none;color:var(--mut);font-size:22px;cursor:pointer;flex:none}
 table.vt{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px}
 table.vt th{text-align:left;font-size:11px;color:var(--mut);padding:4px}
 table.vt td{padding:3px}
@@ -201,13 +208,12 @@ table.vt input{padding:8px;font-size:14px}
           <label class="sw2" style="margin:0"><input type="checkbox" id="e_stock"><span></span></label>
           <span style="font-size:13px;font-weight:600">В наявності</span>
         </div>
-        <label>Головне фото (показується в категорії та на картці)</label>
-        <div class="ph" id="e_phbox" onclick="document.getElementById('e_file').click()">нема фото</div>
-        <input type="file" id="e_file" accept="image/*" style="display:none" onchange="editPickPhoto(this)">
+        <label>Фото товару (до 5). Перше зліва — головне, у каталозі. Перетягни пальцем, щоб змінити порядок</label>
+        <div class="eph" id="e_photos"></div>
+        <input type="file" id="e_file" accept="image/*" multiple style="display:none" onchange="editPickPhoto(this)">
         <div class="row" style="margin-top:8px">
-          <button class="btn sec sm" onclick="document.getElementById('e_file').click()">📷 Завантажити нове</button>
-          <button class="btn sec sm" onclick="openGallery()">🖼 Вибрати з наявних</button>
-          <button class="btn sec sm" onclick="clearPhoto()">✕ Прибрати</button>
+          <button class="btn sec sm" onclick="document.getElementById('e_file').click()">📷 Завантажити</button>
+          <button class="btn sec sm" onclick="openGallery()">🖼 З наявних</button>
         </div>
         <div id="e_gal" style="display:none">
           <input type="text" id="g_q" placeholder="Фільтр по назві файлу…" oninput="renderGallery()" style="margin-top:10px">
@@ -638,6 +644,41 @@ async function saveAll(){
   b.disabled=false; b.textContent='💾 Зберегти зміни';
 }
 let editPhotoBlob=null,editPhotoPick=null,IMGLIST=null;
+let editPhotos=[];
+function renderEPhotos(){
+  const el=$('e_photos');
+  el.innerHTML=editPhotos.map((it,i)=>`<div class="sl ${i===0?'main':''}" data-i="${i}">
+      <img src="${it.blob?it.url:('images/'+it.fn)}">
+      <button class="x" onclick="ephRemove(${i});event.stopPropagation()">\u2715</button>
+    </div>`).join('')+(editPhotos.length<5?'<button class="add" onclick="document.getElementById(&quot;e_file&quot;).click()">+</button>':'');
+}
+function ephRemove(i){editPhotos.splice(i,1);renderEPhotos()}
+let ephDrag=null;
+document.addEventListener('pointerdown',e=>{
+  const sl=e.target.closest&&e.target.closest('#e_photos .sl');
+  if(!sl||e.target.classList.contains('x'))return;
+  ephDrag=+sl.dataset.i; sl.classList.add('drag');
+});
+document.addEventListener('pointermove',e=>{
+  if(ephDrag===null)return;
+  e.preventDefault();
+  const el=document.elementFromPoint(e.clientX,e.clientY);
+  const sl=el&&el.closest&&el.closest('#e_photos .sl');
+  if(!sl)return;
+  const j=+sl.dataset.i;
+  if(j!==ephDrag){
+    const it=editPhotos.splice(ephDrag,1)[0];
+    editPhotos.splice(j,0,it);
+    ephDrag=j; renderEPhotos();
+    const nsl=document.querySelector('#e_photos .sl[data-i="'+j+'"]');
+    if(nsl)nsl.classList.add('drag');
+  }
+},{passive:false});
+document.addEventListener('pointerup',()=>{
+  if(ephDrag===null)return;
+  ephDrag=null;
+  document.querySelectorAll('#e_photos .sl.drag').forEach(x=>x.classList.remove('drag'));
+});
 function openEdit(id){
   editId=id;const p=DATA.products.find(x=>x.id===id);
   const wide=window.matchMedia('(min-width:900px)').matches;
@@ -647,7 +688,7 @@ function openEdit(id){
   $('e_form').style.display='block';
   $('e_title').textContent='#'+p.id;
   editPhotoBlob=null;editPhotoPick=null;$('e_gal').style.display='none';
-  showEPreview(p.photo?'images/'+p.photo:null);
+  editPhotos=(p.photos&&p.photos.length?p.photos:(p.photo?[p.photo]:[])).map(fn=>({fn:fn}));renderEPhotos();
   $('e_name').value=p.name;$('e_desc').value=p.desc||'';$('e_stock').checked=!!p.stock;
   $('e_cover').checked=!!p.cover;
   $('e_nw').checked=!!p.nw;
@@ -695,12 +736,13 @@ function showEPreview(src,note){
   $('e_phbox').innerHTML=src?`<img src="${src}"><span>${note||'натисни, щоб замінити'}</span>`:'нема фото — натисни, щоб додати';
 }
 async function editPickPhoto(inp){
-  const f=inp.files[0];if(!f)return;
-  editPhotoBlob=await compress(f);editPhotoPick=null;
-  showEPreview(URL.createObjectURL(editPhotoBlob),Math.round(editPhotoBlob.size/1024)+' КБ — нове, збережеться при 💾');
-  inp.value='';
+  for(const f of Array.from(inp.files||[])){
+    if(editPhotos.length>=5){toast('Максимум 5 фото','err');break}
+    const bl=await compress(f);
+    editPhotos.push({blob:bl,url:URL.createObjectURL(bl)});
+  }
+  inp.value=''; renderEPhotos();
 }
-function clearPhoto(){editPhotoBlob=null;editPhotoPick='';showEPreview(null);toast('Фото буде прибрано після 💾 Зберегти')}
 async function openGallery(){
   const g=$('e_gal');
   if(g.style.display==='block'){g.style.display='none';return}
@@ -719,24 +761,28 @@ function renderGallery(){
   const q=($('g_q').value||'').toLowerCase();
   const p=DATA.products.find(x=>x.id===editId);
   const items=IMGLIST.filter(n=>n.toLowerCase().includes(q)).slice(0,60);
-  $('g_grid').innerHTML=items.map(n=>`<div class="gi"><img src="images/${n}" loading="lazy" class="${(editPhotoPick===n||(!editPhotoPick&&!editPhotoBlob&&p.photo===n))?'on':''}" onclick="pickFromGallery('${n.replace(/'/g,"\\'")}')"><div class="gn">${n}</div></div>`).join('')||'<div class="hint">Нічого не знайдено — зміни фільтр (можна стерти повністю)</div>';
+  $('g_grid').innerHTML=items.map(n=>`<div class="gi"><img src="images/${n}" loading="lazy" class="${editPhotos.some(x=>x.fn===n)?'on':''}" onclick="pickFromGallery('${n.replace(/'/g,"\\'")}')"><div class="gn">${n}</div></div>`).join('')||'<div class="hint">Нічого не знайдено — зміни фільтр (можна стерти повністю)</div>';
 }
 function pickFromGallery(name){
-  editPhotoPick=name;editPhotoBlob=null;
-  showEPreview('images/'+name,'вибрано з наявних — збережеться при 💾');
-  renderGallery();
+  if(editPhotos.length>=5){toast('Максимум 5 фото','err');return}
+  if(editPhotos.some(x=>x.fn===name)){toast('Це фото вже додано','err');return}
+  editPhotos.push({fn:name});renderEPhotos();renderGallery();
 }
 async function saveEdit(){
   const p=DATA.products.find(x=>x.id===editId);
   p.name=$('e_name').value.trim();p.desc=$('e_desc').value.trim();p.stock=$('e_stock').checked;
   try{
-    if(editPhotoBlob){
-      const fn=`${translit(p.name)}_${p.id}_${Date.now().toString(36)}.jpg`;
-      await commitFile('images/'+fn,await blobToB64(editPhotoBlob),`admin: нове фото для #${p.id}`);
-      p.photo=fn;if(IMGLIST)IMGLIST.push(fn);
-    }else if(editPhotoPick!==null){
-      p.photo=editPhotoPick; // '' = прибрати фото
+    for(let i=0;i<editPhotos.length;i++){
+      const it=editPhotos[i];
+      if(it.blob){
+        const fn=`${translit(p.name)}_${p.id}_${Date.now().toString(36)}_${i}.jpg`;
+        await commitFile('images/'+fn,await blobToB64(it.blob),`admin: фото ${i+1} для #${p.id}`);
+        it.fn=fn; delete it.blob; if(IMGLIST)IMGLIST.push(fn);
+      }
     }
+    const fns=editPhotos.map(x=>x.fn).filter(Boolean);
+    p.photo=fns[0]||'';
+    if(fns.length>1) p.photos=fns; else delete p.photos;
   }catch(e){toast('Помилка фото: '+e.message,'err');return}
   // розміри: перебудувати зі строк таблиці (враховує додані і прибрані)
   const newVar={}, newSizes=[];
