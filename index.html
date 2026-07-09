@@ -138,7 +138,9 @@ section{padding:26px 18px 34px}
 .phead h1{font-family:var(--serif);font-weight:700;font-size:1.55rem}
 .pcount{font-size:.78rem;color:var(--soft);margin-top:4px}
 .subcats{display:flex;gap:8px;padding:12px 18px 0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.subcats.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;overflow:visible;padding:14px 18px 2px;max-width:1100px;margin:0 auto;width:100%}
+.subcats.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;overflow:visible;padding:14px 18px 2px;max-width:600px;margin:0 auto;width:100%}
+@media(min-width:700px){.subcats.grid{grid-template-columns:repeat(2,1fr);max-width:900px;gap:16px}}
+@media(min-width:1050px){.subcats.grid{grid-template-columns:repeat(3,1fr);max-width:1200px}}
 .subcats.grid .hc span{font-size:.85rem;padding:8px 16px}
 #pgCat.pick-sub .cat-search,#pgCat.pick-sub .frow-top,#pgCat.pick-sub #grid,#pgCat.pick-sub .pcount{display:none}
 .subcats::-webkit-scrollbar{display:none}
