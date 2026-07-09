@@ -1061,6 +1061,7 @@ async function submitOrder(){
     }
     if(!sent) throw new Error(lastErr);
     try{
+      if(/тест/i.test(n)) throw 'test-order';
       // items для e-commerce
       let gaItems = [];
       if(cartMode && CART.length){
