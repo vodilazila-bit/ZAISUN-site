@@ -150,6 +150,7 @@ table.vt input{padding:8px;font-size:14px}
 
     <div class="card">
       <label>Колір</label>
+      <div class="hint" style="margin-bottom:6px">Можна вибрати кілька кольорів — тицяй на всі потрібні</div>
       <div class="chips" id="a_colors"></div>
       <div class="row" style="margin-top:10px">
         <input type="text" id="a_ncolor" placeholder="Новий колір (назва)">
@@ -495,7 +496,7 @@ function initAdd(){
   $('a_cats').innerHTML=flatCats().map(c=>`<div class="chip" data-id="${c.id}" onclick="this.classList.toggle('on')">${c.name}</div>`).join('');
   $('a_colors').innerHTML=Object.entries(DATA.colorhex).map(([n,h])=>`<div class="chip" data-c="${n}" data-h="${h}" onclick="pickColor(this)"><span class="sw" style="background:${h}"></span>${n}</div>`).join('');
 }
-function pickColor(el){document.querySelectorAll('#a_colors .chip').forEach(x=>x.classList.remove('on'));el.classList.add('on');$('a_ncolor').value=''}
+function pickColor(el){el.classList.toggle('on')}
 function addOptRow(){const d=document.createElement('div');d.className='optrow';d.innerHTML=`<input type="text" placeholder="Назва (Склад)"><input type="text" placeholder="Значення"><button class="btn sec sm" onclick="this.parentNode.remove()">✕</button>`;$('a_opts').appendChild(d)}
 
 function normSize(s){
@@ -532,11 +533,13 @@ async function saveNew(){
   if(!name||!cats.length||!sizes.length||!$('a_price').value){toast('Заповни назву, категорії, розміри і ціну','err');return}
   $('a_save').disabled=true;$('a_save').textContent='Зберігаю…';
   try{
-    // колір
-    let color=null,hex=null;
-    const sel=document.querySelector('#a_colors .chip.on');
-    if($('a_ncolor').value.trim()){color=$('a_ncolor').value.trim();hex=$('a_nhex').value;DATA.colorhex[color]=hex}
-    else if(sel){color=sel.dataset.c;hex=sel.dataset.h}
+    // кольори (можна кілька)
+    let colors=[...document.querySelectorAll('#a_colors .chip.on')].map(x=>({c:x.dataset.c,h:x.dataset.h}));
+    if($('a_ncolor').value.trim()){
+      const nc=$('a_ncolor').value.trim(), nh=$('a_nhex').value;
+      DATA.colorhex[nc]=nh; colors.push({c:nc,h:nh});
+    }
+    const color=colors.length?colors[0].c:null, hex=colors.length?colors[0].h:null;
     // варіанти
     const vars={};
     document.querySelectorAll('#a_vars tr[data-s]').forEach(tr=>{
@@ -554,7 +557,7 @@ async function saveNew(){
     }
     // опції
     const opts={};
-    if(color)opts['Колір']=[color];
+    if(colors.length)opts['Колір']=colors.map(x=>x.c);
     document.querySelectorAll('#a_opts .optrow').forEach(r=>{const[k,v]=r.querySelectorAll('input');if(k.value.trim()&&v.value.trim())opts[k.value.trim()]=[v.value.trim()]});
     const prod={id,name,price:basePrice,old:parseFloat($('a_old').value)||null,stock:true,sizes,var:vars,color:color||'',hex:hex||'',opts,cats:cats.map(c=>c.id),catn:cats.map(c=>c.name.split(' → ').pop()),desc:$('a_desc').value.trim(),photo:photoName};
     DATA.products.push(prod);
