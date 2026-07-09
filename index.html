@@ -1045,7 +1045,8 @@ async function submitOrder(){
         "Товари": itemsTxt, "Сума": total+' грн', "Коментар": comm||'-'
       }, (em && em.includes('@')) ? {"Пошта клієнта": em} : {}))
     });
-    if(!r.ok) throw new Error('send failed');
+    const respTxt = await r.text().catch(()=> '');
+    if(!r.ok) throw new Error('HTTP '+r.status+' — '+respTxt.slice(0,200));
     try{
       // items для e-commerce
       let gaItems = [];
@@ -1065,7 +1066,7 @@ async function submitOrder(){
     document.getElementById('fview').style.display='none';
     document.getElementById('sview').classList.add('show');
   }catch(e){
-    alert('Не вдалося надіслати замовлення. Напишіть нам в Instagram @zaisun_kids або зателефонуйте +380 73 812 12 52 — приймемо вручну.');
+    alert('Не вдалося надіслати замовлення. Напишіть нам в Instagram @zaisun_kids або зателефонуйте +380 73 812 12 52 — приймемо вручну.\n\n[Технічна інформація для розробника: '+(e && e.message ? e.message : e)+']');
   }
   btn.disabled=false; btn.textContent='Оформити замовлення';
 }
