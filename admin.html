@@ -395,11 +395,22 @@ async function catMove(topId,i,dir){
   await catPublish('admin: змінено порядок підкатегорій у '+c.name);
 }
 async function commitData(msg){
-  await loadDataShaOnly(); // свіжий sha перед записом
+  const remote = await freshDataSha();
+  if(remote && remote !== SHA){
+    throw new Error('Каталог оновився поза цією вкладкою (з іншого пристрою або вкладки). Онови сторінку адмінки і внеси зміни ще раз — інакше вони затерли б новіші дані.');
+  }
   const content='const DATA = '+JSON.stringify(DATA)+';';
   const res=await commitFile('data.js',b64enc(content),msg,SHA);
   SHA=res.content.sha;
   updateFeed().catch(e=>console.warn('feed:',e)); // фід оновлюється у фоні
+}
+async function freshDataSha(){
+  try{
+    const ls=await fetch(`${API}/contents/?ref=${BRANCH}&_=`+Date.now(),{headers:hdr(),cache:'no-store'});
+    const files=await ls.json();
+    const f=files.find(x=>x.name==='data.js');
+    return f?f.sha:null;
+  }catch(e){return null}
 }
 // ─── Merchant Center feed ───
 const FEED_SITE='https://zaisun.com.ua';
@@ -446,7 +457,7 @@ async function updateFeed(){
   await commitFile('sitemap.xml',b64enc(smap),'auto: оновлення sitemap.xml',smSha);
 }
 async function loadDataShaOnly(){
-  const ls=await fetch(`${API}/contents/?ref=${BRANCH}`,{headers:hdr()});
+  const ls=await fetch(`${API}/contents/?ref=${BRANCH}&_=`+Date.now(),{headers:hdr(),cache:'no-store'});
   const files=await ls.json();SHA=files.find(x=>x.name==='data.js').sha;
 }
 
