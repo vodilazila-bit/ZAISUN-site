@@ -823,7 +823,17 @@ async function saveEdit(){
   // обкладинка категорії
   // обкладинка категорії: при вмиканні знімаємо cover з інших товарів тих самих категорій,
   // щоб обрана обкладинка завжди перемагала (одна на категорію)
-  p.cover=$('e_cover').checked;
+  // обкладинка конкретної категорії
+  delete p.cover;
+  if(editCoverCat && editCoverCat!=='__legacy__' && (p.cats||[]).includes(editCoverCat)){
+    p.coverCat=editCoverCat;
+    for(const q of DATA.products){
+      if(q.id!==p.id){
+        if(q.coverCat===editCoverCat) delete q.coverCat;
+        if(q.cover && (q.cats||[]).includes(editCoverCat)) delete q.cover;
+      }
+    }
+  } else { delete p.coverCat; }
   if(p.cover){
     for(const q of DATA.products){
       if(q.id!==p.id && q.cover && (q.cats||[]).some(c=>(p.cats||[]).includes(c))) q.cover=false;
