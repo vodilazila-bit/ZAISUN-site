@@ -1167,14 +1167,16 @@ function doSearch(){
   const grid = document.getElementById('soGrid'), hint = document.getElementById('soHint');
   if(q.length<2){ grid.innerHTML=''; hint.style.display='block'; hint.textContent='Почни вводити назву товару'; return; }
   const words = q.split(/\s+/).filter(w=>w.length>=2);
-  const r = P.map(p=>{
+  const scored = P.map(p=>{
     const name=(p.name||'').toLowerCase();
     const extra=((p.color||'')+' '+p.catn.join(' ')).toLowerCase();
     if(!words.every(w=>name.includes(w)||extra.includes(w))) return null;
     let score=1; // збіг лише по категорії або кольору
     if(words.every(w=>name.includes(w))) score = name.startsWith(q)?4 : name.includes(q)?3 : 2;
     return {p,score};
-  }).filter(Boolean).sort((a,b)=>b.score-a.score).slice(0,60).map(x=>x.p);
+  }).filter(Boolean).sort((a,b)=>b.score-a.score);
+  const byName = scored.filter(x=>x.score>=2);
+  const r = (byName.length ? byName : scored).slice(0,60).map(x=>x.p);
   if(!r.length){ grid.innerHTML=''; hint.style.display='block'; hint.textContent='Нічого не знайдено'; return; }
   hint.style.display='none';
   grid.innerHTML = r.map(p=>{
