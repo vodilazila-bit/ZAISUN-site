@@ -138,6 +138,8 @@ section{padding:26px 18px 34px}
 .phead h1{font-family:var(--serif);font-weight:700;font-size:1.55rem}
 .pcount{font-size:.78rem;color:var(--soft);margin-top:4px}
 .subcats{display:flex;gap:8px;padding:12px 18px 0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.subcats.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;overflow:visible;padding:14px 18px 2px;max-width:1100px;margin:0 auto;width:100%}
+.subcats.grid .hc span{font-size:.85rem;padding:8px 16px}
 .subcats::-webkit-scrollbar{display:none}
 .subcats:empty{display:none}
 .sc-chip{white-space:nowrap;padding:9px 16px;border-radius:30px;font-size:.82rem;font-weight:500;border:1px solid var(--line);background:#fff;color:#6B5D50;flex:none;cursor:pointer}
@@ -623,9 +625,19 @@ function openCatAll(){
 }
 function renderSubs(){
   const el = document.getElementById('subcats');
-  if(!curSubs.length){ el.innerHTML=''; return; }
-  el.innerHTML = `<span class="sc-chip ${curSub===''?'on':''}" onclick="subSel('')">Всі</span>` +
-    curSubs.map(s=>`<span class="sc-chip ${curSub===s.id?'on':''}" onclick="subSel('${s.id}')">${s.name} · ${s.n}</span>`).join('');
+  if(!curSubs.length){ el.innerHTML=''; el.classList.remove('grid'); return; }
+  if(!curSub){
+    const coverOf = prods => (prods.find(p=>p.cover && p.photo) || prods.find(p=>p.photo && p.season===2) || prods.find(p=>p.photo && p.season===1) || prods.find(p=>p.photo));
+    el.classList.add('grid');
+    el.innerHTML = curSubs.map(s=>{
+      const pr = coverOf(curBase.filter(p=>p.cats.includes(s.id)));
+      return `<div class="hc" onclick="subSel('${s.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy">`:''}<span>${s.name} · ${s.n}</span></div>`;
+    }).join('');
+  } else {
+    el.classList.remove('grid');
+    el.innerHTML = `<span class="sc-chip" onclick="subSel('')">← Всі</span>` +
+      curSubs.map(s=>`<span class="sc-chip ${curSub===s.id?'on':''}" onclick="subSel('${s.id}')">${s.name} · ${s.n}</span>`).join('');
+  }
 }
 function subSel(id){
   curSub = id;
