@@ -402,6 +402,7 @@ function renderOrders(){
       </div>
       <div style="color:var(--mut);font-size:12px;margin:3px 0">${dt} · <a href="tel:${o.phone}" style="color:inherit">${o.phone||''}</a>${o.email?' · '+o.email:''}</div>
       <div style="font-size:12px;margin:3px 0">📍 ${o.city||''} — ${(o.np||'').slice(0,60)}</div>
+      ${o.photos?`<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">${String(o.photos).split('|').filter(Boolean).map(u=>`<img src="${u}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;background:#f0ebe4">`).join('')}</div>`:''}
       <div style="font-size:12.5px;white-space:pre-wrap;margin-top:6px">${o.items||''}</div>
       ${o.comm&&o.comm!=='-'?`<div style="font-size:12px;color:var(--mut);margin-top:4px">💬 ${o.comm}</div>`:''}
     </div>`;
