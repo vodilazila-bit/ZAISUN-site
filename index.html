@@ -494,7 +494,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <script src="data.js?v=8"></script>
 <script>
-const P = DATA.products, TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
+const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 let VIEWS = {};
 try{ VIEWS = JSON.parse(localStorage.getItem('zs_views')||'{}'); }catch(e){ VIEWS={}; }
 function popScore(p){
