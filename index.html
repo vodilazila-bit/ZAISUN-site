@@ -954,6 +954,7 @@ function openOrder(){
 }
 function closeOrder(){ document.getElementById('movl').classList.remove('open'); document.body.style.overflow=''; }
 const ORDER_EMAIL = 'miroslava_zanchuk@ukr.net';
+const ORDER_RELAY = 'https://script.google.com/macros/s/AKfycbwn4KyZGlxa702OBBzuUkvu9V-1Tf0GwnQ1D5clmmiSafJQuG2mVidYOoYXrBwZB4zS/exec';
 // ─── Нова Пошта: підказки міст і відділень ───
 let npCityRef = null, npT1 = null, npT2 = null, npDead = false;
 async function npApi(model, method, props){
@@ -1035,18 +1036,30 @@ async function submitOrder(){
   const btn=document.getElementById('osubBtn');
   btn.disabled=true; btn.textContent='Надсилаю…';
   try{
-    const r = await fetch('https://formsubmit.co/ajax/'+ORDER_EMAIL, {
-      method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body: JSON.stringify(Object.assign({
-        _subject:'🛍 Нове замовлення з сайту ZaiSun — '+total+' грн',
-        _template:'box',
-        "Ім'я": n, "Телефон": p, "Місто": city, "Відділення НП": np,
-        "Товари": itemsTxt, "Сума": total+' грн', "Коментар": comm||'-'
-      }, (em && em.includes('@')) ? {"Пошта клієнта": em} : {}))
-    });
-    const respTxt = await r.text().catch(()=> '');
-    if(!r.ok) throw new Error('HTTP '+r.status+' — '+respTxt.slice(0,200));
+    const payload = Object.assign({
+      "Ім'я": n, "Телефон": p, "Місто": city, "Відділення НП": np,
+      "Товари": itemsTxt, "Сума": total+' грн', "Коментар": comm||'-'
+    }, (em && em.includes('@')) ? {"Пошта клієнта": em} : {});
+    let sent=false, lastErr='';
+    // 1) основний канал: власний приймач на Apps Script
+    try{
+      const r1 = await fetch(ORDER_RELAY, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload)});
+      const t1 = await r1.text().catch(()=> '');
+      if(r1.ok && t1.indexOf('ok')===0) sent=true;
+      else lastErr='relay HTTP '+r1.status+' '+t1.slice(0,120);
+    }catch(e1){ lastErr='relay: '+(e1&&e1.message||e1); }
+    // 2) резерв: FormSubmit
+    if(!sent){
+      try{
+        const r2 = await fetch('https://formsubmit.co/ajax/'+ORDER_EMAIL, {
+          method:'POST',
+          headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body: JSON.stringify(Object.assign({_subject:'🛍 Нове замовлення з сайту ZaiSun — '+total+' грн',_template:'box'}, payload))
+        });
+        if(r2.ok) sent=true; else lastErr+=' | formsubmit HTTP '+r2.status;
+      }catch(e2){ lastErr+=' | formsubmit: '+(e2&&e2.message||e2); }
+    }
+    if(!sent) throw new Error(lastErr);
     try{
       // items для e-commerce
       let gaItems = [];
