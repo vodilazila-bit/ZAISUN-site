@@ -919,6 +919,7 @@ async function npApi(model, method, props){
   if(!j.success) throw new Error('np');
   return j.data;
 }
+let npCityList = [];
 function npCity(q){
   npCityRef = null;
   clearTimeout(npT1);
@@ -927,18 +928,20 @@ function npCity(q){
   npT1 = setTimeout(async ()=>{
     try{
       const d = await npApi('Address','searchSettlements',{CityName:q.trim(), Limit:'6'});
-      const list = (d[0] && d[0].Addresses) || [];
-      box.innerHTML = list.map(a=>`<div class="sugg-it" onclick="pickCity('${a.DeliveryCity}','${(a.Present||'').replace(/'/g,'')}')">${a.Present}</div>`).join('');
-      box.classList.toggle('show', list.length>0);
+      npCityList = (d[0] && d[0].Addresses) || [];
+      box.innerHTML = npCityList.map((a,i)=>`<div class="sugg-it" onclick="pickCity(${i})">${a.Present}</div>`).join('');
+      box.classList.toggle('show', npCityList.length>0);
     }catch(e){ npDead = true; box.classList.remove('show'); }
   }, 300);
 }
-function pickCity(ref, name){
-  npCityRef = ref;
-  document.getElementById('fCity').value = name;
+function pickCity(i){
+  const a = npCityList[i]; if(!a) return;
+  npCityRef = a.DeliveryCity;
+  document.getElementById('fCity').value = a.Present || '';
   document.getElementById('cityList').classList.remove('show');
   document.getElementById('fNP').focus();
 }
+let npWhListData = [];
 function npWh(q){
   clearTimeout(npT2);
   const box = document.getElementById('npList');
@@ -947,14 +950,15 @@ function npWh(q){
     try{
       const props = {CityRef:npCityRef, Limit:'12', Page:'1'};
       if(q && q.trim()) props.FindByString = q.trim();
-      const d = await npApi('AddressGeneral','getWarehouses',props);
-      box.innerHTML = d.map(w=>`<div class="sugg-it" onclick="pickWh('${(w.Description||'').replace(/'/g,'')}')">${w.Description}</div>`).join('');
-      box.classList.toggle('show', d.length>0);
+      npWhListData = await npApi('AddressGeneral','getWarehouses',props);
+      box.innerHTML = npWhListData.map((w,i)=>`<div class="sugg-it" onclick="pickWh(${i})">${w.Description}</div>`).join('');
+      box.classList.toggle('show', npWhListData.length>0);
     }catch(e){ box.classList.remove('show'); }
   }, 300);
 }
-function pickWh(name){
-  document.getElementById('fNP').value = name;
+function pickWh(i){
+  const w = npWhListData[i]; if(!w) return;
+  document.getElementById('fNP').value = w.Description || '';
   document.getElementById('npList').classList.remove('show');
 }
 document.addEventListener('click', e=>{
