@@ -244,7 +244,7 @@
     <g:sale_price>240.00 UAH</g:sale_price>
     <g:color>Пудровий</g:color>
     <g:size>42-44/46-48/48-50</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>15</g:id>
@@ -262,7 +262,7 @@
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>42-44/44-46/50-52/52-54</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>16</g:id>
@@ -279,7 +279,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>168.00 UAH</g:sale_price>
     <g:color>Серця</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>17</g:id>
@@ -296,7 +296,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>168.00 UAH</g:sale_price>
     <g:color>Собачка</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>18</g:id>
@@ -313,7 +313,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>168.00 UAH</g:sale_price>
     <g:color>Серця</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>19</g:id>
@@ -330,7 +330,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>145.00 UAH</g:sale_price>
     <g:color>Серця</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>20</g:id>
@@ -347,7 +347,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>168.00 UAH</g:sale_price>
     <g:color>Акула</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>21</g:id>
@@ -364,7 +364,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>145.00 UAH</g:sale_price>
     <g:color>Фламінго</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>22</g:id>
@@ -381,7 +381,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>168.00 UAH</g:sale_price>
     <g:color>Собачка</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>23</g:id>
@@ -398,7 +398,7 @@
     <g:price>500.00 UAH</g:price>
     <g:sale_price>290.00 UAH</g:sale_price>
     <g:color>2шапки</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>24</g:id>
@@ -415,7 +415,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Пудрова</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>25</g:id>
@@ -432,7 +432,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>М&apos;ятна</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>26</g:id>
@@ -449,7 +449,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Графіті</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>27</g:id>
@@ -466,7 +466,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Графіті</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>28</g:id>
@@ -483,7 +483,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Планети</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>29</g:id>
@@ -500,7 +500,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>М&apos;ятна</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>30</g:id>
@@ -517,7 +517,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>М&apos;ятна</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>31</g:id>
@@ -534,7 +534,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Пудра</g:color>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>32</g:id>
@@ -552,7 +552,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Пудровий</g:color>
     <g:size>44-46/52-54/42-44</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>33</g:id>
@@ -570,7 +570,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>46-48</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>34</g:id>
@@ -588,7 +588,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>44-46/42-44</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>35</g:id>
@@ -606,7 +606,7 @@
     <g:sale_price>436.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>42-44/44-46/50-52/52-54/48-50</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>36</g:id>
@@ -624,7 +624,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Фіолетовий</g:color>
     <g:size>40-42/48-50</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>37</g:id>
@@ -642,7 +642,7 @@
     <g:sale_price>387.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/48-50/52-54</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>38</g:id>
@@ -660,7 +660,7 @@
     <g:sale_price>608.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/48-50/52-54</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>39</g:id>
@@ -3332,6 +3332,23 @@
     <g:product_type>Лосіни, футболки &gt; Літо &gt; Боді</g:product_type>
   </item>
   <item>
+    <g:id>198</g:id>
+    <g:title>Дитячий комплект боді і шорти з у леопардовоиу принті 68см</g:title>
+    <g:description>Комплект виготовлений із м&apos;якої та приємної до тіла тканини, що забезпечує комфорт протягом усього дня. Ідеально підходить для прогулянок, фотосесій, святкових подій та щоденного носіння. Матеріал: трикотаж 95% бавовна, 5% еластан Склад комплекту: боді+шорти</g:description>
+    <g:link>https://zaisun.com.ua/?p=198</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiachyi_komplekt_bodi_i_shorty_z_u_leopardovoyu_prynti_68s_198_mrdc2sjv.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>kids</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>585.00 UAH</g:price>
+    <g:sale_price>526.00 UAH</g:sale_price>
+    <g:size>68</g:size>
+    <g:product_type>Лосіни, футболки &gt; Літо &gt; Боді</g:product_type>
+  </item>
+  <item>
     <g:id>199</g:id>
     <g:title>Лосіни базові двохнитка</g:title>
     <g:description>Матеріал: трикотаж двохнитка Склад: 95%бавовна, 5%еластавн Особливості моделі: • м&apos;яка еластична резинка • еластична тканина — зручно для активних рухів Переваги: • не колеться, не подразнює шкіру • добре тримає форму після прання • ідеально підходить як базовий шар та для святкових образів Для кого: дівчаткам і хлопчикам від 0 до 2 років Догляд: прання 30°C, не відбілювати, сушити горизонтально</g:description>
@@ -3598,7 +3615,7 @@
     <g:gender>unisex</g:gender>
     <g:price>935.00 UAH</g:price>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Літо &gt; Панама &gt; Сукні &gt; Костюм</g:product_type>
+    <g:product_type>Літо &gt; Панама &gt; Костюм</g:product_type>
   </item>
   <item>
     <g:id>215</g:id>
@@ -4024,7 +4041,7 @@
     <g:gender>unisex</g:gender>
     <g:price>1215.00 UAH</g:price>
     <g:size>56/62/68/74/80/86/92/98</g:size>
-    <g:product_type>Літо &gt; Сукні</g:product_type>
+    <g:product_type>Літо</g:product_type>
   </item>
   <item>
     <g:id>243</g:id>
@@ -6264,7 +6281,7 @@
     <g:price>585.00 UAH</g:price>
     <g:color>Червоний</g:color>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Одяг &gt; Новий Рік &gt; Подарункові комплекти &gt; Ромпер &gt; Сукні &gt; День Валентина</g:product_type>
+    <g:product_type>Одяг &gt; Новий Рік &gt; Подарункові комплекти &gt; Ромпер &gt; День Валентина</g:product_type>
   </item>
   <item>
     <g:id>376</g:id>
@@ -6296,7 +6313,7 @@
     <g:gender>unisex</g:gender>
     <g:price>585.00 UAH</g:price>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Одяг &gt; Подарункові комплекти &gt; Ромпер &gt; Сукні &gt; День Валентина</g:product_type>
+    <g:product_type>Одяг &gt; Подарункові комплекти &gt; Ромпер &gt; День Валентина</g:product_type>
   </item>
   <item>
     <g:id>378</g:id>
@@ -6312,7 +6329,7 @@
     <g:gender>unisex</g:gender>
     <g:price>865.00 UAH</g:price>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Одяг &gt; Новий Рік &gt; Подарункові комплекти &gt; Ромпер &gt; Сукні</g:product_type>
+    <g:product_type>Одяг &gt; Новий Рік &gt; Подарункові комплекти &gt; Ромпер</g:product_type>
   </item>
   <item>
     <g:id>379</g:id>
@@ -6414,7 +6431,7 @@
     <g:price>475.00 UAH</g:price>
     <g:color>Синій</g:color>
     <g:size>56/62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні</g:product_type>
+    <g:product_type>Одяг &gt; сарафан</g:product_type>
   </item>
   <item>
     <g:id>385</g:id>
@@ -6431,7 +6448,7 @@
     <g:price>1025.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні &gt; Подарункові комплекти</g:product_type>
+    <g:product_type>Одяг &gt; сарафан &gt; Подарункові комплекти</g:product_type>
   </item>
   <item>
     <g:id>386</g:id>
@@ -6448,7 +6465,7 @@
     <g:price>995.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні &gt; Подарункові комплекти</g:product_type>
+    <g:product_type>Одяг &gt; сарафан &gt; Подарункові комплекти</g:product_type>
   </item>
   <item>
     <g:id>387</g:id>
@@ -6465,7 +6482,7 @@
     <g:price>1025.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні &gt; Подарункові комплекти</g:product_type>
+    <g:product_type>Одяг &gt; сарафан &gt; Подарункові комплекти</g:product_type>
   </item>
   <item>
     <g:id>388</g:id>
@@ -6482,7 +6499,7 @@
     <g:price>805.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні &gt; Подарункові комплекти</g:product_type>
+    <g:product_type>Одяг &gt; сарафан &gt; Подарункові комплекти</g:product_type>
   </item>
   <item>
     <g:id>389</g:id>
@@ -6499,7 +6516,7 @@
     <g:price>475.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>56/62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні</g:product_type>
+    <g:product_type>Одяг &gt; сарафан</g:product_type>
   </item>
   <item>
     <g:id>390</g:id>
@@ -6516,7 +6533,7 @@
     <g:price>810.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні &gt; Подарункові комплекти</g:product_type>
+    <g:product_type>Одяг &gt; сарафан &gt; Подарункові комплекти</g:product_type>
   </item>
   <item>
     <g:id>391</g:id>
@@ -6533,7 +6550,7 @@
     <g:price>810.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні &gt; Подарункові комплекти</g:product_type>
+    <g:product_type>Одяг &gt; сарафан &gt; Подарункові комплекти</g:product_type>
   </item>
   <item>
     <g:id>392</g:id>
@@ -6566,7 +6583,7 @@
     <g:price>1055.00 UAH</g:price>
     <g:color>Червоний</g:color>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Одяг &gt; Подарункові комплекти &gt; Ромпер &gt; Сукні &gt; День Валентина &gt; Новий Рік</g:product_type>
+    <g:product_type>Одяг &gt; Подарункові комплекти &gt; Ромпер &gt; День Валентина &gt; Новий Рік</g:product_type>
   </item>
   <item>
     <g:id>394</g:id>
@@ -6583,7 +6600,7 @@
     <g:price>760.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні &gt; Подарункові комплекти</g:product_type>
+    <g:product_type>Одяг &gt; сарафан &gt; Подарункові комплекти</g:product_type>
   </item>
   <item>
     <g:id>395</g:id>
@@ -6600,7 +6617,7 @@
     <g:price>760.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні &gt; Подарункові комплекти &gt; Одяг для Хрещення</g:product_type>
+    <g:product_type>Одяг &gt; сарафан &gt; Подарункові комплекти &gt; Одяг для Хрещення</g:product_type>
   </item>
   <item>
     <g:id>396</g:id>
@@ -6617,7 +6634,7 @@
     <g:price>760.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні &gt; Подарункові комплекти</g:product_type>
+    <g:product_type>Одяг &gt; сарафан &gt; Подарункові комплекти</g:product_type>
   </item>
   <item>
     <g:id>397</g:id>
@@ -6633,7 +6650,7 @@
     <g:gender>female</g:gender>
     <g:price>760.00 UAH</g:price>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні &gt; Подарункові комплекти &gt; Одяг для Хрещення &gt; День Валентина</g:product_type>
+    <g:product_type>Одяг &gt; сарафан &gt; Подарункові комплекти &gt; Одяг для Хрещення &gt; День Валентина</g:product_type>
   </item>
   <item>
     <g:id>398</g:id>
@@ -6650,7 +6667,7 @@
     <g:price>760.00 UAH</g:price>
     <g:color>Червоний</g:color>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні &gt; Подарункові комплекти &gt; Новий Рік &gt; День Валентина</g:product_type>
+    <g:product_type>Одяг &gt; сарафан &gt; Подарункові комплекти &gt; Новий Рік &gt; День Валентина</g:product_type>
   </item>
   <item>
     <g:id>399</g:id>
@@ -6667,7 +6684,7 @@
     <g:price>475.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>56/62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Одяг &gt; сарафан &gt; Сукні</g:product_type>
+    <g:product_type>Одяг &gt; сарафан</g:product_type>
   </item>
   <item>
     <g:id>400</g:id>
@@ -7922,7 +7939,7 @@
     <g:price>180.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>Тонка бінні</g:product_type>
+    <g:product_type>Тонкі</g:product_type>
   </item>
   <item>
     <g:id>476</g:id>
@@ -7939,7 +7956,7 @@
     <g:price>210.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>Тонка бінні</g:product_type>
+    <g:product_type>Тонкі</g:product_type>
   </item>
   <item>
     <g:id>477</g:id>
@@ -7956,7 +7973,7 @@
     <g:price>195.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>Тонка бінні</g:product_type>
+    <g:product_type>Тонкі</g:product_type>
   </item>
   <item>
     <g:id>478</g:id>
@@ -7973,7 +7990,7 @@
     <g:price>195.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>Тонка бінні</g:product_type>
+    <g:product_type>Тонкі</g:product_type>
   </item>
   <item>
     <g:id>479</g:id>
@@ -7990,7 +8007,7 @@
     <g:price>195.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>Тонка бінні</g:product_type>
+    <g:product_type>Тонкі</g:product_type>
   </item>
   <item>
     <g:id>480</g:id>
@@ -8007,7 +8024,7 @@
     <g:price>210.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>Тонка бінні</g:product_type>
+    <g:product_type>Тонкі</g:product_type>
   </item>
   <item>
     <g:id>481</g:id>
@@ -8073,7 +8090,7 @@
     <g:price>250.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>485</g:id>
@@ -8090,7 +8107,7 @@
     <g:price>285.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>486</g:id>
@@ -8107,7 +8124,7 @@
     <g:price>335.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>487</g:id>
@@ -8124,7 +8141,7 @@
     <g:price>320.00 UAH</g:price>
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:size>42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>488</g:id>
@@ -8141,7 +8158,7 @@
     <g:price>320.00 UAH</g:price>
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:size>42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>489</g:id>
@@ -8158,7 +8175,7 @@
     <g:price>300.00 UAH</g:price>
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:size>42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>490</g:id>
@@ -8175,7 +8192,7 @@
     <g:price>300.00 UAH</g:price>
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:size>42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>491</g:id>
@@ -8192,7 +8209,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>492</g:id>
@@ -8209,7 +8226,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>493</g:id>
@@ -8226,7 +8243,7 @@
     <g:price>510.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>Холодна осінь та холодна весна</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>494</g:id>
@@ -9845,7 +9862,7 @@
     <g:price>250.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>591</g:id>
@@ -9862,7 +9879,7 @@
     <g:price>285.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>592</g:id>
@@ -9879,7 +9896,7 @@
     <g:price>335.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>593</g:id>
@@ -9896,7 +9913,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>594</g:id>
@@ -9913,7 +9930,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>тепла весна</g:product_type>
+    <g:product_type>Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>595</g:id>
@@ -9930,7 +9947,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Білий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>тепла весна &gt; чалма</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Чалма &gt; Тонкі</g:product_type>
   </item>
   <item>
     <g:id>596</g:id>
@@ -9947,7 +9964,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Пудра</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>тепла весна &gt; чалма</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Чалма &gt; Тонкі</g:product_type>
   </item>
   <item>
     <g:id>597</g:id>
@@ -9964,7 +9981,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Червоний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>тепла весна &gt; чалма</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Чалма &gt; Тонкі</g:product_type>
   </item>
   <item>
     <g:id>598</g:id>
@@ -9981,7 +9998,7 @@
     <g:price>325.00 UAH</g:price>
     <g:color>Білий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>тепла весна &gt; чалма</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Чалма &gt; Тонкі</g:product_type>
   </item>
   <item>
     <g:id>599</g:id>
@@ -9998,7 +10015,7 @@
     <g:price>375.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>тепла весна &gt; чалма</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Чалма &gt; Тонкі</g:product_type>
   </item>
   <item>
     <g:id>600</g:id>
@@ -10015,7 +10032,7 @@
     <g:price>375.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>тепла весна &gt; чалма</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Чалма &gt; Тонкі</g:product_type>
   </item>
   <item>
     <g:id>601</g:id>
@@ -10032,7 +10049,7 @@
     <g:price>375.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>тепла весна &gt; чалма</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Чалма &gt; Тонкі</g:product_type>
   </item>
   <item>
     <g:id>602</g:id>
@@ -10049,7 +10066,7 @@
     <g:price>375.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>тепла весна &gt; чалма</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Чалма &gt; Тонкі</g:product_type>
   </item>
   <item>
     <g:id>603</g:id>
@@ -10066,7 +10083,7 @@
     <g:price>275.00 UAH</g:price>
     <g:color>Червоний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>чалма одинарна</g:product_type>
+    <g:product_type>Чалма &gt; Тонкі</g:product_type>
   </item>
   <item>
     <g:id>604</g:id>
@@ -10083,7 +10100,7 @@
     <g:price>275.00 UAH</g:price>
     <g:color>Білий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>чалма одинарна</g:product_type>
+    <g:product_type>Чалма &gt; Тонкі</g:product_type>
   </item>
   <item>
     <g:id>605</g:id>
@@ -10100,7 +10117,7 @@
     <g:price>275.00 UAH</g:price>
     <g:color>Білий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>чалма одинарна</g:product_type>
+    <g:product_type>Чалма &gt; Тонкі</g:product_type>
   </item>
   <item>
     <g:id>606</g:id>
@@ -10117,7 +10134,7 @@
     <g:price>295.00 UAH</g:price>
     <g:color>Беж</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>чалма одинарна</g:product_type>
+    <g:product_type>Чалма &gt; Тонкі</g:product_type>
   </item>
   <item>
     <g:id>607</g:id>
@@ -10134,7 +10151,7 @@
     <g:price>295.00 UAH</g:price>
     <g:color>Беж</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>чалма одинарна</g:product_type>
+    <g:product_type>Чалма &gt; Тонкі</g:product_type>
   </item>
   <item>
     <g:id>608</g:id>
@@ -10151,7 +10168,7 @@
     <g:price>295.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>чалма одинарна</g:product_type>
+    <g:product_type>Чалма &gt; Тонкі</g:product_type>
   </item>
 </channel>
 </rss>
