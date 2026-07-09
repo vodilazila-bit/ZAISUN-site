@@ -1046,8 +1046,11 @@ function buildHome(){
   const coverOf = prods => (prods.find(p=>p.cover && p.photo) || prods.find(p=>p.photo && p.season===2) || prods.find(p=>p.photo && p.season===1) || prods.find(p=>p.photo));
   // Всі товари — перша картка. Головне фото: залий своє в images/cover.jpg — підхопиться саме воно
   const allCover = coverOf(P);
+  const manualAll = P.find(p=>p.coverAll && p.photo);
   const fallbackCover = (P.find(p=>p.id===244 && p.photo) || allCover);
-  h += `<div class="hc" onclick="openCatAll()"><img src="images/cover.jpg" onerror="this.onerror=null;this.src='images/${fallbackCover?fallbackCover.photo:''}'" loading="lazy"><span>Всі товари · ${P.length}</span></div>`;
+  const allImg = manualAll ? `<img src="images/${manualAll.photo}" loading="lazy">`
+    : `<img src="images/cover.jpg" onerror="this.onerror=null;this.src='images/${fallbackCover?fallbackCover.photo:''}'" loading="lazy">`;
+  h += `<div class="hc" onclick="openCatAll()">${allImg}<span>Всі товари · ${P.length}</span></div>`;
   MENU_DEF.forEach((d,i)=>{
     const ids = findIdsByNames(d.c);
     const prods = P.filter(p=>p.cats.some(c=>ids.has(c)));
