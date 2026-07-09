@@ -33,6 +33,8 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--acc)}
 .tabs{display:flex;gap:6px;margin-bottom:14px}
 .tab{flex:1;text-align:center;padding:11px;border-radius:10px;font-size:13px;font-weight:600;background:#f0ebe4;cursor:pointer}
 .tab.on{background:var(--txt);color:#fff}
+.mini{padding:5px 9px;border-radius:8px;border:1px solid #e5ddd2;background:#faf7f2;font-size:12px;cursor:pointer}
+.mini:disabled{opacity:.35;cursor:default}
 table.vt{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px}
 table.vt th{text-align:left;font-size:11px;color:var(--mut);padding:4px}
 table.vt td{padding:3px}
@@ -106,6 +108,7 @@ table.vt input{padding:8px;font-size:14px}
   <div class="tabs">
     <div class="tab on" data-t="edit" onclick="tab('edit')">🛍 Товари</div>
     <div class="tab" data-t="add" onclick="tab('add')">➕ Додати</div>
+    <div class="tab" data-t="cats" onclick="tab('cats')">📂 Категорії</div>
   </div>
 
   <!-- ================= ДОДАВАННЯ ================= -->
@@ -154,6 +157,12 @@ table.vt input{padding:8px;font-size:14px}
   </div>
 
   <!-- ================= РЕДАГУВАННЯ ================= -->
+  <!-- ================= КАТЕГОРІЇ ================= -->
+  <div id="t-cats" style="display:none">
+    <div style="font-size:12px;color:var(--mut);margin-bottom:10px">Підкатегорії можна перейменовувати, видаляти, додавати і міняти порядок (він же порядок плиток на сайті). Зміни публікуються одразу.</div>
+    <div id="catTree"></div>
+  </div>
+
   <div id="t-edit">
     <div class="card">
       <input type="text" id="e_q" placeholder="Пошук по назві або ID…" oninput="LIST_LIM=120;renderList()">
@@ -315,6 +324,72 @@ async function commitFile(path,contentB64,message,sha){
   return r.json();
 }
 
+// ─── Керування підкатегоріями ───
+function catCount(cid){return DATA.products.filter(p=>(p.cats||[]).includes(cid)&&!p.hidden).length}
+function renderCatTree(){
+  const el=$('catTree');
+  el.innerHTML=DATA.tree.map(c=>{
+    const kids=(c.children||[]).map((s,i)=>`<div style="display:flex;align-items:center;gap:6px;padding:7px 0 7px 18px;border-bottom:1px solid #f0ebe4">
+      <span style="flex:1;font-size:14px">${s.name} <span style="color:var(--mut);font-size:12px">· ${catCount(s.id)}</span></span>
+      <button class="mini" onclick="catMove('${c.id}',${i},-1)" ${i===0?'disabled':''}>↑</button>
+      <button class="mini" onclick="catMove('${c.id}',${i},1)" ${i===(c.children.length-1)?'disabled':''}>↓</button>
+      <button class="mini" onclick="catRename('${c.id}','${s.id}')">✏️</button>
+      <button class="mini" style="color:#c0392b" onclick="catDelete('${c.id}','${s.id}')">🗑</button>
+    </div>`).join('');
+    return `<div style="background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:10px">
+      <div style="font-weight:700;font-size:14px">${c.name} <span style="color:var(--mut);font-weight:400;font-size:12px">· ${catCount(c.id)} без підкатегорії</span></div>
+      ${kids}
+      <button class="mini" style="margin-top:8px" onclick="catAdd('${c.id}')">+ підкатегорія</button>
+    </div>`;
+  }).join('');
+}
+function findCat(topId){return DATA.tree.find(c=>c.id===topId)}
+async function catPublish(msg){
+  for(const c of DATA.tree){ c.n=catCount(c.id)||c.n; for(const s of (c.children||[])) s.n=catCount(s.id); }
+  try{await commitData(msg);toast('✓ Збережено! Сайт оновиться за 1–3 хв','ok')}
+  catch(e){toast('✗ Помилка збереження: '+e.message,'err')}
+  renderCatTree()
+}
+async function catAdd(topId){
+  const name=(prompt('Назва нової підкатегорії:')||'').trim();
+  if(!name) return;
+  const c=findCat(topId); c.children=c.children||[];
+  if(c.children.some(s=>s.name.toLowerCase()===name.toLowerCase())){toast('Така підкатегорія вже є','err');return}
+  const id=(crypto.randomUUID?crypto.randomUUID():'c'+Date.now()+Math.random().toString(16).slice(2,8));
+  c.children.push({id:id,name:name,raw:name,n:0});
+  DATA.filters=DATA.filters||{}; DATA.filters[id]=[];
+  await catPublish('admin: додано підкатегорію "'+name+'" у '+c.name);
+}
+async function catRename(topId,subId){
+  const c=findCat(topId), s=c.children.find(x=>x.id===subId);
+  const name=(prompt('Нова назва підкатегорії:',s.name)||'').trim();
+  if(!name||name===s.name) return;
+  const old=s.name; s.name=name; s.raw=name;
+  for(const p of DATA.products){
+    if(p.catn&&p.catn.includes(old)&&(p.cats||[]).includes(subId)){
+      p.catn=p.catn.map(n=>n===old?name:n).filter((n,i,arr)=>arr.indexOf(n)===i);
+    }
+  }
+  await catPublish('admin: підкатегорію "'+old+'" перейменовано на "'+name+'"');
+}
+async function catDelete(topId,subId){
+  const c=findCat(topId), s=c.children.find(x=>x.id===subId);
+  const cnt=DATA.products.filter(p=>(p.cats||[]).includes(subId)).length;
+  if(!confirm('Видалити підкатегорію "'+s.name+'"?\n\nТоварів у ній: '+cnt+'. Самі товари НЕ видаляються — вони залишаться в категорії "'+c.name+'" та інших своїх категоріях.')) return;
+  c.children=c.children.filter(x=>x.id!==subId);
+  for(const p of DATA.products){
+    if(p.cats) p.cats=p.cats.filter(x=>x!==subId);
+    if(p.catn) p.catn=p.catn.filter(n=>n!==s.name);
+  }
+  if(DATA.filters) delete DATA.filters[subId];
+  await catPublish('admin: видалено підкатегорію "'+s.name+'"');
+}
+async function catMove(topId,i,dir){
+  const c=findCat(topId), arr=c.children, j=i+dir;
+  if(j<0||j>=arr.length) return;
+  [arr[i],arr[j]]=[arr[j],arr[i]];
+  await catPublish('admin: змінено порядок підкатегорій у '+c.name);
+}
 async function commitData(msg){
   await loadDataShaOnly(); // свіжий sha перед записом
   const content='const DATA = '+JSON.stringify(DATA)+';';
@@ -371,7 +446,7 @@ async function loadDataShaOnly(){
   const files=await ls.json();SHA=files.find(x=>x.name==='data.js').sha;
 }
 
-function tab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===t));$('t-add').style.display=t==='add'?'block':'none';$('t-edit').style.display=t==='edit'?'block':'none'}
+function tab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===t));$('t-add').style.display=t==='add'?'block':'none';$('t-edit').style.display=t==='edit'?'block':'none';$('t-cats').style.display=t==='cats'?'block':'none';if(t==='cats')renderCatTree()}
 
 /* ---------- ДОДАВАННЯ ---------- */
 function flatCats(){const out=[];DATA.tree.forEach(c=>{out.push({id:c.id,name:c.name});(c.children||[]).forEach(s=>out.push({id:s.id,name:c.name+' → '+s.name}))});return out}
