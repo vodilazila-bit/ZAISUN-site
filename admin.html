@@ -71,6 +71,25 @@ table.vt input{padding:8px;font-size:14px}
 .ggrid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:3px solid transparent;cursor:pointer;background:#f0ebe4}
 .ggrid img.on{border-color:var(--acc)}
 .ggrid .gn{font-size:9px;color:var(--mut);word-break:break-all;line-height:1.1;margin-top:2px}
+/* ── Планшет (від 900px) ── */
+@media(min-width:900px){
+  .wrap{max-width:1140px}
+  .savebar .in{max-width:1140px}
+  .tabs{max-width:560px}
+  /* список товарів у 2 колонки */
+  #e_list{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  #e_list .pl{margin-bottom:0}
+  /* категорії у 2 колонки */
+  #catTree{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+  /* режим редагування: список ліворуч, форма праворуч */
+  #t-edit.editing{display:grid;grid-template-columns:380px 1fr;column-gap:18px;align-items:start}
+  #t-edit.editing>.card{grid-column:1}
+  #t-edit.editing #e_list{grid-column:1;display:block;max-height:calc(100vh - 260px);overflow:auto;padding-right:2px}
+  #t-edit.editing #e_moreWrap{grid-column:1}
+  #t-edit.editing #e_form{grid-column:2;grid-row:1/span 3}
+  #t-edit.editing .pl.on{border-color:var(--acc);background:#fdf6ef}
+  .ggrid{max-height:440px}
+}
 </style>
 </head>
 <body>
@@ -169,7 +188,7 @@ table.vt input{padding:8px;font-size:14px}
       <select id="e_catf" onchange="LIST_LIM=120;renderList()" style="width:100%;margin-top:8px;padding:11px;border:1.5px solid var(--line,#ddd);border-radius:10px;font-family:inherit;font-size:14px;background:#fff"></select>
     </div>
     <div id="e_list"></div>
-    <div style="text-align:center;padding:6px 0 14px"><button class="btn sec" id="e_more" style="display:none;max-width:240px" onclick="LIST_LIM+=120;renderList()">Показати ще</button></div>
+    <div id="e_moreWrap" style="text-align:center;padding:6px 0 14px"><button class="btn sec" id="e_more" style="display:none;max-width:240px" onclick="LIST_LIM+=120;renderList()">Показати ще</button></div>
     <div id="e_form" style="display:none">
       <div class="card">
         <div class="flx" style="justify-content:space-between">
@@ -578,7 +597,7 @@ function renderList(){
   const items=all.slice(0,LIST_LIM);
   $('e_more').style.display = all.length>LIST_LIM ? 'inline-block' : 'none';
   $('e_more').textContent = `Показати ще (${all.length-items.length})`;
-  $('e_list').innerHTML=items.map(p=>`<div class="pl">
+  $('e_list').innerHTML=items.map(p=>`<div class="pl" data-pid="${p.id}">
     <div style="display:flex;gap:10px;align-items:center;flex:1;min-width:0" onclick="openEdit(${p.id})">
       ${p.photo?`<img src="images/${p.photo}" loading="lazy">`:`<div class="noi">нема фото</div>`}
       <div style="min-width:0"><div class="nm">#${p.id} · ${p.name}</div>
@@ -621,7 +640,11 @@ async function saveAll(){
 let editPhotoBlob=null,editPhotoPick=null,IMGLIST=null;
 function openEdit(id){
   editId=id;const p=DATA.products.find(x=>x.id===id);
-  $('e_list').style.display='none';$('e_q').parentNode.style.display='none';$('e_form').style.display='block';
+  const wide=window.matchMedia('(min-width:900px)').matches;
+  document.getElementById('t-edit').classList.add('editing');
+  if(!wide){$('e_list').style.display='none';$('e_q').parentNode.style.display='none';}
+  else{document.querySelectorAll('#e_list .pl').forEach(el=>el.classList.toggle('on',el.dataset.pid==String(id)));}
+  $('e_form').style.display='block';
   $('e_title').textContent='#'+p.id;
   editPhotoBlob=null;editPhotoPick=null;$('e_gal').style.display='none';
   showEPreview(p.photo?'images/'+p.photo:null);
@@ -667,7 +690,7 @@ function pickEColor(el){
       document.querySelector('#e_colors .chip[data-c=""]').classList.add('on');
   }
 }
-function closeEdit(){$('e_form').style.display='none';$('e_list').style.display='block';$('e_q').parentNode.style.display='block';editId=null}
+function closeEdit(){document.getElementById('t-edit').classList.remove('editing');document.querySelectorAll('#e_list .pl.on').forEach(el=>el.classList.remove('on'));$('e_form').style.display='none';$('e_list').style.display='block';$('e_q').parentNode.style.display='block';editId=null}
 function showEPreview(src,note){
   $('e_phbox').innerHTML=src?`<img src="${src}"><span>${note||'натисни, щоб замінити'}</span>`:'нема фото — натисни, щоб додати';
 }
