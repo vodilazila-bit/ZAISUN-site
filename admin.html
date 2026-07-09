@@ -453,7 +453,7 @@ function buildFeedXml(){
     const nm=p.name.toLowerCase();
     const gender=/дівчин|дівчат|сукн|сарафан|спідниц/.test(nm)?'female':(/хлопчик|хлопц/.test(nm)?'male':'unisex');
     const ptype=(p.catn||[]).filter(c=>c&&c.toLowerCase()!=='sale').map(xesc).join(' &gt; ');
-    let x=`  <item>\n    <g:id>${p.id}</g:id>\n    <g:title>${xesc(p.name).slice(0,150)}</g:title>\n    <g:description>${xesc((p.desc||'').trim()||p.name).slice(0,4900)}</g:description>\n    <g:link>${FEED_SITE}/?p=${p.id}</g:link>\n    <g:image_link>${FEED_SITE}/images/${encodeURIComponent(p.photo)}</g:image_link>\n    <g:availability>${p.stock?'in stock':'out of stock'}</g:availability>\n    <g:condition>new</g:condition>\n    <g:brand>ZaiSun</g:brand>\n    <g:identifier_exists>no</g:identifier_exists>\n    <g:age_group>kids</g:age_group>\n    <g:gender>${gender}</g:gender>\n`;
+    let x=`  <item>\n    <g:id>${p.id}</g:id>\n    <g:title>${xesc(p.name).slice(0,138)} | ZaiSun</g:title>\n    <g:description>${xesc((p.desc||'').trim()||p.name).slice(0,4900)}</g:description>\n    <g:link>${FEED_SITE}/?p=${p.id}</g:link>\n    <g:image_link>${FEED_SITE}/images/${encodeURIComponent(p.photo)}</g:image_link>\n    <g:availability>${p.stock?'in stock':'out of stock'}</g:availability>\n    <g:condition>new</g:condition>\n    <g:brand>ZaiSun</g:brand>\n    <g:identifier_exists>no</g:identifier_exists>\n    <g:age_group>kids</g:age_group>\n    <g:gender>${gender}</g:gender>\n`;
     if(sale) x+=`    <g:price>${old.toFixed(2)} UAH</g:price>\n    <g:sale_price>${price.toFixed(2)} UAH</g:sale_price>\n`;
     else x+=`    <g:price>${price.toFixed(2)} UAH</g:price>\n`;
     if(p.color) x+=`    <g:color>${xesc(p.color)}</g:color>\n`;
