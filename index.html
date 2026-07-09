@@ -653,6 +653,7 @@ function subSel(id){
   apply();
 }
 function initCat(nm){
+  document.title = nm + ' — дитячий одяг ZaiSun';
   const cq=document.getElementById('catQ'); if(cq) cq.value='';
   curProds.sort((a,b)=>b.season-a.season);
   fSel = {}; pFrom=null; pTo=null;
@@ -838,6 +839,7 @@ function pheroSwitch(i){
 // ─── product ───
 function openProd(id){
   cur = P.find(p=>p.id===id); selSize=null;
+  if(cur) document.title = cur.name + ' — ZaiSun';
   VIEWS[id]=(VIEWS[id]||0)+1;
   try{ localStorage.setItem('zs_views', JSON.stringify(VIEWS)); }catch(e){}
   // schema.org Product для Merchant Center
