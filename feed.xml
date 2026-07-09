@@ -312,7 +312,7 @@
     <g:gender>female</g:gender>
     <g:price>250.00 UAH</g:price>
     <g:sale_price>168.00 UAH</g:sale_price>
-    <g:color>Радуга</g:color>
+    <g:color>Серця</g:color>
     <g:product_type>тепла весна</g:product_type>
   </item>
   <item>
@@ -346,6 +346,7 @@
     <g:gender>female</g:gender>
     <g:price>250.00 UAH</g:price>
     <g:sale_price>168.00 UAH</g:sale_price>
+    <g:color>Акула</g:color>
     <g:product_type>тепла весна</g:product_type>
   </item>
   <item>
@@ -396,6 +397,7 @@
     <g:gender>male</g:gender>
     <g:price>500.00 UAH</g:price>
     <g:sale_price>290.00 UAH</g:sale_price>
+    <g:color>2шапки</g:color>
     <g:product_type>тепла весна</g:product_type>
   </item>
   <item>
@@ -3359,7 +3361,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>235.00 UAH</g:price>
-    <g:color>Синій</g:color>
+    <g:color>Пудра</g:color>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
     <g:product_type>Лосіни, футболки</g:product_type>
   </item>
@@ -3376,7 +3378,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>235.00 UAH</g:price>
-    <g:color>Малиновий</g:color>
+    <g:color>Пудра</g:color>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
     <g:product_type>Лосіни, футболки</g:product_type>
   </item>
@@ -3393,7 +3395,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>235.00 UAH</g:price>
-    <g:color>Чорний</g:color>
+    <g:color>Пудра</g:color>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
     <g:product_type>Лосіни, футболки</g:product_type>
   </item>
@@ -3410,7 +3412,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>235.00 UAH</g:price>
-    <g:color>Бордовий</g:color>
+    <g:color>Пудра</g:color>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
     <g:product_type>Лосіни, футболки</g:product_type>
   </item>
@@ -3511,7 +3513,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>150.00 UAH</g:price>
-    <g:color>Рожева горох</g:color>
+    <g:color>Персикова</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
     <g:product_type>Літо &gt; Косинки, панами</g:product_type>
   </item>
@@ -3545,7 +3547,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>160.00 UAH</g:price>
-    <g:color>Молочний</g:color>
+    <g:color>Молочна</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
     <g:product_type>Літо &gt; Косинки, панами</g:product_type>
   </item>
@@ -3665,7 +3667,7 @@
     <g:gender>unisex</g:gender>
     <g:price>310.00 UAH</g:price>
     <g:sale_price>150.00 UAH</g:sale_price>
-    <g:color>Блакитний</g:color>
+    <g:color>Блакитна</g:color>
     <g:size>44</g:size>
     <g:product_type>Літо &gt; Панама</g:product_type>
   </item>
@@ -3701,7 +3703,7 @@
     <g:gender>unisex</g:gender>
     <g:price>310.00 UAH</g:price>
     <g:sale_price>150.00 UAH</g:sale_price>
-    <g:color>Смужка</g:color>
+    <g:color>Квіти верхні</g:color>
     <g:size>48</g:size>
     <g:product_type>Літо &gt; Панама</g:product_type>
   </item>
@@ -4436,7 +4438,7 @@
     <g:gender>unisex</g:gender>
     <g:price>120.00 UAH</g:price>
     <g:sale_price>110.00 UAH</g:sale_price>
-    <g:color>Темно-синій бантик</g:color>
+    <g:color>Темно-сині єдиноріг</g:color>
     <g:size>3-4р</g:size>
     <g:product_type>Носки колготи &gt; колготи демі</g:product_type>
   </item>
@@ -5034,7 +5036,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>80.00 UAH</g:price>
-    <g:color>Молочний</g:color>
+    <g:color>Білий</g:color>
     <g:size>5-6р</g:size>
     <g:product_type>Носки колготи &gt; Капронові</g:product_type>
   </item>
@@ -5642,7 +5644,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>female</g:gender>
     <g:price>880.00 UAH</g:price>
-    <g:color>Червоний</g:color>
+    <g:color>Червний</g:color>
     <g:size>56/62/68/74/80/86/92/98/104/110/116</g:size>
     <g:product_type>Одяг &gt; Сукні &gt; Подарункові комплекти &gt; Новий Рік</g:product_type>
   </item>
@@ -5659,7 +5661,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>female</g:gender>
     <g:price>935.00 UAH</g:price>
-    <g:color>Червоний</g:color>
+    <g:color>Червний</g:color>
     <g:size>56/62/68/74/80/86/92/98/104/110/116</g:size>
     <g:product_type>Одяг &gt; Сукні &gt; Подарункові комплекти &gt; Новий Рік</g:product_type>
   </item>
@@ -5710,7 +5712,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>female</g:gender>
     <g:price>650.00 UAH</g:price>
-    <g:color>Червоний</g:color>
+    <g:color>Червний</g:color>
     <g:size>56/62/68/74/80/86/92/98/104/110/116</g:size>
     <g:product_type>Одяг &gt; Сукні &gt; Новий Рік &gt; День Валентина</g:product_type>
   </item>
@@ -6478,6 +6480,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>female</g:gender>
     <g:price>805.00 UAH</g:price>
+    <g:color>Бежевий</g:color>
     <g:size>56/62/68/74/80/86</g:size>
     <g:product_type>Одяг &gt; сарафан &gt; Сукні &gt; Подарункові комплекти</g:product_type>
   </item>
@@ -8340,7 +8343,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>250.00 UAH</g:price>
-    <g:color>Персик</g:color>
+    <g:color>Білий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
     <g:product_type>Шапки</g:product_type>
   </item>
@@ -8610,7 +8613,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>65.00 UAH</g:price>
-    <g:color>Білий</g:color>
+    <g:color>Персиковий</g:color>
     <g:size>6-18міс</g:size>
     <g:product_type>гольфи &gt; носки</g:product_type>
   </item>
@@ -8848,7 +8851,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>78.00 UAH</g:price>
-    <g:color>Бежевий/молочний</g:color>
+    <g:color>Бежеві/молочні</g:color>
     <g:size>0-6міс/6-12міс/12-18міс</g:size>
     <g:product_type>носки</g:product_type>
   </item>
@@ -8865,7 +8868,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>60.00 UAH</g:price>
-    <g:color>Сірий</g:color>
+    <g:color>Верхні</g:color>
     <g:size>0-6міс/6-12міс</g:size>
     <g:product_type>носки</g:product_type>
   </item>
@@ -8932,7 +8935,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>110.00 UAH</g:price>
-    <g:color>Жовтий</g:color>
+    <g:color>Синій</g:color>
     <g:size>6-12міс/12-18міс/18-24міс/3-4р</g:size>
     <g:product_type>носки</g:product_type>
   </item>
@@ -8949,7 +8952,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>110.00 UAH</g:price>
-    <g:color>Жовтий</g:color>
+    <g:color>Синій</g:color>
     <g:size>6-12міс/12-18міс/18-24міс/3-4р</g:size>
     <g:product_type>носки</g:product_type>
   </item>
@@ -8966,7 +8969,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>110.00 UAH</g:price>
-    <g:color>Малиновий</g:color>
+    <g:color>Синій</g:color>
     <g:size>6-12міс/12-18міс/18-24міс/3-4р</g:size>
     <g:product_type>носки</g:product_type>
   </item>
@@ -8983,7 +8986,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>110.00 UAH</g:price>
-    <g:color>Молочний</g:color>
+    <g:color>Синій</g:color>
     <g:size>6-12міс/12-18міс/18-24міс/3-4р</g:size>
     <g:product_type>носки</g:product_type>
   </item>
@@ -9891,7 +9894,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>350.00 UAH</g:price>
-    <g:color>Бежевий</g:color>
+    <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
     <g:product_type>тепла весна</g:product_type>
   </item>
@@ -10010,7 +10013,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>375.00 UAH</g:price>
-    <g:color>Молочний</g:color>
+    <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
     <g:product_type>тепла весна &gt; чалма</g:product_type>
   </item>
@@ -10078,7 +10081,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>275.00 UAH</g:price>
-    <g:color>Бордо</g:color>
+    <g:color>Білий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
     <g:product_type>чалма одинарна</g:product_type>
   </item>
