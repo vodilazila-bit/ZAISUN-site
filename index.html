@@ -513,6 +513,7 @@ function money(v){ return v.toLocaleString('uk-UA') + ' ₴'; }
 function go(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
   document.getElementById('pg'+page.charAt(0).toUpperCase()+page.slice(1)).classList.add('show');
+  if(page==='home') document.title = 'ZaiSun — дитячий одяг ручної роботи';
   window.scrollTo(0,0);
 }
 function openMenu(){ document.getElementById('menu').classList.add('show'); document.getElementById('menuOvl').classList.add('show'); document.body.style.overflow='hidden'; }
