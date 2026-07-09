@@ -207,6 +207,10 @@ table.vt input{padding:8px;font-size:14px}
           <label class="sw2" style="margin:0"><input type="checkbox" id="e_nw"><span></span></label>
           <span style="font-size:13px;font-weight:600">🆕 Показувати в стрічці НОВИНКИ на головній</span>
         </div>
+        <div class="flx" style="margin-top:10px">
+          <label class="sw2" style="margin:0"><input type="checkbox" id="e_hid"><span></span></label>
+          <span style="font-size:13px;font-weight:600">🙈 Приховати на сайті (товар не видно покупцям)</span>
+        </div>
         <div class="row" style="margin-top:16px">
           <button class="btn" onclick="saveEdit()">💾 Зберегти</button>
           <button class="btn dng" onclick="delProduct()">🗑 Видалити</button>
@@ -534,6 +538,7 @@ function openEdit(id){
   $('e_name').value=p.name;$('e_desc').value=p.desc||'';$('e_stock').checked=!!p.stock;
   $('e_cover').checked=!!p.cover;
   $('e_nw').checked=!!p.nw;
+  $('e_hid').checked=!!p.hidden;
   $('e_ncolor').value='';
   $('e_cats').innerHTML = flatCats().map(c=>
     `<span class="chip ${(p.cats||[]).includes(c.id)?'on':''}" data-id="${c.id}" data-nm="${c.name.includes('→')?c.name.split('→')[1].trim():c.name}" onclick="this.classList.toggle('on')">${c.name}</span>`
@@ -646,6 +651,7 @@ async function saveEdit(){
   p.cover=$('e_cover').checked;
   // новинка на головній
   if($('e_nw').checked) p.nw=1; else delete p.nw;
+  if($('e_hid').checked) p.hidden=true; else delete p.hidden;
   // оновити фільтри категорій (нові розміри/колір)
   (p.cats||[]).forEach(cid=>{
     if(!DATA.filters[cid])DATA.filters[cid]=[];
