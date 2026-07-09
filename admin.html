@@ -135,6 +135,7 @@ table.vt input{padding:8px;font-size:14px}
     <div class="tab on" data-t="edit" onclick="tab('edit')">🛍 Товари</div>
     <div class="tab" data-t="add" onclick="tab('add')">➕ Додати</div>
     <div class="tab" data-t="cats" onclick="tab('cats')">📂 Категорії</div>
+    <div class="tab" data-t="ord" onclick="tab('ord')">📬 Замовлення</div>
   </div>
 
   <!-- ================= ДОДАВАННЯ ================= -->
@@ -184,6 +185,19 @@ table.vt input{padding:8px;font-size:14px}
   </div>
 
   <!-- ================= РЕДАГУВАННЯ ================= -->
+  <!-- ================= ЗАМОВЛЕННЯ ================= -->
+  <div id="t-ord" style="display:none">
+    <div class="flx" style="gap:8px;margin-bottom:12px">
+      <select id="ordRange" onchange="renderOrders()" style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--bd);background:#fff">
+        <option value="today">Сьогодні</option>
+        <option value="7">Останні 7 днів</option>
+        <option value="all">Всі</option>
+      </select>
+      <button class="mini" onclick="loadOrders(true)">🔄 Оновити</button>
+    </div>
+    <div id="ordList" style="font-size:13px;color:var(--mut)">Завантажую…</div>
+  </div>
+
   <!-- ================= КАТЕГОРІЇ ================= -->
   <div id="t-cats" style="display:none">
     <div style="font-size:12px;color:var(--mut);margin-bottom:10px">Підкатегорії можна перейменовувати, видаляти, додавати і міняти порядок (він же порядок плиток на сайті). Зміни публікуються одразу.</div>
@@ -355,6 +369,44 @@ async function commitFile(path,contentB64,message,sha){
 }
 
 // ─── Керування підкатегоріями ───
+const ORDER_RELAY='https://script.google.com/macros/s/AKfycbwn4KyZGlxa702OBBzuUkvu9V-1Tf0GwnQ1D5clmmiSafJQuG2mVidYOoYXrBwZB4zS/exec';
+const ORDERS_KEY='zs7391k';
+let ORDERS=null;
+async function loadOrders(force){
+  const el=$('ordList');
+  if(ORDERS && !force){ renderOrders(); return; }
+  el.textContent='Завантажую…';
+  try{
+    const r=await fetch(ORDER_RELAY+'?orders=1&key='+ORDERS_KEY);
+    ORDERS=await r.json();
+    renderOrders();
+  }catch(e){ el.innerHTML='Не вдалося завантажити ('+(e&&e.message||e)+').<br>Перевір, що скрипт оновлено до версії з журналом.'; }
+}
+function renderOrders(){
+  const el=$('ordList'); if(!ORDERS){el.textContent='—';return;}
+  const rng=$('ordRange').value;
+  const now=new Date(); const from=new Date(now);
+  if(rng==='today') from.setHours(0,0,0,0);
+  else if(rng==='7') from.setDate(now.getDate()-7);
+  else from.setTime(0);
+  const list=ORDERS.filter(o=>new Date(o.dt)>=from).reverse();
+  if(!list.length){ el.innerHTML='<div style="text-align:center;padding:30px;color:var(--mut)">Замовлень за період немає</div>'; return; }
+  const money=v=>String(v).replace(/\s*грн\s*$/,'')+' грн';
+  el.innerHTML='<div style="font-size:12px;color:var(--mut);margin-bottom:8px">Замовлень: '+list.length+'</div>'+list.map(o=>{
+    const d=new Date(o.dt);
+    const dt=('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+    const test=/тест/i.test(o.name||'');
+    return `<div style="background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:10px;${test?'opacity:.55':''}">
+      <div style="display:flex;justify-content:space-between;font-weight:700">
+        <span>${o.name||'—'} ${test?'<span style="font-size:10px;color:#c98a5e">ТЕСТ</span>':''}</span><span>${money(o.sum||'—')}</span>
+      </div>
+      <div style="color:var(--mut);font-size:12px;margin:3px 0">${dt} · <a href="tel:${o.phone}" style="color:inherit">${o.phone||''}</a>${o.email?' · '+o.email:''}</div>
+      <div style="font-size:12px;margin:3px 0">📍 ${o.city||''} — ${(o.np||'').slice(0,60)}</div>
+      <div style="font-size:12.5px;white-space:pre-wrap;margin-top:6px">${o.items||''}</div>
+      ${o.comm&&o.comm!=='-'?`<div style="font-size:12px;color:var(--mut);margin-top:4px">💬 ${o.comm}</div>`:''}
+    </div>`;
+  }).join('');
+}
 function catCount(cid){return DATA.products.filter(p=>(p.cats||[]).includes(cid)&&!p.hidden).length}
 function renderCatTree(){
   const el=$('catTree');
@@ -487,7 +539,7 @@ async function loadDataShaOnly(){
   const files=await ls.json();SHA=files.find(x=>x.name==='data.js').sha;
 }
 
-function tab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===t));$('t-add').style.display=t==='add'?'block':'none';$('t-edit').style.display=t==='edit'?'block':'none';$('t-cats').style.display=t==='cats'?'block':'none';if(t==='cats')renderCatTree()}
+function tab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===t));$('t-add').style.display=t==='add'?'block':'none';$('t-edit').style.display=t==='edit'?'block':'none';$('t-cats').style.display=t==='cats'?'block':'none';$('t-ord').style.display=t==='ord'?'block':'none';if(t==='cats')renderCatTree();if(t==='ord')loadOrders()}
 
 /* ---------- ДОДАВАННЯ ---------- */
 function flatCats(){const out=[];DATA.tree.forEach(c=>{out.push({id:c.id,name:c.name});(c.children||[]).forEach(s=>out.push({id:s.id,name:c.name+' → '+s.name}))});return out}
