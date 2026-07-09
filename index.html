@@ -1038,12 +1038,12 @@ async function submitOrder(){
     const r = await fetch('https://formsubmit.co/ajax/'+ORDER_EMAIL, {
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body: JSON.stringify({
+      body: JSON.stringify(Object.assign({
         _subject:'🛍 Нове замовлення з сайту ZaiSun — '+total+' грн',
         _template:'box',
-        "Ім'я": n, "Телефон": p, "Email": em||'-', "Місто": city, "Відділення НП": np,
+        "Ім'я": n, "Телефон": p, "Місто": city, "Відділення НП": np,
         "Товари": itemsTxt, "Сума": total+' грн', "Коментар": comm||'-'
-      })
+      }, (em && em.includes('@')) ? {"Пошта клієнта": em} : {}))
     });
     if(!r.ok) throw new Error('send failed');
     try{
