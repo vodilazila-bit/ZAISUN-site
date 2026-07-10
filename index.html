@@ -464,7 +464,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       <div class="mprod"><img id="mimg" src=""><div class="in"><strong id="mname"></strong><div id="mmeta" style="color:var(--soft);font-size:.78rem;margin-bottom:3px"></div><div class="pr" id="mprice"></div></div></div>
       <div class="mform">
         <div class="fld"><label>Ваше ім'я *</label><input type="text" id="fName"></div>
-        <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" value="+380" inputmode="numeric" maxlength="13" oninput="phoneFix(this)"><div class="ferr" id="phoneErr"></div></div>
+        <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" value="+380" inputmode="numeric" maxlength="13" oninput="phoneFix(this)" onblur="phoneBlur(this)"><div class="ferr" id="phoneErr"></div></div>
         <div class="fld"><label>Email <span style="text-transform:none;letter-spacing:0;font-weight:400;opacity:.75">— не обов'язково</span></label><input type="email" id="fEmail" autocomplete="email"></div>
         <div class="frw">
           <div class="fld sugg"><label>Місто *</label><input type="text" id="fCity" placeholder="Почни вводити місто" autocomplete="off" oninput="npCity(this.value)"><div class="sugg-list" id="cityList"></div></div>
@@ -1044,16 +1044,22 @@ function phoneFix(inp){
   else if(d.indexOf('0')===0) d = d.slice(1);
   d = d.slice(0,9);
   inp.value = '+380' + d;
+  // під час введення не лаємось — тільки знімаємо помилку, коли номер став повним
+  if(d.length===9 || d.length===0){
+    inp.classList.remove('bad');
+    const err = document.getElementById('phoneErr');
+    if(err) err.classList.remove('show');
+  }
+}
+function phoneBlur(inp){
+  const d = inp.value.replace(/\D/g,'').replace(/^380/,'');
   const err = document.getElementById('phoneErr');
-  if(err){
-    if(d.length>0 && d.length<9){
-      inp.classList.add('bad');
-      err.textContent = 'Неповний номер: після +380 має бути 9 цифр, зараз ' + d.length;
-      err.classList.add('show');
-    } else {
-      inp.classList.remove('bad');
-      err.classList.remove('show');
-    }
+  if(d.length>0 && d.length<9){
+    inp.classList.add('bad');
+    if(err){ err.textContent = 'Неповний номер телефону: має бути +380 і ще 9 цифр'; err.classList.add('show'); }
+  } else {
+    inp.classList.remove('bad');
+    if(err) err.classList.remove('show');
   }
 }
 function paySel(inp){
