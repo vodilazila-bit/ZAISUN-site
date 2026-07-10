@@ -1342,9 +1342,9 @@ let NAVSILENT = false, NAVDEPTH = 0, LASTVIEW = {v:'home'};
 function pushNav(st, url){ if(NAVSILENT) return; NAVDEPTH++; LASTVIEW = st.o ? LASTVIEW : st; history.pushState(st,'', url||location.pathname); }
 const _openCat = openCat, _openCatAll = openCatAll, _openMenuCat = openMenuCat, _openProd = openProd, _closeProd = closeProd;
 const _openMenu = openMenu, _openCart = openCart, _openSearch = openSearch, _openSheet = openSheet, _openOrder = openOrder, _checkoutCart = checkoutCart;
-openCat = function(id){ _openCat(id); pushNav({v:'cat', m:'id', id}); };
-openCatAll = function(){ _openCatAll(); pushNav({v:'cat', m:'all'}); };
-openMenuCat = function(i){ _openMenuCat(i); pushNav({v:'cat', m:'menu', i}); };
+openCat = function(id){ _openCat(id); pushNav({v:'cat', m:'id', id}, location.pathname + '?cat=' + id); };
+openCatAll = function(){ _openCatAll(); pushNav({v:'cat', m:'all'}, location.pathname + '?cat=all'); };
+openMenuCat = function(i){ _openMenuCat(i); pushNav({v:'cat', m:'menu', i}, location.pathname + '?cat=m' + i); };
 openProd = function(id){ _openProd(id); pushNav({v:'prod', id}, location.pathname + '?p=' + id); };
 // накладки: пушимо стан-дублікат поточного екрана з позначкою o (overlay),
 // щоб жест "назад" закривав накладку і лишав той самий екран
@@ -1357,6 +1357,15 @@ checkoutCart = function(){ _checkoutCart(); if(CART.length) pushNav({...LASTVIEW
 closeProd = function(){
   if(NAVDEPTH > 0) history.back();
   else _closeProd();
+};
+const _subSel0 = subSel;
+subSel = function(id){
+  _subSel0(id);
+  try{
+    const u = new URL(location.href);
+    if(id) u.searchParams.set('sub', id); else u.searchParams.delete('sub');
+    history.replaceState(history.state, '', u.pathname + (u.search||''));
+  }catch(e){}
 };
 window.addEventListener('popstate', e => {
   NAVDEPTH = Math.max(0, NAVDEPTH - 1);
@@ -1374,11 +1383,20 @@ window.addEventListener('popstate', e => {
     else go('home');
   } finally { NAVSILENT = false; }
 });
-history.replaceState({v:'home'}, '', location.pathname);
-// прямий лінк на товар: /?p=123 (для Merchant Center та шерингу)
+// відновлення стану після F5 / прямі лінки: /?p=123, /?cat=..., &sub=...
 (function(){
-  const pid = parseInt(new URLSearchParams(location.search).get('p'));
-  if(pid && P.find(p=>p.id===pid)) openProd(pid);
+  const q = new URLSearchParams(location.search);
+  const pid = parseInt(q.get('p'));
+  const cat = q.get('cat');
+  const sub = q.get('sub');
+  history.replaceState({v:'home'}, '', location.pathname);
+  if(pid && P.find(p=>p.id===pid)){ openProd(pid); return; }
+  if(cat){
+    if(cat === 'all') openCatAll();
+    else if(cat.charAt(0) === 'm' && MENU_DEF[parseInt(cat.slice(1))]) openMenuCat(parseInt(cat.slice(1)));
+    else openCat(cat);
+    if(sub){ try{ subSel(sub); }catch(e){} }
+  }
 })();
 
 </script>
