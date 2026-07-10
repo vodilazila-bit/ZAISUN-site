@@ -227,6 +227,8 @@ section{padding:26px 18px 34px}
 .payopt{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;margin-top:8px;font-size:.9rem;cursor:pointer;background:#fff}
 .payopt input{accent-color:#6B5D50;width:17px;height:17px;flex:none}
 .payopt.on{border-color:#6B5D50;background:#fdf8f2}
+.ptag.clr-sel{cursor:pointer;border:1.5px solid transparent}
+.ptag.clr-sel.on{border-color:#6B5D50;background:#fdf8f2;font-weight:600}
 .phero .noimg{position:absolute;inset:0;display:grid;place-items:center;color:var(--soft);font-size:.7rem;letter-spacing:.2em;background:linear-gradient(150deg,#F0E0CE,#DCC4A8)}
 .pinfo{padding:20px 18px 34px;max-width:560px;margin:0 auto}
 .pcat2{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--rose-d);margin-bottom:8px}
@@ -524,7 +526,7 @@ function rankScore(p){
 function popScore(p){
   return (VIEWS[p.id]||0)*5 + (p.cover?4:0) + (p.old?2:0) + (p.stock?2:0) + typeBoost(p);
 }
-let curCatId = null, curCatName = '', curProds = [], cur = null, selSize = null;
+let curCatId = null, curCatName = '', curProds = [], cur = null, selSize = null, selColor = null;
 let fSel = {}, pFrom = null, pTo = null, catMin = 0, catMax = 0;
 let curSubs = [], curBase = [], curSub = '';
 
@@ -861,7 +863,7 @@ function pheroSwitch(i){
 }
 // ─── product ───
 function openProd(id){
-  cur = P.find(p=>p.id===id); selSize=null;
+  cur = P.find(p=>p.id===id); selSize=null; selColor=null;
   if(cur) document.title = cur.name + ' — ZaiSun';
   VIEWS[id]=(VIEWS[id]||0)+1;
   try{ localStorage.setItem('zs_views', JSON.stringify(VIEWS)); }catch(e){}
@@ -894,7 +896,11 @@ function openProd(id){
   updPrice(cur.price, cur.old);
   let tags = '';
   const curColors = (cur.opts && cur.opts['Колір']) || (cur.color?[cur.color]:[]);
-  curColors.forEach(c=>{ tags += `<span class="ptag"><span class="cd" style="background:${HEX[c]||'#D8C8B8'}"></span>${c}</span>`; });
+  if(curColors.length===1) selColor=curColors[0];
+  curColors.forEach(c=>{
+    const sel = curColors.length>1;
+    tags += `<span class="ptag ${sel?'clr-sel':''} ${selColor===c?'on':''}" ${sel?`onclick="selClr(this,'${c.replace(/'/g,"\\'")}')"`:''}><span class="cd" style="background:${HEX[c]||'#D8C8B8'}"></span>${c}</span>`;
+  });
   for(const [k,v] of Object.entries(cur.opts)){
     if(k!=='Колір') tags += `<span class="ptag">${k}: ${v.join(', ')}</span>`;
   }
@@ -933,6 +939,10 @@ function renderRelated(){
 function updPrice(p, o){
   document.getElementById('ppr').innerHTML = o ? `${money(p)} <s>${money(o)}</s>` : money(p);
 }
+function selClr(el, c){
+  selColor = c;
+  document.querySelectorAll('.ptag.clr-sel').forEach(t=>t.classList.toggle('on', t===el));
+}
 function selSz(el, s){
   selSize = s;
   document.querySelectorAll('.szc').forEach(c=>c.classList.remove('on'));
@@ -944,6 +954,7 @@ function backToCat(){ go('cat'); }
 
 // ─── order ───
 function openOrder(){
+  if(!cartMode && cur && needColor()) return;
   const ph=document.getElementById('fPhone'); if(ph && !ph.value.trim()) ph.value='+380';
   try{
     const vv = selSize && cur.var[selSize] ? cur.var[selSize] : {p:cur.price};
@@ -1039,12 +1050,12 @@ async function submitOrder(){
     itemsTxt = CART.map(it=>{
       const pr=P.find(x=>x.id===it.id); const price=cartPrice(it);
       total += price*it.qty;
-      return `#${it.id} ${pr?pr.name:''} | розмір: ${it.size||'-'} | ${it.qty} шт × ${price} грн`;
+      return `#${it.id} ${pr?pr.name:''}${it.clr?' | колір: '+it.clr:''} | розмір: ${it.size||'-'} | ${it.qty} шт × ${price} грн`;
     }).join('\n');
   } else if(cur){
     const v = size && cur.var && cur.var[size] ? cur.var[size] : {p:cur.price};
     total = v.p;
-    itemsTxt = `#${cur.id} ${cur.name} | розмір: ${size||'-'} | 1 шт × ${v.p} грн`;
+    itemsTxt = `#${cur.id} ${cur.name}${selColor?' | колір: '+selColor:''} | розмір: ${size||'-'} | 1 шт × ${v.p} грн`;
   }
   const btn=document.getElementById('osubBtn');
   btn.disabled=true; btn.textContent='Надсилаю…';
@@ -1178,11 +1189,20 @@ function cartPrice(it){
   const p = P.find(x=>x.id===it.id); if(!p) return 0;
   const v = it.size && p.var[it.size]; return v ? v.p : p.price;
 }
+function needColor(){
+  const cc = (cur && ((cur.opts&&cur.opts['Колір'])||(cur.color?[cur.color]:[])))||[];
+  if(cc.length>1 && !selColor){
+    alert('Оберіть, будь ласка, колір 🙂');
+    return true;
+  }
+  return false;
+}
 function addToCart(){
   if(!cur) return;
+  if(needColor()) return;
   const size = selSize || (cur.sizes[0]||'');
-  const ex = CART.find(i=>i.id===cur.id && i.size===size);
-  if(ex) ex.qty++; else CART.push({id:cur.id, size, qty:1});
+  const ex = CART.find(i=>i.id===cur.id && i.size===size && (i.clr||'')===(selColor||''));
+  if(ex) ex.qty++; else CART.push({id:cur.id, size, clr:selColor||'', qty:1});
   try{
     const v = (cur.var && cur.var[size]) ? cur.var[size] : {p: cur.price};
     gtag('event','add_to_cart',{currency:'UAH', value:v.p, items:[{item_id:String(cur.id), item_name:cur.name, price:v.p, item_variant:size, item_category:(cur.catn&&cur.catn[0])||'', quantity:1}]});
@@ -1209,7 +1229,7 @@ function renderCart(){
     const pr = cartPrice(it); total += pr*it.qty;
     const img = p.photo ? `<img src="images/${p.photo}">` : '<img>';
     return `<div class="ci">${img}
-      <div class="in"><div class="n">${p.name}</div><div class="m">${it.size||''}</div><div class="p">${money(pr)}</div></div>
+      <div class="in"><div class="n">${p.name}</div><div class="m">${[it.clr,it.size].filter(Boolean).join(' · ')}</div><div class="p">${money(pr)}</div></div>
       <div class="qty">
         <button onclick="cartQty(${idx},-1)">−</button><span>${it.qty}</span><button onclick="cartQty(${idx},1)">+</button>
       </div>
