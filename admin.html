@@ -266,6 +266,7 @@ table.vt input{padding:8px;font-size:14px}
         </div>
         <div class="row" style="margin-top:16px">
           <button class="btn" onclick="saveEdit()">💾 Зберегти</button>
+          <button class="btn sec" onclick="dupProduct()">📄 Дублювати</button>
           <button class="btn dng" onclick="delProduct()">🗑 Видалити</button>
         </div>
       </div>
@@ -711,6 +712,33 @@ function renderEPhotos(){
     </div>`).join('')+(editPhotos.length<5?'<button class="add" onclick="document.getElementById(&quot;e_file&quot;).click()">+</button>':'');
 }
 function ephRemove(i){editPhotos.splice(i,1);renderEPhotos()}
+async function dupProduct(){
+  if(!editId) return;
+  const src = DATA.products.find(x=>x.id===editId);
+  if(!src) return;
+  if(!confirm('Створити копію товару «'+src.name+'»?\n\nСкопіюється все, КРІМ фото — його додаси окремо.')) return;
+  const copy = JSON.parse(JSON.stringify(src));
+  copy.id = Math.max(...DATA.products.map(p=>p.id)) + 1;
+  copy.name = src.name + ' (копія)';
+  copy.photo = '';
+  delete copy.photos;
+  delete copy.cover; delete copy.coverCat; delete copy.coverAll;
+  delete copy.nw;
+  DATA.products.push(copy);
+  // лічильники категорій
+  const bump=(node)=>{ if((copy.cats||[]).includes(node.id)) node.n=(node.n||0)+1; (node.children||[]).forEach(bump); };
+  DATA.tree.forEach(bump);
+  try{
+    await commitData('admin: дубльовано товар #'+src.id+' -> #'+copy.id);
+    toast('✓ Копію #'+copy.id+' створено — додай фото і зміни назву','ok');
+    $('stat').textContent='✓ '+DATA.products.length+' товарів';
+    renderList();
+    openEdit(copy.id);
+  }catch(e){
+    DATA.products = DATA.products.filter(x=>x.id!==copy.id);
+    toast('Помилка: '+e.message,'err');
+  }
+}
 async function quickDel(id){
   const p=DATA.products.find(x=>x.id===id); if(!p) return;
   if(!confirm('Видалити товар #'+id+' «'+p.name+'» назавжди?')) return;
