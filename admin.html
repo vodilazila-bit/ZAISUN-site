@@ -248,10 +248,7 @@ table.vt input{padding:8px;font-size:14px}
           <input type="text" id="e_nsize" placeholder="Новий розмір: 74 або 6-12міс">
           <button class="btn sec sm" style="flex:0 0 110px" onclick="addSizeRow()">+ Розмір</button>
         </div>
-        <div class="flx" style="margin-top:14px">
-          <label class="sw2" style="margin:0"><input type="checkbox" id="e_cover"><span></span></label>
-          <span style="font-size:13px;font-weight:600">⭐ Головний у категорії — його фото стане обкладинкою</span>
-        </div>
+        <div id="e_coverBox" style="margin-top:14px"></div>
         <div class="flx" style="margin-top:10px">
           <label class="sw2" style="margin:0"><input type="checkbox" id="e_nw"><span></span></label>
           <span style="font-size:13px;font-weight:600">🆕 Показувати в стрічці НОВИНКИ на головній</span>
@@ -712,6 +709,25 @@ function renderEPhotos(){
     </div>`).join('')+(editPhotos.length<5?'<button class="add" onclick="document.getElementById(&quot;e_file&quot;).click()">+</button>':'');
 }
 function ephRemove(i){editPhotos.splice(i,1);renderEPhotos()}
+let editCoverCat=undefined;
+function renderCoverBox(p){
+  editCoverCat = p.coverCat || (p.cover ? '__legacy__' : '');
+  const el=$('e_coverBox'); if(!el) return;
+  const cats=(p.cats||[]);
+  if(!cats.length){ el.innerHTML='<div style="font-size:12px;color:var(--mut)">Спочатку обери категорії — тоді зможеш призначити обкладинку</div>'; return; }
+  const nameById=id=>{ for(const c of DATA.tree){ if(c.id===id)return c.name; for(const s of (c.children||[])) if(s.id===id)return c.name+' → '+s.name; } return id; };
+  el.innerHTML='<div style="font-size:13px;font-weight:600;margin-bottom:8px">⭐ Зробити фото обкладинкою категорії:</div>'+
+    cats.map(cid=>{
+      const on=(editCoverCat===cid)||(editCoverCat==='__legacy__');
+      return `<div class="flx" style="margin:6px 0"><label class="sw2" style="margin:0"><input type="checkbox" ${on?'checked':''} onchange="pickCoverCat('${cid}',this.checked)"><span></span></label><span style="font-size:13px">${nameById(cid)}</span></div>`;
+    }).join('');
+}
+function pickCoverCat(cid,on){
+  editCoverCat = on ? cid : '';
+  document.querySelectorAll('#e_coverBox input[type=checkbox]').forEach(chk=>{
+    if(chk.getAttribute('onchange').indexOf("'"+cid+"'")<0) chk.checked=false;
+  });
+}
 async function dupProduct(){
   if(!editId) return;
   const src = DATA.products.find(x=>x.id===editId);
@@ -785,7 +801,7 @@ function openEdit(id){
   editPhotoBlob=null;editPhotoPick=null;$('e_gal').style.display='none';
   editPhotos=(p.photos&&p.photos.length?p.photos:(p.photo?[p.photo]:[])).map(fn=>({fn:fn}));renderEPhotos();
   $('e_name').value=p.name;$('e_desc').value=p.desc||'';$('e_stock').checked=!!p.stock;
-  $('e_cover').checked=!!p.cover;
+  renderCoverBox(p);
   $('e_nw').checked=!!p.nw;
   $('e_hid').checked=!!p.hidden;
   $('e_covall').checked=!!p.coverAll;
