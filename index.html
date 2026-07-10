@@ -1143,11 +1143,15 @@ async function submitOrder(){
         const v = size && cur.var && cur.var[size] ? cur.var[size] : {p:cur.price};
         gaItems = [{item_id:String(cur.id),item_name:cur.name,price:v.p,quantity:1,item_variant:size||''}];
       }
-      gtag('event','purchase',{
-        transaction_id: 'ZS-'+Date.now(),
-        value: total, currency:'UAH', items: gaItems
-      });
-      gtag('event','generate_lead',{currency:'UAH', value: total});
+      if(payUrl){
+        sessionStorage.setItem('zs_pend', JSON.stringify({t: total, items: gaItems, id: 'ZS-'+Date.now()}));
+      } else {
+        gtag('event','purchase',{
+          transaction_id: 'ZS-'+Date.now(),
+          value: total, currency:'UAH', items: gaItems
+        });
+        gtag('event','generate_lead',{currency:'UAH', value: total});
+      }
     }catch(e){}
     if(payUrl){
       if(cartMode){ CART=[]; saveCart(); cartMode=false; }
@@ -1205,6 +1209,14 @@ let CART = [];
 try{ CART = JSON.parse(localStorage.getItem('zaisun_cart')||'[]'); }catch(e){ CART=[]; }
 if(location.search.indexOf('paid=1')>=0){
   history.replaceState(null,'',location.pathname);
+  try{
+    const pend = JSON.parse(sessionStorage.getItem('zs_pend')||'null');
+    if(pend){
+      sessionStorage.removeItem('zs_pend');
+      gtag('event','purchase',{transaction_id: pend.id, value: pend.t, currency:'UAH', items: pend.items||[]});
+      gtag('event','generate_lead',{currency:'UAH', value: pend.t});
+    }
+  }catch(e){}
   setTimeout(()=>{
     const w=document.createElement('div');
     w.style.cssText='position:fixed;inset:0;z-index:600;background:rgba(58,48,40,.45);display:grid;place-items:center;padding:20px';
