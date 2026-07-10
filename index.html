@@ -229,6 +229,9 @@ section{padding:26px 18px 34px}
 .payopt.on{border-color:#6B5D50;background:#fdf8f2}
 .ptag.clr-sel{cursor:pointer;border:1.5px solid transparent}
 .ptag.clr-sel.on{border-color:#6B5D50;background:#fdf8f2;font-weight:600}
+.fld input.bad{border-color:#C0392B !important;background:#FDF3F2}
+.ferr{display:none;color:#C0392B;font-size:11px;margin-top:4px;line-height:1.3}
+.ferr.show{display:block}
 .phero .noimg{position:absolute;inset:0;display:grid;place-items:center;color:var(--soft);font-size:.7rem;letter-spacing:.2em;background:linear-gradient(150deg,#F0E0CE,#DCC4A8)}
 .pinfo{padding:20px 18px 34px;max-width:560px;margin:0 auto}
 .pcat2{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--rose-d);margin-bottom:8px}
@@ -461,7 +464,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       <div class="mprod"><img id="mimg" src=""><div class="in"><strong id="mname"></strong><div id="mmeta" style="color:var(--soft);font-size:.78rem;margin-bottom:3px"></div><div class="pr" id="mprice"></div></div></div>
       <div class="mform">
         <div class="fld"><label>Ваше ім'я *</label><input type="text" id="fName"></div>
-        <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" value="+380" inputmode="numeric" maxlength="13" oninput="phoneFix(this)"></div>
+        <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" value="+380" inputmode="numeric" maxlength="13" oninput="phoneFix(this)"><div class="ferr" id="phoneErr"></div></div>
         <div class="fld"><label>Email <span style="text-transform:none;letter-spacing:0;font-weight:400;opacity:.75">— не обов'язково</span></label><input type="email" id="fEmail" autocomplete="email"></div>
         <div class="frw">
           <div class="fld sugg"><label>Місто *</label><input type="text" id="fCity" placeholder="Почни вводити місто" autocomplete="off" oninput="npCity(this.value)"><div class="sugg-list" id="cityList"></div></div>
@@ -956,6 +959,7 @@ function backToCat(){ go('cat'); }
 function openOrder(){
   if(!cartMode && cur && needColor()) return;
   const ph=document.getElementById('fPhone'); if(ph && !ph.value.trim()) ph.value='+380';
+  if(ph) phoneFix(ph);
   try{
     const vv = selSize && cur.var[selSize] ? cur.var[selSize] : {p:cur.price};
     gtag('event','begin_checkout',{currency:'UAH',value:vv.p,items:[{item_id:String(cur.id),item_name:cur.name,price:vv.p}]});
@@ -1040,6 +1044,17 @@ function phoneFix(inp){
   else if(d.indexOf('0')===0) d = d.slice(1);
   d = d.slice(0,9);
   inp.value = '+380' + d;
+  const err = document.getElementById('phoneErr');
+  if(err){
+    if(d.length>0 && d.length<9){
+      inp.classList.add('bad');
+      err.textContent = 'Неповний номер: після +380 має бути 9 цифр, зараз ' + d.length;
+      err.classList.add('show');
+    } else {
+      inp.classList.remove('bad');
+      err.classList.remove('show');
+    }
+  }
 }
 function paySel(inp){
   document.querySelectorAll('.payopt').forEach(l=>l.classList.toggle('on', l.contains(inp)));
