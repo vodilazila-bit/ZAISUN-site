@@ -23,6 +23,8 @@ body{font-family:'Montserrat',sans-serif;background:#FDFAF6;color:#3A3028;-webki
 a{color:inherit;text-decoration:none}
 :root{--cream:#FBEFE1;--petal:#F9F0E7;--blush:#EFDCCB;--rose:#D9A990;--rose-d:#C2826A;--ink:#6B5D50;--mid:#8A7D6F;--soft:#9E9189;--line:rgba(58,48,40,.1);--serif:'Montserrat',sans-serif}
 html{scrollbar-gutter:stable both-edges}
+body{overflow-x:hidden}
+.pc,.hc,.pt{min-width:0}
 
 .topbar{background:#C9A186;color:#FDF8F2;text-align:center;font-size:.74rem;letter-spacing:.05em;padding:8px 14px;font-weight:500}
 .hdr{background:#FBEFE1;display:flex;align-items:center;justify-content:flex-end;padding:10px 20px 12px;position:sticky;top:0;z-index:100;min-height:78px;position:sticky}
@@ -95,7 +97,7 @@ section{padding:26px 18px 34px}
 .sec-k{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rose-d);margin-bottom:8px;text-align:center}
 .sec-t{font-family:var(--serif);font-weight:700;font-size:1.45rem;text-align:center;margin-bottom:22px}
 .sec-t em{font-style:normal}
-.home-cats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:600px;margin:0 auto}
+.home-cats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:600px;margin:0 auto}
 @media(min-width:700px){.home-cats{grid-template-columns:repeat(2,1fr);max-width:900px;gap:16px}}
 @media(min-width:1050px){.home-cats{grid-template-columns:repeat(3,1fr);max-width:1200px}}
 .hc{aspect-ratio:4/4.2;border-radius:14px;position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding:12px 10px 20px;cursor:pointer}
@@ -139,7 +141,7 @@ section{padding:26px 18px 34px}
 .phead h1{font-family:var(--serif);font-weight:700;font-size:1.55rem}
 .pcount{font-size:.78rem;color:var(--soft);margin-top:4px}
 .subcats{display:flex;gap:8px;padding:12px 18px 0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.subcats.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;overflow:visible;padding:14px 18px 2px;max-width:600px;margin:0 auto;width:100%}
+.subcats.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;overflow:visible;padding:14px 18px 2px;max-width:600px;margin:0 auto;width:100%}
 @media(min-width:700px){.subcats.grid{grid-template-columns:repeat(2,1fr);max-width:900px;gap:16px}}
 @media(min-width:1050px){.subcats.grid{grid-template-columns:repeat(3,1fr);max-width:1200px}}
 .subcats.grid .hc span{font-size:.85rem;padding:8px 16px}
@@ -163,8 +165,8 @@ section{padding:26px 18px 34px}
 .fpill{display:flex;align-items:center;gap:6px;white-space:nowrap;padding:6px 12px;border-radius:20px;font-size:.76rem;background:var(--petal);color:var(--mid);flex:none}
 .fpill .cd{width:12px;height:12px;border-radius:50%;border:1px solid var(--line)}
 .fpill button{border:none;background:none;color:var(--soft);font-size:1.05rem;line-height:1;padding:0 0 0 2px;cursor:pointer}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:4px 18px 0;max-width:940px;margin:0 auto}
-@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;padding:4px 18px 0;max-width:940px;margin:0 auto}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .pc{display:block;cursor:pointer}
 .pt{aspect-ratio:3/4;border-radius:14px;position:relative;overflow:hidden;margin-bottom:8px;background:var(--petal)}
 .pt img{width:100%;height:100%;object-fit:contain;display:block}
@@ -312,7 +314,7 @@ section{padding:26px 18px 34px}
 .ig-p{font-size:1.05rem;color:#6B5D50;font-weight:600;line-height:1.6;max-width:26em;margin:0 auto 18px}
 .ig-btn{display:inline-flex;align-items:center;gap:9px;padding:14px 32px;border-radius:40px;background:#4A4038;color:#fff;border:none;font-family:inherit;font-size:.92rem;font-weight:600;cursor:pointer;margin-bottom:26px}
 .ig-btn:active{background:var(--rose-d)}
-.ig-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:520px;margin:0 auto}
+.ig-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;max-width:520px;margin:0 auto}
 .ig-grid a{aspect-ratio:1/1;border-radius:16px;overflow:hidden;display:block}
 .ig-grid img{width:100%;height:100%;object-fit:cover;display:block}
 footer{background:#8A7663;color:#EFE5DA;padding:36px 22px 22px;text-align:center;margin-top:0}
