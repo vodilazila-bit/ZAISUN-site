@@ -473,13 +473,12 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
         </div>
         <div class="fld sugg"><label>Відділення Нової Пошти *</label><input type="text" id="fNP" placeholder="Почни вводити номер або вулицю" autocomplete="off" oninput="npWh(this.value)" onfocus="npWh(this.value)"><div class="sugg-list" id="npList"></div></div>
         <div class="fld"><label>Оплата</label>
-          <label class="payopt on"><input type="radio" name="payway" value="cod" checked onchange="paySel(this)"> 💵 При отриманні (накладений платіж)</label>
-          <label class="payopt"><input type="radio" name="payway" value="bank" onchange="paySel(this)"> 🏦 За реквізитами (передоплата)</label>
+          <label class="payopt on"><input type="radio" name="payway" value="bank" checked onchange="paySel(this)"> 🏦 За реквізитами (передоплата)</label>
           <label class="payopt"><input type="radio" name="payway" value="online" onchange="paySel(this)"> 💳 Онлайн: картка / Apple Pay / Google Pay</label>
         </div>
         <div class="fld"><label>Коментар</label><input type="text" id="fComm" placeholder="Необов'язково"></div>
         <button class="osub" id="osubBtn" onclick="submitOrder()">Оформити замовлення</button>
-        <div class="mnote">Оплата при отриманні (накладений платіж) або за реквізитами. Ми зв'яжемося з вами для підтвердження.</div>
+        <div class="mnote">Оплата за реквізитами (надішлемо після підтвердження) або онлайн карткою. Ми зв'яжемося з вами для підтвердження замовлення.</div>
       </div>
     </div>
     <div class="succ" id="sview">
@@ -1102,7 +1101,7 @@ async function submitOrder(){
       orderPhotos = ['https://zaisun.com.ua/images/'+encodeURIComponent(cur.photo)];
     }
     const paywayEl=document.querySelector('input[name=payway]:checked');
-    const payway=paywayEl?paywayEl.value:'cod';
+    const payway=paywayEl?paywayEl.value:'bank';
     const payName={cod:'Накладений платіж (при отриманні)',bank:'За реквізитами (передоплата)',online:'Онлайн (mono)'}[payway];
     const payload = Object.assign({"Оплата": payName},{
       "Ім'я": n, "Телефон": p, "Місто": city, "Відділення НП": np,
