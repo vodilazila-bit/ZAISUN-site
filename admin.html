@@ -400,6 +400,7 @@ function renderOrders(){
       <div style="display:flex;justify-content:space-between;font-weight:700">
         <span>${o.name||'—'} ${test?'<span style="font-size:10px;color:#c98a5e">ТЕСТ</span>':''}</span><span>${money(o.sum||'—')}</span>
       </div>
+      ${o.pay?`<div style="font-size:11.5px;margin-top:2px;color:var(--mut)">${o.pay} ${o.status==='ОПЛАЧЕНО'?'<span style="background:#2e9e5b;color:#fff;border-radius:8px;padding:1px 8px;font-weight:700;font-size:10px;margin-left:6px">ОПЛАЧЕНО</span>':(o.status?'<span style="color:#c98a5e;font-weight:600"> · '+o.status+'</span>':'')}</div>`:''}
       <div style="color:var(--mut);font-size:12px;margin:3px 0">${dt} · <a href="tel:${o.phone}" style="color:inherit">${o.phone||''}</a>${o.email?' · '+o.email:''}</div>
       <div style="font-size:12px;margin:3px 0">📍 ${o.city||''} — ${(o.np||'').slice(0,60)}</div>
       ${o.photos?`<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">${String(o.photos).split('|').filter(Boolean).map(u=>`<img src="${u}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;background:#f0ebe4">`).join('')}</div>`:''}
