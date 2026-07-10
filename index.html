@@ -461,7 +461,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       <div class="mprod"><img id="mimg" src=""><div class="in"><strong id="mname"></strong><div id="mmeta" style="color:var(--soft);font-size:.78rem;margin-bottom:3px"></div><div class="pr" id="mprice"></div></div></div>
       <div class="mform">
         <div class="fld"><label>Ваше ім'я *</label><input type="text" id="fName"></div>
-        <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" value="+380"></div>
+        <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" value="+380" inputmode="numeric" maxlength="13" oninput="phoneFix(this)"></div>
         <div class="fld"><label>Email <span style="text-transform:none;letter-spacing:0;font-weight:400;opacity:.75">— не обов'язково</span></label><input type="email" id="fEmail" autocomplete="email"></div>
         <div class="frw">
           <div class="fld sugg"><label>Місто *</label><input type="text" id="fCity" placeholder="Почни вводити місто" autocomplete="off" oninput="npCity(this.value)"><div class="sugg-list" id="cityList"></div></div>
@@ -1033,6 +1033,14 @@ document.addEventListener('click', e=>{
     document.getElementById('npList')?.classList.remove('show');
   }
 });
+function phoneFix(inp){
+  let d = inp.value.replace(/\D/g,'');
+  if(d.indexOf('380')===0) d = d.slice(3);
+  else if(d.indexOf('80')===0 && d.length>9) d = d.slice(2);
+  else if(d.indexOf('0')===0) d = d.slice(1);
+  d = d.slice(0,9);
+  inp.value = '+380' + d;
+}
 function paySel(inp){
   document.querySelectorAll('.payopt').forEach(l=>l.classList.toggle('on', l.contains(inp)));
   const b=document.getElementById('osubBtn');
@@ -1040,6 +1048,11 @@ function paySel(inp){
 }
 async function submitOrder(){
   const n=document.getElementById('fName').value.trim(), p=document.getElementById('fPhone').value.trim();
+  if(!/^\+380\d{9}$/.test(p.replace(/[\s-]/g,''))){
+    const have = p.replace(/\D/g,'').replace(/^380/,'').length;
+    alert('Перевірте номер телефону: після +380 має бути рівно 9 цифр (зараз '+have+'). Приклад: +380 97 123 45 67');
+    return;
+  }
   const city=document.getElementById('fCity').value.trim(), np=document.getElementById('fNP').value.trim();
   const size=document.getElementById('fSize').value.trim(), comm=document.getElementById('fComm').value.trim();
   const em=(document.getElementById('fEmail')?.value||'').trim();
