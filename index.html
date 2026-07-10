@@ -167,7 +167,7 @@ section{padding:26px 18px 34px}
 @media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}
 .pc{display:block;cursor:pointer}
 .pt{aspect-ratio:3/4;border-radius:14px;position:relative;overflow:hidden;margin-bottom:8px;background:var(--petal)}
-.pt img{width:100%;height:100%;object-fit:contain;display:block}
+.pt img{width:100%;height:100%;object-fit:cover;display:block}
 .pt .noimg{position:absolute;inset:0;display:grid;place-items:center;color:var(--soft);font-size:.62rem;letter-spacing:.15em;background:linear-gradient(150deg,#F0E0CE,#DCC4A8)}
 .badge{position:absolute;top:8px;left:8px;background:rgba(253,250,246,.92);font-size:.6rem;font-weight:700;letter-spacing:.05em;padding:3px 9px;border-radius:20px;text-transform:uppercase;z-index:2}
 .badge.s{background:var(--rose-d);color:#fff}
@@ -301,7 +301,7 @@ section{padding:26px 18px 34px}
 .new-row::-webkit-scrollbar{display:none}
 .np{flex:0 0 44%;max-width:210px;cursor:pointer}
 .np .pt{aspect-ratio:3/4;border-radius:14px;position:relative;overflow:hidden;margin-bottom:8px;background:var(--petal)}
-.np .pt img{width:100%;height:100%;object-fit:contain;display:block}
+.np .pt img{width:100%;height:100%;object-fit:cover;display:block}
 .np .nb{position:absolute;top:8px;left:8px;background:var(--rose-d);color:#fff;font-size:.6rem;font-weight:700;letter-spacing:.06em;padding:3px 10px;border-radius:20px;z-index:2}
 .np .nn{font-size:.82rem;font-weight:500;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:3px;color:var(--ink)}
 .np .npp{font-size:.86rem;font-weight:700;color:var(--ink)}
@@ -533,6 +533,11 @@ let curCatId = null, curCatName = '', curProds = [], cur = null, selSize = null,
 let fSel = {}, pFrom = null, pTo = null, catMin = 0, catMax = 0;
 let curSubs = [], curBase = [], curSub = '';
 
+function fitTile(img){
+  try{
+    if(img.naturalWidth / img.naturalHeight > 0.92) img.style.objectFit = 'contain';
+  }catch(e){}
+}
 function money(v){ return v.toLocaleString('uk-UA') + ' ₴'; }
 
 // ─── navigation ───
@@ -665,7 +670,7 @@ function renderSubs(){
     el.innerHTML = curSubs.map(s=>{
       const subProds=curBase.filter(p=>p.cats.includes(s.id));
       const pr = subProds.find(p=>p.coverCat===s.id && p.photo) || coverOf(subProds);
-      return `<div class="hc" onclick="subSel('${s.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy">`:''}<span>${s.name} · ${s.n}</span></div>`;
+      return `<div class="hc" onclick="subSel('${s.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">`:''}<span>${s.name} · ${s.n}</span></div>`;
     }).join('');
   } else {
     el.classList.remove('grid');
@@ -847,7 +852,7 @@ function apply(){
   if(!r.length){ el.innerHTML=`<div class="nores"><h3>Нічого не знайдено</h3><p>Спробуйте змінити фільтри</p></div>`; return; }
   el.innerHTML=r.map(p=>{
     const badge=p.old?`<span class="badge s">Sale</span>`:'';
-    const img = p.photo ? `<img src="images/${p.photo}" alt="" loading="lazy">` : `<div class="noimg">ФОТО СКОРО</div>`;
+    const img = p.photo ? `<img src="images/${p.photo}" alt="" loading="lazy" onload="fitTile(this)">` : `<div class="noimg">ФОТО СКОРО</div>`;
     const price=p.old?`${money(p.price)} <s>${money(p.old)}</s>`:money(p.price);
     const sz = p.sizes.length ? (p.sizes.length>1 ? p.sizes[0]+' – '+p.sizes[p.sizes.length-1] : p.sizes[0]) : '';
     return `<a class="pc" onclick="openProd(${p.id})">
@@ -937,7 +942,7 @@ function renderRelated(){
   if(!rel.length){box.innerHTML='';return}
   box.innerHTML=`<h4 class="prel-h">Схожі товари</h4><div class="prel-row">`+
     rel.map(p=>`<a class="prel-c" href="?p=${p.id}" onclick="event.preventDefault();openProd(${p.id});document.getElementById('prodView')?.scrollTo?.(0,0);window.scrollTo(0,0)">
-      <img src="images/${p.photo}" loading="lazy"><div class="prel-n">${p.name}</div><div class="prel-p">${money(p.price)}</div></a>`).join('')+`</div>`;
+      <img src="images/${p.photo}" loading="lazy" onload="fitTile(this)"><div class="prel-n">${p.name}</div><div class="prel-p">${money(p.price)}</div></a>`).join('')+`</div>`;
 }
 function updPrice(p, o){
   document.getElementById('ppr').innerHTML = o ? `${money(p)} <s>${money(o)}</s>` : money(p);
@@ -1175,7 +1180,7 @@ function buildHome(){
   const allCover = coverOf(P);
   const manualAll = P.find(p=>p.coverAll && p.photo);
   const fallbackCover = (P.find(p=>p.id===244 && p.photo) || allCover);
-  const allImg = manualAll ? `<img src="images/${manualAll.photo}" loading="lazy">`
+  const allImg = manualAll ? `<img src="images/${manualAll.photo}" loading="lazy" onload="fitTile(this)">`
     : `<img src="images/cover.jpg" onerror="this.onerror=null;this.src='images/${fallbackCover?fallbackCover.photo:''}'" loading="lazy">`;
   h += `<div class="hc" onclick="openCatAll()">${allImg}<span>Всі товари · ${P.length}</span></div>`;
   MENU_DEF.forEach((d,i)=>{
@@ -1183,20 +1188,20 @@ function buildHome(){
     const prods = P.filter(p=>p.cats.some(c=>ids.has(c)));
     if(!prods.length) return;
     const pr = prods.find(p=>p.coverCat && ids.has(p.coverCat) && p.photo) || coverOf(prods);
-    const img = pr ? `<img src="images/${pr.photo}" loading="lazy">` : '';
+    const img = pr ? `<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">` : '';
     h += `<div class="hc" onclick="openMenuCat(${i})">${img}<span>${d.n} · ${prods.length}</span></div>`;
   });
   const sale = TREE.find(t=>t.raw==='sale');
   if(sale){
     const sp = P.filter(p=>p.cats.includes(sale.id));
     const pr = coverOf(sp.filter(p=>p.old)) || coverOf(sp);
-    h += `<div class="hc" onclick="openCat('${sale.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy">`:''}<span style="background:var(--rose-d);color:#fff">Sale 🔥 · ${sale.n}</span></div>`;
+    h += `<div class="hc" onclick="openCat('${sale.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">`:''}<span style="background:var(--rose-d);color:#fff">Sale 🔥 · ${sale.n}</span></div>`;
   }
   const gifts = TREE.find(t=>t.raw==='Подарункові комплекти');
   if(gifts){
     const gp = P.filter(p=>p.cats.includes(gifts.id));
     const pr = coverOf(gp);
-    h += `<div class="hc" onclick="openCat('${gifts.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy">`:''}<span>Подарункові набори · ${gifts.n}</span></div>`;
+    h += `<div class="hc" onclick="openCat('${gifts.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">`:''}<span>Подарункові набори · ${gifts.n}</span></div>`;
   }
   document.getElementById('homeCats').innerHTML = h;
 }
@@ -1336,7 +1341,7 @@ function doSearch(){
   if(!r.length){ grid.innerHTML=''; hint.style.display='block'; hint.textContent='Нічого не знайдено'; return; }
   hint.style.display='none';
   grid.innerHTML = r.map(p=>{
-    const img = p.photo ? `<img src="images/${p.photo}" loading="lazy">` : '<div class="noimg">ФОТО СКОРО</div>';
+    const img = p.photo ? `<img src="images/${p.photo}" loading="lazy" onload="fitTile(this)">` : '<div class="noimg">ФОТО СКОРО</div>';
     return `<a class="pc" onclick="closeSearch();openProd(${p.id})">
       <div class="pt">${img}</div><div class="pn">${p.name}</div><div class="pp">${money(p.price)}</div></a>`;
   }).join('');
@@ -1374,7 +1379,7 @@ function buildNew(){
   el.innerHTML = picked.map(p=>{
     const price = p.old ? `${money(p.price)} <s>${money(p.old)}</s>` : money(p.price);
     return `<div class="np" onclick="openProd(${p.id})">
-      <div class="pt"><span class="nb">NEW</span><img src="images/${p.photo}" loading="lazy"></div>
+      <div class="pt"><span class="nb">NEW</span><img src="images/${p.photo}" loading="lazy" onload="fitTile(this)"></div>
       <div class="nn">${p.name}</div>
       <div class="npp">${price}</div>
     </div>`;
