@@ -497,6 +497,12 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 <div class="search-ovl" id="searchOvl">
   <div class="so-top">
     <input type="text" id="soInput" placeholder="Пошук товарів..." oninput="doSearch()">
+    <select id="soSort" onchange="doSearch()" style="padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:.85rem;max-width:44vw">
+      <option value="rel">За збігом</option>
+      <option value="pop">Популярні</option>
+      <option value="cheap">Дешевші</option>
+      <option value="exp">Дорожчі</option>
+    </select>
     <button class="so-x" onclick="closeSearch()">Закрити</button>
   </div>
   <div class="so-body"><div class="grid" id="soGrid"></div><div class="so-hint" id="soHint">Почни вводити назву товару</div></div>
@@ -1335,7 +1341,11 @@ function doSearch(){
     return {p,score};
   }).filter(Boolean).sort((a,b)=>b.score-a.score);
   const byName = scored.filter(x=>x.score>=2);
-  const r = (byName.length ? byName : scored).slice(0,60).map(x=>x.p);
+  let r = (byName.length ? byName : scored).slice(0,60).map(x=>x.p);
+  const srt = (document.getElementById('soSort')||{}).value || 'rel';
+  if(srt==='pop') r = r.slice().sort((a,b)=>rankScore(b)-rankScore(a));
+  else if(srt==='cheap') r = r.slice().sort((a,b)=>(a.price||0)-(b.price||0));
+  else if(srt==='exp') r = r.slice().sort((a,b)=>(b.price||0)-(a.price||0));
   if(!r.length){ grid.innerHTML=''; hint.style.display='block'; hint.textContent='Нічого не знайдено'; return; }
   hint.style.display='none';
   grid.innerHTML = r.map(p=>{
