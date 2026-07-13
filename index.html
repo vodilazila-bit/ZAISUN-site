@@ -477,10 +477,11 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
         <div class="fld"><label>Оплата</label>
           <label class="payopt on"><input type="radio" name="payway" value="bank" checked onchange="paySel(this)"> 🏦 За реквізитами</label>
           <label class="payopt"><input type="radio" name="payway" value="online" onchange="paySel(this)"> 💳 Онлайн: картка / Apple Pay / Google Pay</label>
+          <label class="payopt"><input type="radio" name="payway" value="pm" onchange="paySel(this)"> 🍼 Картка «Пакунок малюка»</label>
         </div>
         <div class="fld"><label>Коментар</label><input type="text" id="fComm" placeholder="Необов'язково"></div>
         <button class="osub" id="osubBtn" onclick="submitOrder()">Оформити замовлення</button>
-        <div class="mnote">Оплата за реквізитами (надішлемо після підтвердження) або онлайн карткою. Ми зв'яжемося з вами для підтвердження замовлення.</div>
+        <div class="mnote">Оплата за реквізитами (надішлемо після підтвердження), онлайн карткою або карткою держдопомоги «Пакунок малюка». Ми зв'яжемося з вами для підтвердження замовлення.</div>
       </div>
     </div>
     <div class="succ" id="sview">
@@ -1074,7 +1075,7 @@ function phoneBlur(inp){
 function paySel(inp){
   document.querySelectorAll('.payopt').forEach(l=>l.classList.toggle('on', l.contains(inp)));
   const b=document.getElementById('osubBtn');
-  if(b) b.textContent = (inp.value==='online') ? 'Перейти до оплати 💳' : 'Оформити замовлення';
+  if(b) b.textContent = (inp.value==='online') ? 'Перейти до оплати 💳' : (inp.value==='pm') ? 'Перейти до оплати 🍼' : 'Оформити замовлення';
 }
 async function submitOrder(){
   const n=document.getElementById('fName').value.trim(), p=document.getElementById('fPhone').value.trim();
@@ -1115,12 +1116,13 @@ async function submitOrder(){
     }
     const paywayEl=document.querySelector('input[name=payway]:checked');
     const payway=paywayEl?paywayEl.value:'bank';
-    const payName={cod:'Накладений платіж (при отриманні)',bank:'За реквізитами',online:'Онлайн (mono)'}[payway];
+    const payName={cod:'Накладений платіж (при отриманні)',bank:'За реквізитами',online:'Онлайн (mono)',pm:'🍼 ПАКУНОК МАЛЮКА (mono)'}[payway];
     const payload = Object.assign({"Оплата": payName},{
       "Ім'я": n, "Телефон": p, "Місто": city, "Відділення НП": np,
       "Товари": itemsTxt, "Сума": total+' грн', "Коментар": comm||'-'
     }, (em && em.includes('@')) ? {"Пошта клієнта": em} : {}, orderPhotos.length ? {"_photos": orderPhotos} : {});
-    if(payway==='online') payload._online=true;
+    const isPay = (payway==='online'||payway==='pm');
+    if(isPay) payload._online=true;
     let sent=false, lastErr='', payUrl='';
     // 1) основний канал: власний приймач на Apps Script
     try{
@@ -1133,9 +1135,9 @@ async function submitOrder(){
       }
       else lastErr='relay HTTP '+r1.status+' '+t1.slice(0,120);
     }catch(e1){ lastErr='relay: '+(e1&&e1.message||e1); }
-    if(payway==='online' && sent && !payUrl){ sent=false; lastErr='relay не повернув посилання на оплату. '+lastErr; }
+    if(isPay && sent && !payUrl){ sent=false; lastErr='relay не повернув посилання на оплату. '+lastErr; }
     // 2) резерв: FormSubmit
-    if(!sent && payway!=='online'){
+    if(!sent && !isPay){
       try{
         const r2 = await fetch('https://formsubmit.co/ajax/'+ORDER_EMAIL, {
           method:'POST',
