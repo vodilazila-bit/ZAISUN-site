@@ -1078,7 +1078,7 @@ function paySel(inp){
 }
 async function submitOrder(){
   const n=document.getElementById('fName').value.trim(), p=document.getElementById('fPhone').value.trim();
-  if(n.split(/\s+/).filter(w=>w.length>=2).length<2){
+  if(!/тест/i.test(n) && n.split(/\s+/).filter(w=>w.length>=2).length<2){
     alert("Вкажіть, будь ласка, ім'я та прізвище — вони потрібні для відправки Новою Поштою. Наприклад: Олена Коваль");
     return;
   }
