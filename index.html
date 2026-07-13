@@ -466,7 +466,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       </div>
       <div class="mprod"><img id="mimg" src=""><div class="in"><strong id="mname"></strong><div id="mmeta" style="color:var(--soft);font-size:.78rem;margin-bottom:3px"></div><div class="pr" id="mprice"></div></div></div>
       <div class="mform">
-        <div class="fld"><label>Ваше ім'я *</label><input type="text" id="fName"></div>
+        <div class="fld"><label>Ім'я та прізвище *</label><input type="text" id="fName" placeholder="Олена Коваль"></div>
         <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" value="+380" inputmode="numeric" maxlength="13" oninput="phoneFix(this)" onblur="phoneBlur(this)"><div class="ferr" id="phoneErr"></div></div>
         <div class="fld"><label>Email <span style="text-transform:none;letter-spacing:0;font-weight:400;opacity:.75">— не обов'язково</span></label><input type="email" id="fEmail" autocomplete="email"></div>
         <div class="frw">
@@ -475,7 +475,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
         </div>
         <div class="fld sugg"><label>Відділення Нової Пошти *</label><input type="text" id="fNP" placeholder="Почни вводити номер або вулицю" autocomplete="off" oninput="npWh(this.value)" onfocus="npWh(this.value)"><div class="sugg-list" id="npList"></div></div>
         <div class="fld"><label>Оплата</label>
-          <label class="payopt on"><input type="radio" name="payway" value="bank" checked onchange="paySel(this)"> 🏦 За реквізитами (передоплата)</label>
+          <label class="payopt on"><input type="radio" name="payway" value="bank" checked onchange="paySel(this)"> 🏦 За реквізитами</label>
           <label class="payopt"><input type="radio" name="payway" value="online" onchange="paySel(this)"> 💳 Онлайн: картка / Apple Pay / Google Pay</label>
         </div>
         <div class="fld"><label>Коментар</label><input type="text" id="fComm" placeholder="Необов'язково"></div>
@@ -1078,6 +1078,10 @@ function paySel(inp){
 }
 async function submitOrder(){
   const n=document.getElementById('fName').value.trim(), p=document.getElementById('fPhone').value.trim();
+  if(n.split(/\s+/).filter(w=>w.length>=2).length<2){
+    alert("Вкажіть, будь ласка, ім'я та прізвище — вони потрібні для відправки Новою Поштою. Наприклад: Олена Коваль");
+    return;
+  }
   if(!/^\+380\d{9}$/.test(p.replace(/[\s-]/g,''))){
     const have = p.replace(/\D/g,'').replace(/^380/,'').length;
     alert('Перевірте номер телефону: після +380 має бути рівно 9 цифр (зараз '+have+'). Приклад: +380 97 123 45 67');
@@ -1086,7 +1090,7 @@ async function submitOrder(){
   const city=document.getElementById('fCity').value.trim(), np=document.getElementById('fNP').value.trim();
   const size=document.getElementById('fSize').value.trim(), comm=document.getElementById('fComm').value.trim();
   const em=(document.getElementById('fEmail')?.value||'').trim();
-  if(!n||!p||!city||!np){ alert("Заповніть ім'я, телефон, місто та відділення Нової Пошти"); return; }
+  if(!n||!p||!city||!np){ alert("Заповніть ім'я та прізвище, телефон, місто та відділення Нової Пошти"); return; }
   // склад замовлення
   let itemsTxt='', total=0;
   if(cartMode && CART.length){
@@ -1111,7 +1115,7 @@ async function submitOrder(){
     }
     const paywayEl=document.querySelector('input[name=payway]:checked');
     const payway=paywayEl?paywayEl.value:'bank';
-    const payName={cod:'Накладений платіж (при отриманні)',bank:'За реквізитами (передоплата)',online:'Онлайн (mono)'}[payway];
+    const payName={cod:'Накладений платіж (при отриманні)',bank:'За реквізитами',online:'Онлайн (mono)'}[payway];
     const payload = Object.assign({"Оплата": payName},{
       "Ім'я": n, "Телефон": p, "Місто": city, "Відділення НП": np,
       "Товари": itemsTxt, "Сума": total+' грн', "Коментар": comm||'-'
