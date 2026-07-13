@@ -325,7 +325,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 </head>
 <body>
 
-<div class="topbar">Безкоштовна доставка на замовлення від 3000 грн</div>
+<div class="topbar">Безкоштовна доставка на замовлення від 3000 грн. Оплата 7 тисяч до року.</div>
 <header class="hdr">
   <div class="hdr-logo" onclick="go('home')">
     <img src="logo.png" alt="ZaiSun" class="hl-img">
@@ -477,11 +477,11 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
         <div class="fld"><label>Оплата</label>
           <label class="payopt on"><input type="radio" name="payway" value="bank" checked onchange="paySel(this)"> 🏦 За реквізитами</label>
           <label class="payopt"><input type="radio" name="payway" value="online" onchange="paySel(this)"> 💳 Онлайн: картка / Apple Pay / Google Pay</label>
-          <label class="payopt"><input type="radio" name="payway" value="pm" onchange="paySel(this)"> 🍼 Картка «Пакунок малюка»</label>
+          <label class="payopt"><input type="radio" name="payway" value="pm" onchange="paySel(this)"> 🍼 Картка «7 тисяч до року»</label>
         </div>
         <div class="fld"><label>Коментар</label><input type="text" id="fComm" placeholder="Необов'язково"></div>
         <button class="osub" id="osubBtn" onclick="submitOrder()">Оформити замовлення</button>
-        <div class="mnote">Оплата за реквізитами (надішлемо після підтвердження), онлайн карткою або карткою держдопомоги «Пакунок малюка». Ми зв'яжемося з вами для підтвердження замовлення.</div>
+        <div class="mnote">Оплата за реквізитами (надішлемо після підтвердження), онлайн карткою або карткою держдопомоги «7 тисяч до року». Ми зв'яжемося з вами для підтвердження замовлення.</div>
       </div>
     </div>
     <div class="succ" id="sview">
@@ -1116,7 +1116,7 @@ async function submitOrder(){
     }
     const paywayEl=document.querySelector('input[name=payway]:checked');
     const payway=paywayEl?paywayEl.value:'bank';
-    const payName={cod:'Накладений платіж (при отриманні)',bank:'За реквізитами',online:'Онлайн (mono)',pm:'🍼 ПАКУНОК МАЛЮКА (mono)'}[payway];
+    const payName={cod:'Накладений платіж (при отриманні)',bank:'За реквізитами',online:'Онлайн (mono)',pm:'🍼 7 ТИСЯЧ ДО РОКУ (mono)'}[payway];
     const payload = Object.assign({"Оплата": payName},{
       "Ім'я": n, "Телефон": p, "Місто": city, "Відділення НП": np,
       "Товари": itemsTxt, "Сума": total+' грн', "Коментар": comm||'-'
