@@ -393,6 +393,27 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="menu-list" id="menuList"></div>
 </div>
 
+<!-- SIZE TABLE -->
+<div id="sizeOvl" style="position:fixed;inset:0;z-index:950;background:rgba(58,48,40,.45);display:none;align-items:center;justify-content:center;padding:18px" onclick="if(event.target===this)closeSizeTable()">
+  <div style="background:var(--cream);border-radius:18px;max-width:420px;width:100%;max-height:88vh;overflow-y:auto;padding:22px 20px 20px;position:relative">
+    <button onclick="closeSizeTable()" style="position:absolute;top:12px;right:12px;background:none;border:none;color:var(--ink);padding:6px;cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <div style="font-family:var(--serif);font-weight:700;font-size:1.15rem;color:var(--ink);text-align:center;margin-bottom:4px">Таблиця розмірів шапок</div>
+    <div style="font-size:.82rem;color:var(--mid);text-align:center;margin-bottom:14px">Розмір = обхват голови в см. Виміряйте стрічкою над бровами та вушками.</div>
+    <table style="width:100%;border-collapse:collapse;font-size:.92rem;color:var(--ink)">
+      <tr style="background:var(--blush)"><th style="text-align:left;padding:9px 12px;font-weight:600;border-radius:10px 0 0 0">Вік дитини</th><th style="text-align:right;padding:9px 12px;font-weight:600;border-radius:0 10px 0 0">Розмір</th></tr>
+      <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line)">0–3 міс</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;font-weight:600">36-38 · 38-40</td></tr>
+      <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line)">3–6 міс</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;font-weight:600">40-42</td></tr>
+      <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line)">6–9 міс</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;font-weight:600">42-44</td></tr>
+      <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line)">9–12 міс</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;font-weight:600">44-46</td></tr>
+      <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line)">1–2 роки</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;font-weight:600">46-48</td></tr>
+      <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line)">2–3 роки</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;font-weight:600">48-50</td></tr>
+      <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line)">3–5 років</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;font-weight:600">50-52</td></tr>
+      <tr><td style="padding:9px 12px">5+ років</td><td style="padding:9px 12px;text-align:right;font-weight:600">52-54</td></tr>
+    </table>
+    <div style="font-size:.82rem;color:var(--mid);margin-top:12px;text-align:center">Вагаєтесь між двома розмірами? Беріть більший — трикотаж тягнеться, і шапки вистачить надовше 🤍</div>
+  </div>
+</div>
+
 <!-- CATALOG -->
 <div class="page" id="pgCat">
   <button class="back" onclick="go('home')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Головна</button>
@@ -554,6 +575,8 @@ function go(page){
 }
 function openMenu(){ document.getElementById('menu').classList.add('show'); document.getElementById('menuOvl').classList.add('show'); document.body.style.overflow='hidden'; }
 function closeMenu(){ document.getElementById('menu').classList.remove('show'); document.getElementById('menuOvl').classList.remove('show'); if(!document.querySelector('.movl.open,.sheet.open')) document.body.style.overflow=''; }
+function openSizeTable(){ closeMenu(); document.getElementById('sizeOvl').style.display='flex'; document.body.style.overflow='hidden'; }
+function closeSizeTable(){ document.getElementById('sizeOvl').style.display='none'; if(!document.querySelector('.movl.open,.sheet.open')) document.body.style.overflow=''; }
 
 // ─── menu build ───
 
@@ -620,6 +643,7 @@ function buildMenu(){
   if(sale) h += `<div class="mi" onclick="openCat('${sale.id}')">Sale</div>`;
   const gifts = TREE.find(t=>t.raw==='Подарункові комплекти');
   if(gifts) h += `<div class="mi" onclick="openCat('${gifts.id}')">Подарункові набори</div>`;
+  h += `<div class="mi" onclick="openSizeTable()">Таблиця розмірів шапок</div>`;
   h += `<div class="menu-contact">
     <button class="menu-ig" onclick="window.open('https://instagram.com/zaisun_kids','_blank')" aria-label="Instagram">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
