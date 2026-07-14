@@ -1222,14 +1222,15 @@ function buildHome(){
     const prods = P.filter(p=>p.cats.some(c=>ids.has(c)));
     if(!prods.length) return;
     const pr = prods.find(p=>p.coverCat && ids.has(p.coverCat) && p.photo) || coverOf(prods);
-    const img = pr ? `<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">` : '';
+    let img = pr ? `<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">` : '';
+    if(d.n==='Шапки') img = `<img src="images/cover_shapky.jpg" loading="lazy" onload="fitTile(this)">`;
     h += `<div class="hc" onclick="openMenuCat(${i})">${img}<span>${d.n} · ${prods.length}</span></div>`;
   });
   const sale = TREE.find(t=>t.raw==='sale');
   if(sale){
     const sp = P.filter(p=>p.cats.includes(sale.id));
     const pr = coverOf(sp.filter(p=>p.old)) || coverOf(sp);
-    h += `<div class="hc" onclick="openCat('${sale.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">`:''}<span style="background:var(--rose-d);color:#fff">Sale 🔥 · ${sale.n}</span></div>`;
+    h += `<div class="hc" onclick="openCat('${sale.id}')"><img src="images/cover_sale.jpg" loading="lazy" onload="fitTile(this)"><span style="background:var(--rose-d);color:#fff">Sale 🔥 · ${sale.n}</span></div>`;
   }
   const gifts = TREE.find(t=>t.raw==='Подарункові комплекти');
   if(gifts){
