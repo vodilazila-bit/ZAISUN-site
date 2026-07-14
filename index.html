@@ -327,7 +327,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <div class="topbar">Безкоштовна доставка на замовлення від 3000 грн. Оплата 7 тисяч до року.</div>
 <header class="hdr">
-  <div class="hdr-logo" onclick="go('home')">
+  <div class="hdr-logo" onclick="goHome()">
     <img src="logo.png" alt="ZaiSun" class="hl-img">
   </div>
   <div class="hdr-actions">
@@ -416,7 +416,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- CATALOG -->
 <div class="page" id="pgCat">
-  <button class="back" onclick="go('home')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Головна</button>
+  <button class="back" onclick="goHome()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Головна</button>
   <div class="phead">
     <div class="pk">Каталог</div>
     <h1 id="catTitle"></h1>
@@ -1427,9 +1427,10 @@ function buildNew(){
 buildMenu(); buildHome(); buildNew(); buildIG();
 
 // ═══ Свайп назад / кнопка назад: інтеграція з історією браузера ═══
-function closeProd(){ if(curCatId) go('cat'); else go('home'); }
+function closeProd(){ if(curCatId) go('cat'); else goHome(); }
 let NAVSILENT = false, NAVDEPTH = 0, LASTVIEW = {v:'home'};
 function pushNav(st, url){ if(NAVSILENT) return; NAVDEPTH++; LASTVIEW = st.o ? LASTVIEW : st; history.pushState(st,'', url||location.pathname); }
+function goHome(){ go('home'); LASTVIEW = {v:'home'}; try{ history.replaceState({v:'home'}, '', location.pathname); }catch(e){} }
 const _openCat = openCat, _openCatAll = openCatAll, _openMenuCat = openMenuCat, _openProd = openProd, _closeProd = closeProd;
 const _openMenu = openMenu, _openCart = openCart, _openSearch = openSearch, _openSheet = openSheet, _openOrder = openOrder, _checkoutCart = checkoutCart;
 openCat = function(id){ _openCat(id); pushNav({v:'cat', m:'id', id}, location.pathname + '?cat=' + id); };
