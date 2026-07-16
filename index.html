@@ -508,7 +508,9 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
     <div class="succ" id="sview">
       <div class="sic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
       <h3>Замовлення прийнято!</h3>
-      <p>Дякуємо! Незабаром зв'яжемося з вами для підтвердження.</p>
+      <p>Ми зв'яжемось з вами за номером:</p>
+      <div id="sPhone" style="font-size:1.35rem;font-weight:700;letter-spacing:.5px;margin:6px 0 10px"></div>
+      <p style="font-size:.85rem;color:var(--soft)">Помилились у номері? Напишіть нам в Instagram <a href="https://instagram.com/zaisun_kids" target="_blank" style="color:inherit;text-decoration:underline">@zaisun_kids</a></p>
       <button class="osub" style="max-width:240px" onclick="closeOrder()">Чудово</button>
     </div>
   </div>
@@ -1198,6 +1200,8 @@ async function submitOrder(){
       return;
     }
     if(cartMode){ CART=[]; saveCart(); cartMode=false; }
+    const pd = p.replace(/\D/g,'').replace(/^380/,'');
+    document.getElementById('sPhone').textContent = '+380 '+pd.slice(0,2)+' '+pd.slice(2,5)+' '+pd.slice(5,7)+' '+pd.slice(7,9);
     document.getElementById('fview').style.display='none';
     document.getElementById('sview').classList.add('show');
   }catch(e){
