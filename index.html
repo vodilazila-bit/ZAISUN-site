@@ -232,6 +232,9 @@ section{padding:26px 18px 34px}
 .payopt.on{border-color:#6B5D50;background:#fdf8f2}
 .ptag.clr-sel{cursor:pointer;border:1.5px solid transparent}
 .ptag.clr-sel.on{border-color:#6B5D50;background:#fdf8f2;font-weight:600}
+.ptag.osel{cursor:pointer;border:1.5px solid transparent}
+.ptag.osel.on{border-color:#6B5D50;background:#fdf8f2;font-weight:600}
+.optlbl{background:none;padding:7px 0 7px 2px;font-weight:600;color:var(--ink)}
 .fld input.bad{border-color:#C0392B !important;background:#FDF3F2}
 .ferr{display:none;color:#C0392B;font-size:11px;margin-top:4px;line-height:1.3}
 .ferr.show{display:block}
@@ -568,7 +571,7 @@ function rankScore(p){
 function popScore(p){
   return (VIEWS[p.id]||0)*5 + (p.cover?4:0) + (p.old?2:0) + (p.stock?2:0) + typeBoost(p);
 }
-let curCatId = null, curCatName = '', curProds = [], cur = null, selSize = null, selColor = null;
+let curCatId = null, curCatName = '', curProds = [], cur = null, selSize = null, selColor = null, selOpts = {};
 let fSel = {}, pFrom = null, pTo = null, catMin = 0, catMax = 0;
 let curSubs = [], curBase = [], curSub = '';
 
@@ -909,7 +912,7 @@ function pheroSwitch(i){
 }
 // ─── product ───
 function openProd(id){
-  cur = P.find(p=>p.id===id); selSize=null; selColor=null;
+  cur = P.find(p=>p.id===id); selSize=null; selColor=null; selOpts={};
   if(cur) document.title = cur.name + ' — ZaiSun';
   VIEWS[id]=(VIEWS[id]||0)+1;
   try{ localStorage.setItem('zs_views', JSON.stringify(VIEWS)); }catch(e){}
@@ -948,7 +951,16 @@ function openProd(id){
     tags += `<span class="ptag ${sel?'clr-sel':''} ${selColor===c?'on':''}" ${sel?`onclick="selClr(this,'${c.replace(/'/g,"\\'")}')"`:''}><span class="cd" style="background:${HEX[c]||'#D8C8B8'}"></span>${c}</span>`;
   });
   for(const [k,v] of Object.entries(cur.opts)){
-    if(k!=='Колір') tags += `<span class="ptag">${k}: ${v.join(', ')}</span>`;
+    if(k==='Колір') continue;
+    if(v.length>1){
+      tags += `<span class="ptag optlbl">${k}:</span>`;
+      v.forEach(val=>{
+        tags += `<span class="ptag osel" data-ok="${k.replace(/"/g,'&quot;')}" onclick="selOpt(this,'${k.replace(/'/g,"\\'")}','${val.replace(/'/g,"\\'")}')">${val}</span>`;
+      });
+    } else {
+      if(v.length===1) selOpts[k]=v[0];
+      tags += `<span class="ptag">${k}: ${v.join(', ')}</span>`;
+    }
   }
   if(cur.stock) tags += `<span class="ptag" style="background:#E8F2EA;color:#3A6B4A">В наявності ✓</span>`;
   document.getElementById('ptags').innerHTML = tags;
@@ -989,6 +1001,13 @@ function selClr(el, c){
   selColor = c;
   document.querySelectorAll('.ptag.clr-sel').forEach(t=>t.classList.toggle('on', t===el));
 }
+function selOpt(el, k, v){
+  selOpts[k] = v;
+  document.querySelectorAll('.ptag.osel').forEach(t=>{ if(t.dataset.ok===k) t.classList.toggle('on', t===el); });
+}
+function optText(){
+  return (cur && cur.opts) ? Object.keys(cur.opts).filter(k=>k!=='Колір' && selOpts[k]).map(k=>selOpts[k]).join(', ') : '';
+}
 function selSz(el, s){
   selSize = s;
   document.querySelectorAll('.szc').forEach(c=>c.classList.remove('on'));
@@ -1010,7 +1029,7 @@ function openOrder(){
   const v = selSize ? cur.var[selSize] : null;
   document.getElementById('mimg').src = cur.photo ? 'images/'+cur.photo : '';
   document.getElementById('mname').textContent = cur.name;
-  document.getElementById('mmeta').textContent = (cur.color||'') + (selSize?' · '+selSize:'');
+  document.getElementById('mmeta').textContent = [cur.color||'', optText(), selSize||''].filter(Boolean).join(' · ');
   document.getElementById('mprice').textContent = money(v?v.p:cur.price);
   document.getElementById('fSize').value = selSize || (cur.sizes[0]||'');
   document.getElementById('fview').style.display='block';
@@ -1180,12 +1199,12 @@ async function submitOrder(){
     itemsTxt = CART.map(it=>{
       const pr=P.find(x=>x.id===it.id); const price=cartPrice(it);
       total += price*it.qty;
-      return `#${it.id} ${pr?pr.name:''}${it.clr?' | колір: '+it.clr:''} | розмір: ${it.size||'-'} | ${it.qty} шт × ${price} грн`;
+      return `#${it.id} ${pr?pr.name:''}${it.clr?' | колір: '+it.clr:''}${it.opt?' | вид: '+it.opt:''} | розмір: ${it.size||'-'} | ${it.qty} шт × ${price} грн`;
     }).join('\n');
   } else if(cur){
     const v = size && cur.var && cur.var[size] ? cur.var[size] : {p:cur.price};
     total = v.p;
-    itemsTxt = `#${cur.id} ${cur.name}${selColor?' | колір: '+selColor:''} | розмір: ${size||'-'} | 1 шт × ${v.p} грн`;
+    itemsTxt = `#${cur.id} ${cur.name}${selColor?' | колір: '+selColor:''}${optText()?' | вид: '+optText():''} | розмір: ${size||'-'} | 1 шт × ${v.p} грн`;
   }
   const btn=document.getElementById('osubBtn');
   btn.disabled=true; btn.textContent='Надсилаю…';
@@ -1345,14 +1364,23 @@ function needColor(){
     alert('Оберіть, будь ласка, колір 🙂');
     return true;
   }
+  if(cur && cur.opts){
+    for(const [k,v] of Object.entries(cur.opts)){
+      if(k!=='Колір' && v.length>1 && !selOpts[k]){
+        alert('Оберіть, будь ласка: '+k.toLowerCase()+' 🙂');
+        return true;
+      }
+    }
+  }
   return false;
 }
 function addToCart(){
   if(!cur) return;
   if(needColor()) return;
   const size = selSize || (cur.sizes[0]||'');
-  const ex = CART.find(i=>i.id===cur.id && i.size===size && (i.clr||'')===(selColor||''));
-  if(ex) ex.qty++; else CART.push({id:cur.id, size, clr:selColor||'', qty:1});
+  const opt = optText();
+  const ex = CART.find(i=>i.id===cur.id && i.size===size && (i.clr||'')===(selColor||'') && (i.opt||'')===opt);
+  if(ex) ex.qty++; else CART.push({id:cur.id, size, clr:selColor||'', opt:opt, qty:1});
   try{
     const v = (cur.var && cur.var[size]) ? cur.var[size] : {p: cur.price};
     gtag('event','add_to_cart',{currency:'UAH', value:v.p, items:[{item_id:String(cur.id), item_name:cur.name, price:v.p, item_variant:size, item_category:(cur.catn&&cur.catn[0])||'', quantity:1}]});
@@ -1379,7 +1407,7 @@ function renderCart(){
     const pr = cartPrice(it); total += pr*it.qty;
     const img = p.photo ? `<img src="images/${p.photo}">` : '<img>';
     return `<div class="ci">${img}
-      <div class="in"><div class="n">${p.name}</div><div class="m">${[it.clr,it.size].filter(Boolean).join(' · ')}</div><div class="p">${money(pr)}</div></div>
+      <div class="in"><div class="n">${p.name}</div><div class="m">${[it.clr,it.opt,it.size].filter(Boolean).join(' · ')}</div><div class="p">${money(pr)}</div></div>
       <div class="qty">
         <button onclick="cartQty(${idx},-1)">−</button><span>${it.qty}</span><button onclick="cartQty(${idx},1)">+</button>
       </div>
