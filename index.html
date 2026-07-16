@@ -508,9 +508,16 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
     <div class="succ" id="sview">
       <div class="sic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
       <h3>Замовлення прийнято!</h3>
-      <p>Ми зв'яжемось з вами за номером:</p>
-      <div id="sPhone" style="font-size:1.35rem;font-weight:700;letter-spacing:.5px;margin:6px 0 10px"></div>
-      <p style="font-size:.85rem;color:var(--soft)">Помилились у номері? Напишіть нам в Instagram <a href="https://www.instagram.com/zaisun_kids/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">@zaisun_kids</a></p>
+      <p>Реквізити та інформацію про замовлення надішлемо на</p>
+      <div id="sPhoneWrap">
+        <div id="sPhone" style="font-size:1.35rem;font-weight:700;letter-spacing:.5px;margin:6px 0 4px"></div>
+        <a href="#" id="sPhoneEditLink" onclick="editSuccPhone();return false" style="font-size:.9rem;color:var(--soft);text-decoration:underline">Змінити номер</a>
+      </div>
+      <div id="sPhoneEdit" style="display:none;margin:8px auto;max-width:260px">
+        <input id="sPhoneInp" type="tel" maxlength="13" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:1.05rem;text-align:center" placeholder="+380 __ ___ __ __">
+        <button class="osub" style="max-width:260px;margin-top:8px" onclick="saveSuccPhone()">Зберегти номер</button>
+      </div>
+      <div id="sPhoneOk" style="display:none;font-size:.9rem;color:#2e7d32;margin-top:4px">Номер оновлено ✓</div>
       <button class="osub" style="max-width:240px" onclick="closeOrder()">Чудово</button>
     </div>
   </div>
@@ -1012,6 +1019,55 @@ function openOrder(){
   document.body.style.overflow='hidden';
 }
 function closeOrder(){ document.getElementById('movl').classList.remove('open'); document.body.style.overflow=''; }
+function editSuccPhone(){
+  document.getElementById('sPhoneWrap').style.display='none';
+  document.getElementById('sPhoneOk').style.display='none';
+  document.getElementById('sPhoneEdit').style.display='block';
+  const inp=document.getElementById('sPhoneInp');
+  inp.value=(window._lastOrd&&window._lastOrd.phone)||'+380';
+  inp.focus();
+}
+async function saveSuccPhone(){
+  const inp=document.getElementById('sPhoneInp');
+  const np=inp.value.trim().replace(/[\s-]/g,'');
+  if(!/^\+380\d{9}$/.test(np)){ alert('Перевірте номер: після +380 має бути рівно 9 цифр. Приклад: +380 97 123 45 67'); return; }
+  const old=(window._lastOrd&&window._lastOrd.phone)||'-';
+  if(np===old.replace(/[\s-]/g,'')){
+    document.getElementById('sPhoneEdit').style.display='none';
+    document.getElementById('sPhoneWrap').style.display='block';
+    return;
+  }
+  const btn=document.getElementById('sPhoneEdit').querySelector('button');
+  btn.disabled=true; btn.textContent='Зберігаю…';
+  const payload={
+    "Ім'я": ((window._lastOrd&&window._lastOrd.name)||'-')+' — ⚠️ КОРЕКЦІЯ НОМЕРА',
+    "Телефон": np,
+    "Місто": '-', "Відділення НП": '-',
+    "Товари": 'Клієнт виправив номер до щойно оформленого замовлення',
+    "Сума": '-',
+    "Коментар": 'Старий номер: '+old+' → Новий: '+np
+  };
+  let ok=false;
+  try{
+    const r=await fetch(ORDER_RELAY,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+    const t=await r.text().catch(()=> '');
+    ok = r.ok && (t.indexOf('ok')===0 || (t.charAt(0)==='{' && JSON.parse(t).ok));
+  }catch(e){}
+  if(!ok){
+    try{
+      const r2=await fetch('https://formsubmit.co/ajax/'+ORDER_EMAIL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(Object.assign({_subject:'⚠️ Корекція номера в замовленні ZaiSun'},payload))});
+      ok=r2.ok;
+    }catch(e){}
+  }
+  btn.disabled=false; btn.textContent='Зберегти номер';
+  if(!ok){ alert('Не вдалося зберегти. Напишіть нам в Instagram @zaisun_kids — виправимо вручну.'); return; }
+  window._lastOrd.phone=np;
+  const pd=np.replace(/\D/g,'').replace(/^380/,'');
+  document.getElementById('sPhone').textContent='+380 '+pd.slice(0,2)+' '+pd.slice(2,5)+' '+pd.slice(5,7)+' '+pd.slice(7,9);
+  document.getElementById('sPhoneEdit').style.display='none';
+  document.getElementById('sPhoneWrap').style.display='block';
+  document.getElementById('sPhoneOk').style.display='block';
+}
 const ORDER_EMAIL = 'miroslava_zanchuk@ukr.net';
 const ORDER_RELAY = 'https://script.google.com/macros/s/AKfycbyMhAR-LhYxHdMCdv4VHXDY3--L_O4f_dXTGZNr5265Bq6E5GYJm2waCga9BkmeD8ZN/exec';
 // ─── Нова Пошта: підказки міст і відділень ───
@@ -1200,8 +1256,12 @@ async function submitOrder(){
       return;
     }
     if(cartMode){ CART=[]; saveCart(); cartMode=false; }
+    window._lastOrd = {name:n, phone:p};
     const pd = p.replace(/\D/g,'').replace(/^380/,'');
     document.getElementById('sPhone').textContent = '+380 '+pd.slice(0,2)+' '+pd.slice(2,5)+' '+pd.slice(5,7)+' '+pd.slice(7,9);
+    document.getElementById('sPhoneWrap').style.display='block';
+    document.getElementById('sPhoneEdit').style.display='none';
+    document.getElementById('sPhoneOk').style.display='none';
     document.getElementById('fview').style.display='none';
     document.getElementById('sview').classList.add('show');
   }catch(e){
