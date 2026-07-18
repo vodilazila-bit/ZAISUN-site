@@ -437,7 +437,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       Фільтри <span class="bdg" id="fbdg">0</span>
     </button>
     <select class="sortsel" id="sortsel" onchange="apply()">
-      <option value="default">Сортування</option>
+      <option value="default">Спочатку новинки</option>
       <option value="pop">За популярністю</option>
       <option value="new">Найновіші</option>
       <option value="oldest">Найстаріші</option>
@@ -722,14 +722,14 @@ function renderSubs(){
 function subSel(id){
   curSub = id;
   curProds = id ? curBase.filter(p=>p.cats.includes(id)) : curBase.slice();
-  curProds.sort((a,b)=>rankScore(b)-rankScore(a));
+  curProds.sort((a,b)=>b.id-a.id);
   renderSubs();
   apply();
 }
 function initCat(nm){
   document.title = nm + ' — дитячий одяг ZaiSun';
   const cq=document.getElementById('catQ'); if(cq) cq.value='';
-  curProds.sort((a,b)=>rankScore(b)-rankScore(a));
+  curProds.sort((a,b)=>b.id-a.id);
   fSel = {}; pFrom=null; pTo=null;
   const prices = curProds.map(p=>p.price).filter(x=>x>0);
   catMin = prices.length?Math.floor(Math.min(...prices)):0;
