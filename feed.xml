@@ -2747,7 +2747,7 @@
     <g:identifier_exists>no</g:identifier_exists>
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
-    <g:price>575.00 UAH</g:price>
+    <g:price>595.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>56/62/68/74/80/86</g:size>
     <g:product_type>Костюм</g:product_type>
@@ -2764,7 +2764,7 @@
     <g:identifier_exists>no</g:identifier_exists>
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
-    <g:price>575.00 UAH</g:price>
+    <g:price>595.00 UAH</g:price>
     <g:size>56/62/68/74/80/86</g:size>
     <g:product_type>Костюм</g:product_type>
   </item>
@@ -2780,7 +2780,7 @@
     <g:identifier_exists>no</g:identifier_exists>
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
-    <g:price>575.00 UAH</g:price>
+    <g:price>595.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>56/62/68/74/80/86</g:size>
     <g:product_type>Костюм</g:product_type>
@@ -2797,7 +2797,7 @@
     <g:identifier_exists>no</g:identifier_exists>
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
-    <g:price>575.00 UAH</g:price>
+    <g:price>595.00 UAH</g:price>
     <g:color>Персиковий</g:color>
     <g:size>56/62/68/74/80/86</g:size>
     <g:product_type>Костюм</g:product_type>
@@ -2814,7 +2814,7 @@
     <g:identifier_exists>no</g:identifier_exists>
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
-    <g:price>575.00 UAH</g:price>
+    <g:price>595.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>56/62/68/74/80/86</g:size>
     <g:product_type>Костюм</g:product_type>
@@ -8233,7 +8233,7 @@
     <g:title>Дитяча шапка в широкий рубчик з помпоном єнот та зав&apos;язками на флісовому підкладі | ZaiSun</g:title>
     <g:description>Стильна та практична дитяча шапочка з натуральним помпоном єнот — ідеальний аксесуар для прохолодної пори року. Модель виконана з м’якої, приємної до тіла тканини, яка добре зберігає тепло та не подразнює ніжну шкіру дитини. Шапочка має підворіт для кращої посадки та зав’язки, які надійно фіксують її на голові, забезпечуючи комфорт навіть під час активних прогулянок. Лаконічний базові кольори легко поєднуються з будь-яким дитячим гардеробом, а помпон додає образу особливого шарму. Підклад: фліс Матеріал: трикотаж мустанг Помпон - натуральний єнот (помпон кріпиться на кнопочці)</g:description>
     <g:link>https://zaisun.com.ua/?p=493</g:link>
-    <g:image_link>https://zaisun.com.ua/images/%D0%94%D0%B8%D1%82%D1%8F%D1%87%D0%B0_%D1%88%D0%B0%D0%BF%D0%BA%D0%B0_%D0%B2_%D1%88%D0%B8%D1%80%D0%BE%D0%BA%D0%B8%D0%B9_%D1%80%D1%83%D0%B1%D1%87%D0%B8%D0%BA_%D0%B7_%D0%BF%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%BC_%D1%94%D0%BD%D0%BE%D1%82_%D1%82%D0%B0_%D0%B7%D0%B0%D0%B2%D1%8F%D0%B7%D0%BA%D0%B0%D0%BC%D0%B8_%D0%BD%D0%B0_%D1%84%D0%BB%D1%96%D1%81%D0%BE%D0%B2%D0%BE%D0%BC%D1%83_%D0%BF%D1%96%D0%B4%D0%BA%D0%BB%D0%B0%D0%B4%D1%96_000001-590_1.jpg</g:image_link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_v_shyrokyi_rubchyk_z_pomponom_ienot_ta_zav_i_493_mrq0lbk3_0.jpg</g:image_link>
     <g:availability>in stock</g:availability>
     <g:condition>new</g:condition>
     <g:brand>ZaiSun</g:brand>
@@ -8241,7 +8241,7 @@
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>510.00 UAH</g:price>
-    <g:color>Молочний</g:color>
+    <g:color>Беж</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
     <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
@@ -11257,6 +11257,40 @@
     <g:color>Ніжно-рожевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
     <g:product_type>Тепла осінь/весна</g:product_type>
+  </item>
+  <item>
+    <g:id>761</g:id>
+    <g:title>Мусліновий боді-ромпер для дівчинки з довгим рукавом і рюшками | ZaiSun</g:title>
+    <g:description>Ніжний мусліновий боді для дівчинки — ідеальний вибір для новонароджених та малюків. Виготовлений із натурального двошарового мусліну зі 100% бавовни, який добре пропускає повітря, не парить і дарує комфорт навіть у теплу погоду. Довгий рукав і ніжні рюші — чудово для прогулянок, фотосесій та особливих подій. Кольори: білий, молочний, квіти, сердечка — оберіть свій на фото.</g:description>
+    <g:link>https://zaisun.com.ua/?p=761</g:link>
+    <g:image_link>https://zaisun.com.ua/images/muslin_bodi_bilyi.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>kids</g:age_group>
+    <g:gender>female</g:gender>
+    <g:price>585.00 UAH</g:price>
+    <g:color>Білий</g:color>
+    <g:size>56/62/68/74/80/86</g:size>
+    <g:product_type>Боді &gt; Ромпер</g:product_type>
+  </item>
+  <item>
+    <g:id>762</g:id>
+    <g:title>Мусліновий боді-ромпер для дівчинки з довгим рукавом і рюшками + пов&apos;язка | ZaiSun</g:title>
+    <g:description>Ніжний мусліновий боді для дівчинки — ідеальний вибір для новонароджених та малюків. Виготовлений із натурального двошарового мусліну зі 100% бавовни, який добре пропускає повітря, не парить і дарує комфорт навіть у теплу погоду. Довгий рукав і ніжні рюші — чудово для прогулянок, фотосесій та особливих подій. Кольори: білий, молочний, квіти, сердечка — оберіть свій на фото. У комплекті — пов&apos;язка з бантом у тон.</g:description>
+    <g:link>https://zaisun.com.ua/?p=762</g:link>
+    <g:image_link>https://zaisun.com.ua/images/muslin_bodi_bilyi.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>kids</g:age_group>
+    <g:gender>female</g:gender>
+    <g:price>750.00 UAH</g:price>
+    <g:color>Білий</g:color>
+    <g:size>56/62/68/74/80/86</g:size>
+    <g:product_type>Боді &gt; Ромпер</g:product_type>
   </item>
 </channel>
 </rss>
