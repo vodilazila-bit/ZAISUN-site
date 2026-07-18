@@ -577,6 +577,7 @@ let curSubs = [], curBase = [], curSub = '';
 
 function fitTile(img){}
 function money(v){ return v.toLocaleString('uk-UA') + ' ₴'; }
+function priceFrom(p){ if(!p.var) return ''; const ps=Object.values(p.var).map(v=>v.p).filter(x=>x>0); return (ps.length>1 && Math.min(...ps)!==Math.max(...ps)) ? 'від ' : ''; }
 
 // ─── navigation ───
 function go(page){
@@ -894,7 +895,7 @@ function apply(){
   el.innerHTML=r.map(p=>{
     const badge=p.old?`<span class="badge s">Sale</span>`:'';
     const img = p.photo ? `<img src="images/${p.photo}" alt="" loading="lazy" onload="fitTile(this)">` : `<div class="noimg">ФОТО СКОРО</div>`;
-    const price=p.old?`${money(p.price)} <s>${money(p.old)}</s>`:money(p.price);
+    const price=p.old?`${priceFrom(p)}${money(p.price)} <s>${money(p.old)}</s>`:priceFrom(p)+money(p.price);
     const sz = p.sizes.length ? (p.sizes.length>1 ? p.sizes[0]+' – '+p.sizes[p.sizes.length-1] : p.sizes[0]) : '';
     return `<a class="pc" onclick="openProd(${p.id})">
       <div class="pt">${badge}${img}</div>
@@ -992,7 +993,7 @@ function renderRelated(){
   if(!rel.length){box.innerHTML='';return}
   box.innerHTML=`<h4 class="prel-h">Схожі товари</h4><div class="prel-row">`+
     rel.map(p=>`<a class="prel-c" href="?p=${p.id}" onclick="event.preventDefault();openProd(${p.id});document.getElementById('prodView')?.scrollTo?.(0,0);window.scrollTo(0,0)">
-      <img src="images/${p.photo}" loading="lazy" onload="fitTile(this)"><div class="prel-n">${p.name}</div><div class="prel-p">${money(p.price)}</div></a>`).join('')+`</div>`;
+      <img src="images/${p.photo}" loading="lazy" onload="fitTile(this)"><div class="prel-n">${p.name}</div><div class="prel-p">${priceFrom(p)}${money(p.price)}</div></a>`).join('')+`</div>`;
 }
 function updPrice(p, o){
   document.getElementById('ppr').innerHTML = o ? `${money(p)} <s>${money(o)}</s>` : money(p);
@@ -1474,7 +1475,7 @@ function doSearch(){
   grid.innerHTML = r.map(p=>{
     const img = p.photo ? `<img src="images/${p.photo}" loading="lazy" onload="fitTile(this)">` : '<div class="noimg">ФОТО СКОРО</div>';
     return `<a class="pc" onclick="closeSearch();openProd(${p.id})">
-      <div class="pt">${img}</div><div class="pn">${p.name}</div><div class="pp">${money(p.price)}</div></a>`;
+      <div class="pt">${img}</div><div class="pn">${p.name}</div><div class="pp">${priceFrom(p)}${money(p.price)}</div></a>`;
   }).join('');
 }
 updCartBdg();
