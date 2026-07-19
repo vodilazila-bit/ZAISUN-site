@@ -552,7 +552,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=23"></script>
+<script src="data.js?v=24"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 let VIEWS = {};
@@ -943,7 +943,7 @@ function openProd(id){
   window._pgal = gal;
   document.getElementById('pcat').textContent = cur.catn.filter(c=>c!=='sale').join(' · ') || cur.catn.join(' · ');
   document.getElementById('ptit').textContent = cur.name;
-  updPrice(cur.price, cur.old);
+  updPrice(cur.price, cur.old, priceFrom(cur));
   let tags = '';
   const curColors = (cur.opts && cur.opts['Колір']) || (cur.color?[cur.color]:[]);
   if(curColors.length===1) selColor=curColors[0];
@@ -995,8 +995,9 @@ function renderRelated(){
     rel.map(p=>`<a class="prel-c" href="?p=${p.id}" onclick="event.preventDefault();openProd(${p.id});document.getElementById('prodView')?.scrollTo?.(0,0);window.scrollTo(0,0)">
       <img src="images/${p.photo}" loading="lazy" onload="fitTile(this)"><div class="prel-n">${p.name}</div><div class="prel-p">${priceFrom(p)}${money(p.price)}</div></a>`).join('')+`</div>`;
 }
-function updPrice(p, o){
-  document.getElementById('ppr').innerHTML = o ? `${money(p)} <s>${money(o)}</s>` : money(p);
+function updPrice(p, o, pref){
+  pref = pref || '';
+  document.getElementById('ppr').innerHTML = o ? `${pref}${money(p)} <s>${money(o)}</s>` : pref+money(p);
 }
 function selClr(el, c){
   selColor = c;
@@ -1509,7 +1510,7 @@ function buildNew(){
     picked = picked.slice(0,10);
   }
   el.innerHTML = picked.map(p=>{
-    const price = p.old ? `${money(p.price)} <s>${money(p.old)}</s>` : money(p.price);
+    const price = p.old ? `${priceFrom(p)}${money(p.price)} <s>${money(p.old)}</s>` : priceFrom(p)+money(p.price);
     return `<div class="np" onclick="openProd(${p.id})">
       <div class="pt"><span class="nb">NEW</span><img src="images/${p.photo}" loading="lazy" onload="fitTile(this)"></div>
       <div class="nn">${p.name}</div>
