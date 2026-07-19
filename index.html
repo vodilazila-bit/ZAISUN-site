@@ -1522,15 +1522,20 @@ buildMenu(); buildHome(); buildNew(); buildIG();
 
 // ═══ Свайп назад / кнопка назад: інтеграція з історією браузера ═══
 function closeProd(){ if(curCatId) go('cat'); else goHome(); }
-let NAVSILENT = false, NAVDEPTH = 0, LASTVIEW = {v:'home'};
-function pushNav(st, url){ if(NAVSILENT) return; NAVDEPTH++; LASTVIEW = st.o ? LASTVIEW : st; history.pushState(st,'', url||location.pathname); }
+let NAVSILENT = false, NAVDEPTH = 0, LASTVIEW = {v:'home'}, OVERLAYON = false;
+function pushNav(st, url){ if(NAVSILENT) return; NAVDEPTH++; LASTVIEW = st.o ? LASTVIEW : st; history.pushState(st,'', url||location.pathname); OVERLAYON = !!st.o; }
+function navTo(st, url){
+  if(NAVSILENT) return;
+  if(OVERLAYON){ LASTVIEW = st; history.replaceState(st,'', url||location.pathname); OVERLAYON = false; }
+  else pushNav(st, url);
+}
 function goHome(){ go('home'); LASTVIEW = {v:'home'}; try{ history.replaceState({v:'home'}, '', location.pathname); }catch(e){} }
 const _openCat = openCat, _openCatAll = openCatAll, _openMenuCat = openMenuCat, _openProd = openProd, _closeProd = closeProd;
 const _openMenu = openMenu, _openCart = openCart, _openSearch = openSearch, _openSheet = openSheet, _openOrder = openOrder, _checkoutCart = checkoutCart;
-openCat = function(id){ _openCat(id); pushNav({v:'cat', m:'id', id}, location.pathname + '?cat=' + id); };
-openCatAll = function(){ _openCatAll(); pushNav({v:'cat', m:'all'}, location.pathname + '?cat=all'); };
-openMenuCat = function(i){ _openMenuCat(i); pushNav({v:'cat', m:'menu', i}, location.pathname + '?cat=m' + i); };
-openProd = function(id){ _openProd(id); pushNav({v:'prod', id}, location.pathname + '?p=' + id); };
+openCat = function(id){ _openCat(id); navTo({v:'cat', m:'id', id}, location.pathname + '?cat=' + id); };
+openCatAll = function(){ _openCatAll(); navTo({v:'cat', m:'all'}, location.pathname + '?cat=all'); };
+openMenuCat = function(i){ _openMenuCat(i); navTo({v:'cat', m:'menu', i}, location.pathname + '?cat=m' + i); };
+openProd = function(id){ _openProd(id); navTo({v:'prod', id}, location.pathname + '?p=' + id); };
 // накладки: пушимо стан-дублікат поточного екрана з позначкою o (overlay),
 // щоб жест "назад" закривав накладку і лишав той самий екран
 openMenu = function(){ _openMenu(); pushNav({...LASTVIEW, o:1}); };
@@ -1555,6 +1560,7 @@ subSel = function(id){
 window.addEventListener('popstate', e => {
   NAVDEPTH = Math.max(0, NAVDEPTH - 1);
   const st = e.state || {v:'home'};
+  OVERLAYON = !!st.o;
   LASTVIEW = {v:st.v||'home', m:st.m, id:st.id, i:st.i};
   NAVSILENT = true;
   try{
