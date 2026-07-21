@@ -552,7 +552,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=28"></script>
+<script src="data.js?v=29"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 let VIEWS = {};
@@ -577,7 +577,9 @@ let curSubs = [], curBase = [], curSub = '';
 
 function fitTile(img){}
 function money(v){ return v.toLocaleString('uk-UA') + ' ₴'; }
-function priceFrom(p){ if(!p.var) return ''; const ps=Object.values(p.var).map(v=>v.p).filter(x=>x>0); return (ps.length>1 && Math.min(...ps)!==Math.max(...ps)) ? 'від ' : ''; }
+function priceFrom(p){ if(p.optup) return 'від '; if(!p.var) return ''; const ps=Object.values(p.var).map(v=>v.p).filter(x=>x>0); return (ps.length>1 && Math.min(...ps)!==Math.max(...ps)) ? 'від ' : ''; }
+function curOptUp(){ let u=0; if(cur && cur.optup){ for(const [k,m] of Object.entries(cur.optup)){ const sel=selOpts[k]; if(sel && m[sel]) u+=m[sel]; } } return u; }
+function optUpFor(p, optStr){ let u=0; if(p.optup){ for(const m of Object.values(p.optup)){ for(const [val,add] of Object.entries(m)){ if((optStr||'').includes(val)) u+=add; } } } return u; }
 
 // ─── navigation ───
 function go(page){
@@ -1006,6 +1008,8 @@ function selClr(el, c){
 function selOpt(el, k, v){
   selOpts[k] = v;
   document.querySelectorAll('.ptag.osel').forEach(t=>{ if(t.dataset.ok===k) t.classList.toggle('on', t===el); });
+  const bv = (selSize && cur.var[selSize]) ? cur.var[selSize] : {p:cur.price, o:cur.old};
+  updPrice(bv.p + curOptUp(), bv.o, (selSize||!cur.optup)?'':'від ');
 }
 function optText(){
   return (cur && cur.opts) ? Object.keys(cur.opts).filter(k=>k!=='Колір' && selOpts[k]).map(k=>selOpts[k]).join(', ') : '';
@@ -1015,7 +1019,7 @@ function selSz(el, s){
   document.querySelectorAll('.szc').forEach(c=>c.classList.remove('on'));
   el.classList.add('on');
   const v = cur.var[s];
-  if(v) updPrice(v.p, v.o);
+  if(v) updPrice(v.p + curOptUp(), v.o);
 }
 function backToCat(){ go('cat'); }
 
@@ -1358,7 +1362,7 @@ function updCartBdg(){
 }
 function cartPrice(it){
   const p = P.find(x=>x.id===it.id); if(!p) return 0;
-  const v = it.size && p.var[it.size]; return v ? v.p : p.price;
+  const v = it.size && p.var[it.size]; return (v ? v.p : p.price) + optUpFor(p, it.opt);
 }
 function needColor(){
   const cc = (cur && ((cur.opts&&cur.opts['Колір'])||(cur.color?[cur.color]:[])))||[];
@@ -1385,7 +1389,8 @@ function addToCart(){
   if(ex) ex.qty++; else CART.push({id:cur.id, size, clr:selColor||'', opt:opt, qty:1});
   try{
     const v = (cur.var && cur.var[size]) ? cur.var[size] : {p: cur.price};
-    gtag('event','add_to_cart',{currency:'UAH', value:v.p, items:[{item_id:String(cur.id), item_name:cur.name, price:v.p, item_variant:size, item_category:(cur.catn&&cur.catn[0])||'', quantity:1}]});
+    const vp = v.p + curOptUp();
+    gtag('event','add_to_cart',{currency:'UAH', value:vp, items:[{item_id:String(cur.id), item_name:cur.name, price:vp, item_variant:size, item_category:(cur.catn&&cur.catn[0])||'', quantity:1}]});
   }catch(e){}
   saveCart(); openCart();
 }
