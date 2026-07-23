@@ -10140,8 +10140,8 @@
   </item>
   <item>
     <g:id>630</g:id>
-    <g:title>Набір для дівчинки: чалма з бантом, пов’язка та пінетки — червоний, | ZaiSun</g:title>
-    <g:description>Ніжний набір ручної роботи для дівчинки: чалма з бантом, пов’язка та пінетки. Колір червоний. Одинарний трикотаж — легкий, на літо та в приміщення. Склад: бавовна. Доступно у двох варіантах щільності: одинарний трикотаж — тонкий, дихаючий; або подвійний — тепліший, на прохолодну осінь і весну (+75 грн).</g:description>
+    <g:title>Набір для дівчинки: чалма з бантом, пов’язка та пінетки — червоний тонкий одинарний | ZaiSun</g:title>
+    <g:description>Ніжний набір ручної роботи для дівчинки: чалма з бантом, пов’язка та пінетки. Колір червоний. Одинарний трикотаж — легкий, на літо та в приміщення. Склад: бавовна. Доступно у двох варіантах щільності: одинарний трикотаж — тонкий, дихаючий; або подвійний — тепліший, на прохолодну осінь і весну</g:description>
     <g:link>https://zaisun.com.ua/?p=630</g:link>
     <g:image_link>https://zaisun.com.ua/images/nabir_chervonyi_bant.jpg</g:image_link>
     <g:availability>in stock</g:availability>
@@ -10150,10 +10150,10 @@
     <g:identifier_exists>no</g:identifier_exists>
     <g:age_group>kids</g:age_group>
     <g:gender>female</g:gender>
-    <g:price>665.00 UAH</g:price>
+    <g:price>680.00 UAH</g:price>
     <g:color>Червоний</g:color>
     <g:size>0-3міс/3-6міс/6-9міс/9-12міс/12-18міс</g:size>
-    <g:product_type>Чалма &gt; Тонкі &gt; Пов&apos;язки &gt; Тепла осінь/весна</g:product_type>
+    <g:product_type>Чалма &gt; Тонкі &gt; Пов&apos;язки</g:product_type>
   </item>
   <item>
     <g:id>632</g:id>
@@ -11434,7 +11434,7 @@
     <g:price>730.00 UAH</g:price>
     <g:color>Ніжно-рожевий</g:color>
     <g:size>0-3міс/3-6міс/6-9міс/9-12міс/12-18міс</g:size>
-    <g:product_type>Чалма &gt; Тонкі &gt; Пов&apos;язки</g:product_type>
+    <g:product_type>Чалма &gt; Тепла осінь/весна &gt; Пов&apos;язки</g:product_type>
   </item>
 </channel>
 </rss>
