@@ -256,6 +256,8 @@ section{padding:26px 18px 34px}
 .szc.on small{color:rgba(255,255,255,.75)}
 .szc.oos{opacity:.4;text-decoration:line-through;pointer-events:none}
 .pdesc{font-size:.88rem;color:var(--mid);line-height:1.75;margin-bottom:26px}
+.pdesc p{margin:0 0 10px}
+.pdesc p:last-child{margin-bottom:0}
 .prel-h{font-family:var(--serif);font-size:1.05rem;color:var(--ink);margin:30px 0 14px}
 .prel-row{display:flex;gap:12px;overflow-x:auto;padding-bottom:10px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .prel-row::-webkit-scrollbar{display:none}
@@ -993,7 +995,7 @@ function openProd(id){
   } else {
     document.getElementById('sizesel').innerHTML = '';
   }
-  document.getElementById('pdesc').textContent = cur.desc || '';
+  document.getElementById('pdesc').innerHTML = fmtDesc(cur.desc || '');
   try{
     gtag('event','view_item',{currency:'UAH',value:cur.price,items:[{item_id:String(cur.id),item_name:cur.name,price:cur.price,item_category:(cur.catn&&cur.catn[0])||''}]});
   }catch(e){}
@@ -1034,6 +1036,23 @@ function selSz(el, s){
   el.classList.add('on');
   const v = cur.var[s];
   if(v) updPrice(v.p + curOptUp(), v.o);
+}
+function fmtDesc(t){
+  if(!t) return '';
+  const esc = x => x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  // якщо автор уже поставив переноси — поважаємо їх
+  let parts = t.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+  if(parts.length < 2){
+    // ділимо на речення: крапка/!/? + пробіл + велика літера (не чіпаємо "0-3 міс.", "100% бавовна" тощо)
+    parts = t.replace(/([.!?])\s+(?=[А-ЯЇЄІҐA-Z])/g, '$1|').split('|').map(x=>x.trim()).filter(Boolean);
+  }
+  // короткі "хвости" (списки розмірів) підклеюємо до попереднього абзацу
+  const out = [];
+  parts.forEach(p => {
+    if(out.length && p.length < 28) out[out.length-1] += ' ' + p;
+    else out.push(p);
+  });
+  return out.map(p=>'<p>'+esc(p)+'</p>').join('');
 }
 function backToCat(){
   if(curCatId && curProds && curProds.length){ go('cat'); }
