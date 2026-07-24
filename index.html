@@ -1035,7 +1035,11 @@ function selSz(el, s){
   const v = cur.var[s];
   if(v) updPrice(v.p + curOptUp(), v.o);
 }
-function backToCat(){ go('cat'); }
+function backToCat(){
+  if(curCatId && curProds && curProds.length){ go('cat'); }
+  else if(NAVDEPTH>0){ history.back(); }
+  else { goHome(); }
+}
 
 // ─── order ───
 function openOrder(){
