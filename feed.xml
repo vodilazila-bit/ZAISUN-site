@@ -3512,10 +3512,10 @@
     <g:identifier_exists>no</g:identifier_exists>
     <g:age_group>kids</g:age_group>
     <g:gender>unisex</g:gender>
-    <g:price>445.00 UAH</g:price>
+    <g:price>395.00 UAH</g:price>
     <g:color>Синій</g:color>
     <g:size>56/62/68/74/80/86/92</g:size>
-    <g:product_type>Лосіни, футболки &gt; Шорти, футболки &gt; Літо</g:product_type>
+    <g:product_type>Шорти, футболки &gt; Лосіни, футболки &gt; Літо</g:product_type>
   </item>
   <item>
     <g:id>209</g:id>
@@ -4073,7 +4073,7 @@
     <g:gender>female</g:gender>
     <g:price>610.00 UAH</g:price>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Літо &gt; Панама &gt; Сукні</g:product_type>
+    <g:product_type>Панама &gt; Літо &gt; Сукні</g:product_type>
   </item>
   <item>
     <g:id>244</g:id>
