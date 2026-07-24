@@ -175,10 +175,11 @@ table.vt input{padding:8px;font-size:14px}
     </div>
 
     <div class="card">
-      <label>Склад комплекту (необов'язково)</label>
+      <label>Варіанти вибору (необов'язково)</label>
+      <input type="text" id="a_kitname" placeholder="Назва опції: Склад комплекту / Щільність / Підклад" style="margin-bottom:8px">
       <div id="a_kit"></div>
       <button class="btn sec sm" onclick="addKitRow()">+ варіант</button>
-      <div class="hint">Покупець обирає варіант на картці товару. Напр.: «Ромпер» доплата 0, «Ромпер + пов'язка» доплата 165. Перший варіант — базовий.</div>
+      <div class="hint">Покупець обирає варіант на картці товару. Напр. назва «Склад комплекту», варіанти: «Сукня» доплата 0, «Сукня+панамка» доплата 120. Перший варіант — базовий (доплата 0).</div>
     </div>
 
     <div class="card">
@@ -255,10 +256,11 @@ table.vt input{padding:8px;font-size:14px}
           <input type="text" id="e_nsize" placeholder="Новий розмір: 74 або 6-12міс">
           <button class="btn sec sm" style="flex:0 0 110px" onclick="addSizeRow()">+ Розмір</button>
         </div>
-        <label>Склад комплекту</label>
+        <label>Варіанти вибору (склад комплекту / щільність тощо)</label>
+        <input type="text" id="e_kitname" placeholder="Назва опції" style="margin-bottom:8px">
         <div id="e_kit"></div>
         <button class="btn sec sm" style="margin-top:6px" onclick="addKitRow('e')">+ варіант</button>
-        <div class="hint">Доплата додається до ціни розміру. Перший варіант — базовий (доплата 0).</div>
+        <div class="hint">Доплата додається до ціни обраного розміру. Перший варіант — базовий (доплата 0). Щоб прибрати опцію — очисти назву або видали всі рядки.</div>
         <div id="e_coverBox" style="margin-top:14px"></div>
         <div class="flx" style="margin-top:10px">
           <label class="sw2" style="margin:0"><input type="checkbox" id="e_nw"><span></span></label>
@@ -566,11 +568,12 @@ function addKitRow(pfx,val,add){
   const box = $(pfx+'_kit');
   const d=document.createElement('div'); d.className='optrow kitrow';
   d.innerHTML='<input type="text" class="kv" placeholder="Назва варіанту" value="'+(val?String(val).replace(/"/g,'&quot;'):'')+'">'+
-    '<input type="number" class="ka" placeholder="доплата, грн" style="flex:0 0 120px" value="'+(add||add===0?add:'')+'">'+
+    '<input type="number" class="ka" placeholder="доплата" style="flex:0 0 110px" value="'+(add?add:'')+'">'+
     '<button class="btn sec sm" onclick="this.parentNode.remove()">\u2715</button>';
   box.appendChild(d);
 }
 function collectKit(pfx){
+  const key=($(pfx+'_kitname').value||'').trim();
   const rows=[...document.querySelectorAll('#'+pfx+'_kit .kitrow')];
   const vals=[], up={};
   rows.forEach(r=>{
@@ -579,14 +582,16 @@ function collectKit(pfx){
     if(!v) return;
     vals.push(v); if(a>0) up[v]=a;
   });
-  return {vals, up};
+  return {key, vals, up};
 }
 function fillKit(pfx,p){
   const box=$(pfx+'_kit'); box.innerHTML='';
-  const key='Комплектація';
-  const vals=(p.opts&&p.opts[key])||[];
+  const opts=p.opts||{};
+  const key=Object.keys(opts).find(k=>k!=='Колір' && (opts[k]||[]).length>1) || '';
+  $(pfx+'_kitname').value=key;
+  $(pfx+'_kitname').dataset.orig=key;
   const up=(p.optup&&p.optup[key])||{};
-  vals.forEach(v=>addKitRow(pfx,v,up[v]||0));
+  (opts[key]||[]).forEach(v=>addKitRow(pfx,v,up[v]||0));
 }
 
 function addOptRow(){const d=document.createElement('div');d.className='optrow';d.innerHTML=`<input type="text" placeholder="Назва (Склад)"><input type="text" placeholder="Значення"><button class="btn sec sm" onclick="this.parentNode.remove()">✕</button>`;$('a_opts').appendChild(d)}
@@ -652,9 +657,9 @@ async function saveNew(){
     if(colors.length)opts['Колір']=colors.map(x=>x.c);
     document.querySelectorAll('#a_opts .optrow').forEach(r=>{const[k,v]=r.querySelectorAll('input');if(k.value.trim()&&v.value.trim())opts[k.value.trim()]=[v.value.trim()]});
     const kitN=collectKit('a');
-    if(kitN.vals.length>1) opts['Комплектація']=kitN.vals;
+    if(kitN.key && kitN.vals.length>1) opts[kitN.key]=kitN.vals;
     const prod={id,name,price:basePrice,old:parseFloat($('a_old').value)||null,stock:true,sizes,var:vars,color:color||'',hex:hex||'',opts,cats:cats.map(c=>c.id),catn:cats.map(c=>c.name.split(' → ').pop()),desc:$('a_desc').value.trim(),photo:photoName};
-    if(kitN.vals.length>1 && Object.keys(kitN.up).length) prod.optup={'Комплектація':kitN.up};
+    if(kitN.key && kitN.vals.length>1 && Object.keys(kitN.up).length) prod.optup={[kitN.key]:kitN.up};
     DATA.products.push(prod);
     // лічильники в tree
     const bump=(node)=>{cats.forEach(c=>{if(node.id===c.id)node.n=(node.n||0)+1});(node.children||[]).forEach(bump)};
@@ -672,7 +677,7 @@ async function saveNew(){
     $('stat').textContent='✓ '+DATA.products.length+' товарів';
     // очистити форму
     ['a_name','a_desc','a_sizes','a_price','a_old','a_ncolor'].forEach(i=>$(i).value='');
-    $('a_vars').innerHTML='';$('a_opts').innerHTML='';$('a_kit').innerHTML='';photoBlob=null;
+    $('a_vars').innerHTML='';$('a_opts').innerHTML='';$('a_kit').innerHTML='';$('a_kitname').value='';photoBlob=null;
     $('a_phbox').innerHTML='Натисни, щоб вибрати фото';
     document.querySelectorAll('.chip.on').forEach(x=>x.classList.remove('on'));
     renderList();
@@ -928,14 +933,21 @@ async function saveEdit(){
   p.name=$('e_name').value.trim();p.desc=$('e_desc').value.trim();p.stock=$('e_stock').checked;
   const kitE=collectKit('e');
   p.opts=p.opts||{};
-  if(kitE.vals.length>1){
-    p.opts['Комплектація']=kitE.vals;
-    if(Object.keys(kitE.up).length){ p.optup=p.optup||{}; p.optup['Комплектація']=kitE.up; }
-    else if(p.optup){ delete p.optup['Комплектація']; if(!Object.keys(p.optup).length) delete p.optup; }
-  } else {
-    if(p.opts['Комплектація']) delete p.opts['Комплектація'];
-    if(p.optup&&p.optup['Комплектація']){ delete p.optup['Комплектація']; if(!Object.keys(p.optup).length) delete p.optup; }
+  const origKey=$('e_kitname').dataset.orig||'';
+  if(origKey && origKey!==kitE.key){
+    delete p.opts[origKey];
+    if(p.optup&&p.optup[origKey]) delete p.optup[origKey];
   }
+  if(kitE.key && kitE.vals.length>1){
+    p.opts[kitE.key]=kitE.vals;
+    if(Object.keys(kitE.up).length){ p.optup=p.optup||{}; p.optup[kitE.key]=kitE.up; }
+    else if(p.optup&&p.optup[kitE.key]){ delete p.optup[kitE.key]; }
+  } else if(kitE.key){
+    delete p.opts[kitE.key];
+    if(p.optup&&p.optup[kitE.key]) delete p.optup[kitE.key];
+  }
+  if(p.optup&&!Object.keys(p.optup).length) delete p.optup;
+  $('e_kitname').dataset.orig=kitE.key;
   try{
     for(let i=0;i<editPhotos.length;i++){
       const it=editPhotos[i];
