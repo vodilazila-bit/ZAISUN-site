@@ -1062,25 +1062,27 @@ function backToCat(){
 
 // ─── order ───
 function openOrder(){
-  if(!cartMode && cur && needColor()) return;
+  if(cur && needColor()) return;
+  cartMode = false;
   const ph=document.getElementById('fPhone'); if(ph && !ph.value.trim()) ph.value='+380';
   if(ph) phoneFix(ph);
   try{
     const vv = selSize && cur.var[selSize] ? cur.var[selSize] : {p:cur.price};
-    gtag('event','begin_checkout',{currency:'UAH',value:vv.p,items:[{item_id:String(cur.id),item_name:cur.name,price:vv.p}]});
+    const vfin = vv.p + curOptUp();
+    gtag('event','begin_checkout',{currency:'UAH',value:vfin,items:[{item_id:String(cur.id),item_name:cur.name,price:vfin}]});
   }catch(e){}
   const v = selSize ? cur.var[selSize] : null;
   document.getElementById('mimg').src = cur.photo ? 'images/'+cur.photo : '';
   document.getElementById('mname').textContent = cur.name;
   document.getElementById('mmeta').textContent = [cur.color||'', optText(), selSize||''].filter(Boolean).join(' · ');
-  document.getElementById('mprice').textContent = money(v?v.p:cur.price);
+  document.getElementById('mprice').textContent = money((v?v.p:cur.price) + curOptUp());
   document.getElementById('fSize').value = selSize || (cur.sizes[0]||'');
   document.getElementById('fview').style.display='block';
   document.getElementById('sview').classList.remove('show');
   document.getElementById('movl').classList.add('open');
   document.body.style.overflow='hidden';
 }
-function closeOrder(){ document.getElementById('movl').classList.remove('open'); document.body.style.overflow=''; }
+function closeOrder(){ document.getElementById('movl').classList.remove('open'); document.body.style.overflow=''; cartMode=false; }
 function editSuccPhone(){
   document.getElementById('sPhoneWrap').style.display='none';
   document.getElementById('sPhoneOk').style.display='none';
@@ -1246,8 +1248,9 @@ async function submitOrder(){
     }).join('\n');
   } else if(cur){
     const v = size && cur.var && cur.var[size] ? cur.var[size] : {p:cur.price};
-    total = v.p;
-    itemsTxt = `#${cur.id} ${cur.name}${selColor?' | колір: '+selColor:''}${optText()?' | вид: '+optText():''} | розмір: ${size||'-'} | 1 шт × ${v.p} грн`;
+    const fin = v.p + curOptUp();
+    total = fin;
+    itemsTxt = `#${cur.id} ${cur.name}${selColor?' | колір: '+selColor:''}${optText()?' | вид: '+optText():''} | розмір: ${size||'-'} | 1 шт × ${fin} грн`;
   }
   const btn=document.getElementById('osubBtn');
   btn.disabled=true; btn.textContent='Надсилаю…';
