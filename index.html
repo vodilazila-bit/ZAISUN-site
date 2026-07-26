@@ -171,6 +171,10 @@ section{padding:26px 18px 34px}
 .pt{aspect-ratio:3/4;border-radius:14px;position:relative;overflow:hidden;margin-bottom:8px;background:var(--petal)}
 .pt img{width:100%;height:100%;object-fit:cover;display:block}
 .pt .noimg{position:absolute;inset:0;display:grid;place-items:center;color:var(--soft);font-size:.62rem;letter-spacing:.15em;background:linear-gradient(150deg,#F0E0CE,#DCC4A8)}
+.pc.oos .pt img{opacity:.45;filter:grayscale(.5)}
+.badge.oos{background:rgba(58,48,40,.82);color:#fff}
+.buy.dis{opacity:.45;pointer-events:none}
+.oostxt{background:var(--petal);border-radius:12px;padding:12px;text-align:center;font-size:.86rem;color:var(--ink);font-weight:600;margin-bottom:12px}
 .badge{position:absolute;top:8px;left:8px;background:rgba(253,250,246,.92);font-size:.6rem;font-weight:700;letter-spacing:.05em;padding:3px 9px;border-radius:20px;text-transform:uppercase;z-index:2}
 .badge.s{background:var(--rose-d);color:#fff}
 .csw{position:absolute;bottom:8px;right:8px;width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.9);box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:2}
@@ -477,7 +481,8 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
     <div class="ptags" id="ptags"></div>
     <div class="sizesel" id="sizesel"></div>
     <div class="pdesc" id="pdesc"></div>
-    <div style="display:flex;gap:10px">
+    <div id="oosBox" style="display:none" class="oostxt">Товару немає в наявності 🙈 Напишіть нам в Instagram — підкажемо, коли з'явиться</div>
+    <div style="display:flex;gap:10px" id="buyRow">
       <button class="buy tocart" onclick="addToCart()">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4.5" y="7.5" width="15" height="13" rx="3.5"/><path d="M8.5 8V7a3.5 3.5 0 0 1 7 0v1"/></svg>
         У кошик
@@ -911,11 +916,12 @@ function apply(){
   const el=document.getElementById('grid');
   if(!r.length){ el.innerHTML=`<div class="nores"><h3>Нічого не знайдено</h3><p>Спробуйте змінити фільтри</p></div>`; return; }
   el.innerHTML=r.map(p=>{
-    const badge=p.old?`<span class="badge s">Sale</span>`:'';
+    const oos = p.stock===false;
+    const badge = oos ? `<span class="badge oos">Немає</span>` : (p.old?`<span class="badge s">Sale</span>`:'');
     const img = p.photo ? `<img src="images/${p.photo}" alt="" loading="lazy" onload="fitTile(this)">` : `<div class="noimg">ФОТО СКОРО</div>`;
     const price=p.old?`${priceFrom(p)}${money(p.price)} <s>${money(p.old)}</s>`:priceFrom(p)+money(p.price);
     const sz = p.sizes.length ? (p.sizes.length>1 ? p.sizes[0]+' – '+p.sizes[p.sizes.length-1] : p.sizes[0]) : '';
-    return `<a class="pc" onclick="openProd(${p.id})">
+    return `<a class="pc${oos?' oos':''}" onclick="openProd(${p.id})">
       <div class="pt">${badge}${img}</div>
       <div class="pn">${p.name}</div>
       <div class="pm">${sz}</div>
@@ -933,6 +939,11 @@ function pheroSwitch(i){
 function openProd(id){
   cur = P.find(p=>p.id===id); selSize=null; selColor=null; selOpts={};
   if(cur) document.title = cur.name + ' — ZaiSun';
+  try{
+    const oos = cur && cur.stock===false;
+    document.getElementById('oosBox').style.display = oos ? 'block' : 'none';
+    document.getElementById('buyRow').style.display = oos ? 'none' : 'flex';
+  }catch(e){}
   VIEWS[id]=(VIEWS[id]||0)+1;
   try{ localStorage.setItem('zs_views', JSON.stringify(VIEWS)); }catch(e){}
   // schema.org Product для Merchant Center
@@ -1062,6 +1073,7 @@ function backToCat(){
 
 // ─── order ───
 function openOrder(){
+  if(cur && cur.stock===false){ alert('Цього товару зараз немає в наявності 🙈'); return; }
   if(cur && needColor()) return;
   cartMode = false;
   const ph=document.getElementById('fPhone'); if(ph && !ph.value.trim()) ph.value='+380';
@@ -1422,6 +1434,7 @@ function needColor(){
   return false;
 }
 function addToCart(){
+  if(cur && cur.stock===false){ alert('Цього товару зараз немає в наявності 🙈'); return; }
   if(!cur) return;
   if(needColor()) return;
   const size = selSize || (cur.sizes[0]||'');
