@@ -573,7 +573,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=33"></script>
+<script src="data.js?v=34"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 let VIEWS = {};
@@ -1367,6 +1367,7 @@ function buildHome(){
     const pr = prods.find(p=>p.coverCat && ids.has(p.coverCat) && p.photo) || coverOf(prods);
     let img = pr ? `<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">` : '';
     if(d.n==='Шапки') img = `<img src="images/cover_shapky.jpg" loading="lazy" onload="fitTile(this)">`;
+    if(d.n==='Осінь' && pr) img = `<img src="images/${pr.photo}" loading="lazy" style="object-position:50% 8%" onload="fitTile(this)">`;
     h += `<div class="hc" onclick="openMenuCat(${i})">${img}<span>${d.n} · ${prods.length}</span></div>`;
   });
   const sale = TREE.find(t=>t.raw==='sale');
