@@ -3182,7 +3182,7 @@
     <g:price>295.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Лосіни утеплені &gt; Осінь &gt; Одяг &gt; Штани</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Штани</g:product_type>
   </item>
   <item>
     <g:id>189</g:id>
@@ -3198,7 +3198,7 @@
     <g:gender>unisex</g:gender>
     <g:price>495.00 UAH</g:price>
     <g:size>56/62/68/74/80/86/92</g:size>
-    <g:product_type>Лосіни, футболки &gt; Одяг &gt; Джинси &gt; Штани</g:product_type>
+    <g:product_type>Одяг &gt; Джинси &gt; Штани</g:product_type>
   </item>
   <item>
     <g:id>190</g:id>
@@ -3215,7 +3215,7 @@
     <g:price>495.00 UAH</g:price>
     <g:color>Синій</g:color>
     <g:size>56/62/68/74/80/86/92</g:size>
-    <g:product_type>Лосіни, футболки &gt; Одяг &gt; Джинси &gt; Штани</g:product_type>
+    <g:product_type>Одяг &gt; Джинси &gt; Штани</g:product_type>
   </item>
   <item>
     <g:id>191</g:id>
@@ -3231,7 +3231,7 @@
     <g:gender>unisex</g:gender>
     <g:price>575.00 UAH</g:price>
     <g:size>68</g:size>
-    <g:product_type>Лосіни, футболки &gt; Літо</g:product_type>
+    <g:product_type>Футболки, комплекти &gt; Літо</g:product_type>
   </item>
   <item>
     <g:id>192</g:id>
@@ -3247,7 +3247,7 @@
     <g:gender>female</g:gender>
     <g:price>690.00 UAH</g:price>
     <g:size>80</g:size>
-    <g:product_type>Лосіни, футболки &gt; Літо</g:product_type>
+    <g:product_type>Футболки, комплекти &gt; Літо</g:product_type>
   </item>
   <item>
     <g:id>193</g:id>
@@ -3264,7 +3264,7 @@
     <g:price>690.00 UAH</g:price>
     <g:color>Блакитний</g:color>
     <g:size>86</g:size>
-    <g:product_type>Лосіни, футболки &gt; Літо</g:product_type>
+    <g:product_type>Футболки, комплекти &gt; Літо</g:product_type>
   </item>
   <item>
     <g:id>194</g:id>
@@ -3281,7 +3281,7 @@
     <g:price>690.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>86</g:size>
-    <g:product_type>Лосіни, футболки &gt; Літо</g:product_type>
+    <g:product_type>Футболки, комплекти &gt; Літо</g:product_type>
   </item>
   <item>
     <g:id>195</g:id>
@@ -3298,7 +3298,7 @@
     <g:price>610.00 UAH</g:price>
     <g:color>Бірюзовий</g:color>
     <g:size>56/62/68/74/80/86/92</g:size>
-    <g:product_type>Лосіни, футболки &gt; Літо &gt; Боді</g:product_type>
+    <g:product_type>Футболки, комплекти &gt; Літо &gt; Боді</g:product_type>
   </item>
   <item>
     <g:id>196</g:id>
@@ -3315,7 +3315,7 @@
     <g:price>610.00 UAH</g:price>
     <g:color>Жовтий</g:color>
     <g:size>56/62/68/74/80/86/92</g:size>
-    <g:product_type>Лосіни, футболки &gt; Літо &gt; Боді</g:product_type>
+    <g:product_type>Футболки, комплекти &gt; Літо &gt; Боді</g:product_type>
   </item>
   <item>
     <g:id>197</g:id>
@@ -3332,7 +3332,7 @@
     <g:price>610.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>56/62/68/74/80/86/92</g:size>
-    <g:product_type>Лосіни, футболки &gt; Літо &gt; Боді</g:product_type>
+    <g:product_type>Футболки, комплекти &gt; Літо &gt; Боді</g:product_type>
   </item>
   <item>
     <g:id>198</g:id>
@@ -3349,7 +3349,7 @@
     <g:price>585.00 UAH</g:price>
     <g:sale_price>526.00 UAH</g:sale_price>
     <g:size>68</g:size>
-    <g:product_type>Лосіни, футболки &gt; Літо &gt; Боді</g:product_type>
+    <g:product_type>Футболки, комплекти &gt; Літо &gt; Боді</g:product_type>
   </item>
   <item>
     <g:id>199</g:id>
@@ -3366,7 +3366,7 @@
     <g:price>250.00 UAH</g:price>
     <g:color>Ніжно-рожевий</g:color>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Лосіни, футболки &gt; Осінь &gt; Одяг &gt; Штани</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Штани</g:product_type>
   </item>
   <item>
     <g:id>200</g:id>
@@ -3383,7 +3383,7 @@
     <g:price>235.00 UAH</g:price>
     <g:color>Пудра</g:color>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Лосіни, футболки &gt; Осінь &gt; Одяг &gt; Штани</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Штани</g:product_type>
   </item>
   <item>
     <g:id>205</g:id>
@@ -3400,7 +3400,7 @@
     <g:price>235.00 UAH</g:price>
     <g:color>Малиновий</g:color>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Лосіни, футболки &gt; Осінь &gt; Одяг &gt; Штани</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Штани</g:product_type>
   </item>
   <item>
     <g:id>206</g:id>
@@ -3417,7 +3417,7 @@
     <g:price>235.00 UAH</g:price>
     <g:color>Малиновий</g:color>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Лосіни, футболки &gt; Осінь &gt; Одяг &gt; Штани</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Штани</g:product_type>
   </item>
   <item>
     <g:id>207</g:id>
@@ -3433,7 +3433,7 @@
     <g:gender>female</g:gender>
     <g:price>650.00 UAH</g:price>
     <g:size>56/62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Лосіни, футболки &gt; Літо</g:product_type>
+    <g:product_type>Футболки, комплекти &gt; Літо</g:product_type>
   </item>
   <item>
     <g:id>208</g:id>
@@ -3450,7 +3450,7 @@
     <g:price>395.00 UAH</g:price>
     <g:color>Синій</g:color>
     <g:size>56/62/68/74/80/86/92</g:size>
-    <g:product_type>Шорти, футболки &gt; Лосіни, футболки &gt; Літо &gt; Одяг &gt; Джинси</g:product_type>
+    <g:product_type>Шорти, футболки &gt; Футболки, комплекти &gt; Літо &gt; Одяг &gt; Джинси</g:product_type>
   </item>
   <item>
     <g:id>209</g:id>
@@ -4257,7 +4257,7 @@
     <g:gender>unisex</g:gender>
     <g:price>625.00 UAH</g:price>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Літо &gt; Лосіни, футболки</g:product_type>
+    <g:product_type>Літо &gt; Футболки, комплекти</g:product_type>
   </item>
   <item>
     <g:id>260</g:id>
@@ -4273,7 +4273,7 @@
     <g:gender>unisex</g:gender>
     <g:price>485.00 UAH</g:price>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Шорти, футболки &gt; Лосіни, футболки &gt; Літо</g:product_type>
+    <g:product_type>Шорти, футболки &gt; Футболки, комплекти &gt; Літо</g:product_type>
   </item>
   <item>
     <g:id>261</g:id>
@@ -7313,7 +7313,7 @@
     <g:gender>female</g:gender>
     <g:price>845.00 UAH</g:price>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Подарункові комплекти &gt; Лосіни, футболки &gt; Літо</g:product_type>
+    <g:product_type>Подарункові комплекти &gt; Футболки, комплекти &gt; Літо</g:product_type>
   </item>
   <item>
     <g:id>449</g:id>
@@ -11418,7 +11418,7 @@
     <g:gender>female</g:gender>
     <g:price>955.00 UAH</g:price>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Лосіни, футболки &gt; Літо &gt; Костюм</g:product_type>
+    <g:product_type>Футболки, комплекти &gt; Літо &gt; Костюм</g:product_type>
   </item>
   <item>
     <g:id>832</g:id>
