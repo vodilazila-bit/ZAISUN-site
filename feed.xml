@@ -2725,22 +2725,6 @@
     <g:product_type>Зима</g:product_type>
   </item>
   <item>
-    <g:id>160</g:id>
-    <g:title>Шарф ангора у молочному кольорі-copy | ZaiSun</g:title>
-    <g:description>Дитячий шарфик на вибыр з помпонами чи без у молочному кольорі Помпони - натуральний єнот Помпон з&apos;ємний, на кнопочці Довжина шарфа - 1 м</g:description>
-    <g:link>https://zaisun.com.ua/?p=160</g:link>
-    <g:image_link>https://zaisun.com.ua/images/%D0%A8%D0%B0%D1%80%D1%84_%D0%B0%D0%BD%D0%B3%D0%BE%D1%80%D0%B0_%D1%83_%D0%BC%D0%BE%D0%BB%D0%BE%D1%87%D0%BD%D0%BE%D0%BC%D1%83_%D0%BA%D0%BE%D0%BB%D1%8C%D0%BE%D1%80%D1%96-copy_0001325-85_1.jpg</g:image_link>
-    <g:availability>in stock</g:availability>
-    <g:condition>new</g:condition>
-    <g:brand>ZaiSun</g:brand>
-    <g:identifier_exists>no</g:identifier_exists>
-    <g:age_group>kids</g:age_group>
-    <g:gender>unisex</g:gender>
-    <g:price>195.00 UAH</g:price>
-    <g:color>Молочний</g:color>
-    <g:product_type>Зима</g:product_type>
-  </item>
-  <item>
     <g:id>161</g:id>
     <g:title>Дитячий костюм з велюру у бежевому кольорі | ZaiSun</g:title>
     <g:description>Ніжний велюровий костюм для дівчинки — ідеальний вибір для комфортних образів на кожен день та особливих моментів. Комплект складається зі світшота та штанів з комфортною посадкою. Ґудзики на світшоті декоративні</g:description>
@@ -3774,9 +3758,9 @@
     <g:gender>unisex</g:gender>
     <g:price>310.00 UAH</g:price>
     <g:sale_price>150.00 UAH</g:sale_price>
-    <g:color>Якір</g:color>
+    <g:color>Пальми</g:color>
     <g:size>52</g:size>
-    <g:product_type>Літо &gt; Панама</g:product_type>
+    <g:product_type>Панама &gt; Літо</g:product_type>
   </item>
   <item>
     <g:id>229</g:id>
