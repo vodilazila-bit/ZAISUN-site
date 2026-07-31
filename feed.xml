@@ -1652,23 +1652,6 @@
     <g:product_type>Зима</g:product_type>
   </item>
   <item>
-    <g:id>97</g:id>
-    <g:title>Дитяча зимова шапка з вушками та снуд у малиновому кольорі | ZaiSun</g:title>
-    <g:description>Дитяча зимова шапка з вушками котика чи ведмедика в комплекті зі снудом / хомутом у малиновому кольорі Матеріал - королівськаєвроангора, підклад - фліс</g:description>
-    <g:link>https://zaisun.com.ua/?p=97</g:link>
-    <g:image_link>https://zaisun.com.ua/images/%D0%94%D0%B8%D1%82%D1%8F%D1%87%D0%B0_%D0%B7%D0%B8%D0%BC%D0%BE%D0%B2%D0%B0_%D1%88%D0%B0%D0%BF%D0%BA%D0%B0_%D0%B7_%D0%B2%D1%83%D1%88%D0%BA%D0%B0%D0%BC%D0%B8_%D1%82%D0%B0_%D1%81%D0%BD%D1%83%D0%B4_%D1%83_%D0%BC%D0%B0%D0%BB%D0%B8%D0%BD%D0%BE%D0%B2%D0%BE%D0%BC%D1%83_%D0%BA%D0%BE%D0%BB%D1%8C%D0%BE%D1%80%D1%96_0001325-333_1.jpg</g:image_link>
-    <g:availability>in stock</g:availability>
-    <g:condition>new</g:condition>
-    <g:brand>ZaiSun</g:brand>
-    <g:identifier_exists>no</g:identifier_exists>
-    <g:age_group>kids</g:age_group>
-    <g:gender>unisex</g:gender>
-    <g:price>535.00 UAH</g:price>
-    <g:color>Малиновий</g:color>
-    <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>Зима</g:product_type>
-  </item>
-  <item>
     <g:id>98</g:id>
     <g:title>Дитяча зимова шапка з вушками та снуд у молочному кольорі | ZaiSun</g:title>
     <g:description>Дитяча зимова шапка з вушками котика чи ведмедика в комплекті зі снудом / хомутом у молочному кольорі Матеріал - королівськаєвроангора, підклад - фліс</g:description>
@@ -1785,42 +1768,6 @@
     <g:price>525.00 UAH</g:price>
     <g:color>Ніжно-рожевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>Зима</g:product_type>
-  </item>
-  <item>
-    <g:id>105</g:id>
-    <g:title>Дитяча зимова шапка з вушками у бордовому кольорі | ZaiSun</g:title>
-    <g:description>Стильна та практична дитяча шапочка з милими вушками — ідеальний аксесуар для прохолодної пори року. Модель виконана з м’якої, приємної до тіла тканини, яка добре зберігає тепло та не подразнює ніжну шкіру дитини. Шапочка має підворіт для кращої посадки та зав’язки, які надійно фіксують її на голові, забезпечуючи комфорт навіть під час активних прогулянок. Підходить для щоденного носіння, прогулянок, фотосесій та стильних образів малюка. Характеристики: Матеріал: королівська ангора температурний режим: орієнтовно до -15</g:description>
-    <g:link>https://zaisun.com.ua/?p=105</g:link>
-    <g:image_link>https://zaisun.com.ua/images/%D0%94%D0%B8%D1%82%D1%8F%D1%87%D0%B0_%D0%B7%D0%B8%D0%BC%D0%BE%D0%B2%D0%B0_%D1%88%D0%B0%D0%BF%D0%BA%D0%B0_%D0%B7_%D0%B2%D1%83%D1%88%D0%BA%D0%B0%D0%BC%D0%B8_%D1%83_%D0%B1%D0%BE%D1%80%D0%B4%D0%BE%D0%B2%D0%BE%D0%BC%D1%83_%D0%BA%D0%BE%D0%BB%D1%8C%D0%BE%D1%80%D1%96_0001325-389_1.jpg</g:image_link>
-    <g:availability>in stock</g:availability>
-    <g:condition>new</g:condition>
-    <g:brand>ZaiSun</g:brand>
-    <g:identifier_exists>no</g:identifier_exists>
-    <g:age_group>kids</g:age_group>
-    <g:gender>unisex</g:gender>
-    <g:price>350.00 UAH</g:price>
-    <g:sale_price>297.00 UAH</g:sale_price>
-    <g:color>Бордовий</g:color>
-    <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
-  </item>
-  <item>
-    <g:id>106</g:id>
-    <g:title>Дитяча зимова шапка з вушками у малиновому кольорі | ZaiSun</g:title>
-    <g:description>Стильна та практична дитяча шапочка з милими вушками — ідеальний аксесуар для прохолодної пори року. Модель виконана з м’якої, приємної до тіла тканини, яка добре зберігає тепло та не подразнює ніжну шкіру дитини. Шапочка має підворіт для кращої посадки та зав’язки, які надійно фіксують її на голові, забезпечуючи комфорт навіть під час активних прогулянок. Підходить для щоденного носіння, прогулянок, фотосесій та стильних образів малюка. Характеристики: Матеріал: королівська ангора температурний режим: орієнтовно до -15</g:description>
-    <g:link>https://zaisun.com.ua/?p=106</g:link>
-    <g:image_link>https://zaisun.com.ua/images/%D0%94%D0%B8%D1%82%D1%8F%D1%87%D0%B0_%D0%B7%D0%B8%D0%BC%D0%BE%D0%B2%D0%B0_%D1%88%D0%B0%D0%BF%D0%BA%D0%B0_%D0%B7_%D0%B2%D1%83%D1%88%D0%BA%D0%B0%D0%BC%D0%B8_%D1%83_%D0%BC%D0%B0%D0%BB%D0%B8%D0%BD%D0%BE%D0%B2%D0%BE%D0%BC%D1%83_%D0%BA%D0%BE%D0%BB%D1%8C%D0%BE%D1%80%D1%96_0001325-383_1.jpg</g:image_link>
-    <g:availability>in stock</g:availability>
-    <g:condition>new</g:condition>
-    <g:brand>ZaiSun</g:brand>
-    <g:identifier_exists>no</g:identifier_exists>
-    <g:age_group>kids</g:age_group>
-    <g:gender>unisex</g:gender>
-    <g:price>350.00 UAH</g:price>
-    <g:sale_price>297.00 UAH</g:sale_price>
-    <g:color>Малиновий</g:color>
-    <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
     <g:product_type>Зима</g:product_type>
   </item>
   <item>
@@ -2364,23 +2311,6 @@
     <g:gender>unisex</g:gender>
     <g:price>695.00 UAH</g:price>
     <g:color>Чорний</g:color>
-    <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
-    <g:product_type>Зима</g:product_type>
-  </item>
-  <item>
-    <g:id>139</g:id>
-    <g:title>Дитяча зимова шапка з пухнастими вушками та манішка у молочному кольорі | ZaiSun</g:title>
-    <g:description>Дитяча зимова шапка з пухнастими вушками в комплекті з манішкою у молочному кольорі Матеріал - королівськаєвроангора, підклад - фліс</g:description>
-    <g:link>https://zaisun.com.ua/?p=139</g:link>
-    <g:image_link>https://zaisun.com.ua/images/%D0%94%D0%B8%D1%82%D1%8F%D1%87%D0%B0_%D0%B7%D0%B8%D0%BC%D0%BE%D0%B2%D0%B0_%D1%88%D0%B0%D0%BF%D0%BA%D0%B0_%D0%B7_%D0%BF%D1%83%D1%85%D0%BD%D0%B0%D1%81%D1%82%D0%B8%D0%BC%D0%B8_%D0%B2%D1%83%D1%88%D0%BA%D0%B0%D0%BC%D0%B8_%D1%82%D0%B0_%D0%BC%D0%B0%D0%BD%D1%96%D1%88%D0%BA%D0%B0_%D1%83_%D0%BC%D0%BE%D0%BB%D0%BE%D1%87%D0%BD%D0%BE%D0%BC%D1%83_%D0%BA%D0%BE%D0%BB%D1%8C%D0%BE%D1%80%D1%96_0001325-290_1.jpg</g:image_link>
-    <g:availability>in stock</g:availability>
-    <g:condition>new</g:condition>
-    <g:brand>ZaiSun</g:brand>
-    <g:identifier_exists>no</g:identifier_exists>
-    <g:age_group>kids</g:age_group>
-    <g:gender>unisex</g:gender>
-    <g:price>635.00 UAH</g:price>
-    <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54/54-56</g:size>
     <g:product_type>Зима</g:product_type>
   </item>
