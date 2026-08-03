@@ -13,6 +13,7 @@ const esc = s => String(s || '')
 
 const items = [];
 for (const p of DATA.products) {
+  if (p.hidden) continue;  // приховані на сайті — не показуємо і в Merchant
   if (!p.photo) continue; // Merchant вимагає фото
   const prices = Object.values(p.var || {}).map(v => v.p).filter(x => x > 0);
   const price = prices.length ? Math.min(...prices) : p.price;
