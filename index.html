@@ -16,6 +16,7 @@
 <meta property="og:description" content="Дитячий одяг власного виробництва. Замовлення на сайті або в Instagram @zaisun_kids. Доставка Новою Поштою.">
 <meta property="og:image" content="https://zaisun.com.ua/hero2.jpg">
 <meta property="og:url" content="https://zaisun.com.ua/">
+<link rel="canonical" href="https://zaisun.com.ua/">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R0C1CM969C"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-R0C1CM969C');</script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1585,6 +1586,17 @@ buildMenu(); buildHome(); buildNew(); buildIG();
 // ═══ Свайп назад / кнопка назад: інтеграція з історією браузера ═══
 function closeProd(){ if(curCatId) go('cat'); else goHome(); }
 let NAVSILENT = false, NAVDEPTH = 0, LASTVIEW = {v:'home'}, OVERLAYON = false;
+const SITE_ORIGIN = 'https://zaisun.com.ua';
+function setCanon(suffix){
+  try{
+    const href = SITE_ORIGIN + '/' + (suffix || '');
+    let l = document.querySelector('link[rel="canonical"]');
+    if(!l){ l = document.createElement('link'); l.rel = 'canonical'; document.head.appendChild(l); }
+    l.href = href;
+    const og = document.querySelector('meta[property="og:url"]');
+    if(og) og.setAttribute('content', href);
+  }catch(e){}
+}
 function pushNav(st, url){ if(NAVSILENT) return; NAVDEPTH++; LASTVIEW = st.o ? LASTVIEW : st; history.pushState(st,'', url||location.pathname); OVERLAYON = !!st.o; }
 function navTo(st, url){
   if(NAVSILENT) return;
@@ -1595,13 +1607,13 @@ function navTo(st, url){
 function supGo(){ try{ gtag('event','support_click',{channel:'viber'}); }catch(e){} location.href='viber://chat?number=%2B380978678389'; }
 
 function igGo(loc){ try{ gtag('event','instagram_click',{link_location:loc}); }catch(e){} window.open('https://instagram.com/zaisun_kids','_blank'); }
-function goHome(){ go('home'); LASTVIEW = {v:'home'}; try{ history.replaceState({v:'home'}, '', location.pathname); }catch(e){} }
+function goHome(){ go('home'); setCanon(''); LASTVIEW = {v:'home'}; try{ history.replaceState({v:'home'}, '', location.pathname); }catch(e){} }
 const _openCat = openCat, _openCatAll = openCatAll, _openMenuCat = openMenuCat, _openProd = openProd, _closeProd = closeProd;
 const _openMenu = openMenu, _openCart = openCart, _openSearch = openSearch, _openSheet = openSheet, _openOrder = openOrder, _checkoutCart = checkoutCart;
-openCat = function(id){ _openCat(id); navTo({v:'cat', m:'id', id}, location.pathname + '?cat=' + id); };
-openCatAll = function(){ _openCatAll(); navTo({v:'cat', m:'all'}, location.pathname + '?cat=all'); };
-openMenuCat = function(i){ _openMenuCat(i); navTo({v:'cat', m:'menu', i}, location.pathname + '?cat=m' + i); };
-openProd = function(id){ _openProd(id); navTo({v:'prod', id}, location.pathname + '?p=' + id); };
+openCat = function(id){ _openCat(id); setCanon('?cat=' + id); navTo({v:'cat', m:'id', id}, location.pathname + '?cat=' + id); };
+openCatAll = function(){ _openCatAll(); setCanon('?cat=all'); navTo({v:'cat', m:'all'}, location.pathname + '?cat=all'); };
+openMenuCat = function(i){ _openMenuCat(i); setCanon('?cat=m' + i); navTo({v:'cat', m:'menu', i}, location.pathname + '?cat=m' + i); };
+openProd = function(id){ _openProd(id); setCanon('?p=' + id); navTo({v:'prod', id}, location.pathname + '?p=' + id); };
 // накладки: пушимо стан-дублікат поточного екрана з позначкою o (overlay),
 // щоб жест "назад" закривав накладку і лишав той самий екран
 openMenu = function(){ _openMenu(); pushNav({...LASTVIEW, o:1}); };
@@ -1631,13 +1643,13 @@ window.addEventListener('popstate', e => {
   NAVSILENT = true;
   try{
     closeMenu(); closeSheet(); closeCart(); closeSearch(); closeOrder();
-    if(st.v === 'prod') _openProd(st.id);
+    if(st.v === 'prod'){ _openProd(st.id); setCanon('?p=' + st.id); }
     else if(st.v === 'cat'){
-      if(st.m === 'all') _openCatAll();
-      else if(st.m === 'menu') _openMenuCat(st.i);
-      else _openCat(st.id);
+      if(st.m === 'all'){ _openCatAll(); setCanon('?cat=all'); }
+      else if(st.m === 'menu'){ _openMenuCat(st.i); setCanon('?cat=m' + st.i); }
+      else { _openCat(st.id); setCanon('?cat=' + st.id); }
     }
-    else go('home');
+    else { go('home'); setCanon(''); }
   } finally { NAVSILENT = false; }
 });
 // відновлення стану після F5 / прямі лінки: /?p=123, /?cat=..., &sub=...
@@ -1646,6 +1658,7 @@ window.addEventListener('popstate', e => {
   const pid = parseInt(q.get('p'));
   const cat = q.get('cat');
   const sub = q.get('sub');
+  if(pid) setCanon('?p=' + pid); else if(cat) setCanon('?cat=' + cat); else setCanon('');
   history.replaceState({v:'home'}, '', location.pathname);
   if(pid && P.find(p=>p.id===pid)){ openProd(pid); return; }
   if(cat){
