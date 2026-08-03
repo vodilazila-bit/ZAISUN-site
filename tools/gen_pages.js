@@ -50,6 +50,29 @@ function priceInfo(p) {
 const visible = DATA.products.filter(p => !p.hidden && p.photo);
 const urlOf = p => `/t/${p.id}-${slug(p.name)}/`;
 
+// Заголовки. Після обрізання довгі назви можуть збігтись (часто відрізняються
+// лише кольором у кінці). Розводимо: спершу кольором, потім артикулом.
+const TITLES = (() => {
+  const t = new Map();
+  for (const p of visible) t.set(p.id, clip(p.name, 62));
+
+  const tally = () => {
+    const m = new Map();
+    for (const v of t.values()) m.set(v, (m.get(v) || 0) + 1);
+    return m;
+  };
+
+  let c = tally();
+  for (const p of visible) {
+    if (c.get(t.get(p.id)) > 1 && p.color) t.set(p.id, clip(p.name, 44) + ' — ' + p.color);
+  }
+  c = tally();
+  for (const p of visible) {
+    if (c.get(t.get(p.id)) > 1) t.set(p.id, t.get(p.id) + ' #' + p.id);
+  }
+  return t;
+})();
+
 // ── схожі товари: та сама категорія ──
 function related(p, n) {
   const cats = new Set(p.cats || []);
@@ -156,7 +179,7 @@ function page(p) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${esc(clip(p.name, 62))} — ZaiSun</title>
+<title>${esc(TITLES.get(p.id))} — ZaiSun</title>
 <meta name="description" content="${esc(metaDesc)}">
 <link rel="canonical" href="${url}">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
