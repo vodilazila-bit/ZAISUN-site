@@ -576,7 +576,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=44"></script>
+<script src="data.js?v=45"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 let VIEWS = {};
@@ -621,23 +621,42 @@ function closeSizeTable(){ document.getElementById('sizeOvl').style.display='non
 
 // ═══ Мапа меню старого сайту ═══
 const MENU_DEF = [
-  {n:'Осінь', c:['Осінь']},
-  {n:'Боді', c:['Боді','Боді-гольф','Комплекти з боді']},
-  {n:'Костюми', c:['Костюм','Костюм утеплений']},
-  {n:'Сукні', c:['Сукні']},
-  {n:'Джинси, штани, кофтини', c:['Джинси, штани, кофтини']},
-  {n:'Шапки', c:['Шапки']},
-  {n:'Ромпери', c:['Ромпер']},
-  {n:"Пов'язки/мокси", c:["Пов'язки"]},
-  {n:'Колготи, шкарпетки, гольфи', c:['Капронові','колготи махра','колготи демі','носки','носки махра','гольфи','Гольф']},
-  {n:'Футболки, шорти', c:['Шорти, футболки','Лосіни, футболки']},
-  {n:'Панами, косинки, бейси', c:['Панама','Косинки, панами']},
-  {n:'Літній асортимент', c:['Літо']},
-  {n:'Одяг на хрещення', c:['Одяг для Хрещення']},
-  {n:'Взуття', c:['Пінетки']},
-  {n:'Сарафани', c:['сарафан']},
-  {n:'Аксесуари', c:['чалма','чалма одинарна','Тонка бінні']},
+  {k:'osin',          n:'Осінь', c:['Осінь']},
+  {k:'bodi',          n:'Боді', c:['Боді','Боді-гольф','Комплекти з боді']},
+  {k:'kostiumy',      n:'Костюми', c:['Костюм','Костюм утеплений']},
+  {k:'sukni',         n:'Сукні', c:['Сукні']},
+  {k:'dzhynsy',       n:'Джинси, штани, кофтини', c:['Джинси, штани, кофтини']},
+  {k:'shapky',        n:'Шапки', c:['Шапки']},
+  {k:'rompery',       n:'Ромпери', c:['Ромпер']},
+  {k:'poviazky',      n:"Пов'язки/мокси", c:["Пов'язки"]},
+  {k:'kolhoty',       n:'Колготи, шкарпетки, гольфи', c:['Капронові','колготи махра','колготи демі','носки','носки махра','гольфи','Гольф']},
+  {k:'futbolky',      n:'Футболки, шорти', c:['Шорти, футболки','Лосіни, футболки']},
+  {k:'panamy',        n:'Панами, косинки, бейси', c:['Панама','Косинки, панами']},
+  {k:'lito',          n:'Літній асортимент', c:['Літо']},
+  {k:'khreshchennia', n:'Одяг на хрещення', c:['Одяг для Хрещення']},
+  {k:'vzuttia',       n:'Взуття', c:['Пінетки']},
+  {k:'sarafany',      n:'Сарафани', c:['сарафан']},
+  {k:'aksesuary',     n:'Аксесуари', c:['чалма','чалма одинарна','Тонка бінні']},
 ];
+// Порядок пунктів меню міняється — тому в адресі тепер стійкий ключ (?cat=k<ключ>),
+// а не порядковий номер. Старі посилання виду ?cat=m<N> (реклама, соцмережі,
+// індекс Google) розбираються через цю таблицю — порядок, що діяв до 28.07.2026.
+const LEGACY_MENU = ['osin','lito','bodi','sukni','rompery','panamy','kostiumy',
+  'dzhynsy','futbolky','shapky','poviazky','kolhoty','khreshchennia','vzuttia',
+  'kolhoty','kolhoty','sarafany','aksesuary'];
+function menuIdxByKey(k){ return MENU_DEF.findIndex(d => d.k === k); }
+function menuIdxFromParam(cat){
+  if(!cat) return -1;
+  if(cat.charAt(0) === 'k') return menuIdxByKey(cat.slice(1));
+  if(cat.charAt(0) === 'm'){
+    const n = parseInt(cat.slice(1));
+    if(isNaN(n)) return -1;
+    const byLegacy = menuIdxByKey(LEGACY_MENU[n]);
+    if(byLegacy >= 0) return byLegacy;
+    return MENU_DEF[n] ? n : -1;
+  }
+  return -1;
+}
 function findIdsByNames(names){
   const ids = new Set();
   for(const t of TREE){
@@ -1622,7 +1641,7 @@ const _openCat = openCat, _openCatAll = openCatAll, _openMenuCat = openMenuCat, 
 const _openMenu = openMenu, _openCart = openCart, _openSearch = openSearch, _openSheet = openSheet, _openOrder = openOrder, _checkoutCart = checkoutCart;
 openCat = function(id){ _openCat(id); setCanon('?cat=' + id); navTo({v:'cat', m:'id', id}, location.pathname + '?cat=' + id); };
 openCatAll = function(){ _openCatAll(); setCanon('?cat=all'); navTo({v:'cat', m:'all'}, location.pathname + '?cat=all'); };
-openMenuCat = function(i){ _openMenuCat(i); setCanon('?cat=m' + i); navTo({v:'cat', m:'menu', i}, location.pathname + '?cat=m' + i); };
+openMenuCat = function(i){ _openMenuCat(i); const k = '?cat=k' + (MENU_DEF[i]||{}).k; setCanon(k); navTo({v:'cat', m:'menu', i}, location.pathname + k); };
 openProd = function(id){ _openProd(id); setCanon(prodCanon(id)); navTo({v:'prod', id}, location.pathname + '?p=' + id); };
 // накладки: пушимо стан-дублікат поточного екрана з позначкою o (overlay),
 // щоб жест "назад" закривав накладку і лишав той самий екран
@@ -1656,7 +1675,7 @@ window.addEventListener('popstate', e => {
     if(st.v === 'prod'){ _openProd(st.id); setCanon(prodCanon(st.id)); }
     else if(st.v === 'cat'){
       if(st.m === 'all'){ _openCatAll(); setCanon('?cat=all'); }
-      else if(st.m === 'menu'){ _openMenuCat(st.i); setCanon('?cat=m' + st.i); }
+      else if(st.m === 'menu'){ _openMenuCat(st.i); setCanon('?cat=k' + (MENU_DEF[st.i]||{}).k); }
       else { _openCat(st.id); setCanon('?cat=' + st.id); }
     }
     else { go('home'); setCanon(''); }
@@ -1673,7 +1692,7 @@ window.addEventListener('popstate', e => {
   if(pid && P.find(p=>p.id===pid)){ openProd(pid); return; }
   if(cat){
     if(cat === 'all') openCatAll();
-    else if(cat.charAt(0) === 'm' && MENU_DEF[parseInt(cat.slice(1))]) openMenuCat(parseInt(cat.slice(1)));
+    else if(cat.charAt(0) === 'm' || cat.charAt(0) === 'k'){ const mi = menuIdxFromParam(cat); if(mi >= 0) openMenuCat(mi); }
     else openCat(cat);
     if(sub){ try{ subSel(sub); }catch(e){} }
   }

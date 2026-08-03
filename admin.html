@@ -440,7 +440,7 @@ function renderCatTree(){
 }
 function findCat(topId){return DATA.tree.find(c=>c.id===topId)}
 async function catPublish(msg){
-  for(const c of DATA.tree){ c.n=catCount(c.id)||c.n; for(const s of (c.children||[])) s.n=catCount(s.id); }
+  for(const c of DATA.tree){ c.n=catCount(c.id); for(const s of (c.children||[])) s.n=catCount(s.id); }
   try{await commitData(msg);toast('✓ Збережено! Сайт оновиться за 1–3 хв','ok')}
   catch(e){toast('✗ Помилка збереження: '+e.message,'err')}
   renderCatTree()
@@ -662,8 +662,8 @@ async function saveNew(){
     if(kitN.key && kitN.vals.length>1 && Object.keys(kitN.up).length) prod.optup={[kitN.key]:kitN.up};
     DATA.products.push(prod);
     // лічильники в tree
-    const bump=(node)=>{cats.forEach(c=>{if(node.id===c.id)node.n=(node.n||0)+1});(node.children||[]).forEach(bump)};
-    DATA.tree.forEach(bump);
+    const recount=(node)=>{node.n=catCount(node.id);(node.children||[]).forEach(recount)};
+    DATA.tree.forEach(recount);
     // фільтри: додати колір/розмір у values категорій
     cats.forEach(c=>{
       if(!DATA.filters[c.id])DATA.filters[c.id]=[{name:'Розмір',type:'size',values:[]},{name:'Вік',type:'size',values:[]},{name:'Колір',type:'color',values:[]}];
