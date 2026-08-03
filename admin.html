@@ -493,7 +493,8 @@ async function commitData(msg){
   const content='const DATA = '+JSON.stringify(DATA)+';';
   const res=await commitFile('data.js',b64enc(content),msg,SHA);
   SHA=res.content.sha;
-  updateFeed().catch(e=>console.warn('feed:',e)); // фід оновлюється у фоні
+  // feed.xml, sitemap.xml і сторінки /t/ будує GitHub Action після коміту data.js
+  // (tools/gen_feed.js + tools/gen_pages.js). Тут не чіпаємо, щоб не перезаписати.
 }
 async function freshDataSha(){
   try{
@@ -790,8 +791,8 @@ async function dupProduct(){
   delete copy.nw;
   DATA.products.push(copy);
   // лічильники категорій
-  const bump=(node)=>{ if((copy.cats||[]).includes(node.id)) node.n=(node.n||0)+1; (node.children||[]).forEach(bump); };
-  DATA.tree.forEach(bump);
+  const recount=(node)=>{ node.n=catCount(node.id); (node.children||[]).forEach(recount); };
+  DATA.tree.forEach(recount);
   try{
     await commitData('admin: дубльовано товар #'+src.id+' -> #'+copy.id);
     toast('✓ Копію #'+copy.id+' створено — додай фото і зміни назву','ok');
@@ -1017,8 +1018,8 @@ async function saveEdit(){
   });
   // перерахувати лічильники категорій
   DATA.tree.forEach(t=>{
-    t.n=DATA.products.filter(x=>x.cats.includes(t.id)).length;
-    (t.children||[]).forEach(c=>{c.n=DATA.products.filter(x=>x.cats.includes(c.id)).length});
+    t.n=catCount(t.id);
+    (t.children||[]).forEach(c=>{c.n=catCount(c.id)});
   });
   try{await commitData(`admin: змінено товар #${p.id}`);toast('✓ Збережено! Сайт оновиться за 1–3 хв','ok');closeEdit();renderList()}
   catch(e){toast('Помилка: '+e.message,'err')}
