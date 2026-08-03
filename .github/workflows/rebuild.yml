@@ -1,0 +1,61 @@
+name: Rebuild pages, feed, sitemap
+
+# Спрацьовує, коли змінюється каталог — зокрема після збереження з адмінки.
+# Комітить назад тільки згенеровані файли, тому повторного запуску не буде.
+on:
+  push:
+    paths:
+      - 'data.js'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rebuild
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Згенерувати сторінки товарів
+        run: node tools/gen_pages.js
+
+      - name: Згенерувати фід
+        run: node tools/gen_feed.js
+
+      - name: Перевірити цілісність
+        run: |
+          node -e "
+          const fs=require('fs');
+          const r=fs.readFileSync('data.js','utf8');
+          const D=JSON.parse(r.slice(r.indexOf('{'), r.lastIndexOf('}')+1));
+          const vis=D.products.filter(p=>!p.hidden && p.photo);
+          const dirs=fs.readdirSync('t').filter(d=>fs.statSync('t/'+d).isDirectory());
+          if(dirs.length !== vis.length) throw new Error('сторінок '+dirs.length+', товарів '+vis.length);
+          const feed=fs.readFileSync('feed.xml','utf8');
+          const ids=new Set([...feed.matchAll(/<g:id>(\\d+)<\\/g:id>/g)].map(m=>m[1]));
+          for(const p of D.products) if(p.hidden && ids.has(String(p.id)))
+            throw new Error('прихований товар '+p.id+' потрапив у фід');
+          if(!fs.readFileSync('sitemap.xml','utf8').includes('<loc>')) throw new Error('sitemap порожній');
+          console.log('OK: '+dirs.length+' сторінок, '+ids.size+' у фіді');
+          "
+
+      - name: Закомітити результат
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add t sitemap.xml feed.xml
+          if git diff --staged --quiet; then
+            echo "змін немає"
+          else
+            git commit -m "auto: сторінки товарів, фід і sitemap"
+            git push
+          fi
