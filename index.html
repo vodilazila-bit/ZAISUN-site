@@ -1587,6 +1587,16 @@ buildMenu(); buildHome(); buildNew(); buildIG();
 function closeProd(){ if(curCatId) go('cat'); else goHome(); }
 let NAVSILENT = false, NAVDEPTH = 0, LASTVIEW = {v:'home'}, OVERLAYON = false;
 const SITE_ORIGIN = 'https://zaisun.com.ua';
+// та сама транслітерація, що в tools/gen_pages.js — щоб canonical збігався зі статичною сторінкою
+const _TR = {'а':'a','б':'b','в':'v','г':'h','ґ':'g','д':'d','е':'e','є':'ie','ж':'zh','з':'z','и':'y','і':'i','ї':'i','й':'i','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ф':'f','х':'kh','ц':'ts','ч':'ch','ш':'sh','щ':'shch','ь':'','ю':'iu','я':'ia','ы':'y','э':'e','ё':'e','ъ':''};
+function _slug(s){
+  return String(s).toLowerCase().split('').map(c => (c in _TR ? _TR[c] : c)).join('')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60).replace(/-+$/,'');
+}
+function prodCanon(id){
+  const pr = P.find(x => x.id === id);
+  return pr ? 't/' + id + '-' + _slug(pr.name) + '/' : '?p=' + id;
+}
 function setCanon(suffix){
   try{
     const href = SITE_ORIGIN + '/' + (suffix || '');
@@ -1613,7 +1623,7 @@ const _openMenu = openMenu, _openCart = openCart, _openSearch = openSearch, _ope
 openCat = function(id){ _openCat(id); setCanon('?cat=' + id); navTo({v:'cat', m:'id', id}, location.pathname + '?cat=' + id); };
 openCatAll = function(){ _openCatAll(); setCanon('?cat=all'); navTo({v:'cat', m:'all'}, location.pathname + '?cat=all'); };
 openMenuCat = function(i){ _openMenuCat(i); setCanon('?cat=m' + i); navTo({v:'cat', m:'menu', i}, location.pathname + '?cat=m' + i); };
-openProd = function(id){ _openProd(id); setCanon('?p=' + id); navTo({v:'prod', id}, location.pathname + '?p=' + id); };
+openProd = function(id){ _openProd(id); setCanon(prodCanon(id)); navTo({v:'prod', id}, location.pathname + '?p=' + id); };
 // накладки: пушимо стан-дублікат поточного екрана з позначкою o (overlay),
 // щоб жест "назад" закривав накладку і лишав той самий екран
 openMenu = function(){ _openMenu(); pushNav({...LASTVIEW, o:1}); };
@@ -1643,7 +1653,7 @@ window.addEventListener('popstate', e => {
   NAVSILENT = true;
   try{
     closeMenu(); closeSheet(); closeCart(); closeSearch(); closeOrder();
-    if(st.v === 'prod'){ _openProd(st.id); setCanon('?p=' + st.id); }
+    if(st.v === 'prod'){ _openProd(st.id); setCanon(prodCanon(st.id)); }
     else if(st.v === 'cat'){
       if(st.m === 'all'){ _openCatAll(); setCanon('?cat=all'); }
       else if(st.m === 'menu'){ _openMenuCat(st.i); setCanon('?cat=m' + st.i); }
@@ -1658,7 +1668,7 @@ window.addEventListener('popstate', e => {
   const pid = parseInt(q.get('p'));
   const cat = q.get('cat');
   const sub = q.get('sub');
-  if(pid) setCanon('?p=' + pid); else if(cat) setCanon('?cat=' + cat); else setCanon('');
+  if(pid) setCanon(prodCanon(pid)); else if(cat) setCanon('?cat=' + cat); else setCanon('');
   history.replaceState({v:'home'}, '', location.pathname);
   if(pid && P.find(p=>p.id===pid)){ openProd(pid); return; }
   if(cat){
