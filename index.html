@@ -576,7 +576,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=46"></script>
+<script src="data.js?v=47"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 let VIEWS = {};
@@ -1257,6 +1257,13 @@ function paySel(inp){
   const b=document.getElementById('osubBtn');
   if(b) b.textContent = (inp.value==='online') ? 'Перейти до оплати 💳' : (inp.value==='pm') ? 'Перейти до оплати 🍼' : 'Оформити замовлення';
 }
+// Дістає client_id GA4 з куки _ga (формат GA1.1.<cid1>.<cid2>)
+function ga4ClientId(){
+  try{
+    const m = document.cookie.match(/(?:^|;\s*)_ga=GA\d\.\d\.([\d.]+)/);
+    return m ? m[1] : '';
+  }catch(e){ return ''; }
+}
 async function submitOrder(){
   const n=document.getElementById('fName').value.trim(), p=document.getElementById('fPhone').value.trim();
   if(!/тест/i.test(n) && n.split(/\s+/).filter(w=>w.length>=2).length<2){
@@ -1304,6 +1311,9 @@ async function submitOrder(){
     }, (em && em.includes('@')) ? {"Пошта клієнта": em} : {}, orderPhotos.length ? {"_photos": orderPhotos} : {});
     const isPay = (payway==='online'||payway==='pm');
     if(isPay) payload._online=true;
+    // client_id з куки _ga — щоб подія «оплачено» з релею звʼязалась із цим самим
+    // візитом у GA4, а отже і з рекламним кліком, який його привів
+    payload._cid = ga4ClientId();
     let sent=false, lastErr='', payUrl='';
     // 1) основний канал: власний приймач на Apps Script
     try{

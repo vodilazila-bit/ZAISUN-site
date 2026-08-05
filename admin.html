@@ -393,6 +393,25 @@ async function loadOrders(force){
     renderOrders();
   }catch(e){ el.innerHTML='Не вдалося завантажити ('+(e&&e.message||e)+').<br>Перевір, що скрипт оновлено до версії з журналом.'; }
 }
+// Позначити замовлення оплаченим (для оплати за реквізитами).
+// Релей ставить статус і шле подію «paid» у GA4 — щоб реклама
+// рахувала реальні гроші, а не просто натискання кнопки.
+async function markPaid(row, phone){
+  const b=document.getElementById('pb'+row);
+  if(b){ b.disabled=true; b.textContent='Зберігаю…'; b.style.opacity='.6'; }
+  try{
+    const r=await fetch(ORDER_RELAY,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({_markPaid:true,key:ORDERS_KEY,row:row,phone:phone})});
+    const j=await r.json();
+    if(!j.ok) throw new Error(j.err||'відмова');
+    const o=(ORDERS||[]).find(x=>x.row===row); if(o) o.status='ОПЛАЧЕНО';
+    renderOrders();
+    toast(j.ga4===false?'✓ Позначено, але подія в GA4 не пішла':'✓ Оплачено, передано в GA4', j.ga4===false?'err':'ok');
+  }catch(e){
+    if(b){ b.disabled=false; b.textContent='✓ Оплачено'; b.style.opacity='1'; }
+    toast('✗ '+(e&&e.message||e),'err');
+  }
+}
 function renderOrders(){
   const el=$('ordList'); if(!ORDERS){el.textContent='—';return;}
   const rng=$('ordRange').value;
@@ -417,6 +436,7 @@ function renderOrders(){
       ${o.photos?`<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">${String(o.photos).split('|').filter(Boolean).map(u=>`<img src="${u}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;background:#f0ebe4">`).join('')}</div>`:''}
       <div style="font-size:12.5px;white-space:pre-wrap;margin-top:6px">${o.items||''}</div>
       ${o.comm&&o.comm!=='-'?`<div style="font-size:12px;color:var(--mut);margin-top:4px">💬 ${o.comm}</div>`:''}
+      ${o.status!=='ОПЛАЧЕНО'&&!test?`<button id="pb${o.row}" onclick="markPaid(${o.row},'${(o.phone||'').replace(/'/g,'')}')" style="margin-top:9px;background:#2e9e5b;color:#fff;border:0;border-radius:9px;padding:8px 16px;font-weight:700;font-size:12.5px;cursor:pointer">✓ Оплачено</button>`:''}
     </div>`;
   }).join('');
 }
