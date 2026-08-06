@@ -576,7 +576,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=49"></script>
+<script src="data.js?v=50"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 let VIEWS = {};
@@ -771,6 +771,20 @@ function subSel(id){
   curProds.sort((a,b)=>b.id-a.id);
   renderSubs();
   apply();
+  rememberSub(id);
+}
+// Підкатегорія — це не окремий екран, а стан того самого. Пишемо її в поточний
+// запис історії, щоб повернення з картки товару відкривало саме підрозділ,
+// а не загальний розділ.
+function rememberSub(id){
+  if(NAVSILENT) return;
+  try{
+    if(!LASTVIEW || LASTVIEW.v !== 'cat') return;
+    LASTVIEW = {...LASTVIEW, sub: id || undefined};
+    const u = new URL(location.href);
+    if(id) u.searchParams.set('sub', id); else u.searchParams.delete('sub');
+    history.replaceState(LASTVIEW, '', u.pathname + u.search);
+  }catch(e){}
 }
 function initCat(nm){
   document.title = nm + ' — дитячий одяг ZaiSun';
@@ -1749,7 +1763,7 @@ window.addEventListener('popstate', e => {
   NAVDEPTH = Math.max(0, NAVDEPTH - 1);
   const st = e.state || {v:'home'};
   OVERLAYON = !!st.o;
-  LASTVIEW = {v:st.v||'home', m:st.m, id:st.id, i:st.i};
+  LASTVIEW = {v:st.v||'home', m:st.m, id:st.id, i:st.i, sub:st.sub};
   NAVSILENT = true;
   try{
     closeMenu(); closeSheet(); closeCart(); closeSearch(); closeOrder();
@@ -1758,6 +1772,7 @@ window.addEventListener('popstate', e => {
       if(st.m === 'all'){ _openCatAll(); setCanon('?cat=all'); }
       else if(st.m === 'menu'){ _openMenuCat(st.i); setCanon('?cat=k' + (MENU_DEF[st.i]||{}).k); }
       else { _openCat(st.id); setCanon('?cat=' + st.id); }
+      if(st.sub && curSubs.some(s=>s.id===st.sub)) subSel(st.sub);
     }
     else { go('home'); setCanon(''); }
   } finally { NAVSILENT = false; }
