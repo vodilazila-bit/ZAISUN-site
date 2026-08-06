@@ -18,7 +18,7 @@
 <meta property="og:url" content="https://zaisun.com.ua/">
 <link rel="canonical" href="https://zaisun.com.ua/">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R0C1CM969C"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-R0C1CM969C');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-R0C1CM969C');gtag('config','AW-17974157321');</script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -576,7 +576,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=47"></script>
+<script src="data.js?v=48"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 let VIEWS = {};
@@ -1257,6 +1257,38 @@ function paySel(inp){
   const b=document.getElementById('osubBtn');
   if(b) b.textContent = (inp.value==='online') ? 'Перейти до оплати 💳' : (inp.value==='pm') ? 'Перейти до оплати 🍼' : 'Оформити замовлення';
 }
+// Розширені конверсії Google Ads: передаємо email і телефон, щоб Google міг
+// зіставити покупку з рекламним кліком навіть коли куки не спрацювали.
+// Хешування Google робить сам, від нас — чистий формат.
+const ADS_ID = 'AW-17974157321';
+const ADS_PURCHASE = 'AW-17974157321/LuJeCPSh5NwcEInA3_pC';
+function adsUserData(name, phone, email){
+  const d = {};
+  const em = String(email||'').trim().toLowerCase();
+  if(em.indexOf('@') > 0) d.email = em;
+  let ph = String(phone||'').replace(/\D/g,'');
+  if(ph.length === 10 && ph.charAt(0) === '0') ph = '38' + ph;   // 067… → 38067…
+  if(ph.length === 11 && ph.slice(0,2) === '80') ph = '3' + ph;  // 8067… → 38067…
+  if(ph.length === 12 && ph.slice(0,3) === '380') d.phone_number = '+' + ph;
+  const parts = String(name||'').trim().split(/\s+/);
+  if(parts.length >= 2){
+    d.address = { first_name: parts[0].toLowerCase(), last_name: parts[1].toLowerCase() };
+  }
+  return d;
+}
+function adsConversion(txId, value, name, phone, email){
+  try{
+    const ud = adsUserData(name, phone, email);
+    if(Object.keys(ud).length) gtag('set', 'user_data', ud);
+    gtag('event', 'conversion', {
+      send_to: ADS_PURCHASE,
+      value: value,
+      currency: 'UAH',
+      transaction_id: txId
+    });
+  }catch(e){}
+}
+
 // Дістає client_id GA4 з куки _ga (формат GA1.1.<cid1>.<cid2>)
 function ga4ClientId(){
   try{
@@ -1349,15 +1381,21 @@ async function submitOrder(){
         const v = size && cur.var && cur.var[size] ? cur.var[size] : {p:cur.price};
         gaItems = [{item_id:String(cur.id),item_name:cur.name,price:v.p,quantity:1,item_variant:size||''}];
       }
+      const txId = 'ZS-'+Date.now();
       if(payUrl){
-        sessionStorage.setItem('zs_pend', JSON.stringify({t: total, items: gaItems, id: 'ZS-'+Date.now(), pt: payway}));
+        // онлайн-оплата: подія піде після повернення з mono
+        sessionStorage.setItem('zs_pend', JSON.stringify({
+          t: total, items: gaItems, id: txId, pt: payway,
+          nm: n, ph: p, em: em||''
+        }));
       } else {
         gtag('event','purchase',{
-          transaction_id: 'ZS-'+Date.now(),
+          transaction_id: txId,
           value: total, currency:'UAH', items: gaItems,
           payment_type: payway
         });
         gtag('event','generate_lead',{currency:'UAH', value: total});
+        adsConversion(txId, total, n, p, em);
       }
     }catch(e){}
     if(payUrl){
@@ -1430,6 +1468,7 @@ if(location.search.indexOf('paid=1')>=0){
       sessionStorage.removeItem('zs_pend');
       gtag('event','purchase',{transaction_id: pend.id, value: pend.t, currency:'UAH', items: pend.items||[], payment_type: pend.pt||'online'});
       gtag('event','generate_lead',{currency:'UAH', value: pend.t});
+      adsConversion(pend.id, pend.t, pend.nm, pend.ph, pend.em);
     }
   }catch(e){}
   setTimeout(()=>{
