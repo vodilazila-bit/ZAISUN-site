@@ -576,7 +576,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=50"></script>
+<script src="data.js?v=51"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 let VIEWS = {};
@@ -1016,7 +1016,7 @@ function openProd(id){
     const sel = curColors.length>1;
     tags += `<span class="ptag ${sel?'clr-sel':''} ${selColor===c?'on':''}" ${sel?`onclick="selClr(this,'${c.replace(/'/g,"\\'")}')"`:''}><span class="cd" style="background:${HEX[c]||'#D8C8B8'}"></span>${c}</span>`;
   });
-  for(const [k,v] of Object.entries(cur.opts)){
+  for(const [k,v] of Object.entries(cur.opts || {})){
     if(k==='Колір') continue;
     if(v.length>1){
       tags += `<span class="ptag optlbl">${k}:</span>`;
