@@ -576,7 +576,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=48"></script>
+<script src="data.js?v=49"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 let VIEWS = {};
@@ -1289,6 +1289,36 @@ function adsConversion(txId, value, name, phone, email){
   }catch(e){}
 }
 
+// Рекламний ідентифікатор кліку. Google дописує його до адреси при переході
+// з оголошення (gclid), для iOS та медійних форматів — gbraid / wbraid.
+// Зберігаємо на 90 днів: людина може клікнути сьогодні, а купити через два
+// тижні напряму — тоді Ads без цього звʼязку конверсію не зарахує.
+function saveAdClick(){
+  try{
+    const q = new URLSearchParams(location.search);
+    for(const k of ['gclid','gbraid','wbraid']){
+      const v = q.get(k);
+      if(v){
+        const exp = new Date(Date.now() + 90*864e5).toUTCString();
+        document.cookie = 'zs_' + k + '=' + encodeURIComponent(v) +
+          ';expires=' + exp + ';path=/;SameSite=Lax';
+        document.cookie = 'zs_click_at=' + Date.now() +
+          ';expires=' + exp + ';path=/;SameSite=Lax';
+      }
+    }
+  }catch(e){}
+}
+function adClick(){
+  try{
+    for(const k of ['gclid','gbraid','wbraid']){
+      const m = document.cookie.match(new RegExp('(?:^|;\\s*)zs_' + k + '=([^;]+)'));
+      if(m) return { k: k, v: decodeURIComponent(m[1]) };
+    }
+  }catch(e){}
+  return null;
+}
+saveAdClick();
+
 // Дістає client_id GA4 з куки _ga (формат GA1.1.<cid1>.<cid2>)
 function ga4ClientId(){
   try{
@@ -1346,6 +1376,8 @@ async function submitOrder(){
     // client_id з куки _ga — щоб подія «оплачено» з релею звʼязалась із цим самим
     // візитом у GA4, а отже і з рекламним кліком, який його привів
     payload._cid = ga4ClientId();
+    const _ac = adClick();
+    if(_ac){ payload._gclid = _ac.v; payload._gtype = _ac.k; }
     let sent=false, lastErr='', payUrl='';
     // 1) основний канал: власний приймач на Apps Script
     try{
