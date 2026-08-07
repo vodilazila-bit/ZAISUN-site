@@ -576,7 +576,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=53"></script>
+<script src="data.js?v=54"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1514,7 +1514,15 @@ async function submitOrder(){
     document.getElementById('fview').style.display='none';
     document.getElementById('sview').classList.add('show');
   }catch(e){
-    alert('Не вдалося надіслати замовлення. Напишіть нам в Instagram @zaisun_kids або зателефонуйте +380 73 812 12 52 — приймемо вручну.\n\n[Технічна інформація для розробника: '+(e && e.message ? e.message : e)+']');
+    // Дані у формі збережені — після оновлення сторінки нічого не пропаде.
+    const timeout = e && (e.name === 'AbortError' || /abort/i.test(String(e.message||'')));
+    alert(
+      (timeout
+        ? 'Сервер довго не відповідає 😕\n\nВаші дані збережено — спробуйте ще раз за декілька хвилин, нічого перезаповнювати не треба.'
+        : 'Не вдалося надіслати замовлення 😕\n\nВаші дані збережено — спробуйте ще раз за декілька хвилин.') +
+      '\n\nАбо напишіть нам в Instagram @zaisun_kids чи зателефонуйте +380 73 812 12 52 — приймемо замовлення вручну.' +
+      '\n\n[Технічна інформація: ' + (e && e.message ? e.message : e) + ']'
+    );
   }
   btn.disabled=false; btn.textContent='Оформити замовлення';
 }
