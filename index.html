@@ -576,9 +576,13 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=51"></script>
+<script src="data.js?v=52"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
+// Списки каталогу показують лише те, що можна купити. Прямі посилання на
+// відсутній товар (?p=N, фід Merchant, статичні сторінки) далі працюють —
+// картка відкриється з позначкою «Немає», бо звертається до P, а не до PL.
+const PL = P.filter(p => p.stock !== false);
 let VIEWS = {};
 try{ VIEWS = JSON.parse(localStorage.getItem('zs_views')||'{}'); }catch(e){ VIEWS={}; }
 function typeBoost(p){
@@ -684,7 +688,7 @@ function openMenuCat(idx){
   closeMenu();
   const ids = findIdsByNames(def.c);
   curCatId = '__multi__';
-  curProds = P.filter(p=>p.cats.some(c=>ids.has(c)));
+  curProds = PL.filter(p=>p.cats.some(c=>ids.has(c)));
   curBase = curProds.slice();
   curSubs = subsFromNames(def.c);
   curSub = '';
@@ -727,7 +731,7 @@ function openCat(id){
   closeMenu();
   curCatId = id;
   const ids = new Set(catAndChildren(id));
-  curProds = P.filter(p=>p.cats.some(c=>ids.has(c)));
+  curProds = PL.filter(p=>p.cats.some(c=>ids.has(c)));
   curBase = curProds.slice();
   const top = TREE.find(t=>t.id===id);
   curSubs = top ? (top.children||[]).filter(c=>c.n>0).map(c=>({id:c.id,name:c.name,n:c.n})) : [];
@@ -740,7 +744,7 @@ function openCat(id){
 function openCatAll(){
   closeMenu();
   curCatId = '__all__';
-  curProds = P.slice();
+  curProds = PL.slice();
   curBase = curProds.slice();
   curSubs = []; curSub = '';
   curCatName = 'Всі товари';
@@ -1477,7 +1481,7 @@ function buildHome(){
   h += `<div class="hc" onclick="openCatAll()">${allImg}<span>Всі товари · ${P.length}</span></div>`;
   MENU_DEF.forEach((d,i)=>{
     const ids = findIdsByNames(d.c);
-    const prods = P.filter(p=>p.cats.some(c=>ids.has(c)));
+    const prods = PL.filter(p=>p.cats.some(c=>ids.has(c)));
     if(!prods.length) return;
     const pr = prods.find(p=>p.coverCat && ids.has(p.coverCat) && p.photo) || coverOf(prods);
     let img = pr ? `<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">` : '';
@@ -1487,13 +1491,13 @@ function buildHome(){
   });
   const sale = TREE.find(t=>t.raw==='sale');
   if(sale){
-    const sp = P.filter(p=>p.cats.includes(sale.id));
+    const sp = PL.filter(p=>p.cats.includes(sale.id));
     const pr = coverOf(sp.filter(p=>p.old)) || coverOf(sp);
     h += `<div class="hc" onclick="openCat('${sale.id}')"><img src="images/cover_sale.jpg" loading="lazy" onload="fitTile(this)"><span style="background:var(--rose-d);color:#fff">Sale 🔥 · ${sale.n}</span></div>`;
   }
   const gifts = TREE.find(t=>t.raw==='Подарункові комплекти');
   if(gifts){
-    const gp = P.filter(p=>p.cats.includes(gifts.id));
+    const gp = PL.filter(p=>p.cats.includes(gifts.id));
     const pr = coverOf(gp);
     h += `<div class="hc" onclick="openCat('${gifts.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">`:''}<span>Подарункові набори · ${gifts.n}</span></div>`;
   }
@@ -1634,7 +1638,7 @@ function doSearch(){
   const grid = document.getElementById('soGrid'), hint = document.getElementById('soHint');
   if(q.length<2){ grid.innerHTML=''; hint.style.display='block'; hint.textContent='Почни вводити назву товару'; return; }
   const words = q.split(/\s+/).filter(w=>w.length>=2);
-  const scored = P.map(p=>{
+  const scored = PL.map(p=>{
     const name=(p.name||'').toLowerCase();
     const extra=((p.color||'')+' '+p.catn.join(' ')).toLowerCase();
     if(!words.every(w=>name.includes(w)||extra.includes(w))) return null;
@@ -1676,12 +1680,12 @@ function buildIG(){
 function buildNew(){
   const el = document.getElementById('newRow'); if(!el) return;
   // 1) вручну позначені новинки (🆕 в адмінці) — найновіші перші
-  let picked = P.filter(p=>p.nw && p.photo && !p.hidden).sort((a,b)=>b.id-a.id).slice(0,10);
+  let picked = PL.filter(p=>p.nw && p.photo && !p.hidden).sort((a,b)=>b.id-a.id).slice(0,10);
   // 2) поки таких нема — випадкові товари з категорії "Літо"
   if(!picked.length){
     const lito = TREE.find(t=>t.raw==='Літо'||t.name==='Літо');
-    let pool = lito ? P.filter(p=>p.photo && !p.hidden && p.cats && p.cats.includes(lito.id)) : [];
-    if(!pool.length) pool = P.filter(p=>p.photo && !p.hidden && p.season===2);
+    let pool = lito ? PL.filter(p=>p.photo && !p.hidden && p.cats && p.cats.includes(lito.id)) : [];
+    if(!pool.length) pool = PL.filter(p=>p.photo && !p.hidden && p.season===2);
     picked = pool.slice();
     for(let i=picked.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[picked[i],picked[j]]=[picked[j],picked[i]];}
     picked = picked.slice(0,10);
