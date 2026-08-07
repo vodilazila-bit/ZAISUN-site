@@ -576,7 +576,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=54"></script>
+<script src="data.js?v=55"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -784,10 +784,14 @@ function rememberSub(id){
   if(NAVSILENT) return;
   try{
     if(!LASTVIEW || LASTVIEW.v !== 'cat') return;
-    LASTVIEW = {...LASTVIEW, sub: id || undefined};
+    const now = LASTVIEW.sub || '', nxt = id || '';
+    if(now === nxt) return;                       // те саме — зайвий крок не потрібен
+    const st = {...LASTVIEW, sub: nxt || undefined};
     const u = new URL(location.href);
-    if(id) u.searchParams.set('sub', id); else u.searchParams.delete('sub');
-    history.replaceState(LASTVIEW, '', u.pathname + u.search);
+    if(nxt) u.searchParams.set('sub', nxt); else u.searchParams.delete('sub');
+    // окремий крок історії: «назад» з підрозділу веде в загальний розділ,
+    // а не перестрибує одразу на головну
+    pushNav(st, u.pathname + u.search);
   }catch(e){}
 }
 function initCat(nm){
