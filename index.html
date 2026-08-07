@@ -576,7 +576,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=52"></script>
+<script src="data.js?v=53"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1112,6 +1112,50 @@ function backToCat(){
 }
 
 // ─── order ───
+// ═══ Чернетка форми замовлення ═══
+// Людина заповнила все, натиснула оплату, сторінка зависла — після F5 нічого
+// не має пропасти. Тримаємо поля в localStorage і відновлюємо разом із формою.
+const FKEYS = ['fName','fPhone','fEmail','fCity','fNP','fComm','fSize'];
+function saveForm(open){
+  try{
+    const d = {};
+    FKEYS.forEach(k=>{ const el=document.getElementById(k); if(el) d[k]=el.value; });
+    const pw = document.querySelector('input[name=payway]:checked');
+    if(pw) d.pay = pw.value;
+    d.npRef = npCityRef || '';
+    d.mode  = cartMode ? 'cart' : 'prod';
+    d.pid   = (!cartMode && cur) ? cur.id : null;
+    if(open !== undefined) d.open = open ? 1 : 0;
+    else { const prev = readForm(); d.open = prev ? prev.open : 0; }
+    localStorage.setItem('zs_form', JSON.stringify(d));
+  }catch(e){}
+}
+function readForm(){
+  try{ return JSON.parse(localStorage.getItem('zs_form')||'null'); }catch(e){ return null; }
+}
+function clearForm(){ try{ localStorage.removeItem('zs_form'); }catch(e){} }
+function restoreForm(){
+  const d = readForm(); if(!d) return;
+  FKEYS.forEach(k=>{
+    // розмір і склад підставляє сама картка — не перетираємо
+    if(k === 'fSize') return;
+    const el = document.getElementById(k);
+    if(el && d[k] && !el.value.trim()) el.value = d[k];
+  });
+  if(d.npRef) npCityRef = d.npRef;
+  if(d.pay){
+    const r = document.querySelector('input[name=payway][value="'+d.pay+'"]');
+    if(r && !r.checked){ r.checked = true; try{ paySel(r); }catch(e){} }
+  }
+}
+// пишемо чернетку на кожну зміну поля
+document.addEventListener('input', e=>{
+  if(e.target && (FKEYS.includes(e.target.id))) saveForm();
+}, true);
+document.addEventListener('change', e=>{
+  if(e.target && e.target.name === 'payway') saveForm();
+}, true);
+
 function openOrder(){
   if(cur && cur.stock===false){ alert('Цього товару зараз немає в наявності 🙈'); return; }
   if(cur && needColor()) return;
@@ -1133,8 +1177,9 @@ function openOrder(){
   document.getElementById('sview').classList.remove('show');
   document.getElementById('movl').classList.add('open');
   document.body.style.overflow='hidden';
+  restoreForm(); saveForm(true);
 }
-function closeOrder(){ document.getElementById('movl').classList.remove('open'); document.body.style.overflow=''; cartMode=false; }
+function closeOrder(){ document.getElementById('movl').classList.remove('open'); document.body.style.overflow=''; cartMode=false; saveForm(false); }
 function editSuccPhone(){
   document.getElementById('sPhoneWrap').style.display='none';
   document.getElementById('sPhoneOk').style.display='none';
@@ -1399,7 +1444,11 @@ async function submitOrder(){
     let sent=false, lastErr='', payUrl='';
     // 1) основний канал: власний приймач на Apps Script
     try{
-      const r1 = await fetch(ORDER_RELAY, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload)});
+      // без обмеження часу кнопка «Надсилаю…» могла висіти вічно,
+      // якщо приймач не відповідає
+      const ac = new AbortController();
+      const tm = setTimeout(()=>ac.abort(), 30000);
+      const r1 = await fetch(ORDER_RELAY, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload), signal: ac.signal}).finally(()=>clearTimeout(tm));
       const t1 = await r1.text().catch(()=> '');
       if(r1.ok && t1.indexOf('ok')===0){ sent=true; }
       else if(r1.ok && t1.charAt(0)==='{'){
@@ -1450,10 +1499,12 @@ async function submitOrder(){
     }catch(e){}
     if(payUrl){
       if(cartMode){ CART=[]; saveCart(); cartMode=false; }
+      clearForm();
       location.href = payUrl;
       return;
     }
     if(cartMode){ CART=[]; saveCart(); cartMode=false; }
+    clearForm();
     window._lastOrd = {name:n, phone:p};
     const pd = p.replace(/\D/g,'').replace(/^380/,'');
     document.getElementById('sPhone').textContent = '+380 '+pd.slice(0,2)+' '+pd.slice(2,5)+' '+pd.slice(5,7)+' '+pd.slice(7,9);
@@ -1621,6 +1672,7 @@ function checkoutCart(){
   document.getElementById('sview').classList.remove('show');
   document.getElementById('movl').classList.add('open');
   document.body.style.overflow='hidden';
+  restoreForm(); saveForm(true);
 }
 
 // ═══ SEARCH ═══
@@ -1789,12 +1841,29 @@ window.addEventListener('popstate', e => {
   const sub = q.get('sub');
   if(pid) setCanon(prodCanon(pid)); else if(cat) setCanon('?cat=' + cat); else setCanon('');
   history.replaceState({v:'home'}, '', location.pathname);
-  if(pid && P.find(p=>p.id===pid)){ openProd(pid); return; }
+  if(pid && P.find(p=>p.id===pid)){ openProd(pid); reopenOrder(); return; }
   if(cat){
     if(cat === 'all') openCatAll();
     else if(cat.charAt(0) === 'm' || cat.charAt(0) === 'k'){ const mi = menuIdxFromParam(cat); if(mi >= 0) openMenuCat(mi); }
     else openCat(cat);
     if(sub){ try{ subSel(sub); }catch(e){} }
+  }
+  reopenOrder();
+
+  // Якщо сторінку перезавантажили з відкритою формою замовлення — повертаємо
+  // людину туди ж, а не в каталог. Поля підтягне restoreForm().
+  function reopenOrder(){
+    try{
+      const d = readForm();
+      if(!d || !d.open) return;
+      if(d.mode === 'cart'){
+        if(CART.length) setTimeout(()=>{ try{ checkoutCart(); }catch(e){} }, 60);
+      } else if(d.pid){
+        const pr = P.find(x=>x.id === d.pid);
+        if(!pr) return;
+        setTimeout(()=>{ try{ if(!cur || cur.id!==d.pid) openProd(d.pid); openOrder(); }catch(e){} }, 60);
+      }
+    }catch(e){}
   }
 })();
 
