@@ -19,6 +19,19 @@
 <link rel="canonical" href="https://zaisun.com.ua/">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R0C1CM969C"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-R0C1CM969C');gtag('config','AW-17974157321');</script>
+<!-- Meta Pixel: той самий 865748820475938, що використовує NP-CAPI.
+     Потрібен для ремаркетингу — серверні події з накладних бачать лише покупців,
+     а тут збирається аудиторія тих, хто дивився і пішов. -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','865748820475938');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=865748820475938&ev=PageView&noscript=1"></noscript>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -576,7 +589,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=55"></script>
+<script src="data.js?v=56"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1053,6 +1066,7 @@ function openProd(id){
   document.getElementById('pdesc').innerHTML = fmtDesc(cur.desc || '');
   try{
     gtag('event','view_item',{currency:'UAH',value:cur.price,items:[{item_id:String(cur.id),item_name:cur.name,price:cur.price,item_category:(cur.catn&&cur.catn[0])||''}]});
+    fb('ViewContent',{content_ids:[String(cur.id)],content_type:'product',content_name:cur.name,value:cur.price,currency:'UAH'});
   }catch(e){}
   renderRelated();
   go('prod');
@@ -1170,6 +1184,7 @@ function openOrder(){
     const vv = selSize && cur.var[selSize] ? cur.var[selSize] : {p:cur.price};
     const vfin = vv.p + curOptUp();
     gtag('event','begin_checkout',{currency:'UAH',value:vfin,items:[{item_id:String(cur.id),item_name:cur.name,price:vfin}]});
+    fb('InitiateCheckout',{content_ids:[String(cur.id)],content_type:'product',value:vfin,currency:'UAH',num_items:1});
   }catch(e){}
   const v = selSize ? cur.var[selSize] : null;
   document.getElementById('mimg').src = cur.photo ? 'images/'+cur.photo : '';
@@ -1328,6 +1343,11 @@ function paySel(inp){
 // зіставити покупку з рекламним кліком навіть коли куки не спрацювали.
 // Хешування Google робить сам, від нас — чистий формат.
 const ADS_ID = 'AW-17974157321';
+// Обгортка: блокувальники реклами часто ріжуть fbq, і без перевірки
+// сторінка валилася б на кожній події.
+function fb(name, params, id){
+  try{ if(typeof fbq === 'function') fbq('track', name, params || {}, id ? {eventID: id} : undefined); }catch(e){}
+}
 const ADS_PURCHASE = 'AW-17974157321/LuJeCPSh5NwcEInA3_pC';
 function adsUserData(name, phone, email){
   const d = {};
@@ -1499,6 +1519,7 @@ async function submitOrder(){
         });
         gtag('event','generate_lead',{currency:'UAH', value: total});
         adsConversion(txId, total, n, p, em);
+        fb('Purchase',{content_ids:gaItems.map(i=>i.item_id),content_type:'product',value:total,currency:'UAH'}, txId);
       }
     }catch(e){}
     if(payUrl){
@@ -1582,6 +1603,7 @@ if(location.search.indexOf('paid=1')>=0){
       gtag('event','purchase',{transaction_id: pend.id, value: pend.t, currency:'UAH', items: pend.items||[], payment_type: pend.pt||'online'});
       gtag('event','generate_lead',{currency:'UAH', value: pend.t});
       adsConversion(pend.id, pend.t, pend.nm, pend.ph, pend.em);
+      fb('Purchase',{content_ids:(pend.items||[]).map(i=>i.item_id),content_type:'product',value:pend.t,currency:'UAH'}, pend.id);
     }
   }catch(e){}
   setTimeout(()=>{
@@ -1630,6 +1652,7 @@ function addToCart(){
     const v = (cur.var && cur.var[size]) ? cur.var[size] : {p: cur.price};
     const vp = v.p + curOptUp();
     gtag('event','add_to_cart',{currency:'UAH', value:vp, items:[{item_id:String(cur.id), item_name:cur.name, price:vp, item_variant:size, item_category:(cur.catn&&cur.catn[0])||'', quantity:1}]});
+    fb('AddToCart',{content_ids:[String(cur.id)],content_type:'product',content_name:cur.name,value:vp,currency:'UAH'});
   }catch(e){}
   saveCart(); openCart();
 }
@@ -1673,6 +1696,7 @@ function checkoutCart(){
   const total = CART.reduce((s,it)=>s+cartPrice(it)*it.qty,0);
   try{
     gtag('event','begin_checkout',{currency:'UAH',value:total,items:CART.map(it=>{const p=P.find(x=>x.id===it.id);return{item_id:String(it.id),item_name:p?p.name:'',price:cartPrice(it),quantity:it.qty}})});
+    fb('InitiateCheckout',{content_ids:CART.map(it=>String(it.id)),content_type:'product',value:total,currency:'UAH',num_items:CART.reduce((s,it)=>s+it.qty,0)});
   }catch(e){}
   const first = P.find(x=>x.id===CART[0].id);
   document.getElementById('mimg').src = first && first.photo ? 'images/'+first.photo : '';
