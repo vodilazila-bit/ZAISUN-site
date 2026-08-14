@@ -304,7 +304,7 @@ section{padding:26px 18px 34px}
 .mhead{position:sticky;top:0;z-index:6;background:#FDFAF6;padding:20px 20px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-radius:22px 22px 0 0;min-height:60px}
 .mhead h3{font-family:var(--serif);font-weight:700;font-size:1.15rem}
 .mclose{background:rgba(58,48,40,.06);border:none;color:var(--soft);padding:8px;border-radius:50%;cursor:pointer;flex:none;display:grid;place-items:center;width:36px;height:36px;-webkit-tap-highlight-color:transparent}.mclose:hover{background:rgba(58,48,40,.12)}
-.mprod{display:flex;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.mprod{display:flex;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}.mcart{padding:6px 20px 14px;border-bottom:1px solid var(--line)}.mcart .mci{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);align-items:center}.mcart .mci:last-of-type{border-bottom:0}.mcart .mci img{width:50px;height:63px;border-radius:9px;object-fit:cover;flex:none;background:var(--petal)}.mcart .mci .in{flex:1;min-width:0}.mcart .mci .n{font-size:.82rem;font-weight:500;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.mcart .mci .m{font-size:.72rem;color:var(--soft);margin-top:2px}.mcart .mci .p{font-size:.84rem;font-weight:700;margin-top:3px}.mcart .mq{display:flex;align-items:center;gap:2px;flex:none}.mcart .mq button{width:29px;height:29px;border:1px solid var(--line);background:#fff;border-radius:8px;font-size:1rem;line-height:1;cursor:pointer;color:var(--ink);-webkit-tap-highlight-color:transparent}.mcart .mq span{min-width:22px;text-align:center;font-size:.85rem;font-weight:600}.mcart .mdel{width:30px;height:30px;border:none;background:none;color:var(--soft);cursor:pointer;flex:none;border-radius:50%;display:grid;place-items:center;-webkit-tap-highlight-color:transparent}.mcart .mdel:hover{background:rgba(58,48,40,.08);color:#b4472e}.mcart .mtot{display:flex;justify-content:space-between;align-items:baseline;padding-top:12px;margin-top:4px;border-top:1px solid var(--line);font-size:.9rem}.mcart .mtot b{font-size:1.05rem}
 .mprod img{width:58px;height:74px;border-radius:10px;object-fit:cover;flex:none;background:var(--petal)}
 .mprod .in{font-size:.85rem}
 .mprod .in strong{display:block;margin-bottom:3px}
@@ -525,14 +525,14 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       <div class="mhead"><h3>Оформити замовлення</h3>
         <button class="mclose" onclick="closeOrder()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
       </div>
-      <div class="mprod"><img id="mimg" src=""><div class="in"><strong id="mname"></strong><div id="mmeta" style="color:var(--soft);font-size:.78rem;margin-bottom:3px"></div><div class="pr" id="mprice"></div></div></div>
+      <div class="mprod" id="mprodOne"><img id="mimg" src=""><div class="in"><strong id="mname"></strong><div id="mmeta" style="color:var(--soft);font-size:.78rem;margin-bottom:3px"></div><div class="pr" id="mprice"></div></div></div><div class="mcart" id="mcart" style="display:none"></div>
       <div class="mform">
         <div class="fld"><label>Ім'я та прізвище *</label><input type="text" id="fName"></div>
         <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" value="+380" inputmode="numeric" maxlength="13" oninput="phoneFix(this)" onblur="phoneBlur(this)"><div class="ferr" id="phoneErr"></div></div>
         <div class="fld"><label>Email <span style="text-transform:none;letter-spacing:0;font-weight:400;opacity:.75">— не обов'язково</span></label><input type="email" id="fEmail" autocomplete="email"></div>
         <div class="frw">
           <div class="fld sugg"><label>Місто *</label><input type="text" id="fCity" placeholder="Почни вводити місто" autocomplete="off" oninput="npCity(this.value)"><div class="sugg-list" id="cityList"></div></div>
-          <div class="fld"><label>Розмір</label><input type="text" id="fSize"></div>
+          <div class="fld" id="fSizeWrap"><label>Розмір</label><input type="text" id="fSize"></div>
         </div>
         <div class="fld sugg"><label>Відділення Нової Пошти *</label><input type="text" id="fNP" placeholder="Почни вводити номер або вулицю" autocomplete="off" oninput="npWh(this.value)" onfocus="npWh(this.value)"><div class="sugg-list" id="npList"></div></div>
         <div class="fld"><label>Оплата</label>
@@ -589,7 +589,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=61"></script>
+<script src="data.js?v=62"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1192,6 +1192,9 @@ function openOrder(){
   document.getElementById('mmeta').textContent = [cur.color||'', optText(), selSize||''].filter(Boolean).join(' · ');
   document.getElementById('mprice').textContent = money((v?v.p:cur.price) + curOptUp());
   document.getElementById('fSize').value = selSize || (cur.sizes[0]||'');
+  document.getElementById('mprodOne').style.display='flex';
+  document.getElementById('mcart').style.display='none';
+  document.getElementById('fSizeWrap').style.display='';
   document.getElementById('fview').style.display='block';
   document.getElementById('sview').classList.remove('show');
   document.getElementById('movl').classList.add('open');
@@ -1689,6 +1692,47 @@ function cartQty(idx, d){
   if(CART[idx].qty<=0) CART.splice(idx,1);
   saveCart(); renderCart();
 }
+// Список товарів прямо у формі оформлення: видно всі позиції,
+// можна змінити кількість або прибрати зайве, не виходячи з форми.
+function renderOrderCart(){
+  const box = document.getElementById('mcart');
+  if(!box) return;
+  if(!CART.length){ closeOrder(); return; }
+  let total = 0;
+  const rows = CART.map((it,idx)=>{
+    const pr = P.find(x=>x.id===it.id); if(!pr) return '';
+    const price = cartPrice(it); total += price*it.qty;
+    const img = pr.photo ? '<img src="images/'+pr.photo+'">' : '<img>';
+    const meta = [it.clr,it.opt,it.size].filter(Boolean).join(' · ');
+    return '<div class="mci">'+img+
+      '<div class="in"><div class="n">'+pr.name+'</div>'+
+      (meta?'<div class="m">'+meta+'</div>':'')+
+      '<div class="p">'+money(price)+(it.qty>1?' × '+it.qty:'')+'</div></div>'+
+      '<div class="mq"><button type="button" onclick="orderQty('+idx+',-1)">−</button>'+
+      '<span>'+it.qty+'</span>'+
+      '<button type="button" onclick="orderQty('+idx+',1)">+</button></div>'+
+      '<button type="button" class="mdel" title="Прибрати" onclick="orderDel('+idx+')">'+
+      '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'+
+      '<path d="M18 6 6 18M6 6l12 12"/></svg></button></div>';
+  }).join('');
+  box.innerHTML = rows +
+    '<div class="mtot"><span>Разом</span><b>'+money(total)+'</b></div>';
+}
+function orderQty(idx, d){
+  if(!CART[idx]) return;
+  CART[idx].qty += d;
+  if(CART[idx].qty<=0) CART.splice(idx,1);
+  saveCart();
+  try{ renderCart(); }catch(e){}
+  renderOrderCart();
+}
+function orderDel(idx){
+  if(!CART[idx]) return;
+  CART.splice(idx,1);
+  saveCart();
+  try{ renderCart(); }catch(e){}
+  renderOrderCart();
+}
 function checkoutCart(){
   if(!CART.length) return;
   cartMode = true;
@@ -1698,12 +1742,11 @@ function checkoutCart(){
     gtag('event','begin_checkout',{currency:'UAH',value:total,items:CART.map(it=>{const p=P.find(x=>x.id===it.id);return{item_id:String(it.id),item_name:p?p.name:'',price:cartPrice(it),quantity:it.qty}})});
     fb('InitiateCheckout',{content_ids:CART.map(it=>String(it.id)),content_type:'product',value:total,currency:'UAH',num_items:CART.reduce((s,it)=>s+it.qty,0)});
   }catch(e){}
-  const first = P.find(x=>x.id===CART[0].id);
-  document.getElementById('mimg').src = first && first.photo ? 'images/'+first.photo : '';
-  document.getElementById('mname').textContent = CART.reduce((s,i)=>s+i.qty,0) + ' товар(ів) у кошику';
-  document.getElementById('mmeta').textContent = CART.map(it=>{const p=P.find(x=>x.id===it.id);return p?p.name.slice(0,28):''}).join(', ').slice(0,90)+'…';
-  document.getElementById('mprice').textContent = money(total);
+  document.getElementById('mprodOne').style.display='none';
+  document.getElementById('mcart').style.display='block';
+  document.getElementById('fSizeWrap').style.display='none';
   document.getElementById('fSize').value = '';
+  renderOrderCart();
   document.getElementById('fview').style.display='block';
   document.getElementById('sview').classList.remove('show');
   document.getElementById('movl').classList.add('open');
