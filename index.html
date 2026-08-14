@@ -274,7 +274,7 @@ section{padding:26px 18px 34px}
 .szc small{display:block;font-size:.68rem;color:var(--soft);margin-top:2px}
 .szc.on{background:var(--rose);color:#fff;border-color:var(--rose)}
 .szc.on small{color:rgba(255,255,255,.75)}
-.szc.oos{opacity:.4;text-decoration:line-through;pointer-events:none}
+.szc.oos{opacity:.4;text-decoration:line-through;pointer-events:none}@keyframes needpulse{0%,100%{box-shadow:0 0 0 0 rgba(180,71,46,0)}35%{box-shadow:0 0 0 4px rgba(180,71,46,.28)}}.needpick{animation:needpulse .8s ease 2;border-color:#b4472e!important}@media (prefers-reduced-motion:reduce){.needpick{animation:none;border-color:#b4472e!important}}
 .pdesc{font-size:.88rem;color:var(--mid);line-height:1.75;margin-bottom:26px}
 .pdesc p{margin:0 0 10px}
 .pdesc p:last-child{margin-bottom:0}
@@ -589,7 +589,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=62"></script>
+<script src="data.js?v=63"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1191,7 +1191,7 @@ function openOrder(){
   document.getElementById('mname').textContent = cur.name;
   document.getElementById('mmeta').textContent = [cur.color||'', optText(), selSize||''].filter(Boolean).join(' · ');
   document.getElementById('mprice').textContent = money((v?v.p:cur.price) + curOptUp());
-  document.getElementById('fSize').value = selSize || (cur.sizes[0]||'');
+  document.getElementById('fSize').value = selSize || (cur.sizes.length===1 ? cur.sizes[0] : '');
   document.getElementById('mprodOne').style.display='flex';
   document.getElementById('mcart').style.display='none';
   document.getElementById('fSizeWrap').style.display='';
@@ -1627,15 +1627,35 @@ function cartPrice(it){
   const p = P.find(x=>x.id===it.id); if(!p) return 0;
   const v = it.size && p.var[it.size]; return (v ? v.p : p.price) + optUpFor(p, it.opt);
 }
+function flashPick_(sel){
+  // підсвітити те, що треба обрати, і підкрутити екран туди
+  try{
+    const els = document.querySelectorAll(sel);
+    if(!els.length) return;
+    els[0].scrollIntoView({block:'center', behavior:'smooth'});
+    els.forEach(e=>{ e.classList.add('needpick'); setTimeout(()=>e.classList.remove('needpick'), 1600); });
+  }catch(e){}
+}
+// Перевіряє все обовʼязкове перед покупкою: розмір, колір, інші варіанти.
+// Раніше розмір мовчки підставлявся перший зі списку — людина замовляла не те,
+// що думала, і дізнавалась про це вже при отриманні.
 function needColor(){
+  const sz = (cur && cur.sizes) || [];
+  if(sz.length>1 && !selSize){
+    flashPick_('.szc:not(.oos)');
+    alert('Оберіть, будь ласка, розмір 🙂');
+    return true;
+  }
   const cc = (cur && ((cur.opts&&cur.opts['Колір'])||(cur.color?[cur.color]:[])))||[];
   if(cc.length>1 && !selColor){
+    flashPick_('.ptag.clr-sel');
     alert('Оберіть, будь ласка, колір 🙂');
     return true;
   }
   if(cur && cur.opts){
     for(const [k,v] of Object.entries(cur.opts)){
       if(k!=='Колір' && v.length>1 && !selOpts[k]){
+        flashPick_('.ptag.osel[data-ok="'+k.replace(/"/g,'')+'"]');
         alert('Оберіть, будь ласка: '+k.toLowerCase()+' 🙂');
         return true;
       }
@@ -1647,7 +1667,7 @@ function addToCart(){
   if(cur && cur.stock===false){ alert('Цього товару зараз немає в наявності 🙈'); return; }
   if(!cur) return;
   if(needColor()) return;
-  const size = selSize || (cur.sizes[0]||'');
+  const size = selSize || (cur.sizes.length===1 ? cur.sizes[0] : '');
   const opt = optText();
   const ex = CART.find(i=>i.id===cur.id && i.size===size && (i.clr||'')===(selColor||'') && (i.opt||'')===opt);
   if(ex) ex.qty++; else CART.push({id:cur.id, size, clr:selColor||'', opt:opt, qty:1});
