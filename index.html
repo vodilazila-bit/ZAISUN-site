@@ -299,9 +299,9 @@ section{padding:26px 18px 34px}
 /* ═══ ORDER ═══ */
 .movl{position:fixed;inset:0;z-index:600;background:rgba(58,48,40,.5);display:none;place-items:end center}
 .movl.open{display:grid}
-.modal{background:#FDFAF6;border-radius:22px 22px 0 0;width:100%;max-width:520px;animation:up .3s ease;max-height:92vh;overflow-y:auto;padding-bottom:max(16px,env(safe-area-inset-bottom))}
+.modal{background:#FDFAF6;border-radius:22px 22px 0 0;width:100%;max-width:520px;animation:up .3s ease;max-height:88vh;max-height:88dvh;overflow-y:auto;padding-bottom:max(16px,env(safe-area-inset-bottom))}
 @keyframes up{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
-.mhead{position:sticky;top:0;z-index:6;background:#FDFAF6;padding:18px 20px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;border-radius:22px 22px 0 0}
+.mhead{position:sticky;top:0;z-index:6;background:#FDFAF6;padding:20px 20px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-radius:22px 22px 0 0;min-height:60px}
 .mhead h3{font-family:var(--serif);font-weight:700;font-size:1.15rem}
 .mclose{background:rgba(58,48,40,.06);border:none;color:var(--soft);padding:8px;border-radius:50%;cursor:pointer;flex:none;display:grid;place-items:center;width:36px;height:36px;-webkit-tap-highlight-color:transparent}.mclose:hover{background:rgba(58,48,40,.12)}
 .mprod{display:flex;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
@@ -589,7 +589,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=60"></script>
+<script src="data.js?v=61"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
