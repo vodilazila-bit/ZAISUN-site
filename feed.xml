@@ -349,8 +349,9 @@
     <g:gender>female</g:gender>
     <g:price>250.00 UAH</g:price>
     <g:sale_price>145.00 UAH</g:sale_price>
-    <g:color>Фламінго</g:color>
-    <g:product_type>Тепла осінь/весна &gt; Осінь</g:product_type>
+    <g:color>Бірюза</g:color>
+    <g:size>44-46</g:size>
+    <g:product_type>Осінь &gt; Тепла осінь/весна</g:product_type>
   </item>
   <item>
     <g:id>22</g:id>
