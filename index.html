@@ -92,14 +92,14 @@ body{overflow-x:hidden}
 /* ═══ HOME ═══ */
 .hero2{width:100%;overflow:hidden}
 .hero2 img{width:100%;display:block;height:64vw;max-height:480px;object-fit:cover;object-position:70% 30%;animation:kenburns 26s ease-out forwards;transform-origin:70% 35%}
-@keyframes kenburns{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.13) translate(-1.6%,-1%)}}
+@keyframes kenburns{0%{transform:scale(1.05) translate(0,0)}100%{transform:scale(1.17) translate(-1.4%,-.9%)}}
 .tag-l1{opacity:0;transform:translateY(14px);animation:tagRise 1.4s cubic-bezier(.22,.61,.36,1) forwards;animation-delay:.3s}
 @keyframes tagRise{to{opacity:1;transform:none}}
 .tg1,.tg2{opacity:0;filter:blur(4px);animation:tagFade 1.5s ease forwards}
 .tg1{animation-delay:.45s}
 .tg2{animation-delay:1.5s}
 @keyframes tagFade{to{opacity:1;filter:blur(0)}}
-@media (prefers-reduced-motion:reduce){.hero2 img{animation:none}.tag-l1,.tg1,.tg2{animation:none;opacity:1;transform:none;filter:none}}
+@media (prefers-reduced-motion:reduce){.hero2 img{animation:none;transform:scale(1.05)}.tag-l1,.tg1,.tg2{animation:none;opacity:1;transform:none;filter:none}}
 .tagline{text-align:center;padding:26px 26px 8px}
 .tagline p{font-style:italic;font-size:1.05rem;color:#6E6A64;line-height:1.7;max-width:34em;margin:0 auto}
 .hero-img{position:absolute;inset:0;background:url('hero.jpg') center top/cover no-repeat,#F6EDE4}
@@ -602,7 +602,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=70"></script>
+<script src="data.js?v=71"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
