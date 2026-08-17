@@ -327,7 +327,7 @@ section{padding:26px 18px 34px}
 .sic{width:60px;height:60px;border-radius:50%;background:var(--petal);display:grid;place-items:center;margin-bottom:16px;color:var(--rose-d)}
 .succ h3{font-family:var(--serif);font-weight:700;font-size:1.2rem;margin-bottom:8px}
 .succ p{color:var(--mid);font-size:.88rem;line-height:1.7;margin-bottom:22px}
-.new-sec{padding:8px 0 26px}
+.new-sec{padding:8px 0 26px}.np .hb{position:absolute;top:8px;left:8px;background:var(--rose-d);color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.05em;padding:3px 7px;border-radius:6px;z-index:2}
 .new-row{display:flex;gap:12px;overflow-x:auto;padding:4px 18px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .new-row::-webkit-scrollbar{display:none}
 .np{flex:0 0 44%;max-width:210px;cursor:pointer}
@@ -406,6 +406,10 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <section class="new-sec">
     <h2 class="cats-h">НОВИНКИ</h2>
     <div class="new-row" id="newRow"></div>
+  </section>
+  <section class="new-sec" id="topSec" style="display:none">
+    <h2 class="cats-h">НАЙБІЛЬШЕ КУПУЮТЬ ЦЬОГО ТИЖНЯ</h2>
+    <div class="new-row" id="topRow"></div>
   </section>
   <section class="ig-sec">
     <div class="ig-k">INSTAGRAM</div>
@@ -593,7 +597,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=65"></script>
+<script src="data.js?v=66"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1854,7 +1858,62 @@ function buildNew(){
     </div>`;
   }).join('');
 }
-buildMenu(); buildHome(); buildNew(); buildIG();
+// ═══ Найбільше купують цього тижня ═══
+// Релей віддає знеособлену статистику продажів за 7 днів: тільки id товару
+// і скільки штук куплено. Ніяких імен, телефонів чи сум замовлень.
+const TOP_MIN_PRICE = 200;   // дешеві дрібниці (шкарпетки, колготи) не показуємо
+const TOP_MAX = 10;
+const TOP_CACHE_H = 3;       // скільки годин тримати відповідь у памʼяті браузера
+
+function renderTop(stats){
+  const sec = document.getElementById('topSec');
+  const el  = document.getElementById('topRow');
+  if(!sec || !el || !Array.isArray(stats) || !stats.length) return;
+  const picked = stats
+    .map(r => ({ p: PL.find(x => x.id === (+r.id)), q: +r.q || 0 }))
+    .filter(o => o.p && o.p.photo && !o.p.hidden && o.p.stock !== false
+                 && (o.p.price || 0) >= TOP_MIN_PRICE)
+    .sort((a,b) => b.q - a.q)
+    .slice(0, TOP_MAX);
+  if(picked.length < 3){ return; }   // менше трьох — секція виглядала б порожньою
+  el.innerHTML = picked.map(o => {
+    const p = o.p;
+    const price = p.old ? `${priceFrom(p)}${money(p.price)} <s>${money(p.old)}</s>`
+                        : priceFrom(p)+money(p.price);
+    return `<div class="np" onclick="openProd(${p.id})">
+      <div class="pt"><span class="hb">ХІТ</span><img src="images/${p.photo}" loading="lazy" onload="fitTile(this)"></div>
+      <div class="nn">${p.name}</div>
+      <div class="npp">${price}</div>
+    </div>`;
+  }).join('');
+  sec.style.display = '';
+}
+
+function buildTop(){
+  // спершу показуємо з кешу, щоб секція зʼявилась миттєво
+  try{
+    const raw = localStorage.getItem('zaisun_top');
+    if(raw){
+      const c = JSON.parse(raw);
+      if(c && c.t && (Date.now() - c.t) < TOP_CACHE_H*3600*1000){
+        renderTop(c.d);
+        return;                       // кеш свіжий — релей не турбуємо
+      }
+      if(c && c.d) renderTop(c.d);     // протух, але покажемо поки вантажиться свіже
+    }
+  }catch(e){}
+
+  fetch(ORDER_RELAY + '?top=1', {method:'GET'})
+    .then(r => r.ok ? r.json() : null)
+    .then(d => {
+      if(!d || !Array.isArray(d)) return;
+      try{ localStorage.setItem('zaisun_top', JSON.stringify({t:Date.now(), d:d})); }catch(e){}
+      renderTop(d);
+    })
+    .catch(()=>{ /* релей не відповів — секція просто лишається схованою */ });
+}
+
+buildMenu(); buildHome(); buildNew(); buildIG(); buildTop();
 
 // ═══ Свайп назад / кнопка назад: інтеграція з історією браузера ═══
 function closeProd(){ if(curCatId) go('cat'); else goHome(); }
