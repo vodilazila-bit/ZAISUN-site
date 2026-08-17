@@ -91,7 +91,16 @@ body{overflow-x:hidden}
 
 /* ═══ HOME ═══ */
 .hero2{width:100%;overflow:hidden}
-.hero2 img{width:100%;display:block;height:64vw;max-height:480px;object-fit:cover;object-position:70% 30%}
+.hero2 img{width:100%;display:block;height:64vw;max-height:480px;object-fit:cover;object-position:70% 30%;animation:kenburns 26s ease-out forwards;transform-origin:70% 35%}
+@keyframes kenburns{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.13) translate(-1.6%,-1%)}}
+.tag-l1,.tag-rule,.tag-l2{opacity:0}
+.tag-l1,.tag-l2{transform:translateY(14px);filter:blur(3px);animation:tagRise 1.4s cubic-bezier(.22,.61,.36,1) forwards}
+.tag-l1{animation-delay:.35s}
+.tag-l2{animation-delay:1.35s}
+@keyframes tagRise{to{opacity:1;transform:none;filter:blur(0)}}
+.tag-rule{width:54px;height:1px;background:var(--rose);margin:18px auto;transform:scaleX(0);transform-origin:center;animation:tagRule 1.2s ease forwards;animation-delay:1.05s}
+@keyframes tagRule{to{opacity:.75;transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.hero2 img{animation:none}.tag-l1,.tag-l2,.tag-rule{animation:none;opacity:1;transform:none;filter:none}}
 .tagline{text-align:center;padding:26px 26px 8px}
 .tagline p{font-style:italic;font-size:1.05rem;color:#6E6A64;line-height:1.7;max-width:34em;margin:0 auto}
 .hero-img{position:absolute;inset:0;background:url('hero.jpg') center top/cover no-repeat,#F6EDE4}
@@ -387,7 +396,9 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 <div class="page show" id="pgHome">
   <div class="hero2"><img src="hero2.jpg" alt="ZaiSun"></div>
   <div class="tagline">
-    <p>Ми постійно працюємо над покращенням наших товарів і послуг, для досягнення найкращих результатів. Наші цінності - це унікальний дизайн та висока якість продукції</p>
+    <p class="tag-l1">Ми постійно працюємо над покращенням наших товарів і послуг, для досягнення найкращих результатів.</p>
+    <div class="tag-rule"></div>
+    <p class="tag-l2">Наші цінності — це унікальний дизайн та висока якість продукції</p>
   </div>
   <div class="strip">
     <span><span class="dot"></span>Власне виробництво</span>
@@ -589,7 +600,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=63"></script>
+<script src="data.js?v=64"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
