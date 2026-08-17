@@ -602,7 +602,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=69"></script>
+<script src="data.js?v=70"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1539,8 +1539,10 @@ async function submitOrder(){
       }
     }catch(e){}
     if(payUrl){
-      if(cartMode){ CART=[]; saveCart(); cartMode=false; }
-      clearForm();
+      // Кошик і форму НЕ чистимо: людина ще не заплатила. Якщо вона натисне
+      // «назад» або передумає — все має лишитись на місці. Почистимо при
+      // поверненні з успішної оплати (?paid=1).
+      btn.disabled=false; btn.textContent='Оформити замовлення';
       location.href = payUrl;
       return;
     }
@@ -1610,8 +1612,16 @@ function openGiftsCat(){ const t = TREE.find(t=>t.raw==='Подарункові 
 // ═══ CART ═══
 let CART = [];
 try{ CART = JSON.parse(localStorage.getItem('zaisun_cart')||'[]'); }catch(e){ CART=[]; }
+// Повернення на сторінку з кешу браузера (кнопка «назад» після monobank):
+// сторінка віддається в тому ж стані, в якому пішла, тому кнопку треба розблокувати вручну.
+window.addEventListener('pageshow', function(){
+  const b = document.getElementById('osubBtn');
+  if(b && b.disabled){ b.disabled = false; b.textContent = 'Оформити замовлення'; }
+});
 if(location.search.indexOf('paid=1')>=0){
   history.replaceState(null,'',location.pathname);
+  // оплата пройшла — тепер кошик і чернетку форми можна прибрати
+  try{ CART=[]; localStorage.setItem('zaisun_cart','[]'); localStorage.removeItem('zs_form'); }catch(e){}
   try{
     const pend = JSON.parse(sessionStorage.getItem('zs_pend')||'null');
     if(pend){
