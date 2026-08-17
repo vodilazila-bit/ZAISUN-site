@@ -93,9 +93,13 @@ body{overflow-x:hidden}
 .hero2{width:100%;overflow:hidden}
 .hero2 img{width:100%;display:block;height:64vw;max-height:480px;object-fit:cover;object-position:70% 30%;animation:kenburns 26s ease-out forwards;transform-origin:70% 35%}
 @keyframes kenburns{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.13) translate(-1.6%,-1%)}}
-.tag-l1{opacity:0;transform:translateY(14px);filter:blur(3px);animation:tagRise 1.5s cubic-bezier(.22,.61,.36,1) forwards;animation-delay:.4s}
-@keyframes tagRise{to{opacity:1;transform:none;filter:blur(0)}}
-@media (prefers-reduced-motion:reduce){.hero2 img{animation:none}.tag-l1{animation:none;opacity:1;transform:none;filter:none}}
+.tag-l1{opacity:0;transform:translateY(14px);animation:tagRise 1.4s cubic-bezier(.22,.61,.36,1) forwards;animation-delay:.3s}
+@keyframes tagRise{to{opacity:1;transform:none}}
+.tg1,.tg2{opacity:0;filter:blur(4px);animation:tagFade 1.5s ease forwards}
+.tg1{animation-delay:.45s}
+.tg2{animation-delay:1.5s}
+@keyframes tagFade{to{opacity:1;filter:blur(0)}}
+@media (prefers-reduced-motion:reduce){.hero2 img{animation:none}.tag-l1,.tg1,.tg2{animation:none;opacity:1;transform:none;filter:none}}
 .tagline{text-align:center;padding:26px 26px 8px}
 .tagline p{font-style:italic;font-size:1.05rem;color:#6E6A64;line-height:1.7;max-width:34em;margin:0 auto}
 .hero-img{position:absolute;inset:0;background:url('hero.jpg') center top/cover no-repeat,#F6EDE4}
@@ -114,6 +118,7 @@ body{overflow-x:hidden}
 .dot{width:5px;height:5px;border-radius:50%;background:var(--rose);flex:none}
 section{padding:26px 18px 34px}
 .cats-h{font-weight:300;font-size:1.7rem;letter-spacing:.35em;color:#B8B4AE;text-align:center;margin:8px 0 24px;text-indent:.35em}
+.cats-h-lc{letter-spacing:.18em;text-indent:.18em;font-size:1.5rem}
 .sec-k{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rose-d);margin-bottom:8px;text-align:center}
 .sec-t{font-family:var(--serif);font-weight:700;font-size:1.45rem;text-align:center;margin-bottom:22px}
 .sec-t em{font-style:normal}
@@ -391,7 +396,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 <div class="page show" id="pgHome">
   <div class="hero2"><img src="hero2.jpg" alt="ZaiSun"></div>
   <div class="tagline">
-    <p class="tag-l1">Ми постійно працюємо над покращенням наших товарів і послуг, для досягнення найкращих результатів. Наші цінності — це унікальний дизайн та висока якість продукції</p>
+    <p class="tag-l1"><span class="tg1">Ми постійно працюємо над покращенням наших товарів і послуг, для досягнення найкращих результатів.</span> <span class="tg2">Наші цінності — це унікальний дизайн та висока якість продукції</span></p>
   </div>
   <div class="strip">
     <span><span class="dot"></span>Власне виробництво</span>
@@ -408,7 +413,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
     <div class="new-row" id="newRow"></div>
   </section>
   <section class="new-sec" id="topSec" style="display:none">
-    <h2 class="cats-h">КУПУЮТЬ ЦЬОГО ТИЖНЯ</h2>
+    <h2 class="cats-h cats-h-lc">Купують цього тижня</h2>
     <div class="new-row" id="topRow"></div>
   </section>
   <section class="ig-sec">
@@ -597,7 +602,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=67"></script>
+<script src="data.js?v=68"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
