@@ -90,18 +90,48 @@ body{overflow-x:hidden}
 .page{display:none}.page.show{display:block}
 
 /* ═══ HOME ═══ */
-.hero2{width:100%;overflow:hidden}
-.hero2 img{width:100%;display:block;height:64vw;max-height:480px;object-fit:cover;object-position:70% 30%;animation:kenburns 26s ease-out forwards;transform-origin:70% 35%}
+.herosl{position:relative;overflow:hidden;height:min(82vh,780px);min-height:560px;background:#111}
+.herosl .hs{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .5s ease}
+.herosl .hs.on{opacity:1;visibility:visible;z-index:2}
+.herosl .fgimg{position:absolute;inset:0}
+.herosl .fgimg img{width:100%;height:100%;object-fit:cover;display:block}
+.herosl .fgimg img.kb{animation:kenburns 26s ease-out forwards}
 @keyframes kenburns{0%{transform:scale(1.05) translate(0,0)}100%{transform:scale(1.17) translate(-1.4%,-.9%)}}
-.tag-l1{opacity:0;transform:translateY(14px);animation:tagRise 1.4s cubic-bezier(.22,.61,.36,1) forwards;animation-delay:.3s}
-@keyframes tagRise{to{opacity:1;transform:none}}
-.tg1,.tg2{opacity:0;filter:blur(4px);animation:tagFade 1.5s ease forwards}
-.tg1{animation-delay:.45s}
-.tg2{animation-delay:1.5s}
-@keyframes tagFade{to{opacity:1;filter:blur(0)}}
-@media (prefers-reduced-motion:reduce){.hero2 img{animation:none;transform:scale(1.05)}.tag-l1,.tg1,.tg2{animation:none;opacity:1;transform:none;filter:none}}
-.tagline{text-align:center;padding:26px 26px 8px}
-.tagline p{font-style:italic;font-size:1.05rem;color:#6E6A64;line-height:1.7;max-width:34em;margin:0 auto}
+.herosl .scrim{position:absolute;inset:0;background:linear-gradient(100deg, rgba(15,12,9,.5) 0%, rgba(15,12,9,.2) 38%, rgba(15,12,9,0) 60%)}
+.herosl .stxt{position:absolute;left:0;bottom:0;top:0;display:flex;flex-direction:column;justify-content:center;padding:36px 6vw;max-width:480px;color:#fff;z-index:3;overflow-y:auto;-ms-overflow-style:none;scrollbar-width:none}
+.herosl .stxt::-webkit-scrollbar{display:none}
+.herosl .eyebrow{font-size:.7rem;letter-spacing:.2em;margin-bottom:14px;font-weight:600;color:#F3E4D6;text-transform:uppercase}
+.herosl .stitle{font-family:var(--serif);font-size:clamp(1rem,1.6vw,1.3rem);font-weight:500;line-height:1.52;margin:0 0 14px;text-shadow:0 1px 10px rgba(0,0,0,.3)}
+.herosl .stitle.short{font-weight:600;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.22}
+.herosl .ssub{font-size:.86rem;line-height:1.55;color:rgba(255,255,255,.88);max-width:36ch;margin:0 0 18px;text-shadow:0 1px 8px rgba(0,0,0,.25)}
+.herosl .sbtn{display:inline-block;background:var(--rose);color:#fff;border:none;padding:14px 30px;border-radius:9px;font-family:var(--serif);font-weight:600;font-size:.9rem;cursor:pointer;letter-spacing:.02em;align-self:flex-start;text-decoration:none}
+.herosl .sbtn:hover{background:var(--rose-d,#C2826A)}
+.herosl .eyebrow,.herosl .stitle,.herosl .ssub{opacity:0;transform:translateY(16px);filter:blur(3px)}
+.herosl .sbtn{opacity:0}
+.herosl .hs.on .eyebrow{animation:tRise 1.2s cubic-bezier(.22,.61,.36,1) forwards;animation-delay:.25s}
+.herosl .hs.on .stitle{animation:tRise 1.3s cubic-bezier(.22,.61,.36,1) forwards;animation-delay:.45s}
+.herosl .hs.on .ssub{animation:tRise 1.3s cubic-bezier(.22,.61,.36,1) forwards;animation-delay:.75s}
+.herosl .hs.on .sbtn{animation:tRiseBtn 1s ease forwards;animation-delay:1s}
+@keyframes tRise{to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes tRiseBtn{to{opacity:1}}
+.herosl .harrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.9);border:none;display:grid;place-items:center;cursor:pointer;color:#3A3028;z-index:6;transition:background .15s,transform .15s;-webkit-tap-highlight-color:transparent}
+.herosl .harrow:hover{background:#fff;transform:translateY(-50%) scale(1.06)}
+.herosl .harrow.l{left:22px}.herosl .harrow.r{right:22px}
+.herosl .hdots{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:6}
+.herosl .hdots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55);transition:all .2s;cursor:pointer}
+.herosl .hdots span.on{background:#fff;width:22px;border-radius:4px}
+@media(max-width:760px){
+  .herosl{height:min(72vh,640px);min-height:480px}
+  .herosl .stxt{padding:26px 22px 64px;max-width:none;align-items:flex-start;justify-content:flex-end}
+  .herosl .stitle{font-size:.98rem;line-height:1.5}
+  .herosl .stitle.short{font-size:1.7rem}
+  .herosl .ssub{max-width:none;font-size:.82rem}
+  .herosl .scrim{background:linear-gradient(180deg, rgba(15,12,9,.15) 0%, rgba(15,12,9,.1) 35%, rgba(15,12,9,.7) 100%)}
+}
+@media (prefers-reduced-motion:reduce){
+  .herosl .fgimg img.kb{animation:none;transform:scale(1.05)}
+  .herosl .eyebrow,.herosl .stitle,.herosl .ssub,.herosl .sbtn{animation:none;opacity:1;transform:none;filter:none}
+}
 .hero-img{position:absolute;inset:0;background:url('hero.jpg') center top/cover no-repeat,#F6EDE4}
 
 .hero-fade{position:absolute;inset:0;background:linear-gradient(to top,rgba(253,250,246,.97) 0%,rgba(253,250,246,.4) 30%,transparent 55%)}
@@ -394,10 +424,44 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- HOME -->
 <div class="page show" id="pgHome">
-  <div class="hero2"><img src="hero2.jpg" alt="ZaiSun"></div>
-  <div class="tagline">
-    <p class="tag-l1"><span class="tg1">Ми постійно працюємо над покращенням наших товарів і послуг, для досягнення найкращих результатів.</span> <span class="tg2">Наші цінності — це унікальний дизайн та висока якість продукції</span></p>
-  </div>
+  <section class="herosl" id="herosl">
+    <div class="hs on" data-hs="0">
+      <div class="fgimg"><img class="kb" src="hero2.jpg" alt="ZaiSun" style="object-position:70% 30%;transform-origin:70% 35%"></div>
+      <div class="scrim"></div>
+      <div class="stxt">
+        <div class="eyebrow">ZAISUN · ДИТЯЧИЙ ОДЯГ</div>
+        <h1 class="stitle">Ми постійно працюємо над покращенням наших товарів і послуг, для досягнення найкращих результатів. Наші цінності — це унікальний дизайн та висока якість продукції</h1>
+        <p class="ssub">Власне виробництво в Луцьку. Натуральні тканини, ретельний пошив, турбота в кожній деталі.</p>
+      </div>
+    </div>
+    <div class="hs" data-hs="1">
+      <div class="fgimg"><img class="kb" src="hero-autumn.jpg" alt="Осіння колекція ZaiSun" style="object-position:center 30%;transform-origin:center 40%"></div>
+      <div class="scrim"></div>
+      <div class="stxt">
+        <div class="eyebrow">НОВА КОЛЕКЦІЯ</div>
+        <h1 class="stitle short">Осіння колекція вже на сайті</h1>
+        <p class="ssub">Тепліші тканини, спокійні кольори — усе, що потрібно для перших прохолодних днів.</p>
+        <a class="sbtn" href="#homeCats" onclick="document.getElementById('homeCats').scrollIntoView({behavior:'smooth'})">Дивитись осінь</a>
+      </div>
+    </div>
+    <div class="hs" data-hs="2">
+      <div class="fgimg"><img class="kb" src="hero-sale.jpg" alt="Знижки ZaiSun" style="object-position:78% 30%;transform-origin:78% 35%"></div>
+      <div class="scrim"></div>
+      <div class="stxt">
+        <div class="eyebrow">ОБМЕЖЕНА ПРОПОЗИЦІЯ</div>
+        <h1 class="stitle short">Знижки до −30%</h1>
+        <p class="ssub">Поки є розміри. Діє на позначені товари в каталозі.</p>
+        <a class="sbtn" href="#homeCats" onclick="document.getElementById('homeCats').scrollIntoView({behavior:'smooth'})">До розпродажу</a>
+      </div>
+    </div>
+    <button class="harrow l" onclick="heroNav(-1)" aria-label="Попередній слайд">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="harrow r" onclick="heroNav(1)" aria-label="Наступний слайд">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <div class="hdots" id="heroDots"></div>
+  </section>
   <div class="strip">
     <span><span class="dot"></span>Власне виробництво</span>
     <span><span class="dot"></span>Натуральні тканини</span>
@@ -602,7 +666,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=72"></script>
+<script src="data.js?v=73"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1926,6 +1990,48 @@ function buildTop(){
       renderTop(d);
     })
     .catch(()=>{ /* релей не відповів — секція просто лишається схованою */ });
+}
+
+// ═══ Слайдер на головній (герой) ═══
+// Імена з префіксом hero, щоб не перетнутися з go()/apply() каталогу.
+let heroIdx = 0;
+const heroSlides = document.querySelectorAll('#herosl .hs');
+function heroRenderDots(){
+  const d = document.getElementById('heroDots');
+  if(!d) return;
+  d.innerHTML = Array.from(heroSlides).map((_,i)=>
+    `<span class="${i===heroIdx?'on':''}" onclick="heroGo(${i})"></span>`).join('');
+}
+function heroApplySlide(){
+  heroSlides.forEach((el,i)=>{
+    if(i===heroIdx){
+      el.classList.add('on');
+      el.querySelectorAll('.eyebrow,.stitle,.ssub,.sbtn').forEach(node=>{
+        node.style.animation='none'; void node.offsetWidth; node.style.animation='';
+      });
+      const img = el.querySelector('.fgimg img');
+      if(img){ img.style.animation='none'; void img.offsetWidth; img.style.animation=''; }
+    } else {
+      el.classList.remove('on');
+    }
+  });
+  heroRenderDots();
+}
+function heroGo(i){ heroIdx=i; heroApplySlide(); heroResetAuto(); }
+function heroNav(d){ heroIdx=(heroIdx+d+heroSlides.length)%heroSlides.length; heroApplySlide(); heroResetAuto(); }
+let heroAuto;
+function heroResetAuto(){
+  clearInterval(heroAuto);
+  heroAuto = setInterval(()=>heroNav(1), 6500);
+}
+if(heroSlides.length){
+  heroRenderDots();
+  heroResetAuto();
+  const heroEl = document.getElementById('herosl');
+  if(heroEl){
+    heroEl.addEventListener('mouseenter', ()=>clearInterval(heroAuto));
+    heroEl.addEventListener('mouseleave', heroResetAuto);
+  }
 }
 
 buildMenu(); buildHome(); buildNew(); buildIG(); buildTop();
