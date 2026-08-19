@@ -363,7 +363,13 @@ section{padding:26px 18px 34px}
 .sic{width:60px;height:60px;border-radius:50%;background:var(--petal);display:grid;place-items:center;margin-bottom:16px;color:var(--rose-d)}
 .succ h3{font-family:var(--serif);font-weight:700;font-size:1.2rem;margin-bottom:8px}
 .succ p{color:var(--mid);font-size:.88rem;line-height:1.7;margin-bottom:22px}
-.new-sec{padding:8px 0 26px}.np .hb{position:absolute;top:8px;left:8px;background:var(--rose-d);color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.05em;padding:3px 7px;border-radius:6px;z-index:2}
+.new-sec{padding:8px 0 26px}
+.reveal{opacity:0;transform:translateY(18px);filter:blur(3px)}
+.reveal.seen{animation:secRise 1.1s cubic-bezier(.22,.61,.36,1) forwards}
+.reveal .cats-h{opacity:0;transform:translateY(12px)}
+.reveal.seen .cats-h{animation:secRise 1s cubic-bezier(.22,.61,.36,1) forwards;animation-delay:.1s}
+@keyframes secRise{to{opacity:1;transform:none;filter:blur(0)}}
+@media (prefers-reduced-motion:reduce){.reveal,.reveal .cats-h{animation:none!important;opacity:1;transform:none;filter:none}}.np .hb{position:absolute;top:8px;left:8px;background:var(--rose-d);color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.05em;padding:3px 7px;border-radius:6px;z-index:2}
 .new-row{display:flex;gap:12px;overflow-x:auto;padding:4px 18px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .new-row::-webkit-scrollbar{display:none}
 .np{flex:0 0 44%;max-width:210px;cursor:pointer}
@@ -474,15 +480,15 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
     <span><span class="dot"></span>50 000+ мам з нами</span>
     <span><span class="dot"></span>Обмін 14 днів</span>
   </div>
-  <section>
+  <section class="reveal">
     <h2 class="cats-h">КАТЕГОРІЇ</h2>
     <div class="home-cats" id="homeCats"></div>
   </section>
-  <section class="new-sec">
+  <section class="new-sec reveal">
     <h2 class="cats-h">НОВИНКИ</h2>
     <div class="new-row" id="newRow"></div>
   </section>
-  <section class="new-sec" id="topSec" style="display:none">
+  <section class="new-sec reveal" id="topSec" style="display:none">
     <h2 class="cats-h">КУПУЮТЬ ЦЬОГО ТИЖНЯ</h2>
     <div class="new-row" id="topRow"></div>
   </section>
@@ -672,7 +678,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=82"></script>
+<script src="data.js?v=83"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2008,6 +2014,12 @@ function renderTop(stats){
     </div>`;
   }).join('');
   sec.style.display = '';
+  // секція зʼявляється вже після завантаження даних — якщо вона одразу
+  // у полі зору, вмикаємо появу вручну, не чекаючи прокрутки
+  requestAnimationFrame(()=>{
+    const r = sec.getBoundingClientRect();
+    if(r.top < window.innerHeight && r.bottom > 0) sec.classList.add('seen');
+  });
 }
 
 function buildTop(){
@@ -2085,6 +2097,24 @@ if(heroSlides.length){
     heroEl.addEventListener('mouseleave', heroResetAuto);
   }
 }
+
+// Секції на головній проявляються під час прокрутки — тим самим рухом,
+// що й напис у банері: підйом + зняття розмиття.
+(function(){
+  const els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  if(!('IntersectionObserver' in window) ||
+     window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    els.forEach(el=>el.classList.add('seen'));
+    return;
+  }
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('seen'); io.unobserve(e.target); }
+    });
+  }, {rootMargin:'0px 0px -12% 0px', threshold:.08});
+  els.forEach(el=>io.observe(el));
+})();
 
 buildMenu(); buildHome(); buildNew(); buildIG(); buildTop();
 
