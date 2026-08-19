@@ -673,7 +673,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=84"></script>
+<script src="data.js?v=85"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1935,6 +1935,65 @@ const IG_PHOTOS = ['ig1.jpg','ig2.jpg','ig3.jpg','ig4.jpg'];
 function buildIG(){
   const el = document.getElementById('igGrid'); if(!el) return;
   el.innerHTML = IG_PHOTOS.map(f=>`<a href="https://instagram.com/zaisun_kids" target="_blank" onclick="try{gtag('event','instagram_click',{link_location:'feed'})}catch(e){}"><img src="${f}" loading="lazy"></a>`).join('');
+}
+
+function buildNew(){
+  const el = document.getElementById('newRow'); if(!el) return;
+  // 1) вручну позначені новинки (🆕 в адмінці) — найновіші перші
+  let picked = PL.filter(p=>p.nw && p.photo && !p.hidden).sort((a,b)=>b.id-a.id).slice(0,10);
+  // 2) поки таких нема — випадкові товари з категорії "Літо"
+  if(!picked.length){
+    const lito = TREE.find(t=>t.raw==='Літо'||t.name==='Літо');
+    let pool = lito ? PL.filter(p=>p.photo && !p.hidden && p.cats && p.cats.includes(lito.id)) : [];
+    if(!pool.length) pool = PL.filter(p=>p.photo && !p.hidden && p.season===2);
+    picked = pool.slice();
+    for(let i=picked.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[picked[i],picked[j]]=[picked[j],picked[i]];}
+    picked = picked.slice(0,10);
+  }
+  el.innerHTML = picked.map(p=>{
+    const price = p.old ? `${priceFrom(p)}${money(p.price)} <s>${money(p.old)}</s>` : priceFrom(p)+money(p.price);
+    return `<div class="np" onclick="openProd(${p.id})">
+      <div class="pt"><span class="nb">NEW</span><img src="images/${p.photo}" loading="lazy" onload="fitTile(this)"></div>
+      <div class="nn">${p.name}</div>
+      <div class="npp">${price}</div>
+    </div>`;
+  }).join('');
+}
+// ═══ Найбільше купують цього тижня ═══
+// Релей віддає знеособлену статистику продажів за 7 днів: тільки id товару
+// і скільки штук куплено. Ніяких імен, телефонів чи сум замовлень.
+const TOP_MIN_PRICE = 200;   // дешеві дрібниці (шкарпетки, колготи) не показуємо
+const TOP_MAX = 10;
+const TOP_CACHE_H = 3;       // скільки годин тримати відповідь у памʼяті браузера
+
+function renderTop(stats){
+  const sec = document.getElementById('topSec');
+  const el  = document.getElementById('topRow');
+  if(!sec || !el || !Array.isArray(stats) || !stats.length) return;
+  const picked = stats
+    .map(r => ({ p: PL.find(x => x.id === (+r.id)), q: +r.q || 0 }))
+    .filter(o => o.p && o.p.photo && !o.p.hidden && o.p.stock !== false
+                 && (o.p.price || 0) >= TOP_MIN_PRICE)
+    .sort((a,b) => b.q - a.q)
+    .slice(0, TOP_MAX);
+  if(picked.length < 3){ return; }   // менше трьох — секція виглядала б порожньою
+  el.innerHTML = picked.map(o => {
+    const p = o.p;
+    const price = p.old ? `${priceFrom(p)}${money(p.price)} <s>${money(p.old)}</s>`
+                        : priceFrom(p)+money(p.price);
+    return `<div class="np" onclick="openProd(${p.id})">
+      <div class="pt"><span class="hb">ХІТ</span><img src="images/${p.photo}" loading="lazy" onload="fitTile(this)"></div>
+      <div class="nn">${p.name}</div>
+      <div class="npp">${price}</div>
+    </div>`;
+  }).join('');
+  sec.style.display = '';
+  // секція зʼявляється вже після завантаження даних — якщо вона одразу
+  // у полі зору, вмикаємо появу вручну, не чекаючи прокрутки
+  requestAnimationFrame(()=>{
+    const r = sec.getBoundingClientRect();
+    if(r.top < window.innerHeight && r.bottom > 0) sec.classList.add('seen');
+  });
 }
 
 function buildTop(){
