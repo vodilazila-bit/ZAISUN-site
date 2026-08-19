@@ -95,6 +95,7 @@ body{overflow-x:hidden}
 .herosl .hs.on{opacity:1;visibility:visible;z-index:2}
 .herosl .fgimg{position:absolute;inset:0}
 .herosl .fgimg img{width:100%;height:100%;object-fit:cover;display:block}
+.herosl .hbg{position:absolute;inset:-24px;background-size:cover;background-position:center;filter:blur(30px) brightness(.6);z-index:0;display:none}
 .herosl .fgimg img.kb{animation:kenburns 26s ease-out forwards}
 @keyframes kenburns{0%{transform:scale(1.05) translate(0,0)}100%{transform:scale(1.17) translate(-1.4%,-.9%)}}
 .herosl .scrim{position:absolute;inset:0;background:linear-gradient(100deg, rgba(15,12,9,.5) 0%, rgba(15,12,9,.2) 38%, rgba(15,12,9,0) 60%)}
@@ -122,6 +123,10 @@ body{overflow-x:hidden}
 .herosl .hdots span.on{background:#fff;width:22px;border-radius:4px}
 @media(max-width:760px){
   .herosl{height:min(72vh,640px);min-height:480px}
+  .herosl .fgimg{display:flex;align-items:center;justify-content:center}
+  .herosl .fgimg img{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;position:relative;z-index:2}
+  .herosl .hbg{display:block}
+  .herosl .fgimg img{object-position:center!important;transform-origin:center!important}
   .herosl .stxt{padding:26px 22px 64px;max-width:none;align-items:flex-start;justify-content:flex-end}
   .herosl .stitle{font-size:.98rem;line-height:1.5}
   .herosl .stitle.short{font-size:1.7rem}
@@ -426,7 +431,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 <div class="page show" id="pgHome">
   <section class="herosl" id="herosl">
     <div class="hs on" data-hs="0">
-      <div class="fgimg"><img class="kb" src="hero2.jpg" alt="ZaiSun" style="object-position:70% 30%;transform-origin:70% 35%"></div>
+      <div class="hbg" style="background-image:url('hero2.jpg')"></div><div class="fgimg"><img class="kb" src="hero2.jpg" alt="ZaiSun" style="object-position:70% 30%;transform-origin:70% 35%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">ZAISUN · ДИТЯЧИЙ ОДЯГ</div>
@@ -435,7 +440,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       </div>
     </div>
     <div class="hs" data-hs="1">
-      <div class="fgimg"><img class="kb" src="hero-autumn.jpg" alt="Осіння колекція ZaiSun" style="object-position:62% 40%;transform-origin:62% 45%"></div>
+      <div class="hbg" style="background-image:url('hero-autumn.jpg')"></div><div class="fgimg"><img class="kb" src="hero-autumn.jpg" alt="Осіння колекція ZaiSun" style="object-position:62% 40%;transform-origin:62% 45%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">НОВА КОЛЕКЦІЯ</div>
@@ -445,7 +450,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       </div>
     </div>
     <div class="hs" data-hs="2">
-      <div class="fgimg"><img class="kb" src="hero-sale.jpg" alt="Знижки ZaiSun" style="object-position:78% 30%;transform-origin:78% 35%"></div>
+      <div class="hbg" style="background-image:url('hero-sale.jpg')"></div><div class="fgimg"><img class="kb" src="hero-sale.jpg" alt="Знижки ZaiSun" style="object-position:78% 30%;transform-origin:78% 35%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">ОБМЕЖЕНА ПРОПОЗИЦІЯ</div>
@@ -666,7 +671,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=74"></script>
+<script src="data.js?v=75"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
