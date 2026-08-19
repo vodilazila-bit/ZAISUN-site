@@ -667,7 +667,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=76"></script>
+<script src="data.js?v=77"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1691,7 +1691,8 @@ if(location.search.indexOf('paid=1')>=0){
     const pend = JSON.parse(sessionStorage.getItem('zs_pend')||'null');
     if(pend){
       sessionStorage.removeItem('zs_pend');
-      gtag('event','purchase',{transaction_id: pend.id, value: pend.t, currency:'UAH', items: pend.items||[], payment_type: pend.pt||'online'});
+      // gtag purchase НЕ шлемо: для mono його надсилає релей із сервера,
+      // інакше в звітах був би подвійний дохід.
       gtag('event','generate_lead',{currency:'UAH', value: pend.t});
       adsConversion(pend.id, pend.t, pend.nm, pend.ph, pend.em);
       fb('Purchase',{content_ids:(pend.items||[]).map(i=>i.item_id),content_type:'product',value:pend.t,currency:'UAH'}, pend.id);
