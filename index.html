@@ -442,7 +442,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
         <div class="eyebrow">НОВА КОЛЕКЦІЯ</div>
         <h1 class="stitle short">Осіння колекція вже на сайті</h1>
         <p class="ssub">Тепліші тканини, спокійні кольори — усе, що потрібно для перших прохолодних днів.</p>
-        <a class="sbtn" href="#homeCats" onclick="document.getElementById('homeCats').scrollIntoView({behavior:'smooth'})">Дивитись осінь</a>
+        <button class="sbtn" type="button" onclick="heroOpenCat('Осінь')">Дивитись осінь</button>
       </div>
     </div>
     <div class="hs" data-hs="2">
@@ -452,7 +452,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
         <div class="eyebrow">ОБМЕЖЕНА ПРОПОЗИЦІЯ</div>
         <h1 class="stitle short">Знижки до −30%</h1>
         <p class="ssub">Поки є розміри. Діє на позначені товари в каталозі.</p>
-        <a class="sbtn" href="#homeCats" onclick="document.getElementById('homeCats').scrollIntoView({behavior:'smooth'})">До розпродажу</a>
+        <button class="sbtn" type="button" onclick="heroOpenCat('sale')">До розпродажу</button>
       </div>
     </div>
     <button class="harrow l" onclick="heroNav(-1)" aria-label="Попередній слайд">
@@ -667,7 +667,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=77"></script>
+<script src="data.js?v=78"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1992,6 +1992,16 @@ function buildTop(){
       renderTop(d);
     })
     .catch(()=>{ /* релей не відповів — секція просто лишається схованою */ });
+}
+
+// Відкриває розділ каталогу з банера. Шукаємо за raw-назвою в дереві категорій,
+// бо id категорій — це uuid, які змінюються при перебудові каталогу.
+function heroOpenCat(raw){
+  try{
+    const t = (typeof TREE!=='undefined' && TREE) ? TREE.find(x=>x.raw===raw) : null;
+    if(t){ openCat(t.id); return; }
+  }catch(e){}
+  openCatAll();   // якщо розділ раптом зник — показуємо весь каталог
 }
 
 // ═══ Слайдер на головній (герой) ═══
