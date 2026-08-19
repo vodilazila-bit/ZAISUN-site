@@ -201,7 +201,7 @@ section{padding:26px 18px 34px}
 @media(min-width:700px){.subcats.grid{grid-template-columns:repeat(2,1fr);max-width:900px;gap:16px}}
 @media(min-width:1050px){.subcats.grid{grid-template-columns:repeat(3,1fr);max-width:1200px}}
 .subcats.grid .hc span{font-size:.85rem;padding:8px 16px}
-#pgCat.pick-sub .cat-search,#pgCat.pick-sub .frow-top,#pgCat.pick-sub #grid,#pgCat.pick-sub .pcount{display:none}
+#pgCat.pick-sub .subcats.grid{margin-bottom:22px}
 .subcats::-webkit-scrollbar{display:none}
 .subcats:empty{display:none}
 .sc-chip{white-space:nowrap;padding:9px 16px;border-radius:30px;font-size:.82rem;font-weight:500;border:1px solid var(--line);background:#fff;color:#6B5D50;flex:none;cursor:pointer}
@@ -672,7 +672,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=79"></script>
+<script src="data.js?v=80"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
