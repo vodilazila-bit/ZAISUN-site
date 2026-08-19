@@ -672,7 +672,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=80"></script>
+<script src="data.js?v=81"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2118,7 +2118,15 @@ const _openMenu = openMenu, _openCart = openCart, _openSearch = openSearch, _ope
 openCat = function(id){ _openCat(id); setCanon('?cat=' + id); navTo({v:'cat', m:'id', id}, location.pathname + '?cat=' + id); };
 openCatAll = function(){ _openCatAll(); setCanon('?cat=all'); navTo({v:'cat', m:'all'}, location.pathname + '?cat=all'); };
 openMenuCat = function(i){ _openMenuCat(i); const k = '?cat=k' + (MENU_DEF[i]||{}).k; setCanon(k); navTo({v:'cat', m:'menu', i}, location.pathname + k); };
-openProd = function(id){ _openProd(id); setCanon(prodCanon(id)); navTo({v:'prod', id}, location.pathname + '?p=' + id); };
+openProd = function(id){
+  // Кладемо позицію прокрутки в поточний запис історії — щоб при поверненні
+  // з картки товару список відкрився на тому самому місці, а не з початку.
+  try{
+    const cur = history.state || LASTVIEW || {v:'home'};
+    if(!cur.o) history.replaceState({...cur, sy: window.scrollY||window.pageYOffset||0}, '', location.pathname + location.search);
+  }catch(e){}
+  _openProd(id); setCanon(prodCanon(id)); navTo({v:'prod', id}, location.pathname + '?p=' + id);
+};
 // накладки: пушимо стан-дублікат поточного екрана з позначкою o (overlay),
 // щоб жест "назад" закривав накладку і лишав той самий екран
 openMenu = function(){ _openMenu(); pushNav({...LASTVIEW, o:1}); };
@@ -2156,6 +2164,16 @@ window.addEventListener('popstate', e => {
       if(st.sub && curSubs.some(s=>s.id===st.sub)) subSel(st.sub);
     }
     else { go('home'); setCanon(''); }
+
+    // go() і initCat() підіймають сторінку вгору, тому позицію повертаємо після них.
+    // Два кадри поспіль — щоб сітка встигла відмалюватись і висота стала кінцевою.
+    if(st.v !== 'prod' && typeof st.sy === 'number' && st.sy > 0){
+      const y = st.sy;
+      const back = ()=>window.scrollTo(0, y);
+      requestAnimationFrame(()=>{ back(); requestAnimationFrame(back); });
+      setTimeout(back, 90);
+      setTimeout(back, 240);
+    }
   } finally { NAVSILENT = false; }
 });
 // відновлення стану після F5 / прямі лінки: /?p=123, /?cat=..., &sub=...
