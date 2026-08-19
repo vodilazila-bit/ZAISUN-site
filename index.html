@@ -672,7 +672,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=81"></script>
+<script src="data.js?v=82"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1206,8 +1206,18 @@ function fmtDesc(t){
   });
   return out.map(p=>'<p>'+esc(p)+'</p>').join('');
 }
+// Куди прокрутити список, коли повертаємось кнопкою «Назад до каталогу».
+let LASTLISTY = 0;
+function scrollBackToList_(){
+  const y = LASTLISTY;
+  if(!y) return;
+  const back = ()=>window.scrollTo(0, y);
+  requestAnimationFrame(()=>{ back(); requestAnimationFrame(back); });
+  setTimeout(back, 90);
+  setTimeout(back, 240);
+}
 function backToCat(){
-  if(curCatId && curProds && curProds.length){ go('cat'); }
+  if(curCatId && curProds && curProds.length){ go('cat'); scrollBackToList_(); }
   else if(NAVDEPTH>0){ history.back(); }
   else { goHome(); }
 }
@@ -2123,7 +2133,11 @@ openProd = function(id){
   // з картки товару список відкрився на тому самому місці, а не з початку.
   try{
     const cur = history.state || LASTVIEW || {v:'home'};
-    if(!cur.o) history.replaceState({...cur, sy: window.scrollY||window.pageYOffset||0}, '', location.pathname + location.search);
+    if(!cur.o){
+      const y = window.scrollY||window.pageYOffset||0;
+      if(cur.v !== 'prod') LASTLISTY = y;   // для кнопки «Назад до каталогу»
+      history.replaceState({...cur, sy: y}, '', location.pathname + location.search);
+    }
   }catch(e){}
   _openProd(id); setCanon(prodCanon(id)); navTo({v:'prod', id}, location.pathname + '?p=' + id);
 };
