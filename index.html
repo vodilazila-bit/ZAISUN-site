@@ -379,9 +379,14 @@ section{padding:26px 18px 34px}
 .ig-p{font-size:1.05rem;color:#6B5D50;font-weight:600;line-height:1.6;max-width:26em;margin:0 auto 18px}
 .ig-btn{display:inline-flex;align-items:center;gap:9px;padding:14px 32px;border-radius:40px;background:#4A4038;color:#fff;border:none;font-family:inherit;font-size:.92rem;font-weight:600;cursor:pointer;margin-bottom:26px}
 .ig-btn:active{background:var(--rose-d)}
-.ig-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;max-width:520px;margin:0 auto}
-.ig-grid a{aspect-ratio:1/1;border-radius:16px;overflow:hidden;display:block}
+.ig-grid{display:flex;gap:12px;overflow-x:auto;padding:4px 18px 10px;scroll-snap-type:x mandatory;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+.ig-grid::-webkit-scrollbar{display:none}
+.ig-grid a{flex:none;width:210px;aspect-ratio:1/1;border-radius:16px;overflow:hidden;display:block;
+  scroll-snap-align:center;transition:transform .25s}
+.ig-grid a:hover{transform:scale(1.03)}
 .ig-grid img{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:560px){.ig-grid a{width:64vw;max-width:260px}}
 footer{background:#8A7663;color:#EFE5DA;padding:36px 22px 22px;text-align:center;margin-top:0}
 .flogo{font-family:var(--serif);font-weight:400;color:#fff;font-size:1.5rem;letter-spacing:.14em;margin-bottom:12px}
 footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
@@ -667,7 +672,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=78"></script>
+<script src="data.js?v=79"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1913,9 +1918,34 @@ P.forEach(p=>{
   if(p.cats.some(c=>WINTER_IDS.has(c)) || /зимов|утеплен|хутр|фліс|махра|снуд|новорічн|święt/.test(n)) s = 0;
   p.season = s;
 });
+// Щоб додати фото — просто допиши файл у список і поклади його в корінь репозиторію.
+const IG_PHOTOS = ['ig1.jpg','ig2.jpg','ig3.jpg','ig4.jpg'];
+
 function buildIG(){
   const el = document.getElementById('igGrid'); if(!el) return;
-  el.innerHTML = ['ig1.jpg','ig2.jpg','ig3.jpg','ig4.jpg'].map(f=>`<a href="https://instagram.com/zaisun_kids" target="_blank" onclick="try{gtag('event','instagram_click',{link_location:'feed'})}catch(e){}"><img src="${f}" loading="lazy"></a>`).join('');
+  // дублюємо набір, щоб стрічка гортались по колу без стрибка
+  const list = IG_PHOTOS.concat(IG_PHOTOS);
+  el.innerHTML = list.map(f=>`<a href="https://instagram.com/zaisun_kids" target="_blank" onclick="try{gtag('event','instagram_click',{link_location:'feed'})}catch(e){}"><img src="${f}" loading="lazy"></a>`).join('');
+
+  let timer, paused = false;
+  const step = ()=>{
+    if(paused || !el.scrollWidth) return;
+    const card = el.querySelector('a');
+    const w = card ? card.offsetWidth + 12 : 220;
+    const half = el.scrollWidth / 2;
+    if(el.scrollLeft >= half - 2){
+      el.scrollTo({left: el.scrollLeft - half, behavior:'auto'});  // тихо повертаємось на початок
+    }
+    el.scrollBy({left: w, behavior:'smooth'});
+  };
+  const start = ()=>{ clearInterval(timer); timer = setInterval(step, 3200); };
+
+  el.addEventListener('mouseenter', ()=>{ paused = true; });
+  el.addEventListener('mouseleave', ()=>{ paused = false; });
+  el.addEventListener('touchstart', ()=>{ paused = true; }, {passive:true});
+  el.addEventListener('touchend', ()=>{ setTimeout(()=>{ paused = false; }, 4000); }, {passive:true});
+
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) start();
 }
 function buildNew(){
   const el = document.getElementById('newRow'); if(!el) return;
