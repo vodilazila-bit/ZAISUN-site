@@ -148,8 +148,9 @@ body{overflow-x:hidden}
 .strip:hover .strip-run{animation-play-state:paused}
 @keyframes stripRun{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.strip-run{animation:none}.strip{overflow-x:auto;scrollbar-width:none}.strip::-webkit-scrollbar{display:none}}
-.strip span{white-space:nowrap;font-size:.76rem;color:var(--mid);display:flex;align-items:center;gap:7px;padding:0 13px}
-.dot{width:5px;height:5px;border-radius:50%;background:var(--rose);flex:none}
+.strip span{white-space:nowrap;font-size:.76rem;color:var(--mid);display:flex;align-items:center;gap:8px;padding:0 11px}
+.dot{width:auto;height:auto;border-radius:0;background:none;flex:none;color:var(--rose);font-size:.6rem;line-height:1;opacity:.85}
+.strip .dot::before{content:'\2726'}
 section{padding:26px 18px 34px}
 .cats-h{font-weight:300;font-size:1.7rem;letter-spacing:.35em;color:#B8B4AE;text-align:center;margin:8px 0 24px;text-indent:.35em}
 .cats-h-lc{letter-spacing:.18em;text-indent:.18em;font-size:1.5rem}
@@ -673,7 +674,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=88"></script>
+<script src="data.js?v=89"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
