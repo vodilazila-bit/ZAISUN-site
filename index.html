@@ -364,6 +364,10 @@ section{padding:26px 18px 34px}
 .succ h3{font-family:var(--serif);font-weight:700;font-size:1.2rem;margin-bottom:8px}
 .succ p{color:var(--mid);font-size:.88rem;line-height:1.7;margin-bottom:22px}
 .new-sec{padding:8px 0 26px}
+.rise-i{opacity:0;transform:translateY(16px)}
+.rise-i.in{animation:riseIn .62s cubic-bezier(.22,.61,.36,1) forwards}
+@keyframes riseIn{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.rise-i,.rise-i.in{animation:none!important;opacity:1!important;transform:none!important}}
 .reveal{opacity:0;transform:translateY(18px);filter:blur(3px)}
 .reveal.seen{animation:secRise 1.1s cubic-bezier(.22,.61,.36,1) forwards}
 .reveal .cats-h{opacity:0;transform:translateY(12px)}
@@ -673,7 +677,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=86"></script>
+<script src="data.js?v=87"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -860,6 +864,7 @@ function renderSubs(){
       const pr = subProds.find(p=>p.coverCat===s.id && p.photo) || coverOf(subProds);
       return `<div class="hc" onclick="subSel('${s.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">`:''}<span>${s.name} · ${s.n}</span></div>`;
     }).join('');
+    riseRows(el, '.hc');
   } else {
     el.classList.remove('grid');
     el.innerHTML = `<span class="sc-chip" onclick="subSel('')">← Всі</span>` +
@@ -1069,6 +1074,7 @@ function apply(){
       <div class="pp">${price}</div>
     </a>`;
   }).join('');
+  riseRows(el, '.pc');
 }
 
 function pheroSwitch(i){
@@ -1685,6 +1691,7 @@ function buildHome(){
     h += `<div class="hc" onclick="openCat('${gifts.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">`:''}<span>Подарункові набори · ${gifts.n}</span></div>`;
   }
   document.getElementById('homeCats').innerHTML = h;
+  riseRows(document.getElementById('homeCats'));
 }
 
 function openSaleCat(){ const t = TREE.find(t=>t.raw==='sale'); if(t) openCat(t.id); }
@@ -2070,6 +2077,41 @@ if(heroSlides.length){
     heroEl.addEventListener('mouseenter', ()=>clearInterval(heroAuto));
     heroEl.addEventListener('mouseleave', heroResetAuto);
   }
+}
+
+// Плитки в сітках зʼявляються рядок за рядком під час прокрутки.
+// Затримка рахується від позиції в рядку, тому рух читається як хвиля зліва направо.
+function riseRows(el, sel){
+  if(!el) return;
+  const items = Array.from(el.querySelectorAll(sel || ':scope > *'));
+  if(!items.length) return;
+
+  // Якщо браузер не вміє стежити за прокруткою — просто показуємо все.
+  if(!('IntersectionObserver' in window) ||
+     window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    items.forEach(n=>n.classList.remove('rise-i'));
+    return;
+  }
+
+  items.forEach(n=>{ n.classList.add('rise-i'); n.classList.remove('in'); });
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const n = e.target;
+      io.unobserve(n);
+      // номер колонки в рядку — щоб сусіди зʼявлялись з невеликим зсувом
+      const col = Math.max(0, Math.round(n.offsetLeft / Math.max(1, n.offsetWidth + 12)));
+      n.style.animationDelay = Math.min(col, 5) * 70 + 'ms';
+      n.classList.add('in');
+    });
+  }, {rootMargin:'0px 0px -8% 0px', threshold:.06});
+
+  items.forEach(n=>io.observe(n));
+
+  // Страховка: якщо щось піде не так — за 1,6 с показуємо все примусово,
+  // щоб товари в жодному разі не лишились невидимими.
+  setTimeout(()=>{ items.forEach(n=>{ if(!n.classList.contains('in')) n.classList.add('in'); }); }, 1600);
 }
 
 // Секції на головній проявляються під час прокрутки — тим самим рухом,
