@@ -680,7 +680,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=90"></script>
+<script src="data.js?v=91"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -730,11 +730,12 @@ function closeSizeTable(){ document.getElementById('sizeOvl').style.display='non
 // ═══ Мапа меню старого сайту ═══
 const MENU_DEF = [
   {k:'osin',          n:'Осінь', c:['Осінь']},
+  {k:'shapky',        n:'Шапки', c:['Шапки']},
   {k:'bodi',          n:'Боді', c:['Боді','Боді-гольф','Комплекти з боді']},
   {k:'kostiumy',      n:'Костюми', c:['Костюм','Костюм утеплений']},
   {k:'sukni',         n:'Сукні', c:['Сукні']},
   {k:'dzhynsy',       n:'Джинси, штани, кофтини', c:['Джинси, штани, кофтини']},
-  {k:'shapky',        n:'Шапки', c:['Шапки']},
+  {k:'sarafany',      n:'Сарафани', c:['сарафан']},
   {k:'rompery',       n:'Ромпери', c:['Ромпер']},
   {k:'poviazky',      n:"Пов'язки/мокси", c:["Пов'язки"]},
   {k:'kolhoty',       n:'Колготи, шкарпетки, гольфи', c:['Капронові','колготи махра','колготи демі','носки','носки махра','гольфи','Гольф']},
@@ -743,7 +744,6 @@ const MENU_DEF = [
   {k:'lito',          n:'Літній асортимент', c:['Літо']},
   {k:'khreshchennia', n:'Одяг на хрещення', c:['Одяг для Хрещення']},
   {k:'vzuttia',       n:'Взуття', c:['Пінетки']},
-  {k:'sarafany',      n:'Сарафани', c:['сарафан']},
   {k:'aksesuary',     n:'Аксесуари', c:['чалма','чалма одинарна','Тонка бінні']},
 ];
 // Порядок пунктів меню міняється — тому в адресі тепер стійкий ключ (?cat=k<ключ>),
