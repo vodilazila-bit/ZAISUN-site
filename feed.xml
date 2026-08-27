@@ -5424,7 +5424,7 @@
     <g:title>Кросівки-пінетки дитячі з протиковзкою прорезиненою підошвою</g:title>
     <g:description>Стильні білі пінетки-кросівки для новонароджених — ідеальне доповнення до перших образів малюка</g:description>
     <g:link>https://zaisun.com.ua/?p=178</g:link>
-    <g:image_link>https://zaisun.com.ua/images/%D0%9A%D1%80%D0%BE%D1%81%D1%96%D0%B2%D0%BA%D0%B8-%D0%BF%D1%96%D0%BD%D0%B5%D1%82%D0%BA%D0%B8_%D0%B4%D0%B8%D1%82%D1%8F%D1%87%D1%96_%D0%B7_%D0%BF%D1%80%D0%BE%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%D0%B7%D0%BA%D0%BE%D1%8E_%D0%BF%D1%80%D0%BE%D1%80%D0%B5%D0%B7%D0%B8%D0%BD%D0%B5%D0%BD%D0%BE%D1%8E_%D0%BF%D1%96%D0%B4%D0%BE%D1%88%D0%B2%D0%BE%D1%8E_012247-51_1.jpg</g:image_link>
+    <g:image_link>https://zaisun.com.ua/images/krosivky_pinetky_dytiachi_z_protykovzkoiu_prorezynenoiu_pido_178_mtbj61rk_0.jpg</g:image_link>
     <g:availability>in stock</g:availability>
     <g:condition>new</g:condition>
     <g:brand>ZaiSun</g:brand>
@@ -14987,6 +14987,23 @@
     <g:color>Динозавр</g:color>
     <g:size>3-6міс</g:size>
     <g:product_type>Пінетки</g:product_type>
+  </item>
+  <item>
+    <g:id>1077</g:id>
+    <g:title>Кросівки-пінетки дитячі білі овчина</g:title>
+    <g:description>Стильні білі пінетки-кросівки для новонароджених — ідеальне доповнення до перших образів малюка</g:description>
+    <g:link>https://zaisun.com.ua/?p=1077</g:link>
+    <g:image_link>https://zaisun.com.ua/images/krosivky_pinetky_dytiachi_bili_ovchyna_1077_mtbj5pyr_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>kids</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>250.00 UAH</g:price>
+    <g:color>Білий</g:color>
+    <g:size>6-12міс(11.5см)</g:size>
+    <g:product_type>Кросівки</g:product_type>
   </item>
 </channel>
 </rss>
