@@ -6584,9 +6584,9 @@
     <g:age_group>kids</g:age_group>
     <g:gender>female</g:gender>
     <g:price>385.00 UAH</g:price>
-    <g:color>Рожевий</g:color>
+    <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Тепла осінь/весна &gt; Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>832</g:id>
@@ -9362,9 +9362,9 @@
     <g:age_group>kids</g:age_group>
     <g:gender>female</g:gender>
     <g:price>575.00 UAH</g:price>
-    <g:color>Рожевий</g:color>
+    <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Тепла осінь/весна &gt; Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Єврозима/холодна осінь (весна)</g:product_type>
   </item>
   <item>
     <g:id>818</g:id>
@@ -9848,7 +9848,7 @@
     <g:description>Ніжний набір ручної роботи для дівчинки: чалма з квіткою та пінетки. Колір пудровий. Одинарний трикотаж — легкий, на літо та в приміщення. Склад: бавовна. Доступно у двох варіантах щільності: одинарний трикотаж — тонкий, дихаючий; або подвійний — тепліший, на прохолодну осінь і весну</g:description>
     <g:link>https://zaisun.com.ua/?p=819</g:link>
     <g:image_link>https://zaisun.com.ua/images/chalma_z_kvitkoiu_ta_pinetky_dlia_divchynky_pudrovyi_podviin_819_mrxj7264_0.jpg</g:image_link>
-    <g:availability>in stock</g:availability>
+    <g:availability>out of stock</g:availability>
     <g:condition>new</g:condition>
     <g:brand>ZaiSun</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
@@ -10373,7 +10373,7 @@
     <g:description>Стильна дитяча шапка для дівчинки з бантиками стане чудовим доповненням осіннього гардероба. Модель виконана з м&apos;якого трикотажу та має трикотажний підклад, який забезпечує комфорт у прохолодну погоду. Зав&apos;язки надійно фіксують шапку та захищають вушка. В комплекті з пінетками. Підклад на вибір: трикотажний (тепла осінь/весна) або флісовий (холодна осінь, тепла зима).</g:description>
     <g:link>https://zaisun.com.ua/?p=1000</g:link>
     <g:image_link>https://zaisun.com.ua/images/nabir_dlia_divchynky_shapka_z_bantykamy_osinnia_na_zav_iazka_1000_msrw54au_0.jpg</g:image_link>
-    <g:availability>in stock</g:availability>
+    <g:availability>out of stock</g:availability>
     <g:condition>new</g:condition>
     <g:brand>ZaiSun</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
@@ -11312,7 +11312,7 @@
     <g:description>Ніжний набір для дівчинки: чалма з бантом, пов’язка з квіткою та пінетки. Одинарний трикотаж — на літо і в приміщення. Колір пудровий. Ручна робота. Доступно у двох варіантах щільності: одинарний трикотаж — тонкий, дихаючий; або подвійний — тепліший, на прохолодну осінь і весну (+75 грн).</g:description>
     <g:link>https://zaisun.com.ua/?p=810</g:link>
     <g:image_link>https://zaisun.com.ua/images/chalma_pov_iazka_ta_pinetky_dlia_divchynky_pudrova_podviini__810_mrxi5b0y_0.jpg</g:image_link>
-    <g:availability>in stock</g:availability>
+    <g:availability>out of stock</g:availability>
     <g:condition>new</g:condition>
     <g:brand>ZaiSun</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
