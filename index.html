@@ -680,7 +680,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=93"></script>
+<script src="data.js?v=94"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -861,10 +861,14 @@ function renderSubs(){
   pg.classList.toggle('pick-sub', !curSub);
   if(!curSub){
     const coverOf = prods => (prods.find(p=>p.cover && p.photo) || prods.find(p=>p.photo && p.season===2) || prods.find(p=>p.photo && p.season===1) || prods.find(p=>p.photo));
+    const usedCovers = new Set();
     el.classList.add('grid');
     el.innerHTML = curSubs.map(s=>{
       const subProds=curBase.filter(p=>p.cats.includes(s.id));
-      const pr = subProds.find(p=>p.coverCat===s.id && p.photo) || coverOf(subProds);
+      const pr = subProds.find(p=>p.coverCat===s.id && p.photo)
+              || coverOf(subProds.filter(p=>!usedCovers.has(p.photo)))
+              || coverOf(subProds);
+      if(pr && pr.photo) usedCovers.add(pr.photo);
       return `<div class="hc" onclick="subSel('${s.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">`:''}<span>${s.name} · ${s.n}</span></div>`;
     }).join('');
   } else {
