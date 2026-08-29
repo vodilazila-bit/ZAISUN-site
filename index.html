@@ -680,7 +680,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=96"></script>
+<script src="data.js?v=97"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1061,6 +1061,19 @@ function renderPills(){
   if(pFrom!==null||pTo!==null) h+=`<span class="fpill">${pFrom??catMin}–${pTo??catMax} ₴<button onclick="pFrom=null;pTo=null;updBdg();apply()">×</button></span>`;
   document.getElementById('fpills').innerHTML=h;
 }
+// Бейдж «Sale» показуємо на всьому, що лежить у розділі Sale, — навіть якщо
+// стару ціну не вказано. Раніше він залежав тільки від наявності старої ціни.
+let SALE_ID = null;
+function isSale(p){
+  if(p.old) return true;
+  if(SALE_ID === null){
+    const t = (typeof TREE !== 'undefined' && TREE)
+      ? TREE.find(x => x.raw === 'sale' || x.name === 'Sale') : null;
+    SALE_ID = t ? t.id : '';
+  }
+  return !!SALE_ID && Array.isArray(p.cats) && p.cats.includes(SALE_ID);
+}
+
 function apply(){
   const r=filtered();
   document.getElementById('cnt').textContent=r.length+' товарів';
@@ -1069,7 +1082,7 @@ function apply(){
   if(!r.length){ el.innerHTML=`<div class="nores"><h3>Нічого не знайдено</h3><p>Спробуйте змінити фільтри</p></div>`; return; }
   el.innerHTML=r.map(p=>{
     const oos = p.stock===false;
-    const badge = oos ? `<span class="badge oos">Немає</span>` : (p.old?`<span class="badge s">Sale</span>`:'');
+    const badge = oos ? `<span class="badge oos">Немає</span>` : (isSale(p)?`<span class="badge s">Sale</span>`:'');
     const img = p.photo ? `<img src="images/${p.photo}" alt="" loading="lazy" onload="fitTile(this)">` : `<div class="noimg">ФОТО СКОРО</div>`;
     const price=p.old?`${priceFrom(p)}${money(p.price)} <s>${money(p.old)}</s>`:priceFrom(p)+money(p.price);
     const sz = p.sizes.length ? (p.sizes.length>1 ? p.sizes[0]+' – '+p.sizes[p.sizes.length-1] : p.sizes[0]) : '';
