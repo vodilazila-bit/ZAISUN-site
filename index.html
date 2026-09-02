@@ -120,8 +120,8 @@ body{overflow-x:hidden}
 .herosl .hs.on .sbtn{animation:tRiseBtn 1s ease forwards;animation-delay:1s}
 @keyframes tRise{to{opacity:1;transform:none;filter:blur(0)}}
 @keyframes tRiseBtn{to{opacity:1}}
-.herosl .harrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.9);border:none;display:grid;place-items:center;cursor:pointer;color:#3A3028;z-index:6;transition:background .15s,transform .15s;-webkit-tap-highlight-color:transparent}
-.herosl .harrow:hover{background:#fff;transform:translateY(-50%) scale(1.06)}
+.herosl .harrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(251,239,225,.42);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:none;display:grid;place-items:center;cursor:pointer;color:#5A4A3C;z-index:6;transition:background .15s,transform .15s;-webkit-tap-highlight-color:transparent}
+.herosl .harrow:hover{background:rgba(251,239,225,.72);transform:translateY(-50%) scale(1.06)}
 .herosl .harrow.l{left:22px}.herosl .harrow.r{right:22px}
 .herosl .hdots{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:6}
 .herosl .hdots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55);transition:all .2s;cursor:pointer}
@@ -242,7 +242,9 @@ section{padding:26px 18px 34px}
 .buy.dis{opacity:.45;pointer-events:none}
 .oostxt{background:var(--petal);border-radius:12px;padding:12px;text-align:center;font-size:.86rem;color:var(--ink);font-weight:600;margin-bottom:12px}
 .badge{position:absolute;top:8px;left:8px;background:rgba(253,250,246,.92);font-size:.6rem;font-weight:700;letter-spacing:.05em;padding:3px 9px;border-radius:20px;text-transform:uppercase;z-index:2}
-.badge.s{background:var(--rose-d);color:#fff}
+.badge.s{background:var(--rose-d);color:#fff;animation:salePulse 2.2s ease-in-out infinite}
+@keyframes salePulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.badge.s{animation:none}}
 .csw{position:absolute;bottom:8px;right:8px;width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.9);box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:2}
 .pn{font-family:var(--serif);font-size:.86rem;font-weight:500;line-height:1.2;margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .pm{font-size:.72rem;color:var(--soft);margin-bottom:4px}
@@ -680,7 +682,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=106"></script>
+<script src="data.js?v=107"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
