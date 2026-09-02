@@ -12,7 +12,7 @@
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WW35PFT');</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Montserrat',sans-serif;background:#FDFAF6;color:#3A3028;line-height:1.65;-webkit-font-smoothing:antialiased}
+body{font-family:'Montserrat',sans-serif;background:#FEFCF9;color:#3A3028;line-height:1.65;-webkit-font-smoothing:antialiased}
 .hdr{background:#FBEFE1;padding:14px 20px;position:sticky;top:0}
 .hdr a{color:#6B5D50;text-decoration:none;font-weight:700;letter-spacing:1px;font-size:15px}
 .wrap{max-width:760px;margin:0 auto;padding:28px 20px 60px}
@@ -23,10 +23,14 @@ ul{padding-left:20px;margin-bottom:12px}
 .req{background:#F9F0E7;border-radius:12px;padding:16px 18px;font-size:.88rem;margin-top:24px}
 footer{background:#8A7663;color:#EFE5DA;padding:30px 22px;text-align:center;font-size:.82rem}
 footer a{color:#EFE5DA;margin:0 8px}
+/* ── Фоновий візерунок: стоїть на місці при прокрутці ── */
+.sitepat{position:fixed;inset:0;z-index:-1;pointer-events:none;background-color:#FEFCF9;background-image:url('/pattern.jpg');background-repeat:repeat;background-size:420px 420px;mix-blend-mode:multiply}
+@media(max-width:600px){.sitepat{background-size:300px 300px}}
 </style>
 <title>Оплата і доставка — ZaiSun</title>
 </head>
 <body>
+<div class="sitepat" aria-hidden="true"></div>
 <div class="hdr"><a href="/">← ZAISUN</a></div>
 <div class="wrap">
 <h1>Оплата і доставка</h1>
