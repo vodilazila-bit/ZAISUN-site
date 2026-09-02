@@ -416,7 +416,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 .sup-ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#fff;font-size:15px;flex:0 0 30px}
 
 /* ── Фоновий візерунок: стоїть на місці при прокрутці ── */
-.sitepat{position:fixed;inset:0;z-index:-1;pointer-events:none;background-color:#FEFCF9;background-image:url('/pattern.jpg');background-repeat:repeat;background-size:420px 420px;mix-blend-mode:multiply}
+.sitepat{position:fixed;inset:0;z-index:-1;pointer-events:none;background-color:#FEFCF9;background-image:url('/pattern.jpg');background-repeat:repeat;background-size:420px 420px;opacity:.85}
 @media(max-width:600px){.sitepat{background-size:300px 300px}}
 </style>
 </head>
@@ -684,7 +684,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=98"></script>
+<script src="data.js?v=99"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
