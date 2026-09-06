@@ -682,7 +682,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=110"></script>
+<script src="data.js?v=111"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1752,7 +1752,7 @@ if(location.search.indexOf('paid=1')>=0){
   setTimeout(()=>{
     const w=document.createElement('div');
     w.style.cssText='position:fixed;inset:0;z-index:600;background:rgba(58,48,40,.45);display:grid;place-items:center;padding:20px';
-    w.innerHTML='<div style="background:#fff;border-radius:18px;padding:28px 22px;max-width:340px;text-align:center"><div style="font-size:40px">🎉</div><h3 style="margin:10px 0 6px">Оплата пройшла!</h3><p style="color:#8a7d70;font-size:.9rem;margin-bottom:16px">Дякуємо за замовлення. Ми вже отримали оплату і скоро відправимо посилку 💛</p><button onclick="this.closest(\'div[style*=fixed]\').remove()" style="padding:12px 30px;border-radius:30px;border:none;background:#C98A5E;color:#fff;font-weight:600;cursor:pointer">Супер</button></div>';
+    w.innerHTML='<div style="background:#fff;border-radius:18px;padding:28px 22px;max-width:340px;text-align:center"><div style="font-size:40px">🎉</div><h3 style="margin:10px 0 6px">Дякуємо за замовлення!</h3><p style="color:#8a7d70;font-size:.9rem;margin-bottom:16px">Очікуйте відправку протягом 3–4 робочих днів 💛</p><button onclick="this.closest(\'div[style*=fixed]\').remove()" style="padding:12px 30px;border-radius:30px;border:none;background:#C98A5E;color:#fff;font-weight:600;cursor:pointer">Супер</button></div>';
     document.body.appendChild(w);
   },400);
 }
