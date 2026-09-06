@@ -682,7 +682,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=111"></script>
+<script src="data.js?v=112"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1599,7 +1599,9 @@ async function submitOrder(){
       const t1 = await r1.text().catch(()=> '');
       if(r1.ok && t1.indexOf('ok')===0){ sent=true; }
       else if(r1.ok && t1.charAt(0)==='{'){
-        try{ const j1=JSON.parse(t1); if(j1.ok){ sent=true; payUrl=j1.pageUrl||''; } else lastErr='relay: '+(j1.err||'').slice(0,150); }
+        try{ const j1=JSON.parse(t1); if(j1.ok){ sent=true; payUrl=j1.pageUrl||'';
+          if(j1.invoiceId){ try{ localStorage.setItem('zs_inv', JSON.stringify({id:j1.invoiceId, t:Date.now()})); }catch(e){} }
+        } else lastErr='relay: '+(j1.err||'').slice(0,150); }
         catch(pe){ lastErr='relay parse: '+t1.slice(0,120); }
       }
       else lastErr='relay HTTP '+r1.status+' '+t1.slice(0,120);
@@ -1749,12 +1751,18 @@ if(location.search.indexOf('paid=1')>=0){
       fb('Purchase',{content_ids:(pend.items||[]).map(i=>i.item_id),content_type:'product',value:pend.t,currency:'UAH'}, pend.id);
     }
   }catch(e){}
-  setTimeout(()=>{
-    const w=document.createElement('div');
-    w.style.cssText='position:fixed;inset:0;z-index:600;background:rgba(58,48,40,.45);display:grid;place-items:center;padding:20px';
-    w.innerHTML='<div style="background:#fff;border-radius:18px;padding:28px 22px;max-width:340px;text-align:center"><div style="font-size:40px">🎉</div><h3 style="margin:10px 0 6px">Дякуємо за замовлення!</h3><p style="color:#8a7d70;font-size:.9rem;margin-bottom:16px">Очікуйте відправку протягом 3–4 робочих днів 💛</p><button onclick="this.closest(\'div[style*=fixed]\').remove()" style="padding:12px 30px;border-radius:30px;border:none;background:#C98A5E;color:#fff;font-weight:600;cursor:pointer">Супер</button></div>';
-    document.body.appendChild(w);
-  },400);
+  setTimeout(showPaidThanks,400);
+}
+
+// Вікно подяки після оплати. Показується і одразу після повернення з mono,
+// і пізніше — коли людина зайде на сайт наступного разу.
+function showPaidThanks(){
+  if(document.getElementById('paidThanks')) return;
+  const w=document.createElement('div');
+  w.id='paidThanks';
+  w.style.cssText='position:fixed;inset:0;z-index:600;background:rgba(58,48,40,.45);display:grid;place-items:center;padding:20px';
+  w.innerHTML='<div style="background:#fff;border-radius:18px;padding:28px 22px;max-width:340px;text-align:center"><div style="font-size:40px">🎉</div><h3 style="margin:10px 0 6px">Дякуємо за замовлення!</h3><p style="color:#8a7d70;font-size:.9rem;margin-bottom:16px">Очікуйте відправку протягом 3–4 робочих днів 💛</p><button onclick="this.closest(\'div[style*=fixed]\').remove()" style="padding:12px 30px;border-radius:30px;border:none;background:#C98A5E;color:#fff;font-weight:600;cursor:pointer">Супер</button></div>';
+  document.body.appendChild(w);
 }
 let cartMode = false;
 function saveCart(){ try{localStorage.setItem('zaisun_cart', JSON.stringify(CART));}catch(e){} updCartBdg(); }
@@ -2123,6 +2131,27 @@ if(heroSlides.length){
     });
   }, {rootMargin:'0px 0px -12% 0px', threshold:.08});
   els.forEach(el=>io.observe(el));
+})();
+
+// Людина могла оплатити й не повернутись на сайт — закрити вкладку, піти
+// в застосунок. Тоді подяки вона не побачила. Перевіряємо при наступному
+// заході: якщо рахунок оплачено, показуємо вікно один раз.
+(function(){
+  let raw; try{ raw = localStorage.getItem('zs_inv'); }catch(e){ return; }
+  if(!raw) return;
+  let d; try{ d = JSON.parse(raw); }catch(e){ try{localStorage.removeItem('zs_inv');}catch(_){} return; }
+  if(!d || !d.id){ try{localStorage.removeItem('zs_inv');}catch(e){} return; }
+  if(Date.now() - (d.t||0) > 7*24*3600*1000){ try{localStorage.removeItem('zs_inv');}catch(e){} return; }
+  if(location.search.indexOf('paid=1') >= 0) return;   // вікно вже показує інший шлях
+
+  fetch(ORDER_RELAY + '?paystatus=' + encodeURIComponent(d.id))
+    .then(r => r.ok ? r.json() : null)
+    .then(j => {
+      if(!j || !j.paid) return;
+      try{ localStorage.removeItem('zs_inv'); }catch(e){}
+      setTimeout(showPaidThanks, 600);
+    })
+    .catch(()=>{});
 })();
 
 buildMenu(); buildHome(); buildNew(); buildIG(); buildTop();
