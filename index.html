@@ -682,7 +682,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=108"></script>
+<script src="data.js?v=109"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1665,8 +1665,9 @@ async function submitOrder(){
     document.getElementById('sTitle').textContent = byReq ? 'Замовлення прийнято!' : 'Дякуємо за замовлення!';
     document.getElementById('sText').textContent  = byReq
       ? 'Реквізити та інформацію про замовлення надішлемо на'
-      : 'Очікуйте відправку протягом 3–4 робочих днів. Деталі надішлемо на';
-    document.getElementById('sPhoneWrap').style.display='block';
+      : 'Очікуйте відправку протягом 3–4 робочих днів.';
+    // номер потрібен лише там, де ще треба надіслати реквізити
+    document.getElementById('sPhoneWrap').style.display = byReq ? 'block' : 'none';
     document.getElementById('sPhoneEdit').style.display='none';
     document.getElementById('sPhoneOk').style.display='none';
     document.getElementById('fview').style.display='none';
