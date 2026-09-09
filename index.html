@@ -381,13 +381,14 @@ section{padding:26px 18px 34px}
 .reveal .cats-h{opacity:0;transform:translateY(12px)}
 .reveal.seen .cats-h{animation:secRise 1s cubic-bezier(.22,.61,.36,1) forwards;animation-delay:.1s}
 @keyframes secRise{to{opacity:1;transform:none;filter:blur(0)}}
-@media (prefers-reduced-motion:reduce){.reveal,.reveal .cats-h{animation:none!important;opacity:1;transform:none;filter:none}}.np .hb{position:absolute;top:8px;left:8px;background:var(--rose-d);color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.05em;padding:3px 7px;border-radius:6px;z-index:2}
+@media (prefers-reduced-motion:reduce){.reveal,.reveal .cats-h{animation:none!important;opacity:1;transform:none;filter:none}}.np .hb{position:absolute;top:8px;left:8px;background:var(--rose-d);color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.05em;padding:3px 7px;border-radius:6px;z-index:2;animation:salePulse 2.2s ease-in-out infinite}
 .new-row{display:flex;gap:12px;overflow-x:auto;padding:4px 18px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .new-row::-webkit-scrollbar{display:none}
 .np{flex:0 0 44%;max-width:210px;cursor:pointer}
 .np .pt{aspect-ratio:3/4;border-radius:14px;position:relative;overflow:hidden;margin-bottom:8px;background:var(--petal)}
 .np .pt img{width:100%;height:100%;object-fit:cover;display:block}
-.np .nb{position:absolute;top:8px;left:8px;background:var(--rose-d);color:#fff;font-size:.6rem;font-weight:700;letter-spacing:.06em;padding:3px 10px;border-radius:20px;z-index:2}
+.np .nb{position:absolute;top:8px;left:8px;background:var(--rose-d);color:#fff;font-size:.6rem;font-weight:700;letter-spacing:.06em;padding:3px 10px;border-radius:20px;z-index:2;animation:salePulse 2.2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.np .nb,.np .hb{animation:none}}
 .np .nn{font-size:.82rem;font-weight:500;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:3px;color:var(--ink)}
 .np .npp{font-size:.86rem;font-weight:700;color:var(--ink)}
 .np .npp s{font-weight:400;color:var(--soft);font-size:.74rem;margin-left:5px}
