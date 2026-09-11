@@ -623,12 +623,12 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       <div class="mform">
         <div class="fld"><label>Ім'я та прізвище *</label><input type="text" id="fName"></div>
         <div class="fld"><label>Телефон *</label><input type="tel" id="fPhone" value="+380" inputmode="numeric" maxlength="13" oninput="phoneFix(this)" onblur="phoneBlur(this)"><div class="ferr" id="phoneErr"></div></div>
-        <div class="fld"><label>Email *</label><input type="email" id="fEmail" autocomplete="email" placeholder="для чека та інформації про замовлення"></div>
+        <div class="fld"><label>Email *</label><input type="email" id="fEmail" autocomplete="email"></div>
         <div class="frw">
-          <div class="fld sugg"><label>Місто *</label><input type="text" id="fCity" placeholder="Почни вводити місто" autocomplete="off" oninput="npCity(this.value)"><div class="sugg-list" id="cityList"></div></div>
+          <div class="fld sugg"><label>Місто *</label><input type="text" id="fCity" autocomplete="off" oninput="npCity(this.value)"><div class="sugg-list" id="cityList"></div></div>
           <div class="fld" id="fSizeWrap"><label>Розмір</label><input type="text" id="fSize"></div>
         </div>
-        <div class="fld sugg"><label>Відділення Нової Пошти *</label><input type="text" id="fNP" placeholder="Почни вводити номер або вулицю" autocomplete="off" oninput="npWh(this.value)" onfocus="npWh(this.value)"><div class="sugg-list" id="npList"></div></div>
+        <div class="fld sugg"><label>Відділення Нової Пошти *</label><input type="text" id="fNP" autocomplete="off" oninput="npWh(this.value)" onfocus="npWh(this.value)"><div class="sugg-list" id="npList"></div></div>
         <div class="fld"><label>Оплата</label>
           <label class="payopt on"><input type="radio" name="payway" value="bank" checked onchange="paySel(this)"> 🏦 За реквізитами</label>
           <label class="payopt"><input type="radio" name="payway" value="online" onchange="paySel(this)"> 💳 Онлайн: картка / Apple Pay / Google Pay</label>
