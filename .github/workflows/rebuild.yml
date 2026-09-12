@@ -11,9 +11,12 @@ on:
 permissions:
   contents: write
 
+# Серія збережень з адмінки: проміжні запуски скасовуються, лишається
+# останній. Він генерує все з нуля з поточного data.js, тому нічого
+# не губиться — просто менше шуму і менше витрачених хвилин.
 concurrency:
   group: rebuild
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   rebuild:
@@ -53,9 +56,29 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add t sitemap.xml feed.xml
+
           if git diff --staged --quiet; then
             echo "змін немає"
-          else
-            git commit -m "auto: сторінки товарів, фід і sitemap"
-            git push
+            exit 0
           fi
+
+          git commit -m "auto: сторінки товарів, фід і sitemap"
+
+          # Поки генерувалось, у main могли лягти нові коміти (наступне
+          # збереження з адмінки). Тоді push відхиляється — підтягуємо
+          # чужі зміни поверх своїх і пробуємо ще раз.
+          for i in 1 2 3 4 5; do
+            if git push; then
+              echo "запушено з $i спроби"
+              exit 0
+            fi
+            echo "push відхилено, спроба $i — підтягую main"
+            git pull --rebase --autostash origin main || {
+              echo "::error::конфлікт при rebase — потрібне ручне втручання"
+              exit 1
+            }
+            sleep $((i * 3))
+          done
+
+          echo "::error::не вдалось запушити за 5 спроб"
+          exit 1
