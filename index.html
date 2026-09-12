@@ -683,7 +683,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=118"></script>
+<script src="data.js?v=119"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -741,13 +741,15 @@ const MENU_DEF = [
   {k:'sarafany',      n:'Сарафани', c:['сарафан']},
   {k:'rompery',       n:'Ромпери', c:['Ромпер']},
   {k:'poviazky',      n:"Пов'язки/мокси", c:["Пов'язки"]},
-  {k:'kolhoty',       n:'Колготи, шкарпетки, гольфи', c:['Капронові','колготи махра','колготи демі','носки','носки махра','гольфи','Гольф']},
   {k:'futbolky',      n:'Футболки, шорти', c:['Шорти, футболки','Лосіни, футболки']},
   {k:'panamy',        n:'Панами, косинки, бейси', c:['Панама','Косинки, панами']},
   {k:'khreshchennia', n:'Одяг на хрещення', c:['Одяг для Хрещення']},
   {k:'vzuttia',       n:'Взуття', c:['Пінетки']},
   {k:'aksesuary',     n:'Аксесуари', c:['Аксесуари']},
   {k:'lito',          n:'Літній асортимент', c:['Літо']},
+  {k:'kolhoty',       n:'Колготи', c:['Колготи']},
+  {k:'holfy',         n:'Гольфи', c:['Гольфи']},
+  {k:'nosky',         n:'Носки', c:['Носки']},
 ];
 // Порядок пунктів меню міняється — тому в адресі тепер стійкий ключ (?cat=k<ключ>),
 // а не порядковий номер. Старі посилання виду ?cat=m<N> (реклама, соцмережі,
