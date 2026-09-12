@@ -642,7 +642,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
     <div class="succ" id="sview">
       <div class="sic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
       <h3 id="sTitle">Дякуємо за замовлення!</h3>
-      <p id="sText">Очікуйте відправку протягом 3–4 робочих днів.</p>
+      <p id="sText">Очікуйте відправку протягом 3–4 робочих днів 💛</p>
       <div id="sPhoneWrap">
         <div id="sPhone" style="font-size:1.35rem;font-weight:700;letter-spacing:.5px;margin:6px 0 4px"></div>
         <a href="#" id="sPhoneEditLink" onclick="editSuccPhone();return false" style="font-size:.9rem;color:var(--soft);text-decoration:underline">Змінити номер</a>
@@ -683,7 +683,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=115"></script>
+<script src="data.js?v=116"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1678,7 +1678,7 @@ async function submitOrder(){
     document.getElementById('sTitle').textContent = byReq ? 'Замовлення прийнято!' : 'Дякуємо за замовлення!';
     document.getElementById('sText').textContent  = byReq
       ? 'Реквізити та інформацію про замовлення надішлемо на'
-      : 'Очікуйте відправку протягом 3–4 робочих днів.';
+      : 'Очікуйте відправку протягом 3–4 робочих днів 💛';
     // номер потрібен лише там, де ще треба надіслати реквізити
     document.getElementById('sPhoneWrap').style.display = byReq ? 'block' : 'none';
     document.getElementById('sPhoneEdit').style.display='none';
