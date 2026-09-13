@@ -683,7 +683,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=120"></script>
+<script src="data.js?v=121"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1600,23 +1600,32 @@ async function submitOrder(){
     const _ac = adClick();
     if(_ac){ payload._gclid = _ac.v; payload._gtype = _ac.k; }
     let sent=false, lastErr='', payUrl='';
-    // 1) основний канал: власний приймач на Apps Script
-    try{
-      // без обмеження часу кнопка «Надсилаю…» могла висіти вічно,
-      // якщо приймач не відповідає
-      const ac = new AbortController();
-      const tm = setTimeout(()=>ac.abort(), 30000);
-      const r1 = await fetch(ORDER_RELAY, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload), signal: ac.signal}).finally(()=>clearTimeout(tm));
-      const t1 = await r1.text().catch(()=> '');
-      if(r1.ok && t1.indexOf('ok')===0){ sent=true; }
-      else if(r1.ok && t1.charAt(0)==='{'){
-        try{ const j1=JSON.parse(t1); if(j1.ok){ sent=true; payUrl=j1.pageUrl||'';
-          if(j1.invoiceId){ try{ localStorage.setItem('zs_inv', JSON.stringify({id:j1.invoiceId, t:Date.now()})); }catch(e){} }
-        } else lastErr='relay: '+(j1.err||'').slice(0,150); }
-        catch(pe){ lastErr='relay parse: '+t1.slice(0,120); }
-      }
-      else lastErr='relay HTTP '+r1.status+' '+t1.slice(0,120);
-    }catch(e1){ lastErr='relay: '+(e1&&e1.message||e1); }
+    // унікальний номер спроби: якщо доведеться повторити запит, релей за ним
+    // упізнає те саме замовлення й не запише його другим рядком
+    payload._oid = 'o' + Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+    // 1) основний канал: власний приймач на Apps Script.
+    // Дві спроби: обрив звʼязку в клієнта на секунду — найчастіша причина,
+    // чому відповідь не доходить, хоча замовлення вже записане.
+    for(let att=0; att<2 && !sent; att++){
+      if(att){ await new Promise(r=>setTimeout(r,2000)); }
+      try{
+        // без обмеження часу кнопка «Надсилаю…» могла висіти вічно,
+        // якщо приймач не відповідає
+        const ac = new AbortController();
+        const tm = setTimeout(()=>ac.abort(), att ? 25000 : 20000);
+        const r1 = await fetch(ORDER_RELAY, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload), signal: ac.signal}).finally(()=>clearTimeout(tm));
+        const t1 = await r1.text().catch(()=> '');
+        if(r1.ok && t1.indexOf('ok')===0){ sent=true; }
+        else if(r1.ok && t1.charAt(0)==='{'){
+          try{ const j1=JSON.parse(t1); if(j1.ok){ sent=true; payUrl=j1.pageUrl||'';
+            if(j1.invoiceId){ try{ localStorage.setItem('zs_inv', JSON.stringify({id:j1.invoiceId, t:Date.now()})); }catch(e){} }
+          } else { lastErr='relay: '+(j1.err||'').slice(0,150); break; } }
+          catch(pe){ lastErr='relay parse: '+t1.slice(0,120); }
+        }
+        else lastErr='relay HTTP '+r1.status+' '+t1.slice(0,120);
+      }catch(e1){ lastErr='relay: '+(e1&&e1.message||e1); }
+      if(!sent && att) lastErr = '2 спроби. ' + lastErr;
+    }
     if(isPay && sent && !payUrl){ sent=false; lastErr='relay не повернув посилання на оплату. '+lastErr; }
     // 2) резерв: FormSubmit
     if(!sent && !isPay){
