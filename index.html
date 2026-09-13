@@ -683,7 +683,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=122"></script>
+<script src="data.js?v=123"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1599,7 +1599,7 @@ async function submitOrder(){
     payload._cid = ga4ClientId();
     const _ac = adClick();
     if(_ac){ payload._gclid = _ac.v; payload._gtype = _ac.k; }
-    let sent=false, lastErr='', payUrl='';
+    let sent=false, lastErr='', payUrl='', payFallback=false;
     // унікальний номер спроби: якщо доведеться повторити запит, релей за ним
     // упізнає те саме замовлення й не запише його другим рядком
     payload._oid = 'o' + Date.now().toString(36) + Math.random().toString(36).slice(2,8);
@@ -1638,10 +1638,11 @@ async function submitOrder(){
         if(r2.ok) sent=true; else lastErr+=' | formsubmit HTTP '+r2.status;
       }catch(e2){ lastErr+=' | formsubmit: '+(e2&&e2.message||e2); }
     }
-    // 2б) онлайн-оплата: резервного каналу для клієнта тут бути не може —
-    // без відповіді релею немає посилання на mono. Але хоча б повідомляємо
-    // себе, щоб такий покупець не зник безслідно і йому можна було передзвонити.
+    // 2б) онлайн-оплата: посилання на mono немає, але саме замовлення майже
+    // напевно записалось. Тому клієнту не показуємо помилку — кажемо, що
+    // замовлення прийняте й ми звʼяжемось. Себе повідомляємо окремо.
     if(!sent && isPay){
+      payFallback = true;
       try{
         await fetch('https://formsubmit.co/ajax/'+ORDER_EMAIL, {
           method:'POST',
@@ -1650,7 +1651,9 @@ async function submitOrder(){
         });
       }catch(e3){}
     }
-    if(!sent) throw new Error(lastErr);
+    // Замовлення записалось, лише посилання на оплату не створилось —
+    // це не привід лякати клієнта помилкою.
+    if(!sent && !payFallback) throw new Error(lastErr);
     try{
       if(/тест/i.test(n)) throw 'test-order';
       // items для e-commerce
@@ -1696,12 +1699,16 @@ async function submitOrder(){
     // В інших випадках оплата вже пройшла, тому просто дякуємо.
     const payNow = (document.querySelector('input[name=payway]:checked')||{}).value || '';
     const byReq = (payNow === 'bank');   // 'online' і 'pm' — оплата вже пройшла
-    document.getElementById('sTitle').textContent = byReq ? 'Замовлення прийнято!' : 'Дякуємо за замовлення!';
-    document.getElementById('sText').textContent  = byReq
-      ? 'Реквізити та інформацію про замовлення надішлемо на'
-      : 'Очікуйте відправку протягом 3–4 робочих днів 💛';
-    // номер потрібен лише там, де ще треба надіслати реквізити
-    document.getElementById('sPhoneWrap').style.display = byReq ? 'block' : 'none';
+    // payFallback — онлайн-оплата, де посилання на mono не створилось:
+    // замовлення прийняте, але оплатити просто зараз людина не зможе
+    document.getElementById('sTitle').textContent = (byReq || payFallback)
+      ? 'Замовлення прийнято!' : 'Дякуємо за замовлення!';
+    document.getElementById('sText').textContent  = payFallback
+      ? 'Звʼяжемось з вами найближчим часом для оплати. Ваш телефон:'
+      : (byReq
+        ? 'Реквізити та інформацію про замовлення надішлемо на'
+        : 'Очікуйте відправку протягом 3–4 робочих днів 💛');
+    document.getElementById('sPhoneWrap').style.display = (byReq || payFallback) ? 'block' : 'none';
     document.getElementById('sPhoneEdit').style.display='none';
     document.getElementById('sPhoneOk').style.display='none';
     document.getElementById('fview').style.display='none';
