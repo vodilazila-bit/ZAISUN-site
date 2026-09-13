@@ -683,7 +683,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=121"></script>
+<script src="data.js?v=122"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1637,6 +1637,18 @@ async function submitOrder(){
         });
         if(r2.ok) sent=true; else lastErr+=' | formsubmit HTTP '+r2.status;
       }catch(e2){ lastErr+=' | formsubmit: '+(e2&&e2.message||e2); }
+    }
+    // 2б) онлайн-оплата: резервного каналу для клієнта тут бути не може —
+    // без відповіді релею немає посилання на mono. Але хоча б повідомляємо
+    // себе, щоб такий покупець не зник безслідно і йому можна було передзвонити.
+    if(!sent && isPay){
+      try{
+        await fetch('https://formsubmit.co/ajax/'+ORDER_EMAIL, {
+          method:'POST',
+          headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body: JSON.stringify(Object.assign({_subject:'⚠️ РЕЗЕРВ — клієнт не зміг оплатити онлайн, ZaiSun '+total+' грн',_template:'box'}, payload, {"Помилка релею": lastErr||'-', "Що сталось": 'Покупець дійшов до оплати, але посилання на mono не створилось. Замовлення могло записатись у таблицю, а могло й ні — звірити. Варто передзвонити.'}))
+        });
+      }catch(e3){}
     }
     if(!sent) throw new Error(lastErr);
     try{
