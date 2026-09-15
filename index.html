@@ -683,7 +683,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=133"></script>
+<script src="data.js?v=134"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1077,63 +1077,25 @@ function isSale(p){
   return !!SALE_ID && Array.isArray(p.cats) && p.cats.includes(SALE_ID);
 }
 
-const LAZY_BATCH = 20;
-let _lazyState = { results: [], batch: 0, observer: null };
-function renderProductCard(p){
-  const oos = p.stock===false;
-  const badge = oos ? `<span class="badge oos">Немає</span>` : (isSale(p)?`<span class="badge s">Sale</span>`:'');
-  const img = p.photo ? `<img src="images/${p.photo}" alt="" loading="lazy" onload="fitTile(this)">` : `<div class="noimg">ФОТО СКОРО</div>`;
-  const price=p.old?`${priceFrom(p)}${money(p.price)} <s>${money(p.old)}</s>`:priceFrom(p)+money(p.price);
-  const sz = p.sizes.length ? (p.sizes.length>1 ? p.sizes[0]+' – '+p.sizes[p.sizes.length-1] : p.sizes[0]) : '';
-  return `<a class="pc${oos?' oos':''}" onclick="openProd(${p.id})">
-    <div class="pt">${badge}${img}</div>
-    <div class="pn">${p.name}</div>
-    <div class="pm">${sz}</div>
-    <div class="pp">${price}</div>
-  </a>`;
-}
-function applyLazyLoad(){
+function apply(){
   const r=filtered();
-  _lazyState.results = r;
-  _lazyState.batch = 0;
   document.getElementById('cnt').textContent=r.length+' товарів';
   renderPills(); updBdg();
   const el=document.getElementById('grid');
-  if(!r.length){ el.innerHTML=`<div class="nores"><h3>Нічого не знайдено</h3><p>Спробуйте змінити фільтри</p></div>`; 
-    if(_lazyState.observer) _lazyState.observer.disconnect();
-    return; 
-  }
-  el.classList.add('grid');
-  el.innerHTML='';
-  loadMoreProducts();
-  setupLazyObserver();
-}
-function loadMoreProducts(){
-  const r=_lazyState.results;
-  const start = _lazyState.batch * LAZY_BATCH;
-  const end = start + LAZY_BATCH;
-  const batch = r.slice(start, end);
-  const el=document.getElementById('grid');
-  if(!batch.length) return;
-  const html = batch.map(p=>renderProductCard(p)).join('');
-  el.innerHTML += html;
-  _lazyState.batch++;
-}
-function setupLazyObserver(){
-  if(_lazyState.observer) _lazyState.observer.disconnect();
-  _lazyState.observer = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        const r=_lazyState.results;
-        if(_lazyState.batch * LAZY_BATCH < r.length) loadMoreProducts();
-      }
-    });
-  }, {rootMargin:'200px'});
-  const sentinel = document.getElementById('grid');
-  if(sentinel) _lazyState.observer.observe(sentinel);
-}
-function apply(){
-  applyLazyLoad();
+  if(!r.length){ el.innerHTML=`<div class="nores"><h3>Нічого не знайдено</h3><p>Спробуйте змінити фільтри</p></div>`; return; }
+  el.innerHTML=r.map(p=>{
+    const oos = p.stock===false;
+    const badge = oos ? `<span class="badge oos">Немає</span>` : (isSale(p)?`<span class="badge s">Sale</span>`:'');
+    const img = p.photo ? `<img src="images/${p.photo}" alt="" loading="lazy" onload="fitTile(this)">` : `<div class="noimg">ФОТО СКОРО</div>`;
+    const price=p.old?`${priceFrom(p)}${money(p.price)} <s>${money(p.old)}</s>`:priceFrom(p)+money(p.price);
+    const sz = p.sizes.length ? (p.sizes.length>1 ? p.sizes[0]+' – '+p.sizes[p.sizes.length-1] : p.sizes[0]) : '';
+    return `<a class="pc${oos?' oos':''}" onclick="openProd(${p.id})">
+      <div class="pt">${badge}${img}</div>
+      <div class="pn">${p.name}</div>
+      <div class="pm">${sz}</div>
+      <div class="pp">${price}</div>
+    </a>`;
+  }).join('');
 }
 
 function pheroSwitch(i){
