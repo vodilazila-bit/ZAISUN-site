@@ -683,7 +683,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=131"></script>
+<script src="data.js?v=132"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1698,7 +1698,10 @@ async function submitOrder(){
       if(m){ localStorage.setItem('zs_worker', m); wMode = m; }
       else { wMode = localStorage.getItem('zs_worker') || ''; }
     }catch(e){}
-    const useWorker = wMode === '1' || wMode === 'bad';
+    // Основний шлях для всіх покупців — Cloudflare. Apps Script лишається
+    // резервом, якщо воркер не відповів за 8 секунд.
+    // /?worker=0 — примусово старий шлях, /?worker=bad — перевірка резерву.
+    const useWorker = wMode !== '0';
     const WORKER_EP = wMode === 'bad' ? ORDER_WORKER.replace('zaisun-relay','zaisun-relay-nemaie') : ORDER_WORKER;
     const ENDPOINTS = useWorker ? [WORKER_EP, ORDER_RELAY] : [ORDER_RELAY, ORDER_RELAY];
     let usedEp = useWorker ? ('worker'+(wMode==='bad'?'-bad':'')) : 'relay';
