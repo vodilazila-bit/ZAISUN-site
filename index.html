@@ -1103,6 +1103,7 @@ function applyLazyLoad(){
     if(_lazyState.observer) _lazyState.observer.disconnect();
     return; 
   }
+  el.classList.add('grid');
   el.innerHTML='';
   loadMoreProducts();
   setupLazyObserver();
@@ -1115,9 +1116,7 @@ function loadMoreProducts(){
   const el=document.getElementById('grid');
   if(!batch.length) return;
   const html = batch.map(p=>renderProductCard(p)).join('');
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  el.appendChild(div);
+  el.innerHTML += html;
   _lazyState.batch++;
 }
 function setupLazyObserver(){
