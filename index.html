@@ -683,7 +683,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=123"></script>
+<script src="data.js?v=124"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1375,7 +1375,12 @@ async function saveSuccPhone(){
 const ORDER_EMAIL = 'miroslava_zanchuk@ukr.net';
 const ORDER_RELAY = 'https://script.google.com/macros/s/AKfycbyMhAR-LhYxHdMCdv4VHXDY3--L_O4f_dXTGZNr5265Bq6E5GYJm2waCga9BkmeD8ZN/exec';
 // ─── Нова Пошта: підказки міст і відділень ───
-let npCityRef = null, npT1 = null, npT2 = null, npDead = false;
+let npCityRef = null, npT1 = null, npT2 = null;
+// Раніше один обірваний запит до Нової Пошти вимикав підказки до кінця
+// сесії. Тепер збій лише робить паузу на 8 секунд — далі пробуємо знову.
+let npDeadUntil = 0;
+function npDown(){ return Date.now() < npDeadUntil; }
+function npFail(){ npDeadUntil = Date.now() + 8000; }
 async function npApi(model, method, props){
   const r = await fetch('https://api.novaposhta.ua/v2.0/json/', {
     method:'POST', headers:{'Content-Type':'application/json'},
@@ -1390,14 +1395,14 @@ function npCity(q){
   npCityRef = null;
   clearTimeout(npT1);
   const box = document.getElementById('cityList');
-  if(npDead || q.trim().length < 2){ box.classList.remove('show'); return; }
+  if(npDown() || q.trim().length < 2){ box.classList.remove('show'); return; }
   npT1 = setTimeout(async ()=>{
     try{
       const d = await npApi('Address','searchSettlements',{CityName:q.trim(), Limit:'6'});
       npCityList = (d[0] && d[0].Addresses) || [];
       box.innerHTML = npCityList.map((a,i)=>`<div class="sugg-it" onclick="pickCity(${i})">${a.Present}</div>`).join('');
       box.classList.toggle('show', npCityList.length>0);
-    }catch(e){ npDead = true; box.classList.remove('show'); }
+    }catch(e){ npFail(); box.classList.remove('show'); }
   }, 300);
 }
 function pickCity(i){
@@ -1411,15 +1416,28 @@ let npWhListData = [];
 function npWh(q){
   clearTimeout(npT2);
   const box = document.getElementById('npList');
-  if(npDead || !npCityRef){ box.classList.remove('show'); return; }
+  if(npDown()){ box.classList.remove('show'); return; }
   npT2 = setTimeout(async ()=>{
     try{
+      // Місто могли дописати руками або вибір злетів після збою — тоді
+      // прив'язки немає і список відділень порожній. Пробуємо визначити
+      // місто самі, за текстом у полі.
+      if(!npCityRef){
+        const cityTxt = (document.getElementById('fCity').value||'').trim();
+        if(cityTxt.length < 2){ box.classList.remove('show'); return; }
+        const dd = await npApi('Address','searchSettlements',{CityName:cityTxt, Limit:'1'});
+        const a0 = dd[0] && dd[0].Addresses && dd[0].Addresses[0];
+        if(!a0){ box.classList.remove('show'); return; }
+        npCityRef = a0.DeliveryCity;
+        document.getElementById('fCity').value = a0.Present || cityTxt;
+        saveForm();
+      }
       const props = {CityRef:npCityRef, Limit:'12', Page:'1'};
       if(q && q.trim()) props.FindByString = q.trim();
       npWhListData = await npApi('AddressGeneral','getWarehouses',props);
       box.innerHTML = npWhListData.map((w,i)=>`<div class="sugg-it" onclick="pickWh(${i})">${w.Description}</div>`).join('');
       box.classList.toggle('show', npWhListData.length>0);
-    }catch(e){ box.classList.remove('show'); }
+    }catch(e){ npFail(); box.classList.remove('show'); }
   }, 300);
 }
 function pickWh(i){
