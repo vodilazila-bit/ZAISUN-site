@@ -683,7 +683,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=125"></script>
+<script src="data.js?v=126"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1659,11 +1659,14 @@ async function submitOrder(){
     // унікальний номер спроби: якщо доведеться повторити запит, релей за ним
     // упізнає те саме замовлення й не запише його другим рядком
     payload._oid = 'o' + Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+    // заміри: скільки саме чекає покупець і на чому
+    const tStart = Date.now(); let tRelay = 0, tAtt = 0;
     // 1) основний канал: власний приймач на Apps Script.
     // Дві спроби: обрив звʼязку в клієнта на секунду — найчастіша причина,
     // чому відповідь не доходить, хоча замовлення вже записане.
     for(let att=0; att<2 && !sent; att++){
       if(att){ await new Promise(r=>setTimeout(r,2000)); }
+      tAtt = Date.now();
       try{
         // без обмеження часу кнопка «Надсилаю…» могла висіти вічно,
         // якщо приймач не відповідає
@@ -1680,8 +1683,18 @@ async function submitOrder(){
         }
         else lastErr='relay HTTP '+r1.status+' '+t1.slice(0,120);
       }catch(e1){ lastErr='relay: '+(e1&&e1.message||e1); }
+      tRelay = Date.now() - tAtt;
       if(!sent && att) lastErr = '2 спроби. ' + lastErr;
     }
+    // пишемо заміри в GA4: relay_ms — чиста відповідь приймача,
+    // total_ms — усе, що бачить покупець від натискання кнопки
+    try{
+      if(window.gtag) gtag('event','relay_timing',{
+        relay_ms: tRelay, total_ms: Date.now()-tStart,
+        attempts: sent ? 'ok' : 'fail', pay_kind: isPay ? 'online' : 'offline'
+      });
+    }catch(e){}
+    if(!sent) lastErr += ' | ' + Math.round((Date.now()-tStart)/1000) + ' с усього';
     if(isPay && sent && !payUrl){ sent=false; lastErr='relay не повернув посилання на оплату. '+lastErr; }
     // 2) резерв: FormSubmit
     if(!sent && !isPay){
