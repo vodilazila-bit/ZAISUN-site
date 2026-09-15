@@ -1,0 +1,14 @@
+plugins:
+  - jekyll-default-locale
+
+exclude:
+  - node_modules
+  - README.md
+  - CACHE_HEADERS.md
+
+# Cache control headers (GitHub Pages auto-applies these)
+# JS/CSS/Images: 1 year (31536000 seconds)
+# HTML: no-cache (always validate with server)
+# This is handled by GitHub CDN automatically
+
+# Service Worker handles most caching now
