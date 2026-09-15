@@ -683,7 +683,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=128"></script>
+<script src="data.js?v=129"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1670,8 +1670,11 @@ async function submitOrder(){
     // Дві спроби: обрив звʼязку в клієнта на секунду — найчастіша причина,
     // чому відповідь не доходить, хоча замовлення вже записане.
     // спроба 1 — Cloudflare, спроба 2 — Apps Script
-    const ENDPOINTS = [ORDER_RELAY, ORDER_RELAY];   // ВІДКАТ: воркер вимкнено до з'ясування
-    let usedEp = 'relay';
+    // Воркер поки лише для перевірки: вмикається адресою zaisun.com.ua/?worker=1
+    // Покупці йдуть через Apps Script, поки не переконаємось, що все стабільно.
+    const useWorker = location.search.indexOf('worker=1') >= 0;
+    const ENDPOINTS = useWorker ? [ORDER_WORKER, ORDER_RELAY] : [ORDER_RELAY, ORDER_RELAY];
+    let usedEp = useWorker ? 'worker' : 'relay';
     for(let att=0; att<2 && !sent; att++){
       if(att){ await new Promise(r=>setTimeout(r,2000)); usedEp = 'relay'; }
       tAtt = Date.now();
@@ -1679,7 +1682,7 @@ async function submitOrder(){
         // без обмеження часу кнопка «Надсилаю…» могла висіти вічно,
         // якщо приймач не відповідає
         const ac = new AbortController();
-        const tm = setTimeout(()=>ac.abort(), att ? 25000 : 20000);
+        const tm = setTimeout(()=>ac.abort(), att ? 25000 : (useWorker ? 8000 : 20000));
         const r1 = await fetch(ENDPOINTS[att], {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload), signal: ac.signal}).finally(()=>clearTimeout(tm));
         const t1 = await r1.text().catch(()=> '');
         if(r1.ok && t1.indexOf('ok')===0){ sent=true; }
