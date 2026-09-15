@@ -683,7 +683,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=129"></script>
+<script src="data.js?v=130"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1670,11 +1670,22 @@ async function submitOrder(){
     // Дві спроби: обрив звʼязку в клієнта на секунду — найчастіша причина,
     // чому відповідь не доходить, хоча замовлення вже записане.
     // спроба 1 — Cloudflare, спроба 2 — Apps Script
-    // Воркер поки лише для перевірки: вмикається адресою zaisun.com.ua/?worker=1
-    // Покупці йдуть через Apps Script, поки не переконаємось, що все стабільно.
-    const useWorker = location.search.indexOf('worker=1') >= 0;
-    const ENDPOINTS = useWorker ? [ORDER_WORKER, ORDER_RELAY] : [ORDER_RELAY, ORDER_RELAY];
-    let usedEp = useWorker ? 'worker' : 'relay';
+    // Воркер поки лише для перевірки. Вмикається адресою /?worker=1 і
+    // ЗАПАМʼЯТОВУЄТЬСЯ в цьому браузері — інакше мітка губилась при переході
+    // на картку товару, і замовлення тихо йшло старим шляхом.
+    //   /?worker=1   — увімкнути      /?worker=0   — вимкнути
+    //   /?worker=bad — перевірка резерву: навмисне неробоча адреса воркера,
+    //                  сайт має сам піти в Apps Script і все одно оформити
+    let wMode = '';
+    try{
+      const m = (location.search.match(/worker=([a-z0-9]+)/i)||[])[1];
+      if(m){ localStorage.setItem('zs_worker', m); wMode = m; }
+      else { wMode = localStorage.getItem('zs_worker') || ''; }
+    }catch(e){}
+    const useWorker = wMode === '1' || wMode === 'bad';
+    const WORKER_EP = wMode === 'bad' ? ORDER_WORKER.replace('zaisun-relay','zaisun-relay-nemaie') : ORDER_WORKER;
+    const ENDPOINTS = useWorker ? [WORKER_EP, ORDER_RELAY] : [ORDER_RELAY, ORDER_RELAY];
+    let usedEp = useWorker ? ('worker'+(wMode==='bad'?'-bad':'')) : 'relay';
     for(let att=0; att<2 && !sent; att++){
       if(att){ await new Promise(r=>setTimeout(r,2000)); usedEp = 'relay'; }
       tAtt = Date.now();
