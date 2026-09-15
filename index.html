@@ -683,7 +683,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=130"></script>
+<script src="data.js?v=131"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1488,6 +1488,22 @@ function pickWh(i){
   document.getElementById('fNP').value = w.Description || '';
   document.getElementById('npList').classList.remove('show');
 }
+// Видима позначка режиму перевірки: щоб було ясно, через кого піде
+// замовлення, і не доводилось гадати за секундоміром.
+(function(){
+  try{
+    const m = (location.search.match(/worker=([a-z0-9]+)/i)||[])[1];
+    if(m) localStorage.setItem('zs_worker', m);
+    const w = localStorage.getItem('zs_worker') || '';
+    if(w !== '1' && w !== 'bad') return;
+    const b = document.createElement('div');
+    b.textContent = w === 'bad' ? 'режим: перевірка резерву' : 'режим: Cloudflare';
+    b.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;background:#3a3028;color:#fff;font:12px Arial;padding:6px 10px;border-radius:8px;opacity:.85';
+    b.onclick = ()=>{ try{ localStorage.removeItem('zs_worker'); }catch(e){} b.remove(); };
+    document.addEventListener('DOMContentLoaded', ()=>document.body.appendChild(b));
+    if(document.body) document.body.appendChild(b);
+  }catch(e){}
+})();
 document.addEventListener('click', e=>{
   if(!e.target.closest('.sugg')){
     document.getElementById('cityList')?.classList.remove('show');
