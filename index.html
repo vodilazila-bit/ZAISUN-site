@@ -683,7 +683,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=126"></script>
+<script src="data.js?v=127"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1374,6 +1374,11 @@ async function saveSuccPhone(){
 }
 const ORDER_EMAIL = 'miroslava_zanchuk@ukr.net';
 const ORDER_RELAY = 'https://script.google.com/macros/s/AKfycbyMhAR-LhYxHdMCdv4VHXDY3--L_O4f_dXTGZNr5265Bq6E5GYJm2waCga9BkmeD8ZN/exec';
+// Швидкий приймач на Cloudflare. Основний шлях для оформлення замовлень:
+// відповідає за 1-2 с замість 7-15. Якщо мовчить — сайт сам іде в
+// ORDER_RELAY, як раніше. Решта запитів (?top=1, ?paystatus) лишились
+// на Apps Script: там швидкість не потрібна.
+const ORDER_WORKER = 'https://zaisun-relay.miroslavazanchuk.workers.dev';
 // ─── Нова Пошта: підказки міст і відділень ───
 let npCityRef = null, npT1 = null, npT2 = null;
 // Раніше один обірваний запит до Нової Пошти мовчки вимикав підказки, і
@@ -1664,15 +1669,18 @@ async function submitOrder(){
     // 1) основний канал: власний приймач на Apps Script.
     // Дві спроби: обрив звʼязку в клієнта на секунду — найчастіша причина,
     // чому відповідь не доходить, хоча замовлення вже записане.
+    // спроба 1 — Cloudflare, спроба 2 — Apps Script
+    const ENDPOINTS = [ORDER_WORKER, ORDER_RELAY];
+    let usedEp = 'worker';
     for(let att=0; att<2 && !sent; att++){
-      if(att){ await new Promise(r=>setTimeout(r,2000)); }
+      if(att){ await new Promise(r=>setTimeout(r,800)); usedEp = 'relay'; }
       tAtt = Date.now();
       try{
         // без обмеження часу кнопка «Надсилаю…» могла висіти вічно,
         // якщо приймач не відповідає
         const ac = new AbortController();
-        const tm = setTimeout(()=>ac.abort(), att ? 25000 : 20000);
-        const r1 = await fetch(ORDER_RELAY, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload), signal: ac.signal}).finally(()=>clearTimeout(tm));
+        const tm = setTimeout(()=>ac.abort(), att ? 25000 : 8000);
+        const r1 = await fetch(ENDPOINTS[att], {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload), signal: ac.signal}).finally(()=>clearTimeout(tm));
         const t1 = await r1.text().catch(()=> '');
         if(r1.ok && t1.indexOf('ok')===0){ sent=true; }
         else if(r1.ok && t1.charAt(0)==='{'){
@@ -1684,14 +1692,14 @@ async function submitOrder(){
         else lastErr='relay HTTP '+r1.status+' '+t1.slice(0,120);
       }catch(e1){ lastErr='relay: '+(e1&&e1.message||e1); }
       tRelay = Date.now() - tAtt;
-      if(!sent && att) lastErr = '2 спроби. ' + lastErr;
+      if(!sent && att) lastErr = 'worker+relay. ' + lastErr;
     }
     // пишемо заміри в GA4: relay_ms — чиста відповідь приймача,
     // total_ms — усе, що бачить покупець від натискання кнопки
     try{
       if(window.gtag) gtag('event','relay_timing',{
         relay_ms: tRelay, total_ms: Date.now()-tStart,
-        attempts: sent ? 'ok' : 'fail', pay_kind: isPay ? 'online' : 'offline'
+        attempts: sent ? 'ok' : 'fail', pay_kind: isPay ? 'online' : 'offline', endpoint: usedEp
       });
     }catch(e){}
     if(!sent) lastErr += ' | ' + Math.round((Date.now()-tStart)/1000) + ' с усього';
