@@ -34,6 +34,9 @@ jobs:
       - name: Згенерувати фід
         run: node tools/gen_feed.js
 
+      - name: Розділити каталог на легкий і описи
+        run: node tools/gen_lite.js
+
       - name: Перевірити цілісність
         run: |
           node -e "
@@ -55,7 +58,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add t sitemap.xml feed.xml
+          git add t sitemap.xml feed.xml data-lite.js data-desc.js
 
           if git diff --staged --quiet; then
             echo "змін немає"

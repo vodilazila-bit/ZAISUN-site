@@ -683,7 +683,9 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
   <div class="cs-foot"><button class="btn" style="max-width:none" onclick="checkoutCart()">Оформити замовлення</button></div>
 </div>
 
-<script src="data.js?v=135"></script>
+<!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
+     окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
+<script src="data-lite.js?v=136"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1174,7 +1176,7 @@ function openProd(id){
   } else {
     document.getElementById('sizesel').innerHTML = '';
   }
-  document.getElementById('pdesc').innerHTML = fmtDesc(cur.desc || '');
+  document.getElementById('pdesc').innerHTML = fmtDesc(cur.desc || (window.ZS_DESC && window.ZS_DESC[cur.id]) || '');
   try{
     gtag('event','view_item',{currency:'UAH',value:cur.price,items:[{item_id:String(cur.id),item_name:cur.name,price:cur.price,item_category:(cur.catn&&cur.catn[0])||''}]});
     fb('ViewContent',{content_ids:[String(cur.id)],content_type:'product',content_name:cur.name,value:cur.price,currency:'UAH'});
@@ -2439,6 +2441,24 @@ window.addEventListener('popstate', e => {
       }
     }catch(e){}
   }
+})();
+// Описи товарів у сітці не потрібні, тому вантажимо їх після каталогу,
+// щоб не тримати покупця перед порожнім екраном зайві секунди.
+window.zsDescReady = function(){
+  try{
+    const D = window.ZS_DESC || {};
+    (DATA.products||[]).forEach(p=>{ if(D[p.id]) p.desc = D[p.id]; });
+    // якщо картка товару вже відкрита — дописуємо опис на місці
+    const box = document.getElementById('pdesc');
+    if(box && typeof cur !== 'undefined' && cur && !box.innerHTML.trim()){
+      box.innerHTML = fmtDesc(cur.desc || '');
+    }
+  }catch(e){}
+};
+(function(){
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=136'; t.async=true; document.head.appendChild(t); };
+  if(document.readyState==='complete') setTimeout(go,300);
+  else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
 if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js',{scope:'/'}).catch(e=>console.log('SW reg failed'));}
 </script>
