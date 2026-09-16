@@ -38,7 +38,7 @@ src="https://www.facebook.com/tr?id=865748820475938&ev=PageView&noscript=1"></no
 body{font-family:'Montserrat',sans-serif;background:#FDFAF6;color:#3A3028;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 :root{--cream:#FBEFE1;--petal:#F9F0E7;--blush:#EFDCCB;--rose:#D9A990;--rose-d:#C2826A;--ink:#6B5D50;--mid:#8A7D6F;--soft:#9E9189;--line:rgba(58,48,40,.1);--serif:'Montserrat',sans-serif}
-html{scrollbar-gutter:stable;background:#FDFAF6}
+html{scrollbar-gutter:stable;background:#FDFAF6;overscroll-behavior-y:none}
 /* смуга прокрутки в кольорах сайту, а не сіра системна */
 html{scrollbar-color:#DCCFC0 #F7F0E7;scrollbar-width:thin}
 ::-webkit-scrollbar{width:11px;height:11px}
@@ -56,7 +56,8 @@ body{overflow-x:hidden}
 .hl-img{height:58px;display:block}
 .hdr-actions{display:flex;align-items:center;gap:2px}
 .hbtn{background:none;border:none;padding:9px;cursor:pointer;position:relative;display:grid;place-items:center}
-.cart-float{position:fixed;top:114px;right:14px;z-index:300;width:52px;height:52px;border-radius:50%;background:#fff;border:none;box-shadow:0 4px 18px rgba(58,48,40,.28);display:grid;place-items:center;cursor:pointer;transition:top .15s ease}
+.cart-float{position:fixed;top:114px;right:14px;z-index:300;width:52px;height:52px;border-radius:50%;background:#fff;border:none;box-shadow:0 4px 18px rgba(58,48,40,.28);display:grid;place-items:center;cursor:pointer}
+.hdr>.cart-float{position:absolute;top:calc(100% + 8px);right:14px}
 .cart-bdg{position:absolute;top:-1px;right:-1px;background:var(--rose-d);color:#fff;min-width:16px;height:16px;border-radius:9px;font-size:.6rem;font-weight:700;display:none;place-items:center;padding:0 4px}
 .cart-bdg.show{display:grid}
 /* SEARCH overlay */
@@ -685,7 +686,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=141"></script>
+<script src="data-lite.js?v=142"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2503,7 +2504,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=141'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=142'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
@@ -2563,29 +2564,11 @@ document.addEventListener('input', e=>{
 });
 
 
-// Плаваючий кошик завжди під нижньою лінією хедера (на мобілці топбар
-// часто в два рядки — фіксований top:114px тоді залазить у шапку).
+// Плаваючий кошик живе всередині липкої шапки й їде разом з нею —
+// без обробника прокрутки, тому не смикається на iOS.
 (function(){
-  const btn = () => document.querySelector('.cart-float');
-  const hdr = () => document.querySelector('.hdr');
-  let raf = 0;
-  function syncCartFloat(){
-    const b = btn(), h = hdr();
-    if(!b || !h) return;
-    const top = Math.round(h.getBoundingClientRect().bottom + 6);
-    if(b.dataset.top !== String(top)){
-      b.dataset.top = String(top);
-      b.style.top = top + 'px';
-    }
-  }
-  function tick(){ raf = 0; syncCartFloat(); }
-  function ask(){ if(!raf) raf = requestAnimationFrame(tick); }
-  window.addEventListener('scroll', ask, {passive:true});
-  window.addEventListener('resize', ask);
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', syncCartFloat);
-  else syncCartFloat();
-  // після шрифтів/картинки лого висота хедера може підрости
-  window.addEventListener('load', ()=>{ syncCartFloat(); setTimeout(syncCartFloat, 200); });
+  const b = document.querySelector('.cart-float'), h = document.querySelector('.hdr');
+  if(b && h && b.parentNode !== h) h.appendChild(b);
 })();
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js',{scope:'/'}).catch(e=>console.log('SW reg failed'));}
