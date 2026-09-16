@@ -70,7 +70,8 @@ html,body{max-width:100%;touch-action:pan-y pinch-zoom}
 .so-top input:focus{border-color:var(--rose-d)}
 .so-x{background:none;border:none;color:#6B5D50;padding:8px;cursor:pointer;font-family:inherit;font-size:.9rem;flex:none;white-space:nowrap}
 .so-top select{flex:none}
-@media(max-width:420px){.so-top{gap:6px;padding:12px 10px}.so-top input{padding:11px 14px}.so-top select{padding:10px 6px!important;max-width:34vw!important}.so-x{padding:8px 4px}}
+.so-xi{display:grid;place-items:center;width:40px;height:40px;padding:0;margin-left:-4px}
+@media(max-width:420px){.so-top{gap:8px;padding:12px 10px 12px 12px}.so-top input{padding:11px 14px}.so-top select{padding:10px 8px!important;max-width:34vw!important}}
 .so-body{overflow-y:auto;flex:1;padding:14px 0 40px}
 .so-hint{text-align:center;color:var(--soft);padding:50px 30px;font-size:.9rem}
 /* CART sheet */
@@ -673,7 +674,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       <option value="cheap">Дешевші</option>
       <option value="exp">Дорожчі</option>
     </select>
-    <button class="so-x" onclick="closeSearch()">Закрити</button>
+    <button class="so-x so-xi" onclick="closeSearch()" aria-label="Закрити пошук"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
   </div>
   <div class="so-body"><div class="grid" id="soGrid"></div><div class="so-hint" id="soHint">Почни вводити назву товару</div></div>
 </div>
@@ -690,7 +691,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=144"></script>
+<script src="data-lite.js?v=145"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2508,7 +2509,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=144'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=145'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
