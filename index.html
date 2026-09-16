@@ -2110,7 +2110,7 @@ function doSearch(){
   hint.style.display='none';
   grid.innerHTML = r.map(p=>{
     const img = p.photo ? `<img src="images/${p.photo}" loading="lazy" onload="fitTile(this)">` : '<div class="noimg">ФОТО СКОРО</div>';
-    return `<a class="pc" onclick="closeSearch();openProd(${p.id})">
+    return `<a class="pc" onclick="openProd(${p.id})">
       <div class="pt">${img}</div><div class="pn">${p.name}</div><div class="pp">${priceFrom(p)}${money(p.price)}</div></a>`;
   }).join('');
 }
@@ -2355,6 +2355,11 @@ openProd = function(id){
   // Кладемо позицію прокрутки в поточний запис історії — щоб при поверненні
   // з картки товару список відкрився на тому самому місці, а не з початку.
   try{
+    // З пошуку раніше викликали closeSearch() перед openProd — новий closeSearch
+    // робить history.back() і через гонку з popstate кидає на головну.
+    // Закриваємо лише UI пошуку; запис search в історії лишаємо для «назад».
+    const sov = document.getElementById('searchOvl');
+    if(sov && sov.classList.contains('show')) _closeSearch0();
     const cur = history.state || LASTVIEW || {v:'home'};
     if(!cur.o){
       const y = window.scrollY||window.pageYOffset||0;
