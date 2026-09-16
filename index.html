@@ -685,7 +685,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=136"></script>
+<script src="data-lite.js?v=137"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2085,6 +2085,10 @@ function closeSearch(){
 }
 function doSearch(){
   const q = document.getElementById('soInput').value.trim().toLowerCase();
+  try{
+    if((history.state||{}).v === 'search')
+      history.replaceState({v:'search', q}, '', location.pathname + location.search);
+  }catch(e){}
   const grid = document.getElementById('soGrid'), hint = document.getElementById('soHint');
   if(q.length<2){ grid.innerHTML=''; hint.style.display='block'; hint.textContent='Почни вводити назву товару'; return; }
   const words = q.split(/\s+/).filter(w=>w.length>=2);
@@ -2362,9 +2366,29 @@ openProd = function(id){
 };
 // накладки: пушимо стан-дублікат поточного екрана з позначкою o (overlay),
 // щоб жест "назад" закривав накладку і лишав той самий екран
+// Закриття накладки кнопкою на екрані має зʼїдати і її запис в історії —
+// інакше перше натискання «назад» іде в порожнечу і ніби нічого не робить.
+function eatOverlayNav(){
+  if(NAVSILENT) return false;
+  if(OVERLAYON && NAVDEPTH > 0){ history.back(); return true; }
+  return false;
+}
+const _closeMenu0 = closeMenu, _closeSheet0 = closeSheet, _closeCart0 = closeCart, _closeOrder0 = closeOrder;
+closeMenu  = function(){ if(eatOverlayNav()) return; _closeMenu0(); };
+closeSheet = function(){ if(eatOverlayNav()) return; _closeSheet0(); };
+closeCart  = function(){ if(eatOverlayNav()) return; _closeCart0(); };
+closeOrder = function(){ if(eatOverlayNav()) return; _closeOrder0(); };
+
 openMenu = function(){ _openMenu(); pushNav({...LASTVIEW, o:1}); };
 openCart = function(){ _openCart(); pushNav({...LASTVIEW, o:1}); };
-openSearch = function(){ _openSearch(); pushNav({...LASTVIEW, o:1}); };
+// Пошук — повноцінний екран, а не накладка: інакше при відкритті товару
+// з результатів його запис затирався, і «назад» вело одразу на головну.
+const _closeSearch0 = closeSearch;
+openSearch = function(){ _openSearch(); navTo({v:'search', q:''}, location.pathname); };
+closeSearch = function(){
+  if(!NAVSILENT && NAVDEPTH > 0 && (history.state||{}).v === 'search'){ history.back(); return; }
+  _closeSearch0();
+};
 openSheet = function(){ _openSheet(); pushNav({...LASTVIEW, o:1}); };
 openOrder = function(){ _openOrder(); pushNav({...LASTVIEW, o:1}); };
 checkoutCart = function(){ _checkoutCart(); if(CART.length) pushNav({...LASTVIEW, o:1}); };
@@ -2388,8 +2412,14 @@ window.addEventListener('popstate', e => {
   LASTVIEW = {v:st.v||'home', m:st.m, id:st.id, i:st.i, sub:st.sub};
   NAVSILENT = true;
   try{
-    closeMenu(); closeSheet(); closeCart(); closeSearch(); closeOrder();
-    if(st.v === 'prod'){ _openProd(st.id); setCanon(prodCanon(st.id)); }
+    _closeMenu0(); _closeSheet0(); _closeCart0(); _closeOrder0();
+    if(st.v !== 'search') _closeSearch0();
+    if(st.v === 'search'){
+      _openSearch();
+      const inp = document.getElementById('soInput');
+      if(inp){ inp.value = st.q || ''; if(st.q) doSearch(); }
+    }
+    else if(st.v === 'prod'){ _openProd(st.id); setCanon(prodCanon(st.id)); }
     else if(st.v === 'cat'){
       if(st.m === 'all'){ _openCatAll(); setCanon('?cat=all'); }
       else if(st.m === 'menu'){ _openMenuCat(st.i); setCanon('?cat=k' + (MENU_DEF[st.i]||{}).k); }
@@ -2456,7 +2486,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=136'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=137'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
