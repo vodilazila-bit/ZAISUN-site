@@ -685,7 +685,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=137"></script>
+<script src="data-lite.js?v=138"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2016,7 +2016,7 @@ function cartQty(idx, d){
 function renderOrderCart(){
   const box = document.getElementById('mcart');
   if(!box) return;
-  if(!CART.length){ closeOrder(); return; }
+  if(!CART.length){ (typeof _closeOrder0==='function'?_closeOrder0:closeOrder)(); return; }
   let total = 0;
   const rows = CART.map((it,idx)=>{
     const pr = P.find(x=>x.id===it.id); if(!pr) return '';
@@ -2055,7 +2055,10 @@ function orderDel(idx){
 function checkoutCart(){
   if(!CART.length) return;
   cartMode = true;
-  closeCart();
+  // ВАЖЛИВО: саме сирий закривач. Обгортка closeCart робить history.back(),
+  // і popstate закривав би форму замовлення, яка відкривається наступним рядком —
+  // покупця викидало з оформлення.
+  (typeof _closeCart0==='function'?_closeCart0:closeCart)();
   const total = CART.reduce((s,it)=>s+cartPrice(it)*it.qty,0);
   try{
     gtag('event','begin_checkout',{currency:'UAH',value:total,items:CART.map(it=>{const p=P.find(x=>x.id===it.id);return{item_id:String(it.id),item_name:p?p.name:'',price:cartPrice(it),quantity:it.qty}})});
@@ -2491,7 +2494,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=137'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=138'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
