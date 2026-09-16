@@ -84,6 +84,16 @@ html,body{max-width:100%;touch-action:pan-y pinch-zoom}
 .cs-clr:active{background:var(--petal)}
 .ci-del{width:32px;height:32px;border:none;background:none;color:var(--soft);display:grid;place-items:center;flex:none;border-radius:50%;cursor:pointer;margin-left:-4px}
 .ci-del:active{background:rgba(58,48,40,.08);color:#b4472e}
+.zsconf{position:fixed;inset:0;z-index:1000;background:rgba(58,48,40,.45);display:grid;place-items:center;padding:24px;opacity:0;transition:opacity .18s}
+.zsconf.on{opacity:1}
+.zsconf-box{background:#FDFAF6;border-radius:18px;padding:22px 20px 16px;width:100%;max-width:300px;text-align:center;box-shadow:0 12px 40px rgba(58,48,40,.25);transform:scale(.96);transition:transform .18s}
+.zsconf.on .zsconf-box{transform:none}
+.zsconf-box p{font-size:1rem;font-weight:600;color:#3A3028;margin-bottom:18px}
+.zsconf-box p.zsa{font-weight:500;font-size:.92rem;line-height:1.45;white-space:pre-line;text-align:left;max-height:60vh;overflow-y:auto}
+.zsconf-btns{display:flex;gap:10px}
+.zsconf-btns button{flex:1;padding:12px 10px;border-radius:12px;font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer}
+.zsc-no{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.zsc-ok{background:var(--rose-d);border:none;color:#fff}
 .mclr{display:flex;align-items:center;gap:6px;margin:10px auto 0;background:none;border:none;color:var(--soft);font-family:inherit;font-size:.8rem;cursor:pointer;padding:6px 10px}
 .cs-body{overflow-y:auto;flex:1;padding:0 20px}
 .ci{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}
@@ -697,7 +707,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=146"></script>
+<script src="data-lite.js?v=147"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2028,11 +2038,46 @@ function cartDel(idx){
   CART.splice(idx,1);
   saveCart(); renderCart();
 }
+// Власне вікно підтвердження: системний confirm() на iOS має пункт
+// «Заблокувати діалогові вікна», після якого очистка перестає працювати.
+function zsConfirm(text, okText, onOk){
+  const old = document.getElementById('zsConf'); if(old) old.remove();
+  const w = document.createElement('div');
+  w.id = 'zsConf'; w.className = 'zsconf';
+  w.innerHTML = '<div class="zsconf-box" role="dialog" aria-modal="true"><p></p>'+
+    '<div class="zsconf-btns"><button type="button" class="zsc-no">Скасувати</button>'+
+    '<button type="button" class="zsc-ok"></button></div></div>';
+  w.querySelector('p').textContent = text;
+  w.querySelector('.zsc-ok').textContent = okText;
+  const close = ()=>{ w.classList.remove('on'); setTimeout(()=>w.remove(),180); };
+  w.addEventListener('click', e=>{ if(e.target===w) close(); });
+  w.querySelector('.zsc-no').onclick = close;
+  w.querySelector('.zsc-ok').onclick = ()=>{ close(); onOk(); };
+  document.body.appendChild(w);
+  requestAnimationFrame(()=>w.classList.add('on'));
+}
+// Усі alert() на сайті — теж через власне вікно (з тієї ж причини: після
+// блокування діалогів помилки у формі стали б невидимими).
+function zsAlert(text){
+  const old = document.getElementById('zsConf'); if(old) old.remove();
+  const w = document.createElement('div');
+  w.id = 'zsConf'; w.className = 'zsconf';
+  w.innerHTML = '<div class="zsconf-box" role="alertdialog" aria-modal="true"><p class="zsa"></p>'+
+    '<div class="zsconf-btns"><button type="button" class="zsc-ok">Зрозуміло</button></div></div>';
+  w.querySelector('p').textContent = String(text);
+  const close = ()=>{ w.classList.remove('on'); setTimeout(()=>w.remove(),180); };
+  w.addEventListener('click', e=>{ if(e.target===w) close(); });
+  w.querySelector('.zsc-ok').onclick = close;
+  document.body.appendChild(w);
+  requestAnimationFrame(()=>w.classList.add('on'));
+}
+window.alert = zsAlert;
 function clearCartAsk(){
   if(!CART.length) return;
-  if(!confirm('Очистити кошик?')) return;
-  CART = []; saveCart(); renderCart();
-  try{ renderOrderCart(); }catch(e){}
+  zsConfirm('Очистити кошик?', 'Очистити', ()=>{
+    CART = []; saveCart(); renderCart();
+    try{ renderOrderCart(); }catch(e){}
+  });
 }
 function cartQty(idx, d){
   CART[idx].qty += d;
@@ -2537,7 +2582,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=146'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=147'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
