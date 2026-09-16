@@ -46,6 +46,8 @@ html{scrollbar-color:#DCCFC0 #F7F0E7;scrollbar-width:thin}
 ::-webkit-scrollbar-thumb{background:#DCCFC0;border-radius:8px;border:3px solid #F7F0E7}
 ::-webkit-scrollbar-thumb:hover{background:#C9B8A5}
 body{overflow-x:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}}
+html,body{max-width:100%;touch-action:pan-y pinch-zoom}
 .pc,.hc,.pt{min-width:0}
 
 .topbar{background:#C9A186;color:#FDF8F2;text-align:center;font-size:.74rem;letter-spacing:.05em;padding:8px 14px;font-weight:500}
@@ -178,8 +180,8 @@ section{padding:26px 18px 34px}
 /* ═══ MENU OVERLAY ═══ */
 .menu-ovl{position:fixed;inset:0;z-index:890;background:rgba(58,48,40,.35);opacity:0;pointer-events:none;transition:opacity .25s}
 .menu-ovl.show{opacity:1;pointer-events:auto}
-.menu{position:fixed;top:0;bottom:0;right:0;width:85%;max-width:340px;z-index:900;background:var(--cream);overflow-y:auto;transform:translateX(102%);transition:transform .28s cubic-bezier(.25,.8,.3,1);box-shadow:-6px 0 24px rgba(0,0,0,.12)}
-.menu.show{transform:translateX(0)}
+.menu{position:fixed;top:0;bottom:0;right:0;width:85%;max-width:340px;z-index:900;background:var(--cream);overflow-y:auto;transform:translateX(102%);transition:transform .28s cubic-bezier(.25,.8,.3,1),visibility 0s linear .28s;visibility:hidden;box-shadow:-6px 0 24px rgba(0,0,0,.12)}
+.menu.show{transform:translateX(0);visibility:visible;transition:transform .28s cubic-bezier(.25,.8,.3,1),visibility 0s}
 .menu-top{display:flex;align-items:flex-start;justify-content:space-between;padding:22px 24px 4px}
 .menu-logo{font-family:var(--serif);font-weight:700;text-align:center}
 .menu-logo .m{font-size:1.35rem}
@@ -688,7 +690,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=143"></script>
+<script src="data-lite.js?v=144"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2506,7 +2508,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=143'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=144'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
