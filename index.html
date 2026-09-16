@@ -707,7 +707,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=147"></script>
+<script src="data-lite.js?v=148"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2582,7 +2582,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=147'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=148'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
@@ -2611,7 +2611,12 @@ function abandonData(){
   };
 }
 
+// ВИМКНЕНО, поки релей не оновлено: стара версія релею приймає сигнал
+// за звичайне замовлення («Нове замовлення» з _abandon: 1).
+// Після оновлення релею й тригера processAbandoned — поставити true.
+const ABANDON_ON = false;
 function sendAbandon(){
+  if(!ABANDON_ON) return;
   if(ORDER_SENT) return;
   const d = abandonData();
   if(!d) return;
