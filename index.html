@@ -56,7 +56,7 @@ body{overflow-x:hidden}
 .hl-img{height:58px;display:block}
 .hdr-actions{display:flex;align-items:center;gap:2px}
 .hbtn{background:none;border:none;padding:9px;cursor:pointer;position:relative;display:grid;place-items:center}
-.cart-float{position:fixed;top:114px;right:14px;z-index:300;width:52px;height:52px;border-radius:50%;background:#fff;border:none;box-shadow:0 4px 18px rgba(58,48,40,.28);display:grid;place-items:center;cursor:pointer}
+.cart-float{position:fixed;top:114px;right:14px;z-index:300;width:52px;height:52px;border-radius:50%;background:#fff;border:none;box-shadow:0 4px 18px rgba(58,48,40,.28);display:grid;place-items:center;cursor:pointer;transition:top .15s ease}
 .cart-bdg{position:absolute;top:-1px;right:-1px;background:var(--rose-d);color:#fff;min-width:16px;height:16px;border-radius:9px;font-size:.6rem;font-weight:700;display:none;place-items:center;padding:0 4px}
 .cart-bdg.show{display:grid}
 /* SEARCH overlay */
@@ -2561,6 +2561,32 @@ document.addEventListener('input', e=>{
   clearTimeout(abandonTimer);
   abandonTimer = setTimeout(sendAbandon, 60000);
 });
+
+
+// Плаваючий кошик завжди під нижньою лінією хедера (на мобілці топбар
+// часто в два рядки — фіксований top:114px тоді залазить у шапку).
+(function(){
+  const btn = () => document.querySelector('.cart-float');
+  const hdr = () => document.querySelector('.hdr');
+  let raf = 0;
+  function syncCartFloat(){
+    const b = btn(), h = hdr();
+    if(!b || !h) return;
+    const top = Math.round(h.getBoundingClientRect().bottom + 6);
+    if(b.dataset.top !== String(top)){
+      b.dataset.top = String(top);
+      b.style.top = top + 'px';
+    }
+  }
+  function tick(){ raf = 0; syncCartFloat(); }
+  function ask(){ if(!raf) raf = requestAnimationFrame(tick); }
+  window.addEventListener('scroll', ask, {passive:true});
+  window.addEventListener('resize', ask);
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', syncCartFloat);
+  else syncCartFloat();
+  // після шрифтів/картинки лого висота хедера може підрости
+  window.addEventListener('load', ()=>{ syncCartFloat(); setTimeout(syncCartFloat, 200); });
+})();
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js',{scope:'/'}).catch(e=>console.log('SW reg failed'));}
 </script>
