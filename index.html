@@ -685,7 +685,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=138"></script>
+<script src="data-lite.js?v=139"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1681,6 +1681,7 @@ async function submitOrder(){
     let sent=false, lastErr='', payUrl='', payFallback=false;
     // унікальний номер спроби: якщо доведеться повторити запит, релей за ним
     // упізнає те саме замовлення й не запише його другим рядком
+    ORDER_SENT = true;   // замовлення пішло — лист про покинуте оформлення не потрібен
     payload._oid = 'o' + Date.now().toString(36) + Math.random().toString(36).slice(2,8);
     // заміри: скільки саме чекає покупець і на чому
     const tStart = Date.now(); let tRelay = 0, tAtt = 0;
@@ -2494,10 +2495,69 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=138'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=139'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
+// ─── ПОКИНУТЕ ОФОРМЛЕННЯ ───
+// Якщо покупчиня заповнила контакти й пішла, не натиснувши «Оформити»,
+// шлемо її дані окремим листом — щоб можна було передзвонити.
+// Це НЕ замовлення: половина таких людей повертається й оформлює сама.
+const ABANDON_TO = 'mirazanchuk@gmail.com';
+let ORDER_SENT = false;   // ставиться після успішної відправки замовлення
+let abandonTimer = null;
+
+function abandonData(){
+  const g = id => (document.getElementById(id)||{}).value || '';
+  const phone = g('fPhone').replace(/\D/g,'');
+  const email = g('fEmail').trim();
+  if(phone.length < 11 && email.indexOf('@') < 1) return null;   // нема з чим працювати
+  const movl = document.getElementById('movl');
+  if(!movl || !movl.classList.contains('open')) return null;     // форма не відкрита
+  return {
+    "Ім'я": g('fName') || '-',
+    "Телефон": phone.length >= 11 ? '+' + phone : '-',
+    "Пошта": email || '-',
+    "Місто": g('fCity') || '-',
+    "Відділення НП": g('fNP') || '-',
+    "Коментар": g('fComm') || '-',
+    "Час": new Date().toLocaleString('uk-UA')
+  };
+}
+
+function sendAbandon(){
+  if(ORDER_SENT) return;
+  const d = abandonData();
+  if(!d) return;
+  // не частіше разу на годину для того самого телефону
+  try{
+    const key = 'zs_ab_' + d["Телефон"];
+    const was = +(localStorage.getItem(key)||0);
+    if(Date.now() - was < 3600000) return;
+    localStorage.setItem(key, String(Date.now()));
+  }catch(e){}
+  const body = JSON.stringify(Object.assign({
+    _subject: '🕓 Не завершив оформлення — ZaiSun',
+    _template: 'box',
+    "Що це": 'Людина заповнила форму й пішла, не натиснувши «Оформити». Можливо, варто передзвонити. Якщо слідом прийшов лист «Нове замовлення» з тим самим номером — вона оформила сама, дзвонити не треба.'
+  }, d));
+  const url = 'https://formsubmit.co/ajax/' + ABANDON_TO;
+  try{
+    // sendBeacon переживає закриття вкладки, fetch — ні
+    if(navigator.sendBeacon) navigator.sendBeacon(url, new Blob([body], {type:'application/json'}));
+    else fetch(url, {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body, keepalive:true});
+  }catch(e){}
+}
+
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState === 'hidden') sendAbandon(); });
+window.addEventListener('pagehide', sendAbandon);
+// плюс через хвилину бездіяльності у відкритій формі
+document.addEventListener('input', e=>{
+  if(!e.target.closest || !e.target.closest('#movl')) return;
+  clearTimeout(abandonTimer);
+  abandonTimer = setTimeout(sendAbandon, 60000);
+});
+
 if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js',{scope:'/'}).catch(e=>console.log('SW reg failed'));}
 </script>
 </body>
