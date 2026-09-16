@@ -96,7 +96,7 @@ body{overflow-x:hidden}
 .page{display:none}.page.show{display:block}
 
 /* ═══ HOME ═══ */
-.herosl{position:relative;overflow:hidden;height:min(82vh,780px);min-height:560px;background:#111}
+.herosl{position:relative;overflow:hidden;height:min(82vh,780px);min-height:560px;background:#FDFAF6}
 .herosl .hs{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .5s ease}
 .herosl .hs.on{opacity:1;visibility:visible;z-index:2}
 .herosl .fgimg{position:absolute;inset:0}
@@ -685,7 +685,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=140"></script>
+<script src="data-lite.js?v=141"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -727,7 +727,9 @@ function go(page){
 }
 function openMenu(){ document.getElementById('menu').classList.add('show'); document.getElementById('menuOvl').classList.add('show'); document.body.style.overflow='hidden'; }
 function closeMenu(){ document.getElementById('menu').classList.remove('show'); document.getElementById('menuOvl').classList.remove('show'); if(!document.querySelector('.movl.open,.sheet.open')) document.body.style.overflow=''; }
-function openSizeTable(){ closeMenu(); document.getElementById('sizeOvl').style.display='flex'; document.body.style.overflow='hidden'; }
+// Закрити меню без history.back(): інакше клік по категорії гонить з popstate і кидає на головну.
+function closeMenuUI(){ document.getElementById('menu').classList.remove('show'); document.getElementById('menuOvl').classList.remove('show'); if(!document.querySelector('.movl.open,.sheet.open')) document.body.style.overflow=''; }
+function openSizeTable(){ closeMenuUI(); document.getElementById('sizeOvl').style.display='flex'; document.body.style.overflow='hidden'; }
 function closeSizeTable(){ document.getElementById('sizeOvl').style.display='none'; if(!document.querySelector('.movl.open,.sheet.open')) document.body.style.overflow=''; }
 
 // ─── menu build ───
@@ -794,7 +796,7 @@ function subsFromNames(names){
 }
 function openMenuCat(idx){
   const def = MENU_DEF[idx];
-  closeMenu();
+  closeMenuUI();
   const ids = findIdsByNames(def.c);
   curCatId = '__multi__';
   curProds = PL.filter(p=>p.cats.some(c=>ids.has(c)));
@@ -837,7 +839,7 @@ function catAndChildren(id){
   return ids;
 }
 function openCat(id){
-  closeMenu();
+  closeMenuUI();
   curCatId = id;
   const ids = new Set(catAndChildren(id));
   curProds = PL.filter(p=>p.cats.some(c=>ids.has(c)));
@@ -851,7 +853,7 @@ function openCat(id){
   initCat(nm);
 }
 function openCatAll(){
-  closeMenu();
+  closeMenuUI();
   curCatId = '__all__';
   curProds = PL.slice();
   curBase = curProds.slice();
@@ -2284,12 +2286,18 @@ if(heroSlides.length){
     els.forEach(el=>el.classList.add('seen'));
     return;
   }
+  // Показуємо одразу те, що вже біля екрана — без білої дірки перед каталогом.
+  const early = () => window.innerHeight * 1.2;
+  els.forEach(el=>{
+    const r = el.getBoundingClientRect();
+    if(r.top < early()) el.classList.add('seen');
+  });
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
       if(e.isIntersecting){ e.target.classList.add('seen'); io.unobserve(e.target); }
     });
-  }, {rootMargin:'0px 0px -12% 0px', threshold:.08});
-  els.forEach(el=>io.observe(el));
+  }, {rootMargin:'0px 0px 35% 0px', threshold:0.01});
+  els.forEach(el=>{ if(!el.classList.contains('seen')) io.observe(el); });
 })();
 
 // Людина могла оплатити й не повернутись на сайт — закрити вкладку, піти
@@ -2495,7 +2503,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=140'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=141'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
