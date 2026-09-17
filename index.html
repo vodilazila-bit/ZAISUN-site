@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>if(/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1)){document.querySelector('meta[name=viewport]').setAttribute('content','width=device-width, initial-scale=1.0, maximum-scale=1.0')}</script>
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
@@ -709,7 +710,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=150"></script>
+<script src="data-lite.js?v=151"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2030,7 +2031,6 @@ function renderCart(){
       <div class="qty">
         <button onclick="cartQty(${idx},-1)">−</button><span>${it.qty}</span><button onclick="cartQty(${idx},1)">+</button>
       </div>
-      <button class="ci-del" onclick="cartDel(${idx})" aria-label="Прибрати товар"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
     </div>`;
   }).join('');
   document.getElementById('cartTotal').textContent = money(total);
@@ -2104,10 +2104,7 @@ function renderOrderCart(){
       '<div class="p">'+money(price)+(it.qty>1?' × '+it.qty:'')+'</div></div>'+
       '<div class="mq"><button type="button" onclick="orderQty('+idx+',-1)">−</button>'+
       '<span>'+it.qty+'</span>'+
-      '<button type="button" onclick="orderQty('+idx+',1)">+</button></div>'+
-      '<button type="button" class="mdel" title="Прибрати" onclick="orderDel('+idx+')">'+
-      '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'+
-      '<path d="M18 6 6 18M6 6l12 12"/></svg></button></div>';
+      '<button type="button" onclick="orderQty('+idx+',1)">+</button></div></div>';
   }).join('');
   box.innerHTML = rows +
     '<div class="mtot"><span>Разом</span><b>'+money(total)+'</b></div>'+
@@ -2584,7 +2581,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=150'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=151'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
