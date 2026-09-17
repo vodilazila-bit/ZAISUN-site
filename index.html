@@ -710,7 +710,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=152"></script>
+<script src="data-lite.js?v=153"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1325,6 +1325,7 @@ document.addEventListener('change', e=>{
 }, true);
 
 function openOrder(){
+  try{ if(ORDER_SENT){ ORDER_SENT = false; ORDER_TOUCHED = false; } }catch(e){}
   if(cur && cur.stock===false){ alert('Цього товару зараз немає в наявності 🙈'); return; }
   if(cur && needColor()) return;
   cartMode = false;
@@ -1351,7 +1352,7 @@ function openOrder(){
   document.body.style.overflow='hidden';
   restoreForm(); saveForm(true);
 }
-function closeOrder(){ document.getElementById('movl').classList.remove('open'); document.body.style.overflow=''; cartMode=false; saveForm(false); }
+function closeOrder(){ try{ sendAbandon(); }catch(e){} document.getElementById('movl').classList.remove('open'); document.body.style.overflow=''; cartMode=false; saveForm(false); }
 function editSuccPhone(){
   document.getElementById('sPhoneWrap').style.display='none';
   document.getElementById('sPhoneOk').style.display='none';
@@ -2581,7 +2582,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=152'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=153'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
@@ -2590,6 +2591,7 @@ window.zsDescReady = function(){
 // шлемо її дані окремим листом — щоб можна було передзвонити.
 // Це НЕ замовлення: половина таких людей повертається й оформлює сама.
 let ORDER_SENT = false;   // ставиться після успішної відправки замовлення
+let ORDER_TOUCHED = false; // людина щось вводила у формі оформлення
 let abandonTimer = null;
 
 function abandonData(){
@@ -2597,8 +2599,9 @@ function abandonData(){
   const phone = g('fPhone').replace(/\D/g,'');
   const email = g('fEmail').trim();
   if(phone.length < 11 && email.indexOf('@') < 1) return null;   // нема з чим працювати
-  const movl = document.getElementById('movl');
-  if(!movl || !movl.classList.contains('open')) return null;     // форма не відкрита
+  // раніше тут вимагалась відкрита форма — і хто закрив її хрестиком
+  // перед виходом, губився. Досить того, що людина щось вводила.
+  if(!ORDER_TOUCHED) return null;
   return {
     "Ім'я": g('fName') || '-',
     "Телефон": phone.length >= 11 ? '+' + phone : '-',
@@ -2642,6 +2645,7 @@ window.addEventListener('pagehide', sendAbandon);
 // плюс через хвилину бездіяльності у відкритій формі
 document.addEventListener('input', e=>{
   if(!e.target.closest || !e.target.closest('#movl')) return;
+  ORDER_TOUCHED = true;
   clearTimeout(abandonTimer);
   abandonTimer = setTimeout(sendAbandon, 60000);
 });
