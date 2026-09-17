@@ -710,7 +710,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=153"></script>
+<script src="data-lite.js?v=154"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2582,7 +2582,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=153'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=154'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
@@ -2633,11 +2633,16 @@ function sendAbandon(){
   // Шлемо не листа напряму, а сигнал у релей: він через 15 хвилин перевірить
   // таблицю замовлень і напише лише якщо замовлення так і не з'явилось.
   const body = JSON.stringify(Object.assign({_abandon:1}, d));
+  // Без cookies: sendBeacon завжди їх прикладає, і в браузері, де виконано
+  // вхід у Google, Apps Script перенаправляє такий запит — doPost не
+  // запускається. fetch з keepalive теж переживає закриття вкладки.
+  let ok = false;
   try{
-    // sendBeacon переживає закриття вкладки, fetch — ні
-    if(navigator.sendBeacon) navigator.sendBeacon(ORDER_RELAY, new Blob([body], {type:'text/plain;charset=utf-8'}));
-    else fetch(ORDER_RELAY, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body, keepalive:true});
+    fetch(ORDER_RELAY, {method:'POST', mode:'no-cors', credentials:'omit', keepalive:true,
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, body});
+    ok = true;
   }catch(e){}
+  if(!ok){ try{ navigator.sendBeacon && navigator.sendBeacon(ORDER_RELAY, new Blob([body], {type:'text/plain;charset=utf-8'})); }catch(e){} }
 }
 
 document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState === 'hidden') sendAbandon(); });
