@@ -48,6 +48,8 @@ html{scrollbar-color:#DCCFC0 #F7F0E7;scrollbar-width:thin}
 body{overflow-x:hidden}
 @supports (overflow:clip){html,body{overflow-x:clip}}
 html,body{max-width:100%;touch-action:pan-y pinch-zoom}
+/* iPhone збільшує сторінку при фокусі на полі зі шрифтом < 16px — тоді все «їде». */
+@media (max-width:1024px){input:not([type=checkbox]):not([type=radio]),select,textarea{font-size:16px!important}}
 .pc,.hc,.pt{min-width:0}
 
 .topbar{background:#C9A186;color:#FDF8F2;text-align:center;font-size:.74rem;letter-spacing:.05em;padding:8px 14px;font-weight:500}
@@ -707,7 +709,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=149"></script>
+<script src="data-lite.js?v=150"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2582,7 +2584,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=149'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=150'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
