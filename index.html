@@ -707,7 +707,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=148"></script>
+<script src="data-lite.js?v=149"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2582,7 +2582,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=148'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=149'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
@@ -2652,6 +2652,39 @@ document.addEventListener('input', e=>{
 (function(){
   const b = document.querySelector('.cart-float'), h = document.querySelector('.hdr');
   if(b && h && b.parentNode !== h) h.appendChild(b);
+})();
+
+// ─── СТАРА КОПІЯ СТОРІНКИ ───
+// iPhone (Chrome/Safari) при відкритті давньої вкладки часто показує сторінку
+// з кешу браузера — з тим виглядом і каталогом, які були тижні тому.
+// Звіряємо час публікації цієї копії з тим, що зараз на сервері; якщо на
+// сервері новіше — тихо перезавантажуємось. Не частіше разу на кожну
+// публікацію і ніколи посеред оформлення чи з відкритим кошиком.
+(function(){
+  const mine = Date.parse(document.lastModified) || 0;
+  let hiddenAt = 0, busy = false;
+  function check(){
+    if(busy || !mine) return;
+    const m = document.getElementById('movl'), c = document.getElementById('cartSheet');
+    if((m && m.classList.contains('open')) || (c && c.classList.contains('open'))) return;
+    busy = true;
+    fetch('/', {method:'HEAD', cache:'no-store'}).then(r=>{
+      const srv = Date.parse(r.headers.get('last-modified')||'') || 0;
+      if(!srv || srv - mine < 60000) return;             // ця копія свіжа
+      const key = 'zs_rl_' + srv;
+      try{ if(sessionStorage.getItem(key)) return; sessionStorage.setItem(key,'1'); }catch(e){ return; }
+      // оновлюємо кешовану копію, щоб reload не підсунув ту саму стару
+      return fetch(location.pathname + location.search, {cache:'reload', credentials:'same-origin'})
+        .catch(()=>{}).then(()=>location.reload());
+    }).catch(()=>{}).finally(()=>{ busy = false; });
+  }
+  if(document.readyState === 'complete') setTimeout(check, 1200);
+  else window.addEventListener('load', ()=>setTimeout(check, 1200));
+  window.addEventListener('pageshow', e=>{ if(e.persisted) check(); });
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.visibilityState === 'hidden'){ hiddenAt = Date.now(); return; }
+    if(hiddenAt && Date.now() - hiddenAt > 10*60000) check();
+  });
 })();
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js',{scope:'/'}).catch(e=>console.log('SW reg failed'));}
