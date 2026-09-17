@@ -710,7 +710,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=151"></script>
+<script src="data-lite.js?v=152"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2581,7 +2581,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=151'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=152'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
@@ -2610,20 +2610,21 @@ function abandonData(){
   };
 }
 
-// ВИМКНЕНО, поки релей не оновлено: стара версія релею приймає сигнал
-// за звичайне замовлення («Нове замовлення» з _abandon: 1).
-// Після оновлення релею й тригера processAbandoned — поставити true.
-const ABANDON_ON = false;
+// Увімкнено 17.09 після оновлення релею (версія з processAbandoned).
+// Якщо знову прийде «Нове замовлення» з _abandon: 1 — релей старий, ставити false.
+const ABANDON_ON = true;
 function sendAbandon(){
   if(!ABANDON_ON) return;
   if(ORDER_SENT) return;
   const d = abandonData();
   if(!d) return;
-  // не частіше разу на годину для того самого телефону
+  // не частіше разу на 3 хвилини для того самого телефону. Релей тримає
+  // один запис на номер і оновлює його, тож у листі будуть останні дані,
+  // а прийде він через 15 хв після останньої активності людини.
   try{
     const key = 'zs_ab_' + d["Телефон"];
     const was = +(localStorage.getItem(key)||0);
-    if(Date.now() - was < 3600000) return;
+    if(Date.now() - was < 180000) return;
     localStorage.setItem(key, String(Date.now()));
   }catch(e){}
   // Шлемо не листа напряму, а сигнал у релей: він через 15 хвилин перевірить
