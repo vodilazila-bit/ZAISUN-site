@@ -710,7 +710,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=154"></script>
+<script src="data-lite.js?v=155"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2582,7 +2582,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=154'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=155'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
@@ -2594,6 +2594,27 @@ let ORDER_SENT = false;   // ставиться після успішної ві
 let ORDER_TOUCHED = false; // людина щось вводила у формі оформлення
 let abandonTimer = null;
 
+// Що саме людина збиралась купити: кошик або відкритий товар з обраним розміром.
+function abandonItems(){
+  try{
+    if(cartMode && CART.length){
+      let total = 0;
+      const txt = CART.map(it=>{
+        const pr = P.find(x=>x.id===it.id); const price = cartPrice(it);
+        total += price*it.qty;
+        return `#${it.id} ${pr?pr.name:''}${it.clr?' | колір: '+it.clr:''}${it.opt?' | вид: '+it.opt:''} | розмір: ${it.size||'-'} | ${it.qty} шт × ${price} грн`;
+      }).join('\n');
+      return { txt: txt, total: total };
+    }
+    if(typeof cur !== 'undefined' && cur){
+      const sz = (document.getElementById('fSize')||{}).value || selSize || '';
+      const v = (sz && cur.var && cur.var[sz]) ? cur.var[sz] : {p:cur.price};
+      const fin = v.p + curOptUp();
+      return { txt: `#${cur.id} ${cur.name}${selColor?' | колір: '+selColor:''}${optText()?' | вид: '+optText():''} | розмір: ${sz||'-'} | 1 шт × ${fin} грн`, total: fin };
+    }
+  }catch(e){}
+  return { txt: '', total: 0 };
+}
 function abandonData(){
   const g = id => (document.getElementById(id)||{}).value || '';
   const phone = g('fPhone').replace(/\D/g,'');
@@ -2609,6 +2630,8 @@ function abandonData(){
     "Місто": g('fCity') || '-',
     "Відділення НП": g('fNP') || '-',
     "Коментар": g('fComm') || '-',
+    "Товари": abandonItems().txt || '-',
+    "Сума": abandonItems().total ? abandonItems().total + ' грн' : '-',
     "Час": new Date().toLocaleString('uk-UA')
   };
 }
