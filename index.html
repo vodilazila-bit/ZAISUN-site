@@ -710,7 +710,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=155"></script>
+<script src="data-lite.js?v=156"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1670,6 +1670,7 @@ async function submitOrder(){
     return;
   }
   // склад замовлення
+  if(cartMode) cartPurge();
   let itemsTxt='', total=0;
   if(cartMode && CART.length){
     itemsTxt = CART.map(it=>{
@@ -1682,6 +1683,10 @@ async function submitOrder(){
     const fin = v.p + curOptUp();
     total = fin;
     itemsTxt = `#${cur.id} ${cur.name}${selColor?' | колір: '+selColor:''}${optText()?' | вид: '+optText():''} | розмір: ${size||'-'} | 1 шт × ${fin} грн`;
+  }
+  if(!itemsTxt || total <= 0){
+    alert('У замовленні немає доступних товарів — схоже, їх уже немає в наявності. Оберіть товар ще раз.');
+    return;
   }
   const btn=document.getElementById('osubBtn');
   btn.disabled=true; btn.textContent='Надсилаю…';
@@ -1951,6 +1956,16 @@ function updCartBdg(){
   const b = document.getElementById('cartBdg');
   b.textContent = n; b.classList.toggle('show', n>0);
 }
+// Товар зняли з каталогу, а він лишився в чиємусь кошику: у списку його не
+// видно, ціна рахується як 0, і якщо він був єдиним — сума замовлення
+// виходила 0, а mono відмовляв («invalid amount»). Прибираємо такі позиції.
+function cartPurge(){
+  if(!CART.length || typeof P === 'undefined' || !P.length) return false;
+  const keep = CART.filter(it => P.some(p => p.id === it.id));
+  if(keep.length === CART.length) return false;
+  CART = keep; saveCart();
+  return true;
+}
 function cartPrice(it){
   const p = P.find(x=>x.id===it.id); if(!p) return 0;
   const v = it.size && p.var[it.size]; return (v ? v.p : p.price) + optUpFor(p, it.opt);
@@ -2019,6 +2034,7 @@ function closeCart(){
   document.body.style.overflow='';
 }
 function renderCart(){
+  cartPurge();
   const el = document.getElementById('cartBody');
   const clr = document.getElementById('cartClr'); if(clr) clr.style.display = CART.length ? '' : 'none';
   if(!CART.length){ el.innerHTML = '<div class="cart-empty">Кошик порожній 🌿</div>'; document.getElementById('cartTotal').textContent='0 ₴'; return; }
@@ -2582,7 +2598,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=155'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=156'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
