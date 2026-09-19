@@ -392,6 +392,8 @@ section{padding:26px 18px 34px}
 .fld input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:.95rem;outline:none;background:#fff}
 .fld input:focus{border-color:var(--rose-d)}
 .frw{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.oconsent{margin:10px 2px 0;font-size:.74rem;line-height:1.4;color:var(--soft);text-align:center}
+.oconsent a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 .osub{width:100%;padding:15px;background:var(--rose);color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:1rem;font-weight:600;margin-top:4px;cursor:pointer}
 .osub:disabled{opacity:.6}
 .mnote{font-size:.72rem;color:var(--soft);text-align:center;margin-top:10px}
@@ -661,6 +663,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
         </div>
         <div class="fld"><label>Коментар</label><input type="text" id="fComm" placeholder="Необов'язково"></div>
         <button class="osub" id="osubBtn" onclick="submitOrder()">Оформити замовлення</button>
+        <p class="oconsent">Натискаючи кнопку, ви приймаєте <a href="/oferta.html" target="_blank" rel="noopener">умови продажу</a> та <a href="/oferta.html#pdn" target="_blank" rel="noopener">обробку даних</a>.</p>
         <div class="mnote">Оплата за реквізитами (надішлемо після підтвердження), онлайн карткою або карткою держдопомоги «7 тисяч до року». Ми зв'яжемося з вами для підтвердження замовлення.</div>
       </div>
     </div>
@@ -710,7 +713,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=156"></script>
+<script src="data-lite.js?v=157"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2598,7 +2601,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=156'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=157'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
