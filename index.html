@@ -716,7 +716,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=159"></script>
+<script src="data-lite.js?v=160"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1001,6 +1001,13 @@ function filtered(){
   if(s==='pop') r.sort((a,b)=>popScore(b)-popScore(a));
   if(s==='new') r.sort((a,b)=>b.id-a.id);
   if(s==='oldest') r.sort((a,b)=>a.id-b.id);
+  // Товари зі знижкою — в кінець списку, у тому ж порядку між собою.
+  // Крім сортування за ціною: там покупець сам просив порядок за ціною.
+  if(s!=='asc' && s!=='desc'){
+    const full=[], sale=[];
+    r.forEach(p=>(isSale(p)?sale:full).push(p));
+    r = full.concat(sale);
+  }
   return r;
 }
 function nf(){
@@ -2619,7 +2626,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=159'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=160'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
