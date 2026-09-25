@@ -376,6 +376,9 @@ section{padding:26px 18px 34px}
 /* ═══ ORDER ═══ */
 .movl{position:fixed;inset:0;z-index:600;background:rgba(58,48,40,.5);display:none;place-items:end center}
 .movl.open{display:grid}
+/* відкрита клавіатура на телефоні: форма займає лише видиму частину екрана */
+.movl.kb .modal{max-height:100%}
+.movl.kb .mform{padding-bottom:50vh}
 .modal{background:#FDFAF6;border-radius:22px 22px 0 0;width:100%;max-width:520px;animation:up .3s ease;max-height:88vh;max-height:88dvh;overflow-y:auto;padding-bottom:max(16px,env(safe-area-inset-bottom))}
 @keyframes up{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
 .mhead{position:sticky;top:0;z-index:6;background:#FDFAF6;padding:20px 20px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-radius:22px 22px 0 0;min-height:60px}
@@ -713,7 +716,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=157"></script>
+<script src="data-lite.js?v=158"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2601,7 +2604,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=157'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=158'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
@@ -2739,6 +2742,48 @@ document.addEventListener('input', e=>{
 })();
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js',{scope:'/'}).catch(e=>console.log('SW reg failed'));}
+</script>
+<script>
+// Мобільна форма оформлення: поле, яке зараз заповнюють, піднімається під
+// шапку форми, над клавіатурою, разом зі списком підказок (місто, відділення).
+// Сам iOS цього не робить: форма висить під клавіатурою, і поле не видно.
+(function(){
+  if(!window.matchMedia || !matchMedia('(pointer:coarse)').matches) return;
+  var ov=document.getElementById('movl'); if(!ov) return;
+  var md=ov.querySelector('.modal'), vv=window.visualViewport, cur=null, tm=[];
+  function isField(el){
+    return !!el && (el.tagName==='TEXTAREA' ||
+      (el.tagName==='INPUT' && !/^(radio|checkbox|button|submit|hidden)$/.test(el.type)));
+  }
+  function reset(){ ov.classList.remove('kb'); ov.style.top=ov.style.height=ov.style.bottom=''; }
+  function fit(){
+    if(!cur || !vv) return;
+    if(window.innerHeight - vv.height > 80){
+      ov.classList.add('kb');
+      ov.style.top=vv.offsetTop+'px'; ov.style.height=vv.height+'px'; ov.style.bottom='auto';
+    } else reset();
+  }
+  function lift(){
+    if(!cur || !ov.classList.contains('open')) return;
+    fit();
+    var box=cur.closest('.fld')||cur, head=md.querySelector('.mhead');
+    var hh=(head && head.offsetParent && cur.closest('#fview')) ? head.offsetHeight : 0;
+    var d=box.getBoundingClientRect().top - md.getBoundingClientRect().top - hh - 8;
+    if(Math.abs(d)>4) md.scrollTop+=d;
+  }
+  ov.addEventListener('focusin', function(e){
+    if(!isField(e.target)) return;
+    cur=e.target; tm.forEach(clearTimeout);
+    tm=[60,350,700].map(function(ms){ return setTimeout(lift,ms); });
+  });
+  ov.addEventListener('focusout', function(){
+    setTimeout(function(){
+      var a=document.activeElement;
+      if(!isField(a) || !ov.contains(a)){ cur=null; reset(); }
+    },150);
+  });
+  if(vv){ vv.addEventListener('resize', function(){ if(cur) lift(); }); vv.addEventListener('scroll', fit); }
+})();
 </script>
 </body>
 </html>
