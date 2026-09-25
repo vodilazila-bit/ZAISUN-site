@@ -450,7 +450,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=161" as="script">
+<link rel="preload" href="data-lite.js?v=162" as="script">
 <link rel="preload" href="hero2.jpg" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -605,7 +605,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- CATALOG -->
 <div class="page" id="pgCat">
-  <button class="back" onclick="goHome()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Головна</button>
+  <button class="back" onclick="goHomeBack()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Головна</button>
   <div class="phead">
     <div class="pk">Каталог</div>
     <h1 id="catTitle"></h1>
@@ -742,7 +742,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=161"></script>
+<script src="data-lite.js?v=162"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — лише після каталогу, щоб не забирали в нього швидкість.
 document.querySelectorAll('img[data-hsrc]').forEach(function(i){ i.src = i.getAttribute('data-hsrc'); });
@@ -2500,10 +2500,34 @@ function setCanon(suffix){
     if(og) og.setAttribute('content', href);
   }catch(e){}
 }
-function pushNav(st, url){ if(NAVSILENT) return; NAVDEPTH++; LASTVIEW = st.o ? LASTVIEW : st; history.pushState(st,'', url||location.pathname); OVERLAYON = !!st.o; }
+// Перед кожним переходом кладемо позицію прокрутки в поточний запис історії:
+// «назад» повертає туди, де людина була (зокрема на головній — до каталогу,
+// а не на заставку). HOMEY — те саме для кнопки «← Головна».
+let HOMEY = 0, NAVSAVED = false;
+function saveScrollNav(){
+  if(NAVSILENT || NAVSAVED) return;
+  NAVSAVED = true;
+  try{
+    const cs = history.state || LASTVIEW || {v:'home'};
+    if(cs.o) return;
+    const y = window.scrollY || window.pageYOffset || 0;
+    history.replaceState({...cs, sy: y}, '', location.pathname + location.search);
+    if((cs.v || 'home') === 'home') HOMEY = y;
+  }catch(e){}
+}
+function goHomeBack(){
+  const y = HOMEY;
+  goHome();
+  if(y > 0){
+    const back = ()=>window.scrollTo(0, y);
+    requestAnimationFrame(()=>{ back(); requestAnimationFrame(back); });
+    setTimeout(back, 90); setTimeout(back, 240);
+  }
+}
+function pushNav(st, url){ if(NAVSILENT) return; saveScrollNav(); NAVSAVED = false; NAVDEPTH++; LASTVIEW = st.o ? LASTVIEW : st; history.pushState(st,'', url||location.pathname); OVERLAYON = !!st.o; }
 function navTo(st, url){
   if(NAVSILENT) return;
-  if(OVERLAYON){ LASTVIEW = st; history.replaceState(st,'', url||location.pathname); OVERLAYON = false; }
+  if(OVERLAYON){ NAVSAVED = false; LASTVIEW = st; history.replaceState(st,'', url||location.pathname); OVERLAYON = false; }
   else pushNav(st, url);
 }
 
@@ -2513,9 +2537,9 @@ function igGo(loc){ try{ gtag('event','instagram_click',{link_location:loc}); }c
 function goHome(){ go('home'); setCanon(''); LASTVIEW = {v:'home'}; try{ history.replaceState({v:'home'}, '', location.pathname); }catch(e){} }
 const _openCat = openCat, _openCatAll = openCatAll, _openMenuCat = openMenuCat, _openProd = openProd, _closeProd = closeProd;
 const _openMenu = openMenu, _openCart = openCart, _openSearch = openSearch, _openSheet = openSheet, _openOrder = openOrder, _checkoutCart = checkoutCart;
-openCat = function(id){ _openCat(id); setCanon('?cat=' + id); navTo({v:'cat', m:'id', id}, location.pathname + '?cat=' + id); };
-openCatAll = function(){ _openCatAll(); setCanon('?cat=all'); navTo({v:'cat', m:'all'}, location.pathname + '?cat=all'); };
-openMenuCat = function(i){ _openMenuCat(i); const k = '?cat=k' + (MENU_DEF[i]||{}).k; setCanon(k); navTo({v:'cat', m:'menu', i}, location.pathname + k); };
+openCat = function(id){ saveScrollNav(); _openCat(id); setCanon('?cat=' + id); navTo({v:'cat', m:'id', id}, location.pathname + '?cat=' + id); };
+openCatAll = function(){ saveScrollNav(); _openCatAll(); setCanon('?cat=all'); navTo({v:'cat', m:'all'}, location.pathname + '?cat=all'); };
+openMenuCat = function(i){ saveScrollNav(); _openMenuCat(i); const k = '?cat=k' + (MENU_DEF[i]||{}).k; setCanon(k); navTo({v:'cat', m:'menu', i}, location.pathname + k); };
 openProd = function(id){
   // Кладемо позицію прокрутки в поточний запис історії — щоб при поверненні
   // з картки товару список відкрився на тому самому місці, а не з початку.
@@ -2530,6 +2554,7 @@ openProd = function(id){
       const y = window.scrollY||window.pageYOffset||0;
       if(cur.v !== 'prod') LASTLISTY = y;   // для кнопки «Назад до каталогу»
       history.replaceState({...cur, sy: y}, '', location.pathname + location.search);
+      NAVSAVED = true;   // pushNav не має перезаписати цю позицію нулем після відкриття картки
     }
   }catch(e){}
   _openProd(id); setCanon(prodCanon(id)); navTo({v:'prod', id}, location.pathname + '?p=' + id);
@@ -2656,7 +2681,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=161'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=162'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
