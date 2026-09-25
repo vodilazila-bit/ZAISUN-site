@@ -449,6 +449,32 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 .sup-ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#fff;font-size:15px;flex:0 0 30px}
 
 </style>
+<!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
+<link rel="preload" href="data-lite.js?v=161" as="script">
+<link rel="preload" href="hero2.jpg" as="image" fetchpriority="high">
+<style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
+<script>
+// Поки сайт вантажиться, кнопки вже видно, а код до них ще не дійшов —
+// тап губився. Запам'ятовуємо останній тап і виконуємо, щойно сайт готовий.
+(function(){
+  var q = null;
+  document.addEventListener('click', function(e){
+    if(document.readyState !== 'loading') return;
+    var el = e.target && e.target.closest && e.target.closest('[onclick]');
+    if(!el) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    if(q) q.el.classList.remove('zs-wait');
+    q = {el: el, t: Date.now()};
+    el.classList.add('zs-wait');
+  }, true);
+  document.addEventListener('DOMContentLoaded', function(){
+    if(!q) return;
+    var el = q.el, fresh = Date.now() - q.t < 15000; q = null;
+    el.classList.remove('zs-wait');
+    if(fresh && document.contains(el)) setTimeout(function(){ el.click(); }, 0);
+  });
+})();
+</script>
 </head>
 <body>
 
@@ -476,7 +502,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 <div class="page show" id="pgHome">
   <section class="herosl" id="herosl">
     <div class="hs on" data-hs="0">
-      <div class="fgimg"><img class="kb" src="hero2.jpg" alt="ZaiSun" style="object-position:70% 30%;transform-origin:70% 35%"></div>
+      <div class="fgimg"><img class="kb" src="hero2.jpg" fetchpriority="high" alt="ZaiSun" style="object-position:70% 30%;transform-origin:70% 35%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">ZAISUN · ДИТЯЧИЙ ОДЯГ</div>
@@ -485,7 +511,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       </div>
     </div>
     <div class="hs" data-hs="1">
-      <div class="fgimg"><img class="kb" src="hero-autumn.jpg" alt="Осіння колекція ZaiSun" style="object-position:62% 40%;transform-origin:62% 45%"></div>
+      <div class="fgimg"><img class="kb" data-hsrc="hero-autumn.jpg" alt="Осіння колекція ZaiSun" style="object-position:62% 40%;transform-origin:62% 45%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">НОВА КОЛЕКЦІЯ</div>
@@ -495,7 +521,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       </div>
     </div>
     <div class="hs" data-hs="2">
-      <div class="fgimg"><img class="kb" src="hero-sale.jpg" alt="Знижки ZaiSun" style="object-position:78% 30%;transform-origin:78% 35%"></div>
+      <div class="fgimg"><img class="kb" data-hsrc="hero-sale.jpg" alt="Знижки ZaiSun" style="object-position:78% 30%;transform-origin:78% 35%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">ОБМЕЖЕНА ПРОПОЗИЦІЯ</div>
@@ -716,7 +742,11 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=160"></script>
+<script src="data-lite.js?v=161"></script>
+<script>
+// Фото 2-го і 3-го слайдів банера — лише після каталогу, щоб не забирали в нього швидкість.
+document.querySelectorAll('img[data-hsrc]').forEach(function(i){ i.src = i.getAttribute('data-hsrc'); });
+</script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -2626,7 +2656,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=160'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=161'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
