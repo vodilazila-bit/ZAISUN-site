@@ -450,7 +450,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=162" as="script">
+<link rel="preload" href="data-lite.js?v=163" as="script">
 <link rel="preload" href="hero2.jpg" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -742,7 +742,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=162"></script>
+<script src="data-lite.js?v=163"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — лише після каталогу, щоб не забирали в нього швидкість.
 document.querySelectorAll('img[data-hsrc]').forEach(function(i){ i.src = i.getAttribute('data-hsrc'); });
@@ -2140,7 +2140,7 @@ function zsAlert(text){
   const w = document.createElement('div');
   w.id = 'zsConf'; w.className = 'zsconf';
   w.innerHTML = '<div class="zsconf-box" role="alertdialog" aria-modal="true"><p class="zsa"></p>'+
-    '<div class="zsconf-btns"><button type="button" class="zsc-ok">Зрозуміло</button></div></div>';
+    '<div class="zsconf-btns"><button type="button" class="zsc-ok">ОК</button></div></div>';
   w.querySelector('p').textContent = String(text);
   const close = ()=>{ w.classList.remove('on'); setTimeout(()=>w.remove(),180); };
   w.addEventListener('click', e=>{ if(e.target===w) close(); });
@@ -2681,7 +2681,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=162'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=163'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
