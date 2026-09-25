@@ -716,7 +716,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=158"></script>
+<script src="data-lite.js?v=159"></script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // Списки каталогу показують лише те, що можна купити. Прямі посилання на
@@ -1675,8 +1675,11 @@ async function submitOrder(){
     document.getElementById('fEmail').focus();
     return;
   }
-  // склад замовлення
-  if(cartMode) cartPurge();
+  // склад замовлення. Перевірка локальна, без запитів у мережу — відправку не гальмує.
+  if(cartMode && cartPurge()){ try{ renderOrderCart(); }catch(e){} return; }
+  if(!cartMode && cur && cartDead({id:cur.id, size:size})){
+    alert('Цього товару вже немає в наявності 🙈'); return;
+  }
   let itemsTxt='', total=0;
   if(cartMode && CART.length){
     itemsTxt = CART.map(it=>{
@@ -1965,11 +1968,23 @@ function updCartBdg(){
 // Товар зняли з каталогу, а він лишився в чиємусь кошику: у списку його не
 // видно, ціна рахується як 0, і якщо він був єдиним — сума замовлення
 // виходила 0, а mono відмовляв («invalid amount»). Прибираємо такі позиції.
+// Те саме з позиціями «Немає»: товар поклали в кошик, поки він був, а
+// оформлюють через тиждень, коли його вже зняли з наявності. Прибираємо і їх,
+// і кажемо покупцю, що саме зникло.
+function cartDead(it){
+  const p = P.find(x => x.id === it.id);
+  if(!p || p.stock === false) return true;
+  const v = it.size && p.var && p.var[it.size];
+  return !!(v && v.s === false);
+}
 function cartPurge(){
   if(!CART.length || typeof P === 'undefined' || !P.length) return false;
-  const keep = CART.filter(it => P.some(p => p.id === it.id));
-  if(keep.length === CART.length) return false;
-  CART = keep; saveCart();
+  const gone = CART.filter(cartDead);
+  if(!gone.length) return false;
+  CART = CART.filter(it => !cartDead(it)); saveCart();
+  const names = gone.map(it => { const p = P.find(x => x.id === it.id);
+    return '• ' + (p ? p.name : 'товар #' + it.id) + (it.size ? ' (' + it.size + ')' : ''); });
+  setTimeout(() => alert('Цього вже немає в наявності, ми прибрали з кошика:\n' + names.join('\n')), 50);
   return true;
 }
 function cartPrice(it){
@@ -2604,7 +2619,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=158'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=159'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
@@ -2783,6 +2798,43 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js',{scop
     },150);
   });
   if(vv){ vv.addEventListener('resize', function(){ if(cur) lift(); }); vv.addEventListener('scroll', fit); }
+})();
+</script>
+<script>
+// Стара вкладка: каталог вантажиться раз, при відкритті сайту. Якщо вкладка
+// висить годинами чи днями, наявність і ціни в ній застарілі. Тоді у фоні
+// тягнемо свіжий каталог і оновлюємо наявність/ціни. Відправку замовлення це
+// не гальмує: вона звіряє вже з тим, що є, без очікування мережі.
+(function(){
+  var LOADED = Date.now(), last = LOADED, busy = false, STALE = 30*60*1000;
+  function refresh(){
+    if(busy || Date.now() - last < STALE) return;
+    busy = true;
+    fetch('data-lite.js?t=' + Date.now(), {cache:'no-store'}).then(function(r){ return r.ok ? r.text() : null; })
+    .then(function(t){
+      if(!t) return;
+      var d = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1)), m = {};
+      (d.products || []).forEach(function(x){ if(!x.hidden) m[x.id] = x; });
+      if(!Object.keys(m).length) return;
+      P.forEach(function(p){
+        var f = m[p.id];
+        if(!f){ p.stock = false; return; }
+        p.stock = f.stock; p.price = f.price; p.old = f.old; if(f.var) p.var = f.var;
+      });
+      last = Date.now();
+      var ovOpen = document.getElementById('movl') && document.getElementById('movl').classList.contains('open');
+      var cartOpen = document.getElementById('cartSheet') && document.getElementById('cartSheet').classList.contains('open');
+      if(cartOpen){ try{ renderCart(); }catch(e){} }
+      else if(ovOpen && cartMode && cartPurge()){ try{ renderOrderCart(); }catch(e){} }
+      try{ updCartBdg(); }catch(e){}
+    }).catch(function(){}).then(function(){ busy = false; });
+  }
+  window.zsFreshen = refresh;
+  document.addEventListener('visibilitychange', function(){ if(document.visibilityState === 'visible') refresh(); });
+  ['openCart','checkoutCart','openOrder'].forEach(function(n){
+    var f = window[n]; if(typeof f !== 'function') return;
+    window[n] = function(){ try{ refresh(); }catch(e){} return f.apply(this, arguments); };
+  });
 })();
 </script>
 </body>
