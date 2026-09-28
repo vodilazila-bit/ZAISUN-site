@@ -450,7 +450,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=164" as="script">
+<link rel="preload" href="data-lite.js?v=165" as="script">
 <link rel="preload" href="hero2.jpg" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -686,9 +686,9 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
         </div>
         <div class="fld sugg"><label>Відділення Нової Пошти *</label><input type="text" id="fNP" autocomplete="off" oninput="npWh(this.value)" onfocus="npWh(this.value)"><div class="sugg-list" id="npList"></div></div>
         <div class="fld"><label>Оплата</label>
-          <label class="payopt on"><input type="radio" name="payway" value="bank" checked onchange="paySel(this)"> 🏦 За реквізитами</label>
           <label class="payopt"><input type="radio" name="payway" value="online" onchange="paySel(this)"> 💳 Онлайн: картка / Apple Pay / Google Pay</label>
           <label class="payopt"><input type="radio" name="payway" value="pm" onchange="paySel(this)"> 🍼 Картка «7 тисяч до року»</label>
+          <label class="payopt on"><input type="radio" name="payway" value="bank" checked onchange="paySel(this)"> 🏦 За реквізитами</label>
         </div>
         <div class="fld"><label>Коментар</label><input type="text" id="fComm" placeholder="Необов'язково"></div>
         <button class="osub" id="osubBtn" onclick="submitOrder()">Оформити замовлення</button>
@@ -742,7 +742,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=164"></script>
+<script src="data-lite.js?v=165"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — лише після каталогу, щоб не забирали в нього швидкість.
 document.querySelectorAll('img[data-hsrc]').forEach(function(i){ i.src = i.getAttribute('data-hsrc'); });
@@ -2693,7 +2693,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=164'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=165'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
