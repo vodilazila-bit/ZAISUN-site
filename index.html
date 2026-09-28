@@ -450,7 +450,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=163" as="script">
+<link rel="preload" href="data-lite.js?v=164" as="script">
 <link rel="preload" href="hero2.jpg" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -742,7 +742,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=163"></script>
+<script src="data-lite.js?v=164"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — лише після каталогу, щоб не забирали в нього швидкість.
 document.querySelectorAll('img[data-hsrc]').forEach(function(i){ i.src = i.getAttribute('data-hsrc'); });
@@ -1334,6 +1334,7 @@ function saveForm(open){
     const pw = document.querySelector('input[name=payway]:checked');
     if(pw) d.pay = pw.value;
     d.npRef = npCityRef || '';
+    d.npWh  = npWhPick;
     d.mode  = cartMode ? 'cart' : 'prod';
     d.pid   = (!cartMode && cur) ? cur.id : null;
     if(open !== undefined) d.open = open ? 1 : 0;
@@ -1354,6 +1355,7 @@ function restoreForm(){
     if(el && d[k] && !el.value.trim()) el.value = d[k];
   });
   if(d.npRef) npCityRef = d.npRef;
+  if(d.npWh && d.npWh.ref) npWhPick = d.npWh;
   if(d.pay){
     const r = document.querySelector('input[name=payway][value="'+d.pay+'"]');
     if(r && !r.checked){ r.checked = true; try{ paySel(r); }catch(e){} }
@@ -1454,6 +1456,10 @@ const ORDER_RELAY = 'https://script.google.com/macros/s/AKfycbyMhAR-LhYxHdMCdv4V
 const ORDER_WORKER = 'https://zaisun-relay.miroslavazanchuk.workers.dev';
 // ─── Нова Пошта: підказки міст і відділень ───
 let npCityRef = null, npT1 = null, npT2 = null;
+// Вибране зі списку відділення: код НП (Ref) і назва, до якої він належить.
+// Код іде в замовлення лише якщо в полі досі саме ця назва — дописали руками,
+// значить код уже не про те відділення. Потрібен для створення ТТН через API.
+let npWhPick = null;
 // Раніше один обірваний запит до Нової Пошти мовчки вимикав підказки, і
 // людина бачила порожнечу, не розуміючи чому. Тепер: повтор запиту,
 // коротка пауза, видиме пояснення в списку і автоматична спроба ще раз.
@@ -1520,6 +1526,7 @@ function npCity(q){
 function pickCity(i){
   const a = npCityList[i]; if(!a) return;
   npCityRef = a.DeliveryCity;
+  npWhPick = null;
   document.getElementById('fCity').value = a.Present || '';
   document.getElementById('cityList').classList.remove('show');
   // Місто змінилось — старе відділення до нього вже не належить.
@@ -1559,6 +1566,8 @@ function npWh(q){
 function pickWh(i){
   const w = npWhListData[i]; if(!w) return;
   document.getElementById('fNP').value = w.Description || '';
+  npWhPick = { ref: w.Ref || '', name: w.Description || '' };
+  saveForm();
   document.getElementById('npList').classList.remove('show');
 }
 // Видима позначка режиму перевірки: щоб було ясно, через кого піде
@@ -1755,6 +1764,9 @@ async function submitOrder(){
     // client_id з куки _ga — щоб подія «оплачено» з релею звʼязалась із цим самим
     // візитом у GA4, а отже і з рекламним кліком, який його привів
     payload._cid = ga4ClientId();
+    // коди НП для створення ТТН; у листах їх не видно (поля з «_»)
+    payload._npCityRef = npCityRef || '';
+    payload._npWhRef = (npWhPick && npWhPick.ref && (document.getElementById('fNP').value||'').trim() === npWhPick.name.trim()) ? npWhPick.ref : '';
     const _ac = adClick();
     if(_ac){ payload._gclid = _ac.v; payload._gtype = _ac.k; }
     let sent=false, lastErr='', payUrl='', payFallback=false;
@@ -2681,7 +2693,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=163'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=164'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
