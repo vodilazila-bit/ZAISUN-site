@@ -431,6 +431,9 @@ section{padding:26px 18px 34px}
 .ig-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;max-width:520px;margin:0 auto}
 .ig-grid a{aspect-ratio:1/1;border-radius:16px;overflow:hidden;display:block}
 .ig-grid img{width:100%;height:100%;object-fit:cover;display:block}
+.ig-grid a{position:relative}
+.ig-grid img.ig-nx{position:absolute;top:0;left:0;opacity:0;transition:opacity 1.2s ease}
+.ig-grid img.ig-nx.on{opacity:1}
 footer{background:#8A7663;color:#EFE5DA;padding:36px 22px 22px;text-align:center;margin-top:0}
 .flogo{font-family:var(--serif);font-weight:400;color:#fff;font-size:1.5rem;letter-spacing:.14em;margin-bottom:12px}
 footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
@@ -450,7 +453,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=166" as="script">
+<link rel="preload" href="data-lite.js?v=167" as="script">
 <link rel="preload" href="hero2.jpg" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -742,7 +745,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=166"></script>
+<script src="data-lite.js?v=167"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — лише після каталогу, щоб не забирали в нього швидкість.
 document.querySelectorAll('img[data-hsrc]').forEach(function(i){ i.src = i.getAttribute('data-hsrc'); });
@@ -2294,11 +2297,39 @@ P.forEach(p=>{
   p.season = s;
 });
 // Щоб додати фото — просто допиши файл у список і поклади його в корінь репозиторію.
-const IG_PHOTOS = ['ig1.jpg','ig2.jpg','ig3.jpg','ig4.jpg'];
+const IG_PHOTOS = ['ig1.jpg','ig2.jpg','ig3.jpg','ig4.jpg','ig5.jpg','ig6.jpg','ig7.jpg','ig8.jpg','ig9.jpg','ig10.jpg','ig11.jpg','ig12.jpg','ig13.jpg','ig14.jpg'];
+const IG_TILES = 4;
 
 function buildIG(){
   const el = document.getElementById('igGrid'); if(!el) return;
-  el.innerHTML = IG_PHOTOS.map(f=>`<a href="https://instagram.com/zaisun_kids" target="_blank" onclick="try{gtag('event','instagram_click',{link_location:'feed'})}catch(e){}"><img src="${f}" loading="lazy"></a>`).join('');
+  const pool = IG_PHOTOS.slice();
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+  const shown = pool.slice(0,IG_TILES);
+  el.innerHTML = shown.map(f=>`<a href="https://instagram.com/zaisun_kids" target="_blank" onclick="try{gtag('event','instagram_click',{link_location:'feed'})}catch(e){}"><img src="${f}" loading="lazy"></a>`).join('');
+  if(IG_PHOTOS.length<=IG_TILES) return;
+  try{ if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return; }catch(e){}
+  const tiles = [...el.querySelectorAll('a')];
+  const swap = k => {
+    const a = tiles[k];
+    if(document.hidden){ return setTimeout(()=>swap(k), 2000); }
+    const free = IG_PHOTOS.filter(f=>!shown.includes(f));
+    const f = free[Math.floor(Math.random()*free.length)];
+    shown[k] = f;
+    const nx = new Image(); nx.className = 'ig-nx'; nx.alt = '';
+    nx.onload = () => {
+      a.appendChild(nx);
+      requestAnimationFrame(()=>requestAnimationFrame(()=>nx.classList.add('on')));
+      setTimeout(()=>{
+        const base = a.querySelector('img:not(.ig-nx)');
+        if(base){ base.src = f; }
+        nx.remove();
+        setTimeout(()=>swap(k), 3000 + Math.random()*4000);
+      }, 1300);
+    };
+    nx.onerror = () => setTimeout(()=>swap(k), 3000);
+    nx.src = f;
+  };
+  tiles.forEach((a,k)=>setTimeout(()=>swap(k), 2500 + k*900 + Math.random()*3000));
 }
 
 function buildNew(){
@@ -2696,7 +2727,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=166'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=167'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
