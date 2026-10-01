@@ -453,7 +453,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=167" as="script">
+<link rel="preload" href="data-lite.js?v=168" as="script">
 <link rel="preload" href="hero2.jpg" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -745,7 +745,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=167"></script>
+<script src="data-lite.js?v=168"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — лише після каталогу, щоб не забирали в нього швидкість.
 document.querySelectorAll('img[data-hsrc]').forEach(function(i){ i.src = i.getAttribute('data-hsrc'); });
@@ -1560,9 +1560,20 @@ function npWh(q){
         document.getElementById('fCity').value = a0.Present || cityTxt;
         saveForm();
       }
-      const props = {CityRef:npCityRef, Limit:'12', Page:'1'};
-      if(q && q.trim()) props.FindByString = q.trim();
-      npWhListData = await npApi('AddressGeneral','getWarehouses',props);
+      // Раніше: перші 12 відділень і пошук рядком як є — «відділення 25» не
+      // знаходило «Відділення №25», а у великому місті решта відділень не
+      // показувалась. Тепер: до 50 без запиту; є цифри — шукаємо за номером,
+      // не знайшли за номером — за текстом.
+      const qq = (q||'').trim();
+      const num = (qq.match(/\d+/)||[''])[0];
+      if(qq && num && !/[a-zа-яіїєґ]{3,}.*\d.*[a-zа-яіїєґ]{3,}/i.test(qq)){
+        npWhListData = await npApi('AddressGeneral','getWarehouses',{CityRef:npCityRef, WarehouseId:num, Limit:'30', Page:'1'});
+        if(!npWhListData.length) npWhListData = await npApi('AddressGeneral','getWarehouses',{CityRef:npCityRef, FindByString:qq, Limit:'30', Page:'1'});
+      } else {
+        const props = {CityRef:npCityRef, Limit: qq ? '30' : '50', Page:'1'};
+        if(qq) props.FindByString = qq;
+        npWhListData = await npApi('AddressGeneral','getWarehouses',props);
+      }
       if(!npWhListData.length){ npNote(box,'Відділень не знайшли — спробуйте інший номер'); return; }
       box.innerHTML = npWhListData.map((w,i)=>`<div class="sugg-it" onclick="pickWh(${i})">${w.Description}</div>`).join('');
       box.classList.add('show');
@@ -2727,7 +2738,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=167'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=168'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
