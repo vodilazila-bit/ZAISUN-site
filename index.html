@@ -129,6 +129,9 @@ html,body{max-width:100%;touch-action:pan-y pinch-zoom}
 .herosl{position:relative;overflow:hidden;height:min(82vh,780px);min-height:560px;background:#FDFAF6}
 .herosl .hs{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .5s ease}
 .herosl .hs.on{opacity:1;visibility:visible;z-index:2}
+/* Поки фото слайда не завантажилось — без затемнення, тексту й стрілок, інакше видно сірий банер */
+.herosl .hs:not(.ld) .scrim,.herosl .hs:not(.ld) .stxt{opacity:0}
+.herosl:not(.ready) .harrow,.herosl:not(.ready) .hdots{opacity:0;pointer-events:none}
 .herosl .fgimg{position:absolute;inset:0}
 .herosl .fgimg img{width:100%;height:100%;object-fit:cover;display:block}
 .herosl .fgimg img.kb{animation:kenburns 26s ease-out forwards}
@@ -458,7 +461,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=169" as="script">
+<link rel="preload" href="data-lite.js?v=170" as="script">
 <link rel="preload" href="hero2.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -482,6 +485,12 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
     if(fresh && document.contains(el)) setTimeout(function(){ el.click(); }, 0);
   });
 })();
+</script>
+<script>
+// Банер: слайд отримує .ld, коли його фото завантажилось (або не змогло) — тоді видно затемнення й текст.
+// Перший слайд ще ставить .ready на весь банер — тоді з'являються стрілки й крапки.
+function zsHeroLd(i){var s=i.closest('.hs');if(!s)return;s.classList.add('ld');if(s.getAttribute('data-hs')==='0'&&s.parentNode)s.parentNode.classList.add('ready');}
+window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs img').forEach(function(i){if(i.getAttribute('src')&&i.complete)zsHeroLd(i);});});
 </script>
 </head>
 <body>
@@ -510,7 +519,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 <div class="page show" id="pgHome">
   <section class="herosl" id="herosl">
     <div class="hs on" data-hs="0">
-      <div class="fgimg"><img class="kb" src="hero2.webp" fetchpriority="high" alt="ZaiSun" style="object-position:70% 30%;transform-origin:70% 35%"></div>
+      <div class="fgimg"><img class="kb" onload="zsHeroLd(this)" onerror="zsHeroLd(this)" src="hero2.webp" fetchpriority="high" alt="ZaiSun" style="object-position:70% 30%;transform-origin:70% 35%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">ZAISUN · ДИТЯЧИЙ ОДЯГ</div>
@@ -519,7 +528,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       </div>
     </div>
     <div class="hs" data-hs="1">
-      <div class="fgimg"><img class="kb" data-hsrc="hero-autumn.webp" alt="Осіння колекція ZaiSun" style="object-position:62% 40%;transform-origin:62% 45%"></div>
+      <div class="fgimg"><img class="kb" onload="zsHeroLd(this)" onerror="zsHeroLd(this)" data-hsrc="hero-autumn.webp" alt="Осіння колекція ZaiSun" style="object-position:62% 40%;transform-origin:62% 45%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">НОВА КОЛЕКЦІЯ</div>
@@ -529,7 +538,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       </div>
     </div>
     <div class="hs" data-hs="2">
-      <div class="fgimg"><img class="kb" data-hsrc="hero-sale.webp" alt="Знижки ZaiSun" style="object-position:78% 30%;transform-origin:78% 35%"></div>
+      <div class="fgimg"><img class="kb" onload="zsHeroLd(this)" onerror="zsHeroLd(this)" data-hsrc="hero-sale.webp" alt="Знижки ZaiSun" style="object-position:78% 30%;transform-origin:78% 35%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">ОБМЕЖЕНА ПРОПОЗИЦІЯ</div>
@@ -750,7 +759,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=169"></script>
+<script src="data-lite.js?v=170"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -2764,7 +2773,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=169'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=170'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
