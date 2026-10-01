@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Перевірка Нової Пошти</title>
+<style>
+body{font-family:-apple-system,Arial,sans-serif;margin:0;padding:16px;background:#FDFAF6;color:#3A3028}
+h1{font-size:1.05rem;margin:0 0 12px}
+input{width:100%;font-size:16px;padding:12px;border:1px solid #ddd;border-radius:10px;margin-bottom:10px}
+button{font-size:16px;padding:12px 16px;border:none;border-radius:10px;background:#C9A186;color:#fff;margin-bottom:12px}
+pre{white-space:pre-wrap;word-break:break-all;font-size:12px;background:#fff;border:1px solid #eee;border-radius:10px;padding:10px}
+.ok{color:#2e7d32}.bad{color:#b4472e}
+</style>
+</head>
+<body>
+<h1>Перевірка API Нової Пошти</h1>
+<input id="q" value="камінь" placeholder="місто">
+<button onclick="go()">Перевірити</button>
+<pre id="out">Натисни «Перевірити».</pre>
+<script>
+const out = document.getElementById('out');
+function log(s){ out.textContent += '\n' + s; }
+async function go(){
+  out.textContent = 'Запит…';
+  const q = document.getElementById('q').value.trim();
+  const t0 = Date.now();
+  try{
+    const r = await fetch('https://api.novaposhta.ua/v2.0/json/', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({apiKey:'', modelName:'Address', calledMethod:'searchSettlements',
+                            methodProperties:{CityName:q, Limit:'6'}})
+    });
+    const txt = await r.text();
+    out.textContent = 'HTTP ' + r.status + ' за ' + (Date.now()-t0) + ' мс';
+    let j = null; try{ j = JSON.parse(txt); }catch(e){}
+    if(j){
+      log('success: ' + j.success);
+      log('errors: ' + JSON.stringify(j.errors || []));
+      log('info: ' + JSON.stringify(j.info || []));
+      const addr = (j.data && j.data[0] && j.data[0].Addresses) || [];
+      log('знайдено міст: ' + addr.length);
+      addr.forEach(a => log('  • ' + a.Present));
+      log(addr.length ? '\nПІДКАЗКИ ПРАЦЮЮТЬ ✓' : '\nПОРОЖНЬО — НП нічого не повернув');
+    } else {
+      log('Відповідь не JSON:');
+      log(txt.slice(0, 500));
+    }
+  }catch(e){
+    out.textContent = 'ЗАПИТ НЕ ПРОЙШОВ: ' + (e && e.message || e) +
+      '\n\nЦе означає, що браузер не зміг достукатись до api.novaposhta.ua ' +
+      '(блокування мережі, CORS або оператор).';
+  }
+}
+</script>
+</body>
+</html>
