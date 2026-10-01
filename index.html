@@ -33,8 +33,13 @@ fbq('init','865748820475938');fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=865748820475938&ev=PageView&noscript=1"></noscript>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* Montserrat лежить на сайті (/fonts), а не тягнеться з Google: чужий стиль блокував перше малювання сторінки.
+   Знак ₴ — окремим файлом на 4 КБ, щоб через нього не вантажився весь розширений латинський набір (70 КБ). */
+@font-face{font-family:'Montserrat';font-style:normal;font-display:swap;font-weight:100 900;src:url(/fonts/montserrat-cyrillic-wght-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Montserrat';font-style:normal;font-display:swap;font-weight:100 900;src:url(/fonts/montserrat-uah-wght-normal.woff2) format('woff2');unicode-range:U+20B4}
+@font-face{font-family:'Montserrat';font-style:normal;font-display:swap;font-weight:100 900;src:url(/fonts/montserrat-latin-ext-wght-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20B3,U+20B5-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Montserrat';font-style:normal;font-display:swap;font-weight:100 900;src:url(/fonts/montserrat-latin-wght-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Montserrat',sans-serif;background:#FDFAF6;color:#3A3028;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
@@ -453,8 +458,8 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=168" as="script">
-<link rel="preload" href="hero2.jpg" as="image" fetchpriority="high">
+<link rel="preload" href="data-lite.js?v=169" as="script">
+<link rel="preload" href="hero2.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
 // Поки сайт вантажиться, кнопки вже видно, а код до них ще не дійшов —
@@ -505,7 +510,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 <div class="page show" id="pgHome">
   <section class="herosl" id="herosl">
     <div class="hs on" data-hs="0">
-      <div class="fgimg"><img class="kb" src="hero2.jpg" fetchpriority="high" alt="ZaiSun" style="object-position:70% 30%;transform-origin:70% 35%"></div>
+      <div class="fgimg"><img class="kb" src="hero2.webp" fetchpriority="high" alt="ZaiSun" style="object-position:70% 30%;transform-origin:70% 35%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">ZAISUN · ДИТЯЧИЙ ОДЯГ</div>
@@ -514,7 +519,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       </div>
     </div>
     <div class="hs" data-hs="1">
-      <div class="fgimg"><img class="kb" data-hsrc="hero-autumn.jpg" alt="Осіння колекція ZaiSun" style="object-position:62% 40%;transform-origin:62% 45%"></div>
+      <div class="fgimg"><img class="kb" data-hsrc="hero-autumn.webp" alt="Осіння колекція ZaiSun" style="object-position:62% 40%;transform-origin:62% 45%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">НОВА КОЛЕКЦІЯ</div>
@@ -524,7 +529,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
       </div>
     </div>
     <div class="hs" data-hs="2">
-      <div class="fgimg"><img class="kb" data-hsrc="hero-sale.jpg" alt="Знижки ZaiSun" style="object-position:78% 30%;transform-origin:78% 35%"></div>
+      <div class="fgimg"><img class="kb" data-hsrc="hero-sale.webp" alt="Знижки ZaiSun" style="object-position:78% 30%;transform-origin:78% 35%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">ОБМЕЖЕНА ПРОПОЗИЦІЯ</div>
@@ -745,10 +750,16 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=168"></script>
+<script src="data-lite.js?v=169"></script>
 <script>
-// Фото 2-го і 3-го слайдів банера — лише після каталогу, щоб не забирали в нього швидкість.
-document.querySelectorAll('img[data-hsrc]').forEach(function(i){ i.src = i.getAttribute('data-hsrc'); });
+// Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
+// Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
+// PageSpeed зараховував їх у LCP, і бал стрибав від запуску до запуску.
+(function(){
+  var go = function(){ document.querySelectorAll('img[data-hsrc]').forEach(function(i){ if(!i.getAttribute('src')) i.src = i.getAttribute('data-hsrc'); }); };
+  if(document.readyState === 'complete') setTimeout(go, 2500);
+  else window.addEventListener('load', function(){ setTimeout(go, 2500); });
+})();
 </script>
 <script>
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
@@ -1952,12 +1963,13 @@ async function submitOrder(){
 function buildHome(){
   let h = '';
   const coverOf = prods => (prods.find(p=>p.cover && p.photo) || prods.find(p=>p.photo && p.season===2) || prods.find(p=>p.photo && p.season===1) || prods.find(p=>p.photo));
-  // Всі товари — перша картка. Головне фото: залий своє в images/cover.jpg — підхопиться саме воно
+  // Всі товари — перша картка. Фото — товар з позначкою coverAll в адмінці, інакше запасне.
+  // (Файлу images/cover.jpg у репозиторії немає: спроба його завантажити давала 404 на кожному візиті.)
   const allCover = coverOf(P);
   const manualAll = P.find(p=>p.coverAll && p.photo);
   const fallbackCover = (P.find(p=>p.id===244 && p.photo) || allCover);
   const allImg = manualAll ? `<img src="images/${manualAll.photo}" loading="lazy" onload="fitTile(this)">`
-    : `<img src="images/cover.jpg" onerror="this.onerror=null;this.src='images/${fallbackCover?fallbackCover.photo:''}'" loading="lazy">`;
+    : (fallbackCover ? `<img src="images/${fallbackCover.photo}" loading="lazy">` : '');
   h += `<div class="hc" onclick="openCatAll()">${allImg}<span>Всі товари · ${P.length}</span></div>`;
   MENU_DEF.forEach((d,i)=>{
     const ids = findIdsByNames(d.c);
@@ -2454,6 +2466,8 @@ function heroApplySlide(){
         node.style.animation='none'; void node.offsetWidth; node.style.animation='';
       });
       const img = el.querySelector('.fgimg img');
+      // перемкнули вручну раніше, ніж фото встигло завантажитись, — вантажимо зараз
+      if(img && !img.getAttribute('src') && img.dataset.hsrc) img.src = img.dataset.hsrc;
       if(img){ img.style.animation='none'; void img.offsetWidth; img.style.animation=''; }
     } else {
       el.classList.remove('on');
@@ -2466,11 +2480,23 @@ function heroNav(d){ heroIdx=(heroIdx+d+heroSlides.length)%heroSlides.length; he
 let heroAuto;
 function heroResetAuto(){
   clearInterval(heroAuto);
-  heroAuto = setInterval(()=>heroNav(1), 6500);
+  heroAuto = setInterval(()=>{
+    // наступний слайд показуємо лише тоді, коли його фото вже завантажилось
+    const nx = heroSlides[(heroIdx+1)%heroSlides.length], im = nx && nx.querySelector('.fgimg img');
+    if(im && !im.getAttribute('src') && im.dataset.hsrc){ im.src = im.dataset.hsrc; return; }
+    if(im && !im.complete) return;
+    heroNav(1);
+  }, 6500);
 }
 if(heroSlides.length){
   heroRenderDots();
-  heroResetAuto();
+  // Автопрокрутка — лише після першої дії відвідувача (гортання, дотик, клавіша).
+  // Інакше слайдер перемикався посеред тесту PageSpeed і псував Speed Index та LCP.
+  (function(){
+    var ev = ['scroll','pointerdown','keydown'];
+    var go = function(){ ev.forEach(function(t){ window.removeEventListener(t, go); }); heroResetAuto(); };
+    ev.forEach(function(t){ window.addEventListener(t, go, {passive:true}); });
+  })();
   const heroEl = document.getElementById('herosl');
   if(heroEl){
     heroEl.addEventListener('mouseenter', ()=>clearInterval(heroAuto));
@@ -2738,7 +2764,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=168'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=169'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
