@@ -461,7 +461,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=170" as="script">
+<link rel="preload" href="data-lite.js?v=171" as="script">
 <link rel="preload" href="hero2.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -759,7 +759,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=170"></script>
+<script src="data-lite.js?v=171"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -797,6 +797,13 @@ let fSel = {}, pFrom = null, pTo = null, catMin = 0, catMax = 0;
 let curSubs = [], curBase = [], curSub = '';
 
 function fitTile(img){}
+// Плитки беруть зменшену копію (≈15 КБ) замість оригіналу (100–275 КБ).
+// Якщо копії ще немає (щойно залите фото) — onerror підставляє оригінал.
+function thumb(photo){ return 'images/thumb/' + String(photo).replace(/\.[^.]+$/, '') + '.webp'; }
+function tImg(photo, extra){
+  return `<img src="${thumb(photo)}" loading="lazy" decoding="async"` +
+         ` onerror="this.onerror=null;this.src='images/${photo}'"` + (extra || '') + `>`;
+}
 function money(v){ return v.toLocaleString('uk-UA') + ' ₴'; }
 function priceFrom(p){ if(p.optup) return 'від '; if(!p.var) return ''; const ps=Object.values(p.var).map(v=>v.p).filter(x=>x>0); return (ps.length>1 && Math.min(...ps)!==Math.max(...ps)) ? 'від ' : ''; }
 function curOptUp(){ let u=0; if(cur && cur.optup){ for(const [k,m] of Object.entries(cur.optup)){ const sel=selOpts[k]; if(sel && m[sel]) u+=m[sel]; } } return u; }
@@ -960,7 +967,7 @@ function renderSubs(){
               || coverOf(subProds.filter(p=>!usedCovers.has(p.photo)))
               || coverOf(subProds);
       if(pr && pr.photo) usedCovers.add(pr.photo);
-      return `<div class="hc" onclick="subSel('${s.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">`:''}<span>${s.name} · ${s.n}</span></div>`;
+      return `<div class="hc" onclick="subSel('${s.id}')">${pr?`${tImg(pr.photo)}`:''}<span>${s.name} · ${s.n}</span></div>`;
     }).join('');
   } else {
     el.classList.remove('grid');
@@ -1181,7 +1188,7 @@ function apply(){
   el.innerHTML=r.map(p=>{
     const oos = p.stock===false;
     const badge = oos ? `<span class="badge oos">Немає</span>` : (isSale(p)?`<span class="badge s">Sale</span>`:'');
-    const img = p.photo ? `<img src="images/${p.photo}" alt="" loading="lazy" onload="fitTile(this)">` : `<div class="noimg">ФОТО СКОРО</div>`;
+    const img = p.photo ? tImg(p.photo, ' alt=""') : `<div class="noimg">ФОТО СКОРО</div>`;
     const price=p.old?`${priceFrom(p)}${money(p.price)} <s>${money(p.old)}</s>`:priceFrom(p)+money(p.price);
     const sz = p.sizes.length ? (p.sizes.length>1 ? p.sizes[0]+' – '+p.sizes[p.sizes.length-1] : p.sizes[0]) : '';
     return `<a class="pc${oos?' oos':''}" onclick="openProd(${p.id})">
@@ -1286,7 +1293,7 @@ function renderRelated(){
   if(!rel.length){box.innerHTML='';return}
   box.innerHTML=`<h4 class="prel-h">Схожі товари</h4><div class="prel-row">`+
     rel.map(p=>`<a class="prel-c" href="?p=${p.id}" onclick="event.preventDefault();openProd(${p.id});document.getElementById('prodView')?.scrollTo?.(0,0);window.scrollTo(0,0)">
-      <img src="images/${p.photo}" loading="lazy" onload="fitTile(this)"><div class="prel-n">${p.name}</div><div class="prel-p">${priceFrom(p)}${money(p.price)}</div></a>`).join('')+`</div>`;
+      ${tImg(p.photo)}<div class="prel-n">${p.name}</div><div class="prel-p">${priceFrom(p)}${money(p.price)}</div></a>`).join('')+`</div>`;
 }
 function updPrice(p, o, pref){
   pref = pref || '';
@@ -1977,30 +1984,30 @@ function buildHome(){
   const allCover = coverOf(P);
   const manualAll = P.find(p=>p.coverAll && p.photo);
   const fallbackCover = (P.find(p=>p.id===244 && p.photo) || allCover);
-  const allImg = manualAll ? `<img src="images/${manualAll.photo}" loading="lazy" onload="fitTile(this)">`
-    : (fallbackCover ? `<img src="images/${fallbackCover.photo}" loading="lazy">` : '');
+  const allImg = manualAll ? tImg(manualAll.photo)
+    : (fallbackCover ? tImg(fallbackCover.photo) : '');
   h += `<div class="hc" onclick="openCatAll()">${allImg}<span>Всі товари · ${P.length}</span></div>`;
   MENU_DEF.forEach((d,i)=>{
     const ids = findIdsByNames(d.c);
     const prods = PL.filter(p=>p.cats.some(c=>ids.has(c)));
     if(!prods.length) return;
     const pr = prods.find(p=>p.coverCat && ids.has(p.coverCat) && p.photo) || coverOf(prods);
-    let img = pr ? `<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">` : '';
-    if(d.n==='Шапки') img = `<img src="images/cover_shapky.jpg" loading="lazy" onload="fitTile(this)">`;
-    if(d.n==='Осінь' && pr) img = `<img src="images/${pr.photo}" loading="lazy" style="object-position:50% 8%" onload="fitTile(this)">`;
+    let img = pr ? tImg(pr.photo) : '';
+    if(d.n==='Шапки') img = tImg('cover_shapky.jpg');
+    if(d.n==='Осінь' && pr) img = tImg(pr.photo, ' style="object-position:50% 8%"');
     h += `<div class="hc" onclick="openMenuCat(${i})">${img}<span>${d.n} · ${prods.length}</span></div>`;
   });
   const sale = TREE.find(t=>t.raw==='sale');
   if(sale){
     const sp = PL.filter(p=>p.cats.includes(sale.id));
     const pr = coverOf(sp.filter(p=>p.old)) || coverOf(sp);
-    h += `<div class="hc" onclick="openCat('${sale.id}')"><img src="images/cover_sale.jpg" loading="lazy" onload="fitTile(this)"><span style="background:var(--rose-d);color:#fff">Sale 🔥 · ${sale.n}</span></div>`;
+    h += `<div class="hc" onclick="openCat('${sale.id}')">${tImg('cover_sale.jpg')}<span style="background:var(--rose-d);color:#fff">Sale 🔥 · ${sale.n}</span></div>`;
   }
   const gifts = TREE.find(t=>t.raw==='Подарункові комплекти');
   if(gifts){
     const gp = PL.filter(p=>p.cats.includes(gifts.id));
     const pr = coverOf(gp);
-    h += `<div class="hc" onclick="openCat('${gifts.id}')">${pr?`<img src="images/${pr.photo}" loading="lazy" onload="fitTile(this)">`:''}<span>Подарункові набори · ${gifts.n}</span></div>`;
+    h += `<div class="hc" onclick="openCat('${gifts.id}')">${pr?tImg(pr.photo):''}<span>Подарункові набори · ${gifts.n}</span></div>`;
   }
   document.getElementById('homeCats').innerHTML = h;
 }
@@ -2309,12 +2316,29 @@ function doSearch(){
   else if(srt==='exp') r = r.slice().sort((a,b)=>(b.price||0)-(a.price||0));
   if(!r.length){ grid.innerHTML=''; hint.style.display='block'; hint.textContent='Нічого не знайдено'; return; }
   hint.style.display='none';
-  grid.innerHTML = r.map(p=>{
-    const img = p.photo ? `<img src="images/${p.photo}" loading="lazy" onload="fitTile(this)">` : '<div class="noimg">ФОТО СКОРО</div>';
+  // Малюємо порціями: 60 плиток одразу тягнули ~3,4 МБ фото одним залпом,
+  // і нижні зʼявлялись із затримкою 2–3 с. Тепер перші 24, решта при прокрутці.
+  SO_REST = r.slice(24);
+  grid.innerHTML = soTiles(r.slice(0, 24));
+}
+function soTiles(list){
+  return list.map(p=>{
+    const img = p.photo ? tImg(p.photo) : '<div class="noimg">ФОТО СКОРО</div>';
     return `<a class="pc" onclick="openProd(${p.id})">
       <div class="pt">${img}</div><div class="pn">${p.name}</div><div class="pp">${priceFrom(p)}${money(p.price)}</div></a>`;
   }).join('');
 }
+let SO_REST = [];
+(function(){
+  const body = document.querySelector('.so-body');
+  if(!body) return;
+  body.addEventListener('scroll', function(){
+    if(!SO_REST.length) return;
+    if(body.scrollTop + body.clientHeight < body.scrollHeight - 600) return;
+    const next = SO_REST.slice(0, 24); SO_REST = SO_REST.slice(24);
+    document.getElementById('soGrid').insertAdjacentHTML('beforeend', soTiles(next));
+  }, {passive:true});
+})();
 updCartBdg();
 
 
@@ -2380,7 +2404,7 @@ function buildNew(){
   el.innerHTML = picked.map(p=>{
     const price = p.old ? `${priceFrom(p)}${money(p.price)} <s>${money(p.old)}</s>` : priceFrom(p)+money(p.price);
     return `<div class="np" onclick="openProd(${p.id})">
-      <div class="pt"><span class="nb">NEW</span><img src="images/${p.photo}" loading="lazy" onload="fitTile(this)"></div>
+      <div class="pt"><span class="nb">NEW</span>${tImg(p.photo)}</div>
       <div class="nn">${p.name}</div>
       <div class="npp">${price}</div>
     </div>`;
@@ -2409,7 +2433,7 @@ function renderTop(stats){
     const price = p.old ? `${priceFrom(p)}${money(p.price)} <s>${money(p.old)}</s>`
                         : priceFrom(p)+money(p.price);
     return `<div class="np" onclick="openProd(${p.id})">
-      <div class="pt"><span class="hb">ХІТ</span><img src="images/${p.photo}" loading="lazy" onload="fitTile(this)"></div>
+      <div class="pt"><span class="hb">ХІТ</span>${tImg(p.photo)}</div>
       <div class="nn">${p.name}</div>
       <div class="npp">${price}</div>
     </div>`;
@@ -2773,7 +2797,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=170'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=171'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();

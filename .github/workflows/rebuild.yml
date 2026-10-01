@@ -31,6 +31,11 @@ jobs:
       - name: Згенерувати сторінки товарів
         run: node tools/gen_pages.js
 
+      - name: Зменшені копії фото для плиток
+        run: |
+          python3 -m pip install --quiet pillow
+          python3 tools/gen_thumbs.py
+
       - name: Згенерувати фід
         run: node tools/gen_feed.js
 
