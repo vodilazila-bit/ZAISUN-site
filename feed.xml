@@ -16315,5 +16315,22 @@
     <g:size>3-5р</g:size>
     <g:product_type>Рукавички</g:product_type>
   </item>
+  <item>
+    <g:id>1156</g:id>
+    <g:title>Дитячі рукавички 2-4роки</g:title>
+    <g:description>Теплі та зручні рукавиці для захисту дитячих ручок від холоду. М’який матеріал приємний до шкіри, добре зберігає тепло та забезпечує комфорт під час прогулянок.</g:description>
+    <g:link>https://zaisun.com.ua/?p=1156</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiachi_rukavychky_2_4roky_1156_murd8kvp_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>kids</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>125.00 UAH</g:price>
+    <g:color>Беж</g:color>
+    <g:size>2-4р</g:size>
+    <g:product_type>Рукавички</g:product_type>
+  </item>
 </channel>
 </rss>
