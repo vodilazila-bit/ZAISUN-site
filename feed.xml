@@ -16478,7 +16478,7 @@
     <g:price>290.00 UAH</g:price>
     <g:color>Бордовий</g:color>
     <g:size>1-2р/3-4р/5-6р</g:size>
-    <g:product_type>Осінь &gt; Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
   </item>
   <item>
     <g:id>1165</g:id>
@@ -16496,7 +16496,7 @@
     <g:price>315.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>3-4р/5-6р/7-8р</g:size>
-    <g:product_type>Осінь &gt; Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
   </item>
   <item>
     <g:id>1166</g:id>
@@ -16515,7 +16515,45 @@
     <g:price>290.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>1-2р/3-4р/5-6р</g:size>
-    <g:product_type>Осінь &gt; Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+  </item>
+  <item>
+    <g:id>1167</g:id>
+    <g:title>Дитячі махрові колготи в молочному кольорі (1-2р; 3-4р; 5-6р)</g:title>
+    <g:description>Дитячі махрові колготи однотон Виробник Туреччина Розміри:
+1-2р; 3-4р; 5-6р
+Сезон: зима Колір: молочний Матеріал: 100% бавовна Особливості: еластичний пояс, в’язка, м’яка текстура Догляд: прання при 30 °C, не відбілювати</g:description>
+    <g:link>https://zaisun.com.ua/?p=1167</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiachi_makhrovi_kolhoty_v_molochnomu_kolori_1_2r_3_4r_5_6r_1167_musspa8l_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>kids</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>290.00 UAH</g:price>
+    <g:color>Молочний</g:color>
+    <g:size>1-2р/3-4р/5-6р</g:size>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+  </item>
+  <item>
+    <g:id>1168</g:id>
+    <g:title>Дитячі махрові колготи в білому кольорі (1-2р; 3-4р; 5-6р) (копія)</g:title>
+    <g:description>Дитячі махрові колготи однотон Виробник Туреччина Розміри:
+1-2р; 3-4р; 5-6р
+Сезон: зима Колір: молочний Матеріал: 100% бавовна Особливості: еластичний пояс, в’язка, м’яка текстура Догляд: прання при 30 °C, не відбілювати</g:description>
+    <g:link>https://zaisun.com.ua/?p=1168</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiachi_makhrovi_kolhoty_v_bilomu_kolori_1_2r_3_4r_5_6r_kop_1168_mussra1e_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>kids</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>290.00 UAH</g:price>
+    <g:color>Білий</g:color>
+    <g:size>1-2р/3-4р/5-6р</g:size>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
   </item>
 </channel>
 </rss>
