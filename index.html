@@ -358,8 +358,8 @@ section{padding:26px 18px 34px}
 .sizesel{margin-bottom:18px}
 .sizesel h5{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-bottom:10px;font-weight:600}
 .szrow{display:flex;gap:8px;flex-wrap:wrap}
-.szc{padding:9px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:.84rem;cursor:pointer;background:#fff;user-select:none;text-align:center}
-.szc small{display:block;font-size:.68rem;color:var(--soft);margin-top:2px}
+.szc{padding:8px 13px;min-width:62px;border:1.5px solid var(--line);border-radius:12px;font-size:.9rem;font-weight:600;line-height:1.15;letter-spacing:.01em;cursor:pointer;background:#fff;user-select:none;text-align:center;white-space:nowrap}
+.szc small{display:block;font-size:.76rem;font-weight:500;color:var(--soft);margin-top:3px;letter-spacing:0}
 .szc.on{background:var(--rose);color:#fff;border-color:var(--rose)}
 .szc.on small{color:rgba(255,255,255,.75)}
 .szc.oos{opacity:.4;text-decoration:line-through;pointer-events:none}@keyframes needpulse{0%,100%{box-shadow:0 0 0 0 rgba(180,71,46,0)}35%{box-shadow:0 0 0 4px rgba(180,71,46,.28)}}.needpick{animation:needpulse .8s ease 2;border-color:#b4472e!important}@media (prefers-reduced-motion:reduce){.needpick{animation:none;border-color:#b4472e!important}}
@@ -464,7 +464,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=172" as="script">
+<link rel="preload" href="data-lite.js?v=173" as="script">
 <link rel="preload" href="hero2.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -762,7 +762,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=172"></script>
+<script src="data-lite.js?v=173"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -1277,7 +1277,9 @@ function openProd(id){
   if(cur.sizes.length){
     const chips = cur.sizes.map(s=>{
       const v = cur.var[s];
-      const pr = v ? money(v.p) : '';
+      // ціна показується завжди: у товарів без окремих цін по розмірах
+      // раніше під розміром було порожньо
+      const pr = money((v && v.p) || cur.price);
       const oos = v && !v.s ? 'oos' : '';
       return `<span class="szc ${oos}" onclick="selSz(this,'${s.replace(/'/g,"\\'")}')">${s}${pr?`<small>${pr}</small>`:''}</span>`;
     }).join('');
@@ -2806,7 +2808,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=172'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=173'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
