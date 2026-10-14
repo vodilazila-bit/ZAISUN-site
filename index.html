@@ -215,7 +215,7 @@ section{padding:26px 18px 34px}
 .menu-logo .m{font-size:1.35rem}
 .menu-logo .s{font-size:.5rem;letter-spacing:.14em;color:var(--mid)}
 .menu-x{background:none;border:none;color:var(--ink);padding:6px;cursor:pointer}
-.menu-list{display:flex;flex-direction:column;align-items:stretch;padding:6px 26px 44px;max-width:480px;margin:0 auto}
+.menu-list{display:flex;flex-direction:column;align-items:stretch;padding:6px 20px 44px;max-width:480px;margin:0 auto}
 .mi{font-size:1.2rem;font-weight:500;color:#5C544B;padding:13px 6px;text-align:center;cursor:pointer;position:relative}
 /* Підменю «Каталог товарів» розгортається плавно: висоту ставить toggleSub() */
 .mnu-sub{display:flex;flex-direction:column;padding:0;max-height:0;overflow:hidden;opacity:0;visibility:hidden;transition:max-height .28s cubic-bezier(.25,.8,.3,1),opacity .2s ease,visibility 0s .28s}
@@ -231,7 +231,27 @@ section{padding:26px 18px 34px}
 .msi.mic .mic-t{flex:1;min-width:0;padding:10px 0;border-bottom:1px solid rgba(58,48,40,.08)}
 .msi.mic:last-child .mic-t{border-bottom:none}
 .msi.mic:active .mic-t{color:var(--rose-d)}
-.menu-contact{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:30px}
+/* Головні пункти меню (варіант A): іконка ліворуч, стрілка праворуч */
+.mi.mic{display:flex;align-items:center;gap:14px;text-align:left;padding:6px 0;font-size:1.02rem}
+.mi.mic .mic-i{flex:0 0 42px;width:42px;height:42px;border-radius:12px;background:#F1E2D0;display:grid;place-items:center;color:#7A5A44}
+.mi.mic .mic-i svg{width:24px;height:24px}
+.mi.mic .mic-t{flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 0;border-bottom:1px solid rgba(58,48,40,.08)}
+.mi.mic .arr,.mi.mic .chv{display:flex;color:#ABA091;margin-left:0}
+.mi.mic.sale{color:var(--rose-d);font-weight:600}
+.mi.mic.sale .mic-i{background:#F4D9CB;color:var(--rose-d)}
+.mi.mic:active .mic-t{color:var(--rose-d)}
+/* Підпункти каталогу — з відступом, щоб було видно вкладеність */
+.mnu-sub .msi.mic{padding-left:8px;gap:14px;font-size:.98rem}
+.mnu-sub .msi.mic .mic-i{flex-basis:36px;width:36px;height:36px;border-radius:10px}
+.mnu-sub .msi.mic .mic-i svg{width:22px;height:22px}
+/* «Популярне» — 6 найчастіше відкритих категорій за 30 днів (рахує релей) */
+.mpop{margin-top:24px}
+.mpop-h{font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--rose-d);font-weight:600;margin:0 0 12px 2px}
+.mpop-c{display:flex;flex-wrap:wrap;gap:8px}
+.mpop-c button{display:inline-flex;align-items:center;gap:7px;background:none;border:1px solid rgba(58,48,40,.14);border-radius:30px;padding:8px 13px;font:inherit;font-size:.86rem;color:#5C544B;cursor:pointer}
+.mpop-c button svg{width:16px;height:16px;color:#7A5A44;flex:0 0 16px}
+.mpop-c button:active{border-color:var(--rose-d);color:var(--rose-d)}
+.menu-contact{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:16px;margin-top:28px}
 .menu-ig{width:48px;height:48px;border-radius:50%;background:#4A4038;border:none;display:grid;place-items:center;color:#FBEFE1;cursor:pointer}
 .menu-tel{font-size:1.05rem;color:#5C544B;text-decoration:underline}
 .mi:active{color:var(--rose-d)}
@@ -934,21 +954,92 @@ const MENU_ICONS = {
   lito:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>',
   kolhoty:'<path d="M8 3h7v9l3.6 3.6a3 3 0 0 1-4.2 4.2L9 14.5A3.4 3.4 0 0 1 8 12z"/><path d="M8 6.5h7"/>',
 };
+const MENU_TOP_ICONS = {
+  cat:'<path d="M12 6.5a2 2 0 1 1 2-2"/><path d="M12 6.5v1.5L3.5 15a1.5 1.5 0 0 0 1 2.6h15a1.5 1.5 0 0 0 1-2.6L12 8"/>',
+  sale:'<path d="M3 12.2V4.5A1.5 1.5 0 0 1 4.5 3h7.7l8.8 8.8a1.5 1.5 0 0 1 0 2.1l-7.1 7.1a1.5 1.5 0 0 1-2.1 0z"/><circle cx="7.8" cy="7.8" r="1.4"/>',
+  gift:'<rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8.5h14V12M12 8v12.5M12 8c-1.5-3.5-6-4-6-1.5S10 8 12 8zM12 8c1.5-3.5 6-4 6-1.5S14 8 12 8z"/>',
+  ruler:'<rect x="2.5" y="8" width="19" height="8" rx="1.5"/><path d="M6.5 8v3M10 8v4.5M13.5 8v3M17 8v4.5"/>',
+};
+const SVG_CHEV = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
+const SVG_DOWN = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+function topIcon(k){
+  return `<span class="mic-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${MENU_TOP_ICONS[k]}</svg></span>`;
+}
+
+// ═══ «Популярне» в меню ═══
+// Коли людина відкриває категорію з меню або з плиток на головній, сайт шле
+// сигнал {_pop:<ключ>} у релей. Релей (файл Popular.gs) рахує по днях і на
+// ?pop=1 віддає 6 найпопулярніших за 30 днів. Натискання на самі чипи
+// «Популярного» НЕ рахуються — інакше перші шість самі себе підтримували б.
+// Сигнали шлються лише після того, як релей хоч раз відповів на ?pop=1:
+// старий релей без Popular.gs прийняв би такий запит за замовлення.
+const POP_DEFAULT = ['osin','shapky','bodi','kostiumy','sukni','dzhynsy'];
+const POP_MIN_TOTAL = 20;   // поки натискань менше — показуємо типовий набір
+const POP_CACHE_H = 6;
+const POP_LABEL = {lito:'Літо', khreshchennia:'Хрещення', poviazky:"Пов'язки", kolhoty:'Колготи'};
+let POP_ON = false;
+function popPick(d){
+  let top = [];
+  if(d && Array.isArray(d.top) && (d.total||0) >= POP_MIN_TOTAL) top = d.top.slice();
+  const keys = new Set(MENU_DEF.map(x=>x.k));
+  const out = [];
+  top.concat(POP_DEFAULT).forEach(k=>{ if(keys.has(k) && !out.includes(k) && out.length < 6) out.push(k); });
+  return out;
+}
+function popRender(d){
+  const el = document.getElementById('menuPop');
+  if(!el) return;
+  const h = popPick(d).map(k=>{
+    const i = menuIdxByKey(k), def = MENU_DEF[i];
+    return `<button type="button" onclick="openMenuCat(${i})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${MENU_ICONS[k]||''}</svg>${POP_LABEL[k] || def.n.split(',')[0]}</button>`;
+  }).join('');
+  el.innerHTML = `<div class="mpop-h">Популярне</div><div class="mpop-c">${h}</div>`;
+}
+function popLoad(){
+  let fresh = false;
+  try{
+    const c = JSON.parse(localStorage.getItem('zs_pop') || 'null');
+    if(c && c.d){ POP_ON = true; popRender(c.d); fresh = (Date.now() - c.t) < POP_CACHE_H*3600*1000; }
+  }catch(e){}
+  if(!document.getElementById('menuPop').innerHTML) popRender(null);
+  if(fresh) return;
+  fetch(ORDER_RELAY + '?pop=1', {method:'GET', credentials:'omit'})
+    .then(r => r.ok ? r.json() : null)
+    .then(d => {
+      if(!d || !Array.isArray(d.top)) return;
+      POP_ON = true;
+      try{ localStorage.setItem('zs_pop', JSON.stringify({t:Date.now(), d:d})); }catch(e){}
+      popRender(d);
+    })
+    .catch(()=>{});
+}
+function popHit(k){
+  if(!POP_ON || !k) return;
+  try{                                   // одна людина — один голос за категорію на сесію
+    if(sessionStorage.getItem('zs_pop_' + k)) return;
+    sessionStorage.setItem('zs_pop_' + k, '1');
+  }catch(e){}
+  try{
+    fetch(ORDER_RELAY, {method:'POST', mode:'no-cors', credentials:'omit', keepalive:true,
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify({_pop:k})});
+  }catch(e){}
+}
 function menuIcon(k){
   const p = MENU_ICONS[k] || '<circle cx="12" cy="12" r="2.5"/>';
   return `<span class="mic-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${p}</svg></span>`;
 }
 function buildMenu(){
-  let h = `<div class="mi" onclick="toggleSub(event,'subCatalog')">Каталог товарів <span class="arr">▾</span></div>
+  let h = `<div class="mi mic" onclick="toggleSub(event,'subCatalog')">${topIcon('cat')}<span class="mic-t">Каталог товарів<span class="arr">${SVG_DOWN}</span></span></div>
     <div class="mnu-sub" id="subCatalog">
       <div class="msi mic" onclick="openCatAll()">${menuIcon('_all')}<span class="mic-t">Всі товари</span></div>`;
-  MENU_DEF.forEach((d,i)=>{ h += `<div class="msi mic" onclick="openMenuCat(${i})">${menuIcon(d.k)}<span class="mic-t">${d.n}</span></div>`; });
+  MENU_DEF.forEach((d,i)=>{ h += `<div class="msi mic" onclick="popHit('${d.k}');openMenuCat(${i})">${menuIcon(d.k)}<span class="mic-t">${d.n}</span></div>`; });
   h += `</div>`;
   const sale = TREE.find(t=>t.raw==='sale');
-  if(sale) h += `<div class="mi" onclick="openCat('${sale.id}')">Sale</div>`;
+  if(sale) h += `<div class="mi mic sale" onclick="openCat('${sale.id}')">${topIcon('sale')}<span class="mic-t">Sale<span class="chv">${SVG_CHEV}</span></span></div>`;
   const gifts = TREE.find(t=>t.raw==='Подарункові комплекти');
-  if(gifts) h += `<div class="mi" onclick="openCat('${gifts.id}')">Подарункові набори</div>`;
-  h += `<div class="mi" onclick="openSizeTable()">Таблиця розмірів шапок</div>`;
+  if(gifts) h += `<div class="mi mic" onclick="openCat('${gifts.id}')">${topIcon('gift')}<span class="mic-t">Подарункові набори<span class="chv">${SVG_CHEV}</span></span></div>`;
+  h += `<div class="mi mic" onclick="openSizeTable()">${topIcon('ruler')}<span class="mic-t">Розміри шапок<span class="chv">${SVG_CHEV}</span></span></div>`;
+  h += `<div class="mpop" id="menuPop"></div>`;
   h += `<div class="menu-contact">
     <button class="menu-ig" onclick="igGo('menu')" aria-label="Instagram">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
@@ -2045,7 +2136,7 @@ function buildHome(){
     let img = pr ? tImg(pr.photo) : '';
     if(d.n==='Шапки') img = tImg('cover_shapky.jpg');
     if(d.n==='Осінь' && pr) img = tImg(pr.photo, ' style="object-position:50% 8%"');
-    h += `<div class="hc" onclick="openMenuCat(${i})">${img}<span>${d.n} · ${prods.length}</span></div>`;
+    h += `<div class="hc" onclick="popHit('${d.k}');openMenuCat(${i})">${img}<span>${d.n} · ${prods.length}</span></div>`;
   });
   const sale = TREE.find(t=>t.raw==='sale');
   if(sale){
@@ -2640,7 +2731,7 @@ if(heroSlides.length){
     .catch(()=>{});
 })();
 
-buildMenu(); buildHome(); buildNew(); buildIG(); buildTop();
+buildMenu(); buildHome(); buildNew(); buildIG(); buildTop(); popLoad();
 
 // ═══ Свайп назад / кнопка назад: інтеграція з історією браузера ═══
 function closeProd(){ if(curCatId) go('cat'); else goHome(); }
