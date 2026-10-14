@@ -224,6 +224,13 @@ section{padding:26px 18px 34px}
 .msi{font-size:.98rem;color:#8A8074;padding:8px;text-align:center;cursor:pointer}
 .msi:active{color:var(--rose-d)}
 .msi.sub2{font-size:.88rem;color:#ABA091}
+/* Пункти «Каталогу товарів» з іконками ліворуч */
+.mnu-sub .msi.mic{display:flex;align-items:center;gap:16px;text-align:left;padding:7px 4px;color:#5C544B;font-size:1.02rem}
+.msi.mic .mic-i{flex:0 0 40px;width:40px;height:40px;border-radius:11px;background:#F1E2D0;display:grid;place-items:center;color:#7A5A44}
+.msi.mic .mic-i svg{width:24px;height:24px}
+.msi.mic .mic-t{flex:1;min-width:0;padding:10px 0;border-bottom:1px solid rgba(58,48,40,.08)}
+.msi.mic:last-child .mic-t{border-bottom:none}
+.msi.mic:active .mic-t{color:var(--rose-d)}
 .menu-contact{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:30px}
 .menu-ig{width:48px;height:48px;border-radius:50%;background:#4A4038;border:none;display:grid;place-items:center;color:#FBEFE1;cursor:pointer}
 .menu-tel{font-size:1.05rem;color:#5C544B;text-decoration:underline}
@@ -907,11 +914,35 @@ function openMenuCat(idx){
   curCatName = def.n;
   initCat(def.n);
 }
+// Іконки пунктів «Каталогу товарів» (ключ = MENU_DEF.k). Немає ключа — крапка.
+const MENU_ICONS = {
+  _all:'<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
+  osin:'<path d="M5 19C5 10.5 10.5 5 19 5c0 8.5-5.5 14-14 14z"/><path d="M5 19 13.5 10.5M9.5 14.5h3.5M12 12V9"/>',
+  shapky:'<path d="M5 16a7 7 0 0 1 14 0"/><rect x="4" y="16" width="16" height="4" rx="1.5"/><circle cx="12" cy="6.8" r="1.8"/>',
+  bodi:'<path d="M8 3 4 5.5l1.8 3.2L7.5 8v8l2.5 4h4l2.5-4V8l1.7.7L20 5.5 16 3a4 4 0 0 1-8 0z"/><path d="M10 20h4"/>',
+  kostiumy:'<path d="M8 2.5 4.5 4.2V9H7v4h10V9h2.5V4.2L16 2.5a4 4 0 0 1-8 0z"/><path d="M12 6.4V13M7.5 15.5h9l.5 6h-3.5L12 17.5l-1.5 4H7z"/>',
+  sukni:'<path d="M9.5 3h5L14 7.5l5 13H5l5-13z"/><path d="M10 7.5h4M9.5 3c.8 1.3 4.2 1.3 5 0"/>',
+  dzhynsy:'<path d="M7 3h10l1 18h-4.2L12 10l-1.8 11H6z"/><path d="M7 6.5h10M12 6.5V10"/>',
+  sarafany:'<path d="M9 3v5M15 3v5"/><path d="M8 8h8l3.5 12h-15z"/><path d="M9.5 8a2.5 2.5 0 0 0 5 0M8 13h8"/>',
+  rompery:'<path d="M8 3 4 5l1.6 3.2L8 7.2V14l-1 6h4l1-3.5 1 3.5h4l-1-6V7.2l2.4 1L20 5l-4-2a4 4 0 0 1-8 0z"/>',
+  poviazky:'<path d="M10.3 12 3.5 7.5v9zM13.7 12l6.8-4.5v9z"/><rect x="10.3" y="10" width="3.4" height="4" rx="1.2"/>',
+  futbolky:'<path d="M8.5 3 3 6l2 4.2 3-1.4V21h8V8.8l3 1.4L21 6l-5.5-3a3.5 3.5 0 0 1-7 0z"/>',
+  panamy:'<path d="M7.2 14 8 8a4 4 0 0 1 8 0l.8 6"/><path d="M3 15c2.5-1.6 15.5-1.6 18 0-2.5 2.6-15.5 2.6-18 0z"/>',
+  khreshchennia:'<path d="M12 3v18M7.5 8h9"/>',
+  vzuttia:'<path d="M6 4h6v8l5.5 2a3 3 0 0 1 2.5 3v2.5H4V6a2 2 0 0 1 2-2z"/><path d="M6 8h6M4 17h16"/>',
+  aksesuary:'<path d="M5 8.5h14L18 20H6z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/>',
+  lito:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>',
+  kolhoty:'<path d="M8 3h7v9l3.6 3.6a3 3 0 0 1-4.2 4.2L9 14.5A3.4 3.4 0 0 1 8 12z"/><path d="M8 6.5h7"/>',
+};
+function menuIcon(k){
+  const p = MENU_ICONS[k] || '<circle cx="12" cy="12" r="2.5"/>';
+  return `<span class="mic-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${p}</svg></span>`;
+}
 function buildMenu(){
   let h = `<div class="mi" onclick="toggleSub(event,'subCatalog')">Каталог товарів <span class="arr">▾</span></div>
     <div class="mnu-sub" id="subCatalog">
-      <div class="msi" onclick="openCatAll()">Всі товари</div>`;
-  MENU_DEF.forEach((d,i)=>{ h += `<div class="msi" onclick="openMenuCat(${i})">${d.n}</div>`; });
+      <div class="msi mic" onclick="openCatAll()">${menuIcon('_all')}<span class="mic-t">Всі товари</span></div>`;
+  MENU_DEF.forEach((d,i)=>{ h += `<div class="msi mic" onclick="openMenuCat(${i})">${menuIcon(d.k)}<span class="mic-t">${d.n}</span></div>`; });
   h += `</div>`;
   const sale = TREE.find(t=>t.raw==='sale');
   if(sale) h += `<div class="mi" onclick="openCat('${sale.id}')">Sale</div>`;
