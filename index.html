@@ -248,12 +248,12 @@ section{padding:26px 18px 34px}
 .mpop{margin-top:24px}
 .mpop-h{font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--rose-d);font-weight:600;margin:0 0 12px 2px}
 .mpop-c{display:flex;flex-wrap:wrap;gap:8px}
-.mpop-c button{display:inline-flex;align-items:center;gap:7px;background:none;border:1px solid rgba(58,48,40,.14);border-radius:30px;padding:8px 13px;font:inherit;font-size:.86rem;color:#5C544B;cursor:pointer}
-.mpop-c button svg{width:16px;height:16px;color:#7A5A44;flex:0 0 16px}
+.mpop-c button{display:inline-flex;align-items:center;gap:7px;background:none;border:1px solid rgba(58,48,40,.14);border-radius:30px;padding:9px 16px;font:inherit;font-size:.86rem;color:#5C544B;cursor:pointer}
 .mpop-c button:active{border-color:var(--rose-d);color:var(--rose-d)}
-.menu-contact{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:16px;margin-top:28px}
-.menu-ig{width:48px;height:48px;border-radius:50%;background:#4A4038;border:none;display:grid;place-items:center;color:#FBEFE1;cursor:pointer}
-.menu-tel{font-size:1.05rem;color:#5C544B;text-decoration:underline}
+.menu-contact{display:flex;gap:10px;margin-top:26px}
+.menu-btn{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;background:#4A4038;color:#FBEFE1;border:none;border-radius:14px;padding:14px 8px;font:inherit;font-size:.92rem;font-weight:600;text-decoration:none;cursor:pointer;white-space:nowrap}
+.menu-btn svg{flex:0 0 20px}
+.menu-btn:active{background:#3A322B}
 .mi:active{color:var(--rose-d)}
 .mi .arr{font-size:.85rem;color:var(--soft);margin-left:8px;display:inline-block;transition:transform .28s cubic-bezier(.25,.8,.3,1)}
 .mi.open .arr{transform:rotate(180deg)}
@@ -991,7 +991,7 @@ function popRender(d){
   if(!el) return;
   const h = popPick(d).map(k=>{
     const i = menuIdxByKey(k), def = MENU_DEF[i];
-    return `<button type="button" onclick="openMenuCat(${i})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${MENU_ICONS[k]||''}</svg>${POP_LABEL[k] || def.n.split(',')[0]}</button>`;
+    return `<button type="button" onclick="openMenuCat(${i})">${POP_LABEL[k] || def.n.split(',')[0]}</button>`;
   }).join('');
   el.innerHTML = `<div class="mpop-h">Популярне</div><div class="mpop-c">${h}</div>`;
 }
@@ -1041,10 +1041,12 @@ function buildMenu(){
   h += `<div class="mi mic" onclick="openSizeTable()">${topIcon('ruler')}<span class="mic-t">Розміри шапок<span class="chv">${SVG_CHEV}</span></span></div>`;
   h += `<div class="mpop" id="menuPop"></div>`;
   h += `<div class="menu-contact">
-    <button class="menu-ig" onclick="igGo('menu')" aria-label="Instagram">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
+    <button type="button" class="menu-btn" onclick="igGo('menu')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg>Instagram
     </button>
-    <a class="menu-tel" href="tel:+380738121252">+380738121252</a>
+    <a class="menu-btn" href="tel:+380738121252" onclick="try{gtag('event','phone_click',{link_location:'menu'})}catch(e){}">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.5h3.5l1.7 4.3-2.2 1.4a11 11 0 0 0 6.8 6.8l1.4-2.2 4.3 1.7V19a1.5 1.5 0 0 1-1.5 1.5A16.5 16.5 0 0 1 3.5 5 1.5 1.5 0 0 1 5 3.5z"/></svg>Подзвонити
+    </a>
   </div>`;
   document.getElementById('menuList').innerHTML = h;
 }
