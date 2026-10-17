@@ -237,8 +237,9 @@ section{padding:26px 18px 34px}
 .mi.mic .mic-i svg{width:24px;height:24px}
 .mi.mic .mic-t{flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 0;border-bottom:1px solid rgba(58,48,40,.08)}
 .mi.mic .arr,.mi.mic .chv{display:flex;color:#ABA091;margin-left:0}
-.mi.mic.sale{color:var(--rose-d);font-weight:600}
 .mi.mic.sale .mic-i{background:#F4D9CB;color:var(--rose-d)}
+/* Sale — звичайний текст, виділяє лише ніжна мітка зі знижкою */
+.mi.mic .sbadge{margin-left:auto;margin-right:10px;font-size:.74rem;font-weight:600;color:var(--rose-d);background:#F7E3D8;border-radius:20px;padding:4px 10px;white-space:nowrap}
 .mi.mic:active .mic-t{color:var(--rose-d)}
 /* Підпункти каталогу — з відступом, щоб було видно вкладеність */
 .mnu-sub .msi.mic{padding-left:8px;gap:14px;font-size:.98rem}
@@ -262,7 +263,6 @@ section{padding:26px 18px 34px}
 .msi{font-size:1.02rem;color:#8A8074;padding:8px;text-align:center;cursor:pointer}
 .msi:active{color:var(--rose-d)}
 .menu-gap{height:22px}
-.mi.sale{color:var(--rose-d);font-weight:600}
 
 /* ═══ CATALOG ═══ */
 .phead{padding:18px 18px 2px;text-align:center}
@@ -491,7 +491,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=254" as="script">
+<link rel="preload" href="data-lite.js?v=255" as="script">
 <link rel="preload" href="hero2.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -789,7 +789,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=254"></script>
+<script src="data-lite.js?v=255"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -1035,7 +1035,13 @@ function buildMenu(){
   MENU_DEF.forEach((d,i)=>{ h += `<div class="msi mic" onclick="popHit('${d.k}');openMenuCat(${i})">${menuIcon(d.k)}<span class="mic-t">${d.n}</span></div>`; });
   h += `</div>`;
   const sale = TREE.find(t=>t.raw==='sale');
-  if(sale) h += `<div class="mi mic sale" onclick="openCat('${sale.id}')">${topIcon('sale')}<span class="mic-t">Sale<span class="chv">${SVG_CHEV}</span></span></div>`;
+  if(sale){
+    // найбільша реальна знижка серед товарів розділу Sale
+    let mx = 0;
+    try{ PL.forEach(p=>{ if(p.cats.includes(sale.id) && p.old > p.price) mx = Math.max(mx, Math.round((1 - p.price/p.old)*100)); }); }catch(e){}
+    const badge = mx >= 5 ? `<span class="sbadge">до −${mx}%</span>` : '';
+    h += `<div class="mi mic sale" onclick="openCat('${sale.id}')">${topIcon('sale')}<span class="mic-t">Sale${badge}<span class="chv">${SVG_CHEV}</span></span></div>`;
+  }
   const gifts = TREE.find(t=>t.raw==='Подарункові комплекти');
   if(gifts) h += `<div class="mi mic" onclick="openCat('${gifts.id}')">${topIcon('gift')}<span class="mic-t">Подарункові набори<span class="chv">${SVG_CHEV}</span></span></div>`;
   h += `<div class="mi mic" onclick="openSizeTable()">${topIcon('ruler')}<span class="mic-t">Розміри шапок<span class="chv">${SVG_CHEV}</span></span></div>`;
@@ -2940,7 +2946,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=254'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=255'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
