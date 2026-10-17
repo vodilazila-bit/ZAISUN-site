@@ -14916,7 +14916,7 @@
     <g:gender>female</g:gender>
     <g:price>395.00 UAH</g:price>
     <g:sale_price>220.00 UAH</g:sale_price>
-    <g:color>Блакитний</g:color>
+    <g:color>Білий</g:color>
     <g:size>3-6міс</g:size>
     <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
   </item>
@@ -15936,7 +15936,7 @@
 матеріал: подвійна ангора Погода: холодна весна-холодна осінь/тепла зима Орієнтовно до 0*</g:description>
     <g:link>https://zaisun.com.ua/?p=1135</g:link>
     <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_na_kholodnu_vesnu_osin_u_synomu_kolori_z_vus_1135_muipr85u_0.jpg</g:image_link>
-    <g:availability>in stock</g:availability>
+    <g:availability>out of stock</g:availability>
     <g:condition>new</g:condition>
     <g:brand>ZaiSun</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
