@@ -60,7 +60,7 @@ html,body{max-width:100%;touch-action:pan-y pinch-zoom}
 
 .topbar{background:#C9A186;color:#FDF8F2;text-align:center;font-size:.74rem;letter-spacing:.05em;padding:8px 14px;font-weight:500}
 .hdr{background:#FBEFE1;display:flex;align-items:center;justify-content:flex-end;padding:10px 20px 12px;position:sticky;top:0;z-index:100;min-height:78px;position:sticky}
-.hdr-logo{cursor:pointer;line-height:1.15;position:absolute;left:50%;transform:translateX(-50%)}
+.hdr-logo{display:block;cursor:pointer;line-height:1.15;position:absolute;left:50%;transform:translateX(-50%)}
 
 
 .hl-img{height:58px;display:block}
@@ -494,7 +494,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=276" as="script">
+<link rel="preload" href="data-lite.js?v=277" as="script">
 <link rel="preload" href="hero2.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -530,9 +530,9 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <div class="topbar">Безкоштовна доставка на замовлення від 3000 грн. Оплата 7 тисяч до року.</div>
 <header class="hdr">
-  <div class="hdr-logo" onclick="goHome()">
+  <a class="hdr-logo" href="/" onclick="spaClick(event,()=>goHome())" aria-label="ZaiSun — на головну">
     <img src="logo.png" alt="ZaiSun" class="hl-img">
-  </div>
+  </a>
   <div class="hdr-actions">
     <button class="hbtn" onclick="openSearch()" aria-label="Пошук">
       <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#4A4038" stroke-width="1.7"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -567,7 +567,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
         <div class="eyebrow">НОВА КОЛЕКЦІЯ</div>
         <h1 class="stitle short">Осіння колекція вже на сайті</h1>
         <p class="ssub">Тепліші тканини, спокійні кольори — усе, що потрібно для перших прохолодних днів.</p>
-        <button class="sbtn" type="button" onclick="heroOpenCat('Осінь')">Дивитись осінь</button>
+        <a class="sbtn" href="?cat=kosin" data-herocat="Осінь" onclick="spaClick(event,()=>heroOpenCat('Осінь'))">Дивитись осінь</a>
       </div>
     </div>
     <div class="hs" data-hs="2">
@@ -577,7 +577,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
         <div class="eyebrow">ОБМЕЖЕНА ПРОПОЗИЦІЯ</div>
         <h1 class="stitle short">Знижки до −30%</h1>
         <p class="ssub">Поки є розміри. Діє на позначені товари в каталозі.</p>
-        <button class="sbtn" type="button" onclick="heroOpenCat('sale')">До розпродажу</button>
+        <a class="sbtn" href="?cat=all" data-herocat="sale" onclick="spaClick(event,()=>heroOpenCat('sale'))">До розпродажу</a>
       </div>
     </div>
     <button class="harrow l" onclick="heroNav(-1)" aria-label="Попередній слайд">
@@ -625,7 +625,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 <div class="menu-ovl" id="menuOvl" onclick="closeMenu()"></div>
 <div class="menu" id="menu">
   <div class="menu-top">
-    <div class="menu-logo" onclick="closeMenu();goHome()" style="cursor:pointer" role="button" tabindex="0" aria-label="На головну"><img src="logo.png" alt="ZaiSun" style="height:54px;display:block"></div>
+    <a class="menu-logo" href="/" onclick="spaClick(event,()=>{closeMenu();goHome()})" style="cursor:pointer;display:block" aria-label="На головну"><img src="logo.png" alt="ZaiSun" style="height:54px;display:block"></a>
     <button class="menu-x" onclick="closeMenu()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
   </div>
   <div class="menu-list" id="menuList"></div>
@@ -655,7 +655,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- CATALOG -->
 <div class="page" id="pgCat">
-  <button class="back" onclick="goHomeBack()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Головна</button>
+  <a class="back" href="/" onclick="spaClick(event,()=>goHomeBack())"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Головна</a>
   <div class="phead">
     <div class="pk">Каталог</div>
     <h1 id="catTitle"></h1>
@@ -792,7 +792,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=276"></script>
+<script src="data-lite.js?v=277"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -1449,7 +1449,7 @@ function renderRelated(){
   rel=rel.slice(0,8);
   if(!rel.length){box.innerHTML='';return}
   box.innerHTML=`<h4 class="prel-h">Схожі товари</h4><div class="prel-row">`+
-    rel.map(p=>`<a class="prel-c" href="?p=${p.id}" onclick="event.preventDefault();openProd(${p.id});document.getElementById('prodView')?.scrollTo?.(0,0);window.scrollTo(0,0)">
+    rel.map(p=>`<a class="prel-c" href="?p=${p.id}" onclick="spaClick(event,()=>{openProd(${p.id});document.getElementById('prodView')?.scrollTo?.(0,0);window.scrollTo(0,0)})">
       ${tImg(p.photo)}<div class="prel-n">${p.name}</div><div class="prel-p">${priceFrom(p)}${money(p.price)}</div></a>`).join('')+`</div>`;
 }
 function updPrice(p, o, pref){
@@ -2630,6 +2630,13 @@ function buildTop(){
 
 // Відкриває розділ каталогу з банера. Шукаємо за raw-назвою в дереві категорій,
 // бо id категорій — це uuid, які змінюються при перебудові каталогу.
+function heroLinks(){
+  try{ document.querySelectorAll('[data-herocat]').forEach(a=>{
+    const raw = a.dataset.herocat, k = (MENU_DEF.find(d=>d.c.includes(raw))||{}).k;
+    const t = TREE.find(x=>x.raw===raw);
+    if(k) a.href = '?cat=k' + k; else if(t) a.href = '?cat=' + t.id;
+  }); }catch(e){}
+}
 function heroOpenCat(raw){
   try{
     const t = (typeof TREE!=='undefined' && TREE) ? TREE.find(x=>x.raw===raw) : null;
@@ -2747,7 +2754,7 @@ if(heroSlides.length){
     .catch(()=>{});
 })();
 
-buildMenu(); buildHome(); buildNew(); buildIG(); buildTop(); popLoad();
+buildMenu(); buildHome(); buildNew(); buildIG(); buildTop(); popLoad(); heroLinks();
 
 // ═══ Свайп назад / кнопка назад: інтеграція з історією браузера ═══
 function closeProd(){ if(curCatId) go('cat'); else goHome(); }
@@ -2954,7 +2961,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=276'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=277'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
