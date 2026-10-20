@@ -277,6 +277,7 @@ a.back{width:fit-content;text-decoration:none}
 .subcats.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;overflow:visible;padding:14px 18px 2px;max-width:600px;margin:0 auto;width:100%}
 @media(min-width:700px){.subcats.grid{grid-template-columns:repeat(2,1fr);max-width:900px;gap:16px}}
 @media(min-width:1050px){.subcats.grid{grid-template-columns:repeat(3,1fr);max-width:1200px}}
+@media (max-width:480px){.hc{padding:12px 6px 16px}.hc span{font-size:clamp(.8rem,3.7vw,.95rem);padding:9px clamp(9px,3vw,14px)}}
 .subcats.grid .hc span{font-size:.85rem;padding:8px 16px}
 #pgCat.pick-sub .subcats.grid{margin-bottom:22px}
 .subcats::-webkit-scrollbar{display:none}
@@ -495,7 +496,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=280" as="script">
+<link rel="preload" href="data-lite.js?v=281" as="script">
 <link rel="preload" href="hero2.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -793,7 +794,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=280"></script>
+<script src="data-lite.js?v=281"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -876,8 +877,27 @@ function spaClick(e, fn){
 // ─── menu build ───
 
 // ═══ Мапа меню старого сайту ═══
+// ─── Розділ «Новий рік»: свій порядок товарів ───
+// Перший екран — найкращі святкові фото (NY_HERO, у такому порядку).
+// Далі групи: сукні → ромпери й сарафани → комплекти з боді → боді → аксесуари;
+// у кожній групі спершу червоне й бордо, потім зелене, чорне, біле й молочне.
+// Новий товар, якому в адмінці поставили «Новий Рік», сам стане у свою групу.
+const NY_HERO = [338, 393, 841, 378, 452, 843, 349, 1038];
+function nyRank(p){
+  const h = NY_HERO.indexOf(p.id);
+  if(h >= 0) return h;
+  const c = p.catn || [];
+  const g = c.includes('Сукні') ? 1
+          : (c.includes('Ромпер') || c.includes('сарафан')) ? 2
+          : c.includes('Комплекти з боді') ? 3
+          : (c.includes('Боді') || c.includes('Палітра боді')) ? 4 : 5;
+  const col = ((p.color||'') + ' ' + (p.name||'')).toLowerCase();
+  const hue = /черв|бордо/.test(col) ? 0 : /зелен|чорн|біл|молоч|клітин|золот/.test(col) ? 1 : 2;
+  return 100 + g*10 + hue;
+}
 const MENU_DEF = [
   {k:'osin',          n:'Осінь', c:['Осінь']},
+  {k:'novyirik',      n:'Новий рік', c:['Новий Рік'], rank:nyRank},
   {k:'shapky',        n:'Шапки', c:['Шапки']},
   {k:'bodi',          n:'Боді', c:['Боді','Боді-гольф','Комплекти з боді']},
   {k:'kostiumy',      n:'Костюми', c:['Костюм','Костюм утеплений']},
@@ -945,7 +965,7 @@ function openMenuCat(idx){
   curSubs = subsFromNames(def.c);
   curSub = '';
   curCatName = def.n;
-  initCat(def.n);
+  initCat(def.n, def.rank);
 }
 // Іконки пунктів «Каталогу товарів» (ключ = MENU_DEF.k). Немає ключа — крапка.
 const MENU_ICONS = {
@@ -966,6 +986,7 @@ const MENU_ICONS = {
   aksesuary:'<path d="M5 8.5h14L18 20H6z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/>',
   lito:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>',
   kolhoty:'<path d="M8 3h7v9l3.6 3.6a3 3 0 0 1-4.2 4.2L9 14.5A3.4 3.4 0 0 1 8 12z"/><path d="M8 6.5h7"/>',
+  novyirik:'<path d="M12 3.2 16.6 9H14l3.6 4.6h-2.9L18.6 19H5.4l3.9-5.4H6.4L10 9H7.4z"/><path d="M12 19v2.3"/>',
 };
 const MENU_TOP_ICONS = {
   cat:'<path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="5" cy="6.5" r="1.2"/><circle cx="5" cy="12" r="1.2"/><circle cx="5" cy="17.5" r="1.2"/>',
@@ -1155,16 +1176,19 @@ function rememberSub(id){
     pushNav(st, u.pathname + u.search);
   }catch(e){}
 }
-function initCat(nm){
+function initCat(nm, rank){
   document.title = nm + ' — дитячий одяг ZaiSun';
   const cq=document.getElementById('catQ'); if(cq) cq.value='';
-  curProds.sort((a,b)=>b.id-a.id);
+  // у розділу може бути свій порядок (rank) — інакше спершу новинки
+  curProds.sort(rank ? (a,b)=>rank(a)-rank(b) || b.id-a.id : (a,b)=>b.id-a.id);
   fSel = {}; pFrom=null; pTo=null;
   const prices = curProds.map(p=>p.price).filter(x=>x>0);
   catMin = prices.length?Math.floor(Math.min(...prices)):0;
   catMax = prices.length?Math.ceil(Math.max(...prices)):0;
   document.getElementById('catTitle').textContent = nm;
   document.getElementById('sortsel').value='default';
+  const o0 = document.querySelector('#sortsel option[value="default"]');
+  if(o0) o0.textContent = rank ? 'Рекомендовані' : 'Спочатку новинки';
   renderSubs();
   try{
     gtag('event','view_item_list',{item_list_name:nm,items:curProds.slice(0,10).map(p=>({item_id:String(p.id),item_name:p.name,price:p.price}))});
@@ -2898,7 +2922,11 @@ window.addEventListener('popstate', e => {
     else if(st.v === 'prod'){ _openProd(st.id); setCanon(prodCanon(st.id)); }
     else if(st.v === 'cat'){
       if(st.m === 'all'){ _openCatAll(); setCanon('?cat=all'); }
-      else if(st.m === 'menu'){ _openMenuCat(st.i); setCanon('?cat=k' + (MENU_DEF[st.i]||{}).k); }
+      else if(st.m === 'menu'){
+        const kq = new URLSearchParams(location.search).get('cat') || '';
+        const mk = kq.charAt(0) === 'k' ? menuIdxFromParam(kq) : -1, mi = mk >= 0 ? mk : st.i;
+        _openMenuCat(mi); setCanon('?cat=k' + (MENU_DEF[mi]||{}).k);
+      }
       else { _openCat(st.id); setCanon('?cat=' + st.id); }
       if(st.sub && curSubs.some(s=>s.id===st.sub)) subSel(st.sub);
     }
@@ -2962,7 +2990,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=280'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=281'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
