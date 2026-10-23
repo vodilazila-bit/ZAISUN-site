@@ -17354,7 +17354,7 @@
 матеріал: ангора на флісовому пікладі Погода: зима Орієнтовно до -15•</g:description>
     <g:link>https://zaisun.com.ua/?p=1214</g:link>
     <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_na_zymu_na_flisovomu_pidkladi_1214_mvl9kd9l_0.jpg</g:image_link>
-    <g:availability>out of stock</g:availability>
+    <g:availability>in stock</g:availability>
     <g:condition>new</g:condition>
     <g:brand>ZaiSun</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
@@ -17363,8 +17363,28 @@
     <g:price>410.00 UAH</g:price>
     <g:sale_price>310.00 UAH</g:sale_price>
     <g:color>Бежевий</g:color>
-    <g:size>44-46</g:size>
+    <g:size>42-44</g:size>
     <g:product_type>Зима</g:product_type>
+  </item>
+  <item>
+    <g:id>1215</g:id>
+    <g:title>Дитяча шапка на холодну осінь/теплу зиму</g:title>
+    <g:description>Дитяча шапка з ангори — м’яка, тепла та приємна до тіла 
+матеріал: подвійна ангора 
+Погода: зима Орієнтовно до -15•</g:description>
+    <g:link>https://zaisun.com.ua/?p=1215</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_na_kholodnu_osin_teplu_zymu_1215_mvl9ns7a_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>410.00 UAH</g:price>
+    <g:sale_price>310.00 UAH</g:sale_price>
+    <g:color>Рожевий</g:color>
+    <g:size>42-44</g:size>
+    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
   </item>
 </channel>
 </rss>
