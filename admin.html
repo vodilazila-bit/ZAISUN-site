@@ -804,7 +804,8 @@ async function dupProduct(){
   if(!confirm('Створити копію товару «'+src.name+'»?\n\nСкопіюється все, КРІМ фото — його додаси окремо.')) return;
   const copy = JSON.parse(JSON.stringify(src));
   copy.id = Math.max(...DATA.products.map(p=>p.id)) + 1;
-  copy.name = src.name + ' (копія)';
+  // без «(копія)» у назві: цей напис потрапляв на сайт і у фід, якщо назву не встигали змінити
+  copy.name = src.name;
   copy.photo = '';
   delete copy.photos;
   delete copy.cover; delete copy.coverCat; delete copy.coverAll;
@@ -815,7 +816,7 @@ async function dupProduct(){
   DATA.tree.forEach(recount);
   try{
     await commitData('admin: дубльовано товар #'+src.id+' -> #'+copy.id);
-    toast('✓ Копію #'+copy.id+' створено — додай фото і зміни назву','ok');
+    toast('✓ Копію #'+copy.id+' створено — додай фото і зміни назву (зараз вона така сама, як в оригіналу)','ok');
     $('stat').textContent='✓ '+DATA.products.length+' товарів';
     renderList();
     openEdit(copy.id);
