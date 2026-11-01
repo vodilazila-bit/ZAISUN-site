@@ -993,6 +993,8 @@ async function saveEdit(){
   if(!newSizes.length){toast('Має лишитись хоча б один розмір','err');return}
   p.sizes=newSizes; p.var=newVar;
   p.price=Math.min(...Object.values(p.var).map(v=>v.p).filter(x=>x>0));
+  // «стара» ціна товару — з колонки «Стара» (раніше лишалась від копії і показувалась на сайті)
+  { const os=Object.values(p.var).map(v=>v.o).filter(x=>x>0); p.old = os.length ? Math.min(...os) : 0; }
   // категорії товару
   const catChips=[...document.querySelectorAll('#e_cats .chip.on')];
   if(!catChips.length){toast('Вибери хоча б одну категорію','err');return}

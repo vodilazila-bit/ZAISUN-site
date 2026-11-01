@@ -205,7 +205,9 @@ function page(p) {
   <div>
     <h1>${esc(p.name)}</h1>
     <div class="price">${pi.many ? 'від ' : ''}${pi.min} грн${
-      p.old && p.old > pi.min ? `<span class="old">${p.old} грн</span>` : ''
+      (() => { const os = Object.values(p.var || {}).map(v => v && v.o).filter(x => x > 0);
+               const old = os.length ? Math.min(...os) : p.old;
+               return old && old > pi.min ? `<span class="old">${old} грн</span>` : ''; })()
     }</div>
     ${p.color ? `<p class="meta">Колір: ${esc(p.color)}</p>` : ''}
     <p class="meta">${p.stock ? 'В наявності' : 'Немає в наявності'}</p>
