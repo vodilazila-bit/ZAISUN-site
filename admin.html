@@ -97,6 +97,18 @@ table.vt input{padding:8px;font-size:14px}
   #t-edit.editing .pl.on{border-color:var(--acc);background:#fdf6ef}
   .ggrid{max-height:440px}
 }
+/* «Колір закінчився» */
+.csw{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:90;display:flex;align-items:flex-end;justify-content:center}
+.csw-box{background:#fff;width:100%;max-width:720px;max-height:90vh;overflow:auto;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
+.csw-it{display:flex;gap:10px;align-items:center;padding:8px;border:1px solid var(--bd);border-radius:10px;margin:0 0 6px;cursor:pointer;text-transform:none;letter-spacing:normal;font-weight:400;font-size:13px;color:var(--txt)}
+.csw-bar{position:sticky;bottom:calc(-16px - env(safe-area-inset-bottom));background:#fff;padding:10px 0 calc(6px + env(safe-area-inset-bottom));margin-top:6px;border-top:1px solid var(--bd)}
+.csw-it img,.csw-it .noi{width:46px;height:46px;object-fit:cover;border-radius:8px;background:#f0ebe4;flex:none}
+.csw-it input{width:22px;height:22px;flex:none;accent-color:var(--acc)}
+.csw-it .nm{font-size:12.5px;font-weight:600;line-height:1.3}
+.csw-it .tg{font-size:11px;color:var(--mut)}
+.csw-it .tg b{color:var(--acc2);font-weight:600}
+.csw-it.on{border-color:var(--acc);background:#fdf6ef}
+@media(min-width:900px){.csw{align-items:center}.csw-box{border-radius:16px}}
 </style>
 </head>
 <body>
@@ -216,6 +228,7 @@ table.vt input{padding:8px;font-size:14px}
     <div class="card">
       <input type="text" id="e_q" placeholder="Пошук по назві або ID…" oninput="LIST_LIM=120;renderList()">
       <select id="e_catf" onchange="LIST_LIM=120;renderList()" style="width:100%;margin-top:8px;padding:11px;border:1.5px solid var(--line,#ddd);border-radius:10px;font-family:inherit;font-size:14px;background:#fff"></select>
+      <button class="btn sec sm" style="margin-top:8px" onclick="cswOpen('',null)">🎨 Колір закінчився — прибрати з товарів</button>
     </div>
     <div id="e_list"></div>
     <div id="e_moreWrap" style="text-align:center;padding:6px 0 14px"><button class="btn sec" id="e_more" style="display:none;max-width:240px" onclick="LIST_LIM+=120;renderList()">Показати ще</button></div>
@@ -287,6 +300,21 @@ table.vt input{padding:8px;font-size:14px}
 <div id="loader" style="display:none">Завантажую data.js…</div>
 </div>
 <div class="msg" id="msg"></div>
+<div class="csw" id="csw" style="display:none" onclick="if(event.target===this)cswClose()"><div class="csw-box">
+  <div class="flx" style="justify-content:space-between;align-items:flex-start"><b id="csw_t" style="font-size:15px;line-height:1.35"></b><button class="btn sec sm" onclick="cswClose()">✕</button></div>
+  <div id="csw_selw" style="display:none;margin-top:10px"><select id="csw_sel" onchange="cswRender()"></select></div>
+  <div class="hint" id="csw_h" style="margin-top:8px"></div>
+  <div class="row" id="csw_btns" style="margin:10px 0;flex-wrap:wrap">
+    <button class="btn sec sm" id="csw_sim" onclick="cswPick('sim')">Вибрати схожі</button>
+    <button class="btn sec sm" onclick="cswPick('all')">Вибрати всі</button>
+    <button class="btn sec sm" onclick="cswPick('none')">Зняти всі</button>
+  </div>
+  <div id="csw_list"></div>
+  <div class="row csw-bar">
+    <button class="btn" id="csw_go" onclick="cswApply()">Прибрати колір з вибраних</button>
+    <button class="btn sec" id="csw_skip" onclick="cswClose()">Нічого не міняти</button>
+  </div>
+</div></div>
 <div class="savebar" id="savebar"><div class="in">
   <div class="n" id="sb_n">Незбережених змін: 0</div>
   <button class="btn" id="sb_btn" onclick="saveAll()">💾 Зберегти зміни</button>
@@ -952,6 +980,7 @@ function pickFromGallery(name){
 }
 async function saveEdit(){
   const p=DATA.products.find(x=>x.id===editId);
+  const colBefore=colorsOf(p).slice();
   p.name=$('e_name').value.trim();p.desc=$('e_desc').value.trim();p.stock=$('e_stock').checked;
   const kitE=collectKit('e');
   p.opts=p.opts||{};
@@ -1044,8 +1073,101 @@ async function saveEdit(){
     t.n=catCount(t.id);
     (t.children||[]).forEach(c=>{c.n=catCount(c.id)});
   });
-  try{await commitData(`admin: змінено товар #${p.id}`);toast('✓ Збережено! Сайт оновиться за 1–3 хв','ok');closeEdit();renderList()}
+  try{await commitData(`admin: змінено товар #${p.id}`);toast('✓ Збережено! Сайт оновиться за 1–3 хв','ok');closeEdit();renderList();cswAfterEdit(p,colBefore)}
   catch(e){toast('Помилка: '+e.message,'err')}
+}
+// ─── «Колір закінчився» ───
+// Той самий колір часто є в кількох товарах (шапка, манішка, набір з них).
+// Раніше його прибирали з одного, а в інших він лишався — і клієнти купували
+// те, чого вже немає. Тепер після прибирання кольору адмінка показує решту.
+function colorsOf(p){ return (p.opts&&p.opts['Колір'])||(p.color?[p.color]:[]); }
+// «Гірчичний» і «Гірчична» — один колір; «Сірий» і «Сірий темний» — ні
+function colorKey(c){ return String(c||'').toLowerCase().trim().split(/\s+/).map(w=>w.replace(/(ого|ої|ий|ій|ая|яя|а|я|е|і|у)$/,'')).join(' '); }
+let CSW={color:'',src:null,queue:[]};
+function cswOpen(color, src, queue){
+  CSW={color:color||'', src:src||null, queue:queue||[]};
+  const pick=!color;
+  $('csw_selw').style.display=pick?'block':'none';
+  if(pick){
+    const cnt={};
+    DATA.products.filter(p=>!p.hidden).forEach(p=>colorsOf(p).forEach(c=>{cnt[c]=(cnt[c]||0)+1}));
+    $('csw_sel').innerHTML='<option value="">— вибери колір —</option>'+Object.keys(cnt).sort((a,b)=>a.localeCompare(b,'uk'))
+      .map(c=>`<option value="${xesc(c)}">${xesc(c)} (${cnt[c]})</option>`).join('');
+  }
+  $('csw_skip').textContent = src ? 'Лише з цього товару' : 'Закрити';
+  $('csw').style.display='flex';
+  cswRender();
+}
+function cswClose(){
+  $('csw').style.display='none';
+  const next=CSW.queue&&CSW.queue.length?CSW.queue:null;
+  if(next){ const [c,...rest]=next; setTimeout(()=>cswOpen(c,CSW.src,rest),50); }
+}
+function cswRender(){
+  const color = CSW.color || $('csw_sel').value;
+  const src = CSW.src;
+  $('csw_t').textContent = color ? `Колір «${color}»` + (src?` прибрано з #${src.id}`:'') : 'Який колір закінчився?';
+  if(!color){ $('csw_list').innerHTML=''; $('csw_h').textContent='Вибери колір — покажу всі товари, де він ще є.'; $('csw_btns').style.display='none'; $('csw_go').style.display='none'; return; }
+  const key=colorKey(color);
+  const srcCats=src?(src.cats||[]):[];
+  const items=DATA.products.filter(p=>!p.hidden && (!src||p.id!==src.id) && colorsOf(p).some(c=>colorKey(c)===key))
+    .map(p=>({p, sim: (p.cats||[]).filter(c=>srcCats.includes(c)).length}))
+    .sort((a,b)=> (b.p.stock!==false)-(a.p.stock!==false) || b.sim-a.sim || b.p.id-a.p.id);
+  CSW.items=items;
+  $('csw_btns').style.display=items.length?'flex':'none';
+  $('csw_go').style.display=items.length?'block':'none';
+  $('csw_sim').style.display=src&&items.some(x=>x.sim)?'inline-block':'none';
+  $('csw_h').innerHTML = items.length
+    ? `Цей колір ще є в <b>${items.length}</b> товарах. Познач ті, де його теж уже немає.${src?' Схожі (з тих самих категорій) — зверху.':''}<br>Якщо колір у товарі єдиний — товар стане «немає в наявності».`
+    : 'Більше ніде цього кольору немає 👍';
+  $('csw_list').innerHTML=items.map((x,i)=>{
+    const p=x.p, cc=colorsOf(p), only=cc.every(c=>colorKey(c)===key);
+    const tags=[x.sim?'<b>та сама категорія</b>':'', p.stock===false?'немає в наявності':'', only?'<b>єдиний колір → «немає в наявності»</b>':'кольори: '+xesc(cc.join(', '))].filter(Boolean).join(' · ');
+    return `<label class="csw-it" data-i="${i}"><input type="checkbox" onchange="this.parentNode.classList.toggle('on',this.checked)">
+      ${p.photo?`<img src="images/${p.photo}" loading="lazy">`:'<div class="noi"></div>'}
+      <div style="min-width:0"><div class="nm">#${p.id} · ${xesc(p.name)}</div><div class="tg">${tags}</div></div></label>`;
+  }).join('');
+}
+function cswPick(mode){
+  document.querySelectorAll('#csw_list .csw-it').forEach(el=>{
+    const x=CSW.items[+el.dataset.i]; const on = mode==='all' || (mode==='sim' && x.sim>0 && x.p.stock!==false);
+    el.querySelector('input').checked=on; el.classList.toggle('on',on);
+  });
+}
+async function cswApply(){
+  const color = CSW.color || $('csw_sel').value; if(!color) return;
+  const key=colorKey(color);
+  const picked=[...document.querySelectorAll('#csw_list .csw-it')].filter(el=>el.querySelector('input').checked).map(el=>CSW.items[+el.dataset.i].p);
+  if(!picked.length){ toast('Нічого не вибрано','err'); return; }
+  const backup=JSON.stringify(DATA.products);
+  let gone=0, off=0;
+  picked.forEach(p=>{
+    const left=colorsOf(p).filter(c=>colorKey(c)!==key);
+    if(left.length){
+      p.opts=p.opts||{}; p.opts['Колір']=left;
+      if(colorKey(p.color)===key){ p.color=left[0]; p.hex=(DATA.colorhex||{})[left[0]]||p.hex; }
+      gone++;
+    } else {
+      p.stock=false; Object.values(p.var||{}).forEach(v=>v.s=false); off++;
+    }
+  });
+  const b=$('csw_go'); b.disabled=true; b.textContent='Зберігаю…';
+  try{
+    await commitData(`admin: колір «${color}» закінчився — прибрано з ${gone}, без наявності ${off}`);
+    toast(`✓ «${color}» прибрано з ${gone} товарів`+(off?`, ${off} — «немає в наявності»`:'')+'. Сайт оновиться за 1–3 хв','ok');
+    renderList(); cswClose();
+  }catch(e){
+    DATA.products=JSON.parse(backup);   // нічого не збереглось — повертаємо як було
+    toast('Помилка: '+e.message,'err');
+  }
+  b.disabled=false; b.textContent='Прибрати колір з вибраних';
+}
+// після збереження товару: які кольори прибрали і чи є вони ще деінде
+function cswAfterEdit(p, before){
+  const now=colorsOf(p).map(colorKey);
+  const removed=before.filter(c=>!now.includes(colorKey(c)));
+  const left=removed.filter(c=>DATA.products.some(q=>!q.hidden&&q.id!==p.id&&colorsOf(q).some(x=>colorKey(x)===colorKey(c))));
+  if(left.length) cswOpen(left[0], p, left.slice(1));
 }
 async function delProduct(){
   if(!confirm('Точно видалити товар #'+editId+'?'))return;
