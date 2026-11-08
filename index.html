@@ -346,6 +346,7 @@ a.back{width:fit-content;text-decoration:none}
 .chk.on .lbl{color:var(--ink)}
 .chk .cd{width:17px;height:17px;border-radius:50%;border:1px solid var(--line);flex:none}
 .chk .cnt{margin-left:auto;font-size:.76rem;color:var(--soft)}
+.chk.zero{opacity:.4}
 .prow2{display:flex;gap:10px;margin-bottom:14px}
 .rng{position:relative;height:32px;margin:6px 8px 12px}
 .rng-track{position:absolute;top:14px;left:0;right:0;height:4px;border-radius:4px;background:var(--blush)}
@@ -354,7 +355,7 @@ a.back{width:fit-content;text-decoration:none}
 .rng input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;pointer-events:auto;width:22px;height:22px;border-radius:50%;background:#fff;border:2.5px solid var(--rose-d);box-shadow:0 1px 4px rgba(0,0,0,.18);cursor:pointer}
 .rng input[type=range]::-moz-range-thumb{pointer-events:auto;width:22px;height:22px;border-radius:50%;background:#fff;border:2.5px solid var(--rose-d);box-shadow:0 1px 4px rgba(0,0,0,.18);cursor:pointer}
 .rng input[type=range]::-moz-range-track{background:none}
-.prow2 input{flex:1;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;font-size:.92rem;font-family:inherit;outline:none;text-align:center;background:#fff}
+.prow2 input{flex:1;min-width:0;width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;font-size:.92rem;font-family:inherit;outline:none;text-align:center;background:#fff}
 .prow2 input:focus{border-color:var(--rose-d)}
 .abar{flex:none;display:flex;align-items:center;gap:14px;padding:14px 20px max(16px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#FDFAF6}
 .apply{flex:1;padding:15px;background:var(--rose);color:#fff;border:none;border-radius:40px;font-family:inherit;font-size:1rem;font-weight:600;cursor:pointer}
@@ -496,7 +497,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=425" as="script">
+<link rel="preload" href="data-lite.js?v=426" as="script">
 <link rel="preload" href="hero2.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -794,7 +795,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=425"></script>
+<script src="data-lite.js?v=426"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -1161,6 +1162,7 @@ function subSel(id){
   curSub = id;
   curProds = id ? curBase.filter(p=>p.cats.includes(id)) : curBase.slice();
   curProds.sort((a,b)=>b.id-a.id);
+  calcPriceSpan();
   renderSubs();
   apply();
   rememberSub(id);
@@ -1184,15 +1186,18 @@ function rememberSub(id){
 }
 function initCat(nm, rank){
   document.title = nm + ' — дитячий одяг ZaiSun';
-  const cq=document.getElementById('catQ'); if(cq) cq.value='';
+  // При поверненні «назад» з картки товару розділ малюється наново — раніше це
+  // скидало фільтри, сортування й пошук. Тепер відновлюємо те, що було обрано.
+  let back = false; try{ back = NAVSILENT; }catch(e){}
+  const mem = back ? FMEM[catMemKey()] : null;
+  const cq=document.getElementById('catQ'); if(cq) cq.value = mem ? mem.q : '';
   // у розділу може бути свій порядок (rank) — інакше спершу новинки
   curProds.sort(rank ? (a,b)=>rank(a)-rank(b) || b.id-a.id : (a,b)=>b.id-a.id);
   fSel = {}; pFrom=null; pTo=null;
-  const prices = curProds.map(p=>p.price).filter(x=>x>0);
-  catMin = prices.length?Math.floor(Math.min(...prices)):0;
-  catMax = prices.length?Math.ceil(Math.max(...prices)):0;
+  if(mem){ for(const [k, v] of Object.entries(mem.f)) fSel[k] = new Set(v); pFrom = mem.a; pTo = mem.b; }
+  calcPriceSpan();
   document.getElementById('catTitle').textContent = nm;
-  document.getElementById('sortsel').value='default';
+  document.getElementById('sortsel').value = mem ? mem.s : 'default';
   const o0 = document.querySelector('#sortsel option[value="default"]');
   if(o0) o0.textContent = rank ? 'Рекомендовані' : 'Спочатку новинки';
   renderSubs();
@@ -1203,43 +1208,147 @@ function initCat(nm, rank){
 }
 
 // ─── filters for current category ───
-function curFilters(){
-  if(curCatId==='__all__' || curCatId==='__multi__'){
-    // aggregate: розмір+колір з усіх товарів
-    const sizes = new Set(), colors = new Set();
-    curProds.forEach(p=>{ p.sizes.forEach(s=>sizes.add(s)); if(p.color) colors.add(p.color); });
-    return [
-      {name:'Колір', type:'color', values:[...colors].sort()},
-      {name:'Розмір', type:'size', values:[...sizes].sort()},
-    ];
+// Значення фільтрів беремо з товарів, які зараз у розділі, а не з довідника
+// в data.js: там лишались розміри й кольори, яких уже немає (лічильник 0),
+// а в розділах меню вік і обхват голови зливались з розміром і сортувались
+// як текст («104» перед «56»).
+const SIZE_F = ['Розмір','Обхват голови','Вік'];
+let FMEM = {};          // обрані фільтри по розділах — щоб «назад» з картки їх не скидав
+function catMemKey(){ return curCatId + '|' + curCatName; }
+function escH(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+// Розмір, якого «Немає», не рахується — так само, як у картці товару
+function sizeOk(p, s){ const v = p.var && p.var[s]; return !(v && !v.s); }
+function varPrice(p, s){ const v = p.var && p.var[s]; return v && v.p > 0 ? v.p : p.price; }
+function sizeNums(s){ return (String(s).match(/\d+(?:[.,]\d+)?/g) || []).map(x=>parseFloat(x.replace(',','.'))); }
+const SZK = new Map();
+function sizeKind(s){
+  if(SZK.has(s)) return SZK.get(s);
+  let k = '';
+  const t = String(s);
+  if(/\d/.test(t)){                                            // «Без помпонів» — не розмір
+    if(/міс|\d\s*р(?![a-zа-яіїєґ])/i.test(t)) k = 'Вік';
+    else {
+      const n = sizeNums(t), grid = x => x >= 50 && (x - 50) % 6 === 0;   // зріст: 56, 62 … 116
+      k = (n.length === 1 ? grid(n[0]) : (n.length === 2 && grid(n[0]) && grid(n[1]))) ? 'Розмір' : 'Обхват голови';
+    }
   }
-  return (FILT[curCatId]||[]).slice();
+  SZK.set(s, k); return k;
+}
+function bySize(x, y){
+  const key = s => { const n = sizeNums(s); let a = n[0] || 0, b = n.length > 1 ? n[1] : a;
+    if(!/міс/i.test(s) && /\d\s*р(?![a-zа-яіїєґ])/i.test(s)){ a *= 12; b *= 12; } return [a, b]; };
+  const a = key(x), b = key(y);
+  return a[0] - b[0] || a[1] - b[1] || String(x).localeCompare(String(y), 'uk');
+}
+function colorsOf(p){ return (p.opts && p.opts['Колір']) || (p.color ? [p.color] : []); }
+// «Рожевий», «Рожева», «Рожеві» — один колір; «Пудра» і «Пудровий», «Беж» і «Бежевий» — теж
+const CLK = new Map();
+function colKey(c){
+  if(CLK.has(c)) return CLK.get(c);
+  const k = String(c||'').toLowerCase().replace(/[-–]/g,' ').trim().split(/\s+/)
+    .map(w=>w.replace(/(ого|ої|ий|ій|ая|яя|а|я|е|і|у|и|о)$/,'').replace(/^(.{3,})[ое]в$/,'$1')).join(' ');
+  CLK.set(c, k); return k;
+}
+let HEXK = null;
+function colHex(v){
+  if(HEX[v]) return HEX[v];
+  if(!HEXK){ HEXK = {}; for(const [n, h] of Object.entries(HEX||{})){ const k = colKey(n); if(!HEXK[k] || /^#d8c8b8$/i.test(HEXK[k])) HEXK[k] = h; } }
+  return HEXK[colKey(v)] || '#D8C8B8';
+}
+function curFilters(){
+  const groups = {}; SIZE_F.forEach(k=>groups[k] = new Set());
+  const col = new Map();   // ключ кольору → {назва: скільки товарів}
+  curProds.forEach(p=>{
+    p.sizes.forEach(s=>{ const k = sizeKind(s); if(k && sizeOk(p, s)) groups[k].add(s); });
+    colorsOf(p).forEach(c=>{ const k = colKey(c); if(!k) return; const m = col.get(k) || {}; m[c] = (m[c]||0) + 1; col.set(k, m); });
+  });
+  // обране лишаємо в списку, навіть якщо в цьому підрозділі такого немає, — щоб можна було зняти
+  SIZE_F.forEach(k=>{ if(fSel[k]) fSel[k].forEach(v=>groups[k].add(v)); });
+  if(fSel['Колір']) fSel['Колір'].forEach(c=>{ const k = colKey(c); if(!col.has(k)) col.set(k, {[c]:0}); });
+  const out = [];
+  SIZE_F.forEach(k=>{ if(groups[k].size) out.push({name:k, type:'size', values:[...groups[k]].sort(bySize)}); });
+  // назва кольору — та, що найчастіша серед товарів розділу
+  if(col.size) out.push({name:'Колір', type:'color', values:[...col.values()]
+    .map(m=>Object.entries(m).sort((a,b)=>b[1]-a[1])[0][0]).sort((a,b)=>a.localeCompare(b,'uk'))});
+  // решта параметрів (склад комплекту, підклад…) — як і раніше, з довідника розділу
+  (FILT[curCatId]||[]).forEach(f=>{
+    if(SIZE_F.includes(f.name) || f.name==='Колір') return;
+    const have = new Set();
+    curProds.forEach(p=>((p.opts||{})[f.name]||[]).forEach(v=>have.add(v)));
+    if(fSel[f.name]) fSel[f.name].forEach(v=>have.add(v));
+    const fv = f.values || [];
+    const vals = fv.filter(v=>have.has(v)).concat([...have].filter(v=>!fv.includes(v)));
+    if(vals.length) out.push({name:f.name, type:f.type||'', values:vals});
+  });
+  return out;
 }
 function prodMatchesFilter(p, fname, vals){
-  if(fname==='Розмір' || fname==='Вік') return p.sizes.some(s=>vals.has(s));
+  if(SIZE_F.includes(fname)) return p.sizes.some(s=>vals.has(s) && sizeOk(p, s));
   if(fname==='Колір'){
-    const pc = (p.opts && p.opts['Колір']) || (p.color?[p.color]:[]);
-    return pc.some(v=>vals.has(v));
+    const ks = new Set([...vals].map(colKey));
+    return colorsOf(p).some(c=>ks.has(colKey(c)));
   }
-  const ov = p.opts[fname];
-  return ov && ov.some(v=>vals.has(v));
+  const ov = (p.opts||{})[fname];
+  return !!ov && ov.some(v=>vals.has(v));
+}
+function priceRange(){ let a = pFrom, b = pTo; if(a !== null && b !== null && a > b){ const t = a; a = b; b = t; } return [a, b]; }
+function inRange(x, a, b){ return (a === null || x >= a) && (b === null || x <= b); }
+function catWords(){ return (document.getElementById('catQ')?.value||'').trim().toLowerCase().split(/\s+/).filter(w=>w.length>=2); }
+// Чи підходить товар під усе обране. Розмір, обхват голови й вік — це той самий
+// вибір розміру, лише підписаний по-різному, тому між собою вони через «або».
+// Коли розмір обрано, ціна береться саме цього розміру (у сукні 56 і 116
+// ціни різні), інакше — та, що на плитці.
+function matchesAll(p, sel, qw, noPrice){
+  if(qw.length){
+    const hay = (p.name+' '+(p.color||'')).toLowerCase();
+    if(!qw.every(w=>hay.includes(w))) return false;
+  }
+  const ss = new Set();
+  for(const [fn, vals] of Object.entries(sel)){
+    if(!vals || !vals.size) continue;
+    if(SIZE_F.includes(fn)){ vals.forEach(v=>ss.add(v)); continue; }
+    if(!prodMatchesFilter(p, fn, vals)) return false;
+  }
+  const [a, b] = noPrice ? [null, null] : priceRange();
+  if(ss.size){
+    const ok = p.sizes.filter(s=>ss.has(s) && sizeOk(p, s));
+    if(!ok.length) return false;
+    return (a === null && b === null) || ok.some(s=>inRange(varPrice(p, s), a, b));
+  }
+  return inRange(p.price, a, b);
+}
+// Скільки товарів буде, якщо обрати це значення, — з урахуванням решти фільтрів
+function facetCounts(f, qw){
+  const cnt = {}, sel = {...fSel}, isSz = SIZE_F.includes(f.name);
+  if(isSz) SIZE_F.forEach(k=>delete sel[k]); else delete sel[f.name];
+  const [a, b] = priceRange();
+  curProds.forEach(p=>{
+    if(isSz){
+      if(!matchesAll(p, sel, qw, true)) return;
+      new Set(p.sizes).forEach(s=>{ if(sizeKind(s)===f.name && sizeOk(p, s) && inRange(varPrice(p, s), a, b)) cnt[s] = (cnt[s]||0) + 1; });
+    } else {
+      if(!matchesAll(p, sel, qw)) return;
+      const vs = f.name==='Колір' ? colorsOf(p).map(colKey) : ((p.opts||{})[f.name]||[]);
+      new Set(vs).forEach(v=>{ cnt[v] = (cnt[v]||0) + 1; });
+    }
+  });
+  return cnt;
+}
+// Межі повзунка ціни — з товарів, які зараз у розділі (з урахуванням дорожчих розмірів)
+function calcPriceSpan(){
+  let lo = Infinity, hi = 0;
+  curProds.forEach(p=>{
+    if(p.price > 0){ lo = Math.min(lo, p.price); hi = Math.max(hi, p.price); }
+    p.sizes.forEach(s=>{ if(sizeOk(p, s)){ const x = varPrice(p, s); if(x > hi) hi = x; } });
+  });
+  catMin = isFinite(lo) ? Math.floor(lo) : 0;
+  catMax = Math.ceil(hi);
 }
 function filtered(){
   const cq = (document.getElementById('catQ')?.value||'').trim().toLowerCase();
   const qw = cq.split(/\s+/).filter(w=>w.length>=2);
   const xbtn = document.getElementById('catQx'); if(xbtn) xbtn.style.display = cq?'block':'none';
-  let r = curProds.filter(p=>{
-    if(qw.length){
-      const hay = (p.name+' '+(p.color||'')).toLowerCase();
-      if(!qw.every(w=>hay.includes(w))) return false;
-    }
-    for(const [fn, vals] of Object.entries(fSel)){
-      if(vals.size && !prodMatchesFilter(p, fn, vals)) return false;
-    }
-    if(pFrom!==null && p.price<pFrom) return false;
-    if(pTo!==null && p.price>pTo) return false;
-    return true;
-  });
+  let r = curProds.filter(p=>matchesAll(p, fSel, qw));
   const s=document.getElementById('sortsel').value;
   if(s==='asc') r.sort((a,b)=>a.price-b.price);
   if(s==='desc') r.sort((a,b)=>b.price-a.price);
@@ -1263,10 +1372,16 @@ function nf(){
 
 // ─── sheet ───
 function chev(){ return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>`; }
+// Відкриті секції памʼятаємо за назвою: раніше після кожного вибору панель
+// перемальовувалась і всі секції згортались — щоб обрати другий розмір,
+// секцію доводилось відкривати знову.
+let SHEET_F = [], SHEET_OPEN = new Set();
 function buildSheet(){
   const fl = curFilters();
+  SHEET_F = fl;
+  const cls = k => 'ssec' + (SHEET_OPEN.has(k) ? '' : ' closed');
   let h = `
-    <div class="ssec closed" id="sPrice"><div class="shead-row" onclick="tglSec('sPrice')"><h4>Ціна, ₴</h4>${chev()}</div>
+    <div class="${cls('Ціна')}" id="sPrice" data-k="Ціна"><div class="shead-row" onclick="tglSec('sPrice')"><h4>Ціна, ₴</h4>${chev()}</div>
       <div class="sbody-in">
         <div class="rng" id="rng">
           <div class="rng-track"></div><div class="rng-fill" id="rngFill"></div>
@@ -1274,33 +1389,55 @@ function buildSheet(){
           <input type="range" id="rHi" min="${catMin}" max="${catMax}" value="${pTo??catMax}" oninput="onSlide()">
         </div>
         <div class="prow2">
-          <input type="number" id="pf" placeholder="від ${catMin}" value="${pFrom??''}" oninput="onPrice();syncSlide()">
-          <input type="number" id="pt2" placeholder="до ${catMax}" value="${pTo??''}" oninput="onPrice();syncSlide()">
+          <input type="number" id="pf" inputmode="numeric" placeholder="від ${catMin}" value="${pFrom??''}" oninput="onPrice();syncSlide()">
+          <input type="number" id="pt2" inputmode="numeric" placeholder="до ${catMax}" value="${pTo??''}" oninput="onPrice();syncSlide()">
         </div>
       </div>
     </div>`;
   fl.forEach((f,i)=>{
-    const cnts = {};
-    f.values.forEach(v=>{
-      cnts[v] = curProds.filter(p=>prodMatchesFilter(p, f.name, new Set([v]))).length;
-    });
-    const rows = f.values.map(v=>{
-      const on = fSel[f.name]?.has(v)?'on':'';
-      const dot = f.type==='color' ? `<span class="cd" style="background:${HEX[v]||'#D8C8B8'}"></span>` : '';
-      return `<div class="chk ${on}" onclick="tglF('${f.name.replace(/'/g,"\\'")}','${v.replace(/'/g,"\\'")}')">
-        <div class="box"></div><div class="lbl">${dot}${v}</div><span class="cnt">${cnts[v]}</span></div>`;
+    const isCol = f.name==='Колір';
+    const selK = isCol ? new Set([...(fSel[f.name]||[])].map(colKey)) : null;
+    const rows = f.values.map((v,j)=>{
+      const on = (isCol ? selK.has(colKey(v)) : (fSel[f.name] && fSel[f.name].has(v))) ? ' on' : '';
+      const dot = isCol ? `<span class="cd" style="background:${colHex(v)}"></span>` : '';
+      return `<div class="chk${on}" data-j="${j}" onclick="tglFi(${i},${j})">
+        <div class="box"></div><div class="lbl">${dot}${escH(v)}</div><span class="cnt"></span></div>`;
     }).join('');
-    h += `<div class="ssec closed" id="sF${i}">
-      <div class="shead-row" onclick="tglSec('sF${i}')"><h4>${f.name}</h4>${chev()}</div>
+    h += `<div class="${cls(f.name)}" id="sF${i}" data-k="${escH(f.name)}">
+      <div class="shead-row" onclick="tglSec('sF${i}')"><h4>${escH(f.name)}</h4>${chev()}</div>
       <div class="sbody-in">${rows}</div></div>`;
   });
   document.getElementById('sbody').innerHTML = h;
   updApply();
 }
-function tglSec(id){ document.getElementById(id).classList.toggle('closed'); }
+// Лічильник біля значення — скільки товарів буде, якщо його обрати,
+// з урахуванням ціни й інших фільтрів (раніше рахувався без них).
+function updCounts(){
+  const qw = catWords();
+  SHEET_F.forEach((f,i)=>{
+    const cnt = facetCounts(f, qw), isCol = f.name==='Колір';
+    document.querySelectorAll('#sF' + i + ' .chk').forEach(el=>{
+      const v = f.values[+el.dataset.j], n = cnt[isCol ? colKey(v) : v] || 0;
+      el.querySelector('.cnt').textContent = n;
+      el.classList.toggle('zero', !n && !el.classList.contains('on'));
+    });
+  });
+}
+function tglSec(id){
+  const el = document.getElementById(id); if(!el) return;
+  el.classList.toggle('closed');
+  const k = el.dataset.k;
+  if(k){ if(el.classList.contains('closed')) SHEET_OPEN.delete(k); else SHEET_OPEN.add(k); }
+}
+function tglFi(i, j){ const f = SHEET_F[i]; if(f) tglF(f.name, f.values[j]); }
 function tglF(fn, v){
-  fSel[fn] = fSel[fn] || new Set();
-  fSel[fn].has(v) ? fSel[fn].delete(v) : fSel[fn].add(v);
+  const s = fSel[fn] = fSel[fn] || new Set();
+  if(fn === 'Колір'){
+    // «Рожевий» і «Рожева» — одна галочка
+    const k = colKey(v), hit = [...s].filter(x=>colKey(x)===k);
+    if(hit.length) hit.forEach(x=>s.delete(x)); else s.add(v);
+  } else if(s.has(v)) s.delete(v); else s.add(v);
+  if(!s.size) delete fSel[fn];
   buildSheet(); updBdg();
 }
 function onPrice(){
@@ -1334,23 +1471,31 @@ function updBdg(){
 }
 function updApply(){
   const el=document.getElementById('applyBtn'); if(el) el.textContent=`Застосувати (${filtered().length})`;
+  updCounts();
 }
 function resetAll(){ fSel={}; pFrom=null; pTo=null; buildSheet(); syncSlide(); updBdg(); apply(); }
 function openSheet(){ buildSheet(); syncSlide(); document.getElementById('sheet').classList.add('open'); document.getElementById('ovl').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeSheet(){ document.getElementById('sheet').classList.remove('open'); document.getElementById('ovl').classList.remove('open'); document.body.style.overflow=''; apply(); }
 
 // ─── pills + grid ───
+let PILLS = [];
 function renderPills(){
   let h='';
+  PILLS = [];
   for(const [fn, vals] of Object.entries(fSel)){
     for(const v of vals){
-      const dot = HEX[v]?`<span class="cd" style="background:${HEX[v]}"></span>`:'';
-      h+=`<span class="fpill">${dot}${v}<button onclick="tglF('${fn.replace(/'/g,"\\'")}','${v.replace(/'/g,"\\'")}');apply()">×</button></span>`;
+      const k = PILLS.push([fn, v]) - 1;
+      const dot = fn==='Колір' ? `<span class="cd" style="background:${colHex(v)}"></span>` : '';
+      h+=`<span class="fpill">${dot}${escH(v)}<button onclick="pillX(${k})">×</button></span>`;
     }
   }
-  if(pFrom!==null||pTo!==null) h+=`<span class="fpill">${pFrom??catMin}–${pTo??catMax} ₴<button onclick="pFrom=null;pTo=null;updBdg();apply()">×</button></span>`;
+  if(pFrom!==null||pTo!==null){
+    const [a, b] = priceRange();
+    h+=`<span class="fpill">${a??catMin}–${b??catMax} ₴<button onclick="pFrom=null;pTo=null;updBdg();apply()">×</button></span>`;
+  }
   document.getElementById('fpills').innerHTML=h;
 }
+function pillX(k){ const x = PILLS[k]; if(!x) return; tglF(x[0], x[1]); apply(); }
 // Бейдж «Sale» показуємо на всьому, що лежить у розділі Sale, — навіть якщо
 // стару ціну не вказано. Раніше він залежав тільки від наявності старої ціни.
 let SALE_ID = null;
@@ -1366,6 +1511,10 @@ function isSale(p){
 
 function apply(){
   const r=filtered();
+  try{
+    if(curCatName) FMEM[catMemKey()] = {f:Object.fromEntries(Object.entries(fSel).map(([k,v])=>[k,[...v]])),
+      a:pFrom, b:pTo, s:document.getElementById('sortsel').value, q:document.getElementById('catQ').value};
+  }catch(e){}
   document.getElementById('cnt').textContent=r.length+' товарів';
   renderPills(); updBdg();
   const el=document.getElementById('grid');
@@ -2542,11 +2691,14 @@ function doSearch(){
     return {p,score};
   }).filter(Boolean).sort((a,b)=>b.score-a.score);
   const byName = scored.filter(x=>x.score>=2);
-  let r = (byName.length ? byName : scored).slice(0,60).map(x=>x.p);
+  // Спершу сортуємо все знайдене, а тоді беремо перші 60. Раніше брали 60 за збігом
+  // і вже їх сортували — «Дешевші» не бачили дешевших товарів за межею цих 60.
+  let r = (byName.length ? byName : scored).map(x=>x.p);
   const srt = (document.getElementById('soSort')||{}).value || 'rel';
   if(srt==='pop') r = r.slice().sort((a,b)=>rankScore(b)-rankScore(a));
   else if(srt==='cheap') r = r.slice().sort((a,b)=>(a.price||0)-(b.price||0));
   else if(srt==='exp') r = r.slice().sort((a,b)=>(b.price||0)-(a.price||0));
+  r = r.slice(0,60);
   if(!r.length){ grid.innerHTML=''; hint.style.display='block'; hint.textContent='Нічого не знайдено'; return; }
   hint.style.display='none';
   // Малюємо порціями: 60 плиток одразу тягнули ~3,4 МБ фото одним залпом,
@@ -2956,9 +3108,25 @@ subSel = function(id){
     history.replaceState(history.state, '', u.pathname + (u.search||''));
   }catch(e){}
 };
+function sameView(a, b){
+  const k = x => [x.v||'home', x.m||'', x.id ?? '', x.i ?? '', x.sub||''].join('|');
+  return !!a && !!b && k(a) === k(b);
+}
 window.addEventListener('popstate', e => {
   NAVDEPTH = Math.max(0, NAVDEPTH - 1);
   const st = e.state || {v:'home'};
+  // Закрилась накладка (фільтри, кошик, меню, форма) над тим самим екраном —
+  // лише ховаємо її. Раніше екран під нею малювався наново, і «Застосувати»
+  // у фільтрах скидало щойно обрані фільтри: розділ показував усі товари.
+  if(OVERLAYON && sameView(st, LASTVIEW)){
+    OVERLAYON = !!st.o;
+    NAVSILENT = true;
+    try{
+      _closeMenu0(); _closeCart0(); _closeOrder0();
+      if(document.getElementById('sheet').classList.contains('open')) _closeSheet0();
+    } finally { NAVSILENT = false; }
+    return;
+  }
   OVERLAYON = !!st.o;
   LASTVIEW = {v:st.v||'home', m:st.m, id:st.id, i:st.i, sub:st.sub};
   NAVSILENT = true;
@@ -3041,7 +3209,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=425'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=426'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
