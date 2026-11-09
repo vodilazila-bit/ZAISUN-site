@@ -364,6 +364,13 @@ a.back{width:fit-content;text-decoration:none}
 /* ═══ PRODUCT ═══ */
 .phero{width:100%;max-width:560px;margin:0 auto;position:relative;aspect-ratio:3/4;overflow:hidden}
 .phero img{width:100%;height:100%;object-fit:cover;display:block;background:var(--petal)}
+/* кілька фото — стрічка, яку гортають пальцем */
+.phero .ptrack{display:flex;width:100%;height:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;touch-action:pan-x pan-y pinch-zoom;overscroll-behavior-x:contain}
+.phero .ptrack::-webkit-scrollbar{display:none}
+.phero .ptrack img{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always}
+.phero .pdots{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:6px;justify-content:center;pointer-events:none}
+.phero .pdots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.6);box-shadow:0 0 2px rgba(0,0,0,.35)}
+.phero .pdots i.on{background:#fff;width:18px;border-radius:4px}
 .phero:not(:has(img)){background:var(--petal)}
 .pthumbs{display:flex;gap:8px;justify-content:center;padding:10px 14px 0;flex-wrap:wrap}
 .pthumbs img{width:58px;height:58px;object-fit:cover;border-radius:10px;border:2px solid transparent;cursor:pointer;background:var(--petal)}
@@ -497,7 +504,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=444" as="script">
+<link rel="preload" href="data-lite.js?v=445" as="script">
 <link rel="preload" href="hero2.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -795,7 +802,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=444"></script>
+<script src="data-lite.js?v=445"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -1536,8 +1543,17 @@ function apply(){
 
 function pheroSwitch(i){
   const g=window._pgal||[]; if(!g[i]) return;
-  const im=document.getElementById('pheroImg'); if(im) im.src='images/'+g[i];
+  const tr=document.getElementById('ptrack');
+  if(tr) tr.scrollTo({left:i*tr.clientWidth, behavior:'smooth'});
+  pheroMark(i);
+}
+function pheroMark(i){
   document.querySelectorAll('#pthumbs img').forEach((t,j)=>t.classList.toggle('on',j===i));
+  document.querySelectorAll('#phero .pdots i').forEach((t,j)=>t.classList.toggle('on',j===i));
+}
+function pheroScroll(tr){
+  const i=Math.round(tr.scrollLeft/Math.max(1,tr.clientWidth));
+  if(i!==tr._i){ tr._i=i; pheroMark(i); }
 }
 // ─── product ───
 function openProd(id){
@@ -1569,7 +1585,10 @@ function openProd(id){
     });
   }catch(e){}
   const gal = (cur.photos && cur.photos.length ? cur.photos : (cur.photo?[cur.photo]:[]));
-  document.getElementById('phero').innerHTML = gal.length ? `<img id="pheroImg" src="images/${gal[0]}">` : `<div class="noimg">ФОТО СКОРО</div>`;
+  document.getElementById('phero').innerHTML = !gal.length ? `<div class="noimg">ФОТО СКОРО</div>`
+    : gal.length===1 ? `<img id="pheroImg" src="images/${gal[0]}">`
+    : `<div class="ptrack" id="ptrack" onscroll="pheroScroll(this)">${gal.map((f,i)=>`<img ${i?'loading="lazy" ':'id="pheroImg" '}src="images/${f}" alt="">`).join('')}</div>`
+      + `<div class="pdots">${gal.map((f,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>`;
   let th = document.getElementById('pthumbs');
   if(!th){ th = document.createElement('div'); th.className='pthumbs'; th.id='pthumbs'; document.getElementById('phero').after(th); }
   th.innerHTML = gal.length>1 ? gal.map((f,i)=>`<img src="images/${f}" class="${i===0?'on':''}" onclick="pheroSwitch(${i})">`).join('') : '';
@@ -3209,7 +3228,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=444'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=445'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
