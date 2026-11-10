@@ -11,6 +11,20 @@ const OUT = path.join(ROOT, 't');
 
 const raw = fs.readFileSync(path.join(ROOT, 'data.js'), 'utf-8');
 const DATA = JSON.parse(raw.slice(raw.indexOf('{'), raw.lastIndexOf('}') + 1));
+// Категорії-чернетки (draft:true) не потрапляють ні на сторінки, ні у фід.
+(() => {
+  const dr = new Set();
+  DATA.tree.forEach(t => { if (t.draft) { dr.add(t.id); (t.children || []).forEach(c => dr.add(c.id)); } });
+  if (!dr.size) return;
+  DATA.tree = DATA.tree.filter(t => !t.draft);
+  for (const p of DATA.products) {
+    const cats = p.cats || [], catn = p.catn || [];
+    if (!cats.some(c => dr.has(c))) continue;
+    const keep = cats.map((c, i) => dr.has(c) ? -1 : i).filter(i => i >= 0);
+    if (!keep.length) { p.hidden = true; continue; }
+    p.cats = keep.map(i => cats[i]); p.catn = keep.map(i => catn[i]);
+  }
+})();
 
 const esc = s => String(s || '')
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')

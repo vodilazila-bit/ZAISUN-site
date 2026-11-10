@@ -504,7 +504,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=445" as="script">
+<link rel="preload" href="data-lite.js?v=446" as="script">
 <link rel="preload" href="hero2.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -802,7 +802,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=445"></script>
+<script src="data-lite.js?v=446"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -814,6 +814,21 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 })();
 </script>
 <script>
+// Категорія з draft:true (позначка в data.js) — чернетка: на сайті її немає взагалі.
+// Товари з неї лишаються у своїх інших категоріях; товар, що лежить ЛИШЕ в чернетці, не видно.
+(function(){
+  const dr = new Set();
+  DATA.tree.forEach(t=>{ if(t.draft){ dr.add(t.id); (t.children||[]).forEach(c=>dr.add(c.id)); } });
+  if(!dr.size) return;
+  DATA.tree = DATA.tree.filter(t=>!t.draft);
+  DATA.products.forEach(p=>{
+    const cats = p.cats||[], catn = p.catn||[];
+    if(!cats.some(c=>dr.has(c))) return;
+    const keep = cats.map((c,i)=>dr.has(c)?-1:i).filter(i=>i>=0);
+    if(!keep.length){ p.hidden = true; return; }
+    p.cats = keep.map(i=>cats[i]); p.catn = keep.map(i=>catn[i]);
+  });
+})();
 const P = DATA.products.filter(p=>!p.hidden), TREE = DATA.tree, FILT = DATA.filters, HEX = DATA.colorhex;
 // «Стара» ціна має сенс лише коли вона більша за поточну. Якщо в товарі
 // лишилось старе значення від дубльованої картки — не малюємо закреслене,
@@ -909,7 +924,8 @@ function nyRank(p){
   const hue = /черв|бордо/.test(col) ? 0 : /зелен|чорн|біл|молоч|клітин|золот/.test(col) ? 1 : 2;
   return 100 + g*10 + hue;
 }
-const MENU_DEF = [
+let MENU_DEF = [
+  {k:'blackfriday',   n:'Black Friday', c:['Black Friday'], needCat:true},
   {k:'osin',          n:'Осінь-зима', c:['Осінь']},
   {k:'novyirik',      n:'Новий рік', c:['Новий Рік'], rank:nyRank},
   {k:'shapky',        n:'Шапки', c:['Шапки']},
@@ -928,6 +944,8 @@ const MENU_DEF = [
   {k:'lito',          n:'Літній асортимент', c:['Літо']},
   {k:'kolhoty',       n:'Колготи, шкарпетки, гольфи', c:['Колготи, шкарпетки, гольфи']},
 ];
+// needCat: пункт показується, лише коли категорія є на сайті (не чернетка).
+MENU_DEF = MENU_DEF.filter(d => !d.needCat || TREE.some(t => d.c.includes(t.raw) || d.c.includes(t.name)));
 // Порядок пунктів меню міняється — тому в адресі тепер стійкий ключ (?cat=k<ключ>),
 // а не порядковий номер. Старі посилання виду ?cat=m<N> (реклама, соцмережі,
 // індекс Google) розбираються через цю таблицю — порядок, що діяв до 28.07.2026.
@@ -3228,7 +3246,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=445'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=446'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();

@@ -65,6 +65,8 @@ jobs:
           const fs=require('fs');
           const r=fs.readFileSync('data.js','utf8');
           const D=JSON.parse(r.slice(r.indexOf('{'), r.lastIndexOf('}')+1));
+          const dr=new Set();D.tree.forEach(t=>{if(t.draft){dr.add(t.id);(t.children||[]).forEach(c=>dr.add(c.id));}});
+          D.products.forEach(p=>{const c=p.cats||[];if(c.length&&c.every(x=>dr.has(x)))p.hidden=true;});
           const vis=D.products.filter(p=>!p.hidden && p.photo);
           const dirs=fs.readdirSync('t').filter(d=>fs.statSync('t/'+d).isDirectory());
           if(dirs.length !== vis.length) throw new Error('сторінок '+dirs.length+', товарів '+vis.length);

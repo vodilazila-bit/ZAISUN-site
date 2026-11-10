@@ -481,6 +481,7 @@ function renderCatTree(){
     </div>`).join('');
     return `<div style="background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:10px">
       <div style="font-weight:700;font-size:14px">${c.name} <span style="color:var(--mut);font-weight:400;font-size:12px">· ${catCount(c.id)} без підкатегорії</span></div>
+      ${c.draft?'<div style="margin-top:6px;background:#fff4e0;color:#8a5a00;border-radius:8px;padding:6px 10px;font-size:12px">🔒 Чернетка — на сайті не видно. Наповнюй, Володя опублікує.</div>':''}
       ${kids}
       <button class="mini" style="margin-top:8px" onclick="catAdd('${c.id}')">+ підкатегорія</button>
     </div>`;
@@ -604,7 +605,7 @@ async function loadDataShaOnly(){
 function tab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===t));$('t-add').style.display=t==='add'?'block':'none';$('t-edit').style.display=t==='edit'?'block':'none';$('t-cats').style.display=t==='cats'?'block':'none';$('t-ord').style.display=t==='ord'?'block':'none';if(t==='cats')renderCatTree();if(t==='ord')loadOrders()}
 
 /* ---------- ДОДАВАННЯ ---------- */
-function flatCats(){const out=[];DATA.tree.forEach(c=>{out.push({id:c.id,name:c.name});(c.children||[]).forEach(s=>out.push({id:s.id,name:c.name+' → '+s.name}))});return out}
+function flatCats(){const out=[];DATA.tree.forEach(c=>{out.push({id:c.id,name:c.name+(c.draft?' 🔒':'')});(c.children||[]).forEach(s=>out.push({id:s.id,name:c.name+' → '+s.name}))});return out}
 
 function initAdd(){
   $('a_cats').innerHTML=flatCats().map(c=>`<div class="chip" data-id="${c.id}" onclick="this.classList.toggle('on')">${c.name}</div>`).join('');
