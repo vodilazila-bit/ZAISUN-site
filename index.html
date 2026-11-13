@@ -445,6 +445,8 @@ a.back{width:fit-content;text-decoration:none}
 .fld label{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin-bottom:6px;font-weight:600}
 .fld input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:.95rem;outline:none;background:#fff}
 .fld input:focus{border-color:var(--rose-d)}
+.fld select{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:.95rem;outline:none;background:#fff;color:var(--ink,#333)}
+.fld select:focus{border-color:var(--rose-d)}
 .frw{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .oconsent{margin:10px 2px 0;font-size:.74rem;line-height:1.4;color:var(--soft);text-align:center}
 .oconsent a{color:inherit;text-decoration:underline;text-underline-offset:2px}
@@ -504,7 +506,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=456" as="script">
+<link rel="preload" href="data-lite.js?v=457" as="script">
 <link rel="preload" href="hero2.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -742,7 +744,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
         <div class="fld"><label>Email *</label><input type="email" id="fEmail" autocomplete="email"></div>
         <div class="frw">
           <div class="fld sugg"><label>Місто *</label><input type="text" id="fCity" autocomplete="off" oninput="npCityTyped(this.value)"><div class="sugg-list" id="cityList"></div></div>
-          <div class="fld" id="fSizeWrap"><label>Розмір</label><input type="text" id="fSize"></div>
+          <div class="fld" id="fSizeWrap"><label>Розмір</label><select id="fSize" onchange="fSizeChg()"></select></div>
         </div>
         <div class="fld sugg"><label>Відділення Нової Пошти *</label><input type="text" id="fNP" autocomplete="off" oninput="npWh(this.value)" onfocus="npWh(this.value)"><div class="sugg-list" id="npList"></div></div>
         <div class="fld"><label>Оплата</label>
@@ -802,7 +804,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=456"></script>
+<script src="data-lite.js?v=457"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -1752,6 +1754,23 @@ function readForm(){
   try{ return JSON.parse(localStorage.getItem('zs_form')||'null'); }catch(e){ return null; }
 }
 function clearForm(){ try{ localStorage.removeItem('zs_form'); }catch(e){} }
+function fSizeFill(){
+  const el = document.getElementById('fSize'); if(!el || !cur) return;
+  const ok = (cur.sizes||[]).filter(s=>{ const v=cur.var&&cur.var[s]; return !(v && !v.s); });
+  const list = ok.length ? ok : (cur.sizes||[]);
+  const pick = list.includes(selSize) ? selSize : (list.length===1 ? list[0] : '');
+  el.innerHTML = (pick ? '' : '<option value="">Оберіть розмір</option>')
+    + list.map(s=>`<option value="${String(s).replace(/"/g,'&quot;')}">${String(s).replace(/</g,'&lt;')}</option>`).join('');
+  el.value = pick;
+}
+function fSizeChg(){
+  const el = document.getElementById('fSize'); if(!el || !cur || !el.value) return;
+  selSize = el.value;
+  const v = cur.var && cur.var[selSize];
+  document.getElementById('mmeta').textContent = [cur.color||'', optText(), selSize||''].filter(Boolean).join(' · ');
+  document.getElementById('mprice').textContent = money((v?v.p:cur.price) + curOptUp());
+  try{ document.querySelectorAll('.szc').forEach(c=>c.classList.toggle('on', c.firstChild.textContent===selSize)); }catch(e){}
+}
 function restoreForm(){
   const d = readForm(); if(!d) return;
   FKEYS.forEach(k=>{
@@ -1794,10 +1813,12 @@ function openOrder(){
   document.getElementById('mname').textContent = cur.name;
   document.getElementById('mmeta').textContent = [cur.color||'', optText(), selSize||''].filter(Boolean).join(' · ');
   document.getElementById('mprice').textContent = money((v?v.p:cur.price) + curOptUp());
-  document.getElementById('fSize').value = selSize || (cur.sizes.length===1 ? cur.sizes[0] : '');
+  // Розмір — лише зі списку товару. Раніше тут було текстове поле, і покупці
+  // вписували свій розмір (13.11: «4-6 міс» у #524, де є тільки «6-18міс»).
+  fSizeFill();
   document.getElementById('mprodOne').style.display='flex';
   document.getElementById('mcart').style.display='none';
-  document.getElementById('fSizeWrap').style.display='';
+  document.getElementById('fSizeWrap').style.display = (cur.sizes||[]).length ? '' : 'none';
   document.getElementById('fview').style.display='block';
   document.getElementById('sview').classList.remove('show');
   document.getElementById('movl').classList.add('open');
@@ -2143,6 +2164,9 @@ async function submitOrder(){
   if(cartMode && cartPurge()){ try{ renderOrderCart(); }catch(e){} return; }
   if(cartMode && cartFixPicks()) return;
   // одиночний товар: поле «Розмір» у формі можна стерти — без розміру не відправляємо
+  if(!cartMode && cur && (cur.sizes||[]).length && size && !cur.sizes.includes(size)){
+    alert('Оберіть, будь ласка, розмір зі списку 🙂'); fSizeFill(); return;
+  }
   if(!cartMode && cur && (cur.sizes||[]).length > 1 && !size){
     if(selSize){ document.getElementById('fSize').value = selSize; }
     alert('Вкажіть, будь ласка, розмір 🙂');
@@ -3246,7 +3270,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=456'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=457'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
