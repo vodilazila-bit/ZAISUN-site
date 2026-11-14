@@ -163,6 +163,7 @@ html,body{max-width:100%;touch-action:pan-y pinch-zoom}
   .herosl{height:min(72vh,640px);min-height:480px}
   .herosl .hs[data-hs="2"] .fgimg img{object-position:72% 32%!important;transform-origin:72% 38%!important}
   .herosl .stxt{padding:26px 22px 64px;max-width:none;align-items:flex-start;justify-content:flex-end}
+  .herosl .harrow{top:30%}
   .herosl .stitle{font-size:.98rem;line-height:1.5}
   .herosl .stitle.short{font-size:1.7rem}
   .herosl .ssub{max-width:none;font-size:.82rem}
@@ -506,7 +507,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=457" as="script">
+<link rel="preload" href="data-lite.js?v=458" as="script">
 <link rel="preload" href="hero2.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -573,13 +574,13 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
       </div>
     </div>
     <div class="hs" data-hs="1">
-      <div class="fgimg"><img class="kb" onload="zsHeroLd(this)" onerror="zsHeroLd(this)" data-hsrc="hero-autumn.webp" alt="Осіння колекція ZaiSun" style="object-position:62% 40%;transform-origin:62% 45%"></div>
+      <div class="fgimg"><img class="kb" onload="zsHeroLd(this)" onerror="zsHeroLd(this)" data-hsrc="hero-winter.webp" alt="Зимова колекція ZaiSun" style="object-position:74% 45%;transform-origin:74% 50%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">НОВА КОЛЕКЦІЯ</div>
-        <h1 class="stitle short">Осіння колекція вже на сайті</h1>
-        <p class="ssub">Тепліші тканини, спокійні кольори — усе, що потрібно для перших прохолодних днів.</p>
-        <a class="sbtn" href="?cat=kosin" data-herocat="Осінь" onclick="spaClick(event,()=>heroOpenCat('Осінь'))">Дивитись осінь</a>
+        <h1 class="stitle short">Зимова колекція вже на сайті</h1>
+        <p class="ssub">Теплі шапки, костюми, рукавички й колготи для морозних днів.</p>
+        <a class="sbtn" href="?cat=kzyma" onclick="spaClick(event,()=>{ const i=menuIdxByKey('zyma'); if(i>=0) openMenuCat(i); else openCatAll(); })">Дивитись зиму</a>
       </div>
     </div>
     <div class="hs" data-hs="2">
@@ -804,7 +805,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=457"></script>
+<script src="data-lite.js?v=458"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -928,6 +929,7 @@ function nyRank(p){
 }
 let MENU_DEF = [
   {k:'blackfriday',   n:'Black Friday', c:['Black Friday'], needCat:true},
+  {k:'zyma',          n:'Зима', c:['Зима']},
   {k:'osin',          n:'Осінь-зима', c:['Осінь']},
   {k:'novyirik',      n:'Новий рік', c:['Новий Рік'], rank:nyRank},
   {k:'shapky',        n:'Шапки', c:['Шапки']},
@@ -1004,6 +1006,7 @@ function openMenuCat(idx){
 // Іконки пунктів «Каталогу товарів» (ключ = MENU_DEF.k). Немає ключа — крапка.
 const MENU_ICONS = {
   _all:'<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
+  zyma:'<path d="M12 2.5v19M3.8 7.25l16.4 9.5M3.8 16.75l16.4-9.5"/><path d="M9.5 4 12 6.5 14.5 4M9.5 20l2.5-2.5 2.5 2.5M4.5 10.2l3.4.9-.9 3.4M19.5 13.8l-3.4-.9.9-3.4M4.5 13.8l3.4-.9-.9-3.4M19.5 10.2l-3.4.9.9 3.4"/>',
   osin:'<path d="M5 19C5 10.5 10.5 5 19 5c0 8.5-5.5 14-14 14z"/><path d="M5 19 13.5 10.5M9.5 14.5h3.5M12 12V9"/>',
   shapky:'<path d="M5 16a7 7 0 0 1 14 0"/><rect x="4" y="16" width="16" height="4" rx="1.5"/><circle cx="12" cy="6.8" r="1.8"/>',
   bodi:'<path d="M8 3 4 5.5l1.8 3.2L7.5 8v8l2.5 4h4l2.5-4V8l1.7.7L20 5.5 16 3a4 4 0 0 1-8 0z"/><path d="M10 20h4"/>',
@@ -3270,7 +3273,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=457'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=458'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
