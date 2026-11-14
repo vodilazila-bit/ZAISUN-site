@@ -1073,7 +1073,7 @@
     <g:price>45.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>3-4р/5-6р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>580</g:id>
@@ -3645,6 +3645,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>36-38/40-42/42-44/44-46/46-48/48-50</g:size>
+    <g:product_type>Зима</g:product_type>
   </item>
   <item>
     <g:id>11</g:id>
@@ -3662,7 +3663,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>50-52</g:size>
-    <g:product_type>Осінь</g:product_type>
+    <g:product_type>Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>84</g:id>
@@ -3680,7 +3681,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>48-52</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>489</g:id>
@@ -3697,7 +3698,7 @@
     <g:price>300.00 UAH</g:price>
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:size>42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1012</g:id>
@@ -3734,7 +3735,7 @@
     <g:price>210.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>Без помпонів</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>476</g:id>
@@ -3820,7 +3821,7 @@
     <g:price>270.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>6-12міс/12-18міс/18-24міс</g:size>
-    <g:product_type>Осінь &gt; Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Осінь &gt; Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>316</g:id>
@@ -3837,7 +3838,7 @@
     <g:price>220.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>6-12міс/12-18міс/18-24міс</g:size>
-    <g:product_type>Осінь &gt; Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Осінь &gt; Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>317</g:id>
@@ -3854,7 +3855,7 @@
     <g:price>220.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>6-12міс/12-18міс/18-24міс/3-4р/5-6р</g:size>
-    <g:product_type>Осінь &gt; Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Осінь &gt; Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>318</g:id>
@@ -3871,7 +3872,7 @@
     <g:price>220.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>12-18міс/18-24міс</g:size>
-    <g:product_type>Осінь &gt; Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Осінь &gt; Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>658</g:id>
@@ -4044,7 +4045,7 @@
     <g:sale_price>240.00 UAH</g:sale_price>
     <g:color>Пудровий</g:color>
     <g:size>42-44/46-48/48-50</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>229</g:id>
@@ -4097,7 +4098,7 @@
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>42-44/44-46/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>39</g:id>
@@ -4472,7 +4473,7 @@
     <g:price>250.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>487</g:id>
@@ -4490,7 +4491,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>50-52</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>488</g:id>
@@ -4507,7 +4508,7 @@
     <g:price>320.00 UAH</g:price>
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:size>42-44/38-40/40-42</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>590</g:id>
@@ -4819,7 +4820,7 @@
     <g:price>290.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>591</g:id>
@@ -5007,7 +5008,7 @@
     <g:price>295.00 UAH</g:price>
     <g:color>Беж</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>902</g:id>
@@ -5041,7 +5042,7 @@
     <g:price>295.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>0-3р/3-6р/6-9р</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>158</g:id>
@@ -5058,7 +5059,7 @@
     <g:price>295.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>0-3р/3-6р/6-9р</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>606</g:id>
@@ -5182,7 +5183,7 @@
     <g:price>295.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>0-3р/3-6р/6-9р</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>996</g:id>
@@ -5217,6 +5218,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Чорний</g:color>
     <g:size>40-42/42-44/46-48</g:size>
+    <g:product_type>Зима</g:product_type>
   </item>
   <item>
     <g:id>3</g:id>
@@ -5234,6 +5236,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Молочний</g:color>
     <g:size>42-44/44-46/46-48/48-50/50-52/52-54</g:size>
+    <g:product_type>Зима</g:product_type>
   </item>
   <item>
     <g:id>4</g:id>
@@ -5251,6 +5254,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Молочний</g:color>
     <g:size>40-42/42-44/44-46/46-48/48-50/52-54</g:size>
+    <g:product_type>Зима</g:product_type>
   </item>
   <item>
     <g:id>5</g:id>
@@ -5268,6 +5272,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/48-50/52-54</g:size>
+    <g:product_type>Зима</g:product_type>
   </item>
   <item>
     <g:id>32</g:id>
@@ -5285,7 +5290,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Пудровий</g:color>
     <g:size>44-46/52-54/42-44</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>33</g:id>
@@ -5303,7 +5308,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>46-48</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>36</g:id>
@@ -5321,7 +5326,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Фіолетовий</g:color>
     <g:size>48-50</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>148</g:id>
@@ -5339,7 +5344,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>42-44/44-46/48-50/50-52</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>506</g:id>
@@ -5373,7 +5378,7 @@
     <g:price>305.00 UAH</g:price>
     <g:color>Беж</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Осінь &gt; Шапки &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Осінь &gt; Шапки &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>178</g:id>
@@ -5594,7 +5599,7 @@
     <g:sale_price>320.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>595</g:id>
@@ -6031,7 +6036,7 @@
     <g:price>340.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>592</g:id>
@@ -6066,7 +6071,7 @@
     <g:sale_price>350.00 UAH</g:sale_price>
     <g:color>Пудровий</g:color>
     <g:size>42-44/44-46</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>8</g:id>
@@ -6084,6 +6089,7 @@
     <g:sale_price>350.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>42-44/46-48</g:size>
+    <g:product_type>Зима</g:product_type>
   </item>
   <item>
     <g:id>125</g:id>
@@ -6100,7 +6106,7 @@
     <g:price>550.00 UAH</g:price>
     <g:sale_price>350.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>155</g:id>
@@ -6118,7 +6124,7 @@
     <g:sale_price>390.00 UAH</g:sale_price>
     <g:color>Чорний</g:color>
     <g:size>36-38</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>491</g:id>
@@ -6135,7 +6141,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>492</g:id>
@@ -6152,7 +6158,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Білий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>593</g:id>
@@ -6273,7 +6279,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>932</g:id>
@@ -6292,7 +6298,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Малиновий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>933</g:id>
@@ -6311,7 +6317,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>993</g:id>
@@ -6415,7 +6421,7 @@
     <g:price>365.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>892</g:id>
@@ -6451,7 +6457,7 @@
     <g:price>375.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>989</g:id>
@@ -6470,7 +6476,7 @@
     <g:price>375.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Одяг &gt; Джинси, штани, кофтини</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Джинси, штани, кофтини &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>990</g:id>
@@ -6489,7 +6495,7 @@
     <g:price>375.00 UAH</g:price>
     <g:color>Коричневий</g:color>
     <g:size>68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Одяг &gt; Джинси, штани, кофтини</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Джинси, штани, кофтини &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>765</g:id>
@@ -6506,7 +6512,7 @@
     <g:price>385.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Тепла осінь/весна &gt; Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>766</g:id>
@@ -6523,7 +6529,7 @@
     <g:price>385.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Тепла осінь/весна &gt; Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>767</g:id>
@@ -6540,7 +6546,7 @@
     <g:price>385.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>832</g:id>
@@ -6576,7 +6582,7 @@
     <g:sale_price>387.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/48-50/52-54</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>963</g:id>
@@ -6609,7 +6615,7 @@
     <g:gender>unisex</g:gender>
     <g:price>395.00 UAH</g:price>
     <g:size>68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Костюм утеплений &gt; Осінь &gt; Одяг &gt; Джинси, штани, кофтини</g:product_type>
+    <g:product_type>Костюм утеплений &gt; Осінь &gt; Одяг &gt; Джинси, штани, кофтини &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>208</g:id>
@@ -7206,7 +7212,7 @@
     <g:price>415.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>379</g:id>
@@ -7308,7 +7314,7 @@
     <g:price>425.00 UAH</g:price>
     <g:color>Синій</g:color>
     <g:size>0-6міс(10см)/6-12міс(11см)/9-12міс(12см)</g:size>
-    <g:product_type>Чобітки утеплені &gt; Осінь</g:product_type>
+    <g:product_type>Чобітки утеплені &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>35</g:id>
@@ -7326,7 +7332,7 @@
     <g:sale_price>436.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>42-44/44-46/50-52/52-54/48-50</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>743</g:id>
@@ -7495,7 +7501,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>44-46/42-44</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>926</g:id>
@@ -7788,7 +7794,7 @@
     <g:sale_price>495.00 UAH</g:sale_price>
     <g:color>Ніжно-рожевий</g:color>
     <g:size>42-44</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>189</g:id>
@@ -7841,7 +7847,7 @@
     <g:price>495.00 UAH</g:price>
     <g:color>Білий</g:color>
     <g:size>0-6міс(10см)/6-9міс(11см)/9-12міс(12см)</g:size>
-    <g:product_type>Осінь &gt; Чобітки утеплені</g:product_type>
+    <g:product_type>Осінь &gt; Чобітки утеплені &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>495</g:id>
@@ -7862,7 +7868,7 @@
     <g:price>495.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>0-6міс(10см)/6-9міс(11см)/9-12міс(12см)</g:size>
-    <g:product_type>Осінь &gt; Чобітки утеплені</g:product_type>
+    <g:product_type>Осінь &gt; Чобітки утеплені &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>496</g:id>
@@ -7882,7 +7888,7 @@
     <g:price>495.00 UAH</g:price>
     <g:color>Ніжно-рожевий</g:color>
     <g:size>0-6міс(10см)/6-9міс(11см)/9-12міс(12см)</g:size>
-    <g:product_type>Осінь &gt; Чобітки утеплені</g:product_type>
+    <g:product_type>Осінь &gt; Чобітки утеплені &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>497</g:id>
@@ -7899,7 +7905,7 @@
     <g:price>495.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>0-6міс(10см)/6-9міс(11см)/9-12міс(12см)</g:size>
-    <g:product_type>Осінь &gt; Чобітки утеплені</g:product_type>
+    <g:product_type>Осінь &gt; Чобітки утеплені &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>499</g:id>
@@ -7920,7 +7926,7 @@
     <g:price>495.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>0-6міс(10см)/6-9міс(11см)/9-12міс(12см)</g:size>
-    <g:product_type>Осінь &gt; Чобітки утеплені</g:product_type>
+    <g:product_type>Осінь &gt; Чобітки утеплені &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>918</g:id>
@@ -7974,7 +7980,7 @@
     <g:price>495.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>0-6міс(10см)/6-9міс(11см)/9-12міс(12см)</g:size>
-    <g:product_type>Осінь &gt; Чобітки утеплені</g:product_type>
+    <g:product_type>Осінь &gt; Чобітки утеплені &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1004</g:id>
@@ -7995,7 +8001,7 @@
     <g:price>495.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>0-6міс(10см)/6-9міс(11см)/9-12міс(12см)</g:size>
-    <g:product_type>Осінь &gt; Чобітки утеплені</g:product_type>
+    <g:product_type>Осінь &gt; Чобітки утеплені &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1005</g:id>
@@ -8016,7 +8022,7 @@
     <g:price>495.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>0-6міс(10см)/6-9міс(11см)/9-12міс(12см)</g:size>
-    <g:product_type>Осінь &gt; Чобітки утеплені</g:product_type>
+    <g:product_type>Осінь &gt; Чобітки утеплені &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1006</g:id>
@@ -8037,7 +8043,7 @@
     <g:price>495.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>0-6міс(10см)/6-9міс(11см)/9-12міс(12см)</g:size>
-    <g:product_type>Осінь &gt; Чобітки утеплені</g:product_type>
+    <g:product_type>Осінь &gt; Чобітки утеплені &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>248</g:id>
@@ -8071,7 +8077,7 @@
     <g:price>510.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>780</g:id>
@@ -8088,7 +8094,7 @@
     <g:price>510.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>782</g:id>
@@ -8105,7 +8111,7 @@
     <g:price>510.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>784</g:id>
@@ -8122,7 +8128,7 @@
     <g:price>510.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>938</g:id>
@@ -8143,7 +8149,7 @@
     <g:price>550.00 UAH</g:price>
     <g:color>Бордо</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>940</g:id>
@@ -8164,7 +8170,7 @@
     <g:price>550.00 UAH</g:price>
     <g:color>Сірий темний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>448</g:id>
@@ -8284,7 +8290,7 @@
     <g:price>545.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>242</g:id>
@@ -8639,7 +8645,7 @@
     <g:price>545.00 UAH</g:price>
     <g:color>Малиновий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>934</g:id>
@@ -8658,7 +8664,7 @@
     <g:price>545.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>972</g:id>
@@ -8709,7 +8715,7 @@
     <g:price>550.00 UAH</g:price>
     <g:color>Коричневий</g:color>
     <g:size>74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Костюм утеплений &gt; Осінь</g:product_type>
+    <g:product_type>Костюм утеплений &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>347</g:id>
@@ -9045,7 +9051,7 @@
     <g:price>560.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>509</g:id>
@@ -9200,7 +9206,7 @@
     <g:price>570.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>174</g:id>
@@ -9217,7 +9223,7 @@
     <g:price>575.00 UAH</g:price>
     <g:color>Коричневий</g:color>
     <g:size>74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Костюм утеплений &gt; Осінь</g:product_type>
+    <g:product_type>Костюм утеплений &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>191</g:id>
@@ -9284,7 +9290,7 @@
     <g:price>575.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Тепла осінь/весна &gt; Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>795</g:id>
@@ -9301,7 +9307,7 @@
     <g:price>575.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>796</g:id>
@@ -9318,7 +9324,7 @@
     <g:price>575.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>818</g:id>
@@ -9421,7 +9427,7 @@
     <g:price>575.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>953</g:id>
@@ -9659,7 +9665,7 @@
     <g:price>585.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>464</g:id>
@@ -9694,7 +9700,7 @@
     <g:sale_price>590.00 UAH</g:sale_price>
     <g:color>Пудровий</g:color>
     <g:size>52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>161</g:id>
@@ -9931,7 +9937,7 @@
     <g:sale_price>608.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/48-50/52-54</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>120</g:id>
@@ -9950,7 +9956,7 @@
     <g:price>650.00 UAH</g:price>
     <g:color>Бордо</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>195</g:id>
@@ -10100,7 +10106,7 @@
     <g:price>610.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>170</g:id>
@@ -10117,7 +10123,7 @@
     <g:price>680.00 UAH</g:price>
     <g:sale_price>618.00 UAH</g:sale_price>
     <g:size>86</g:size>
-    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>233</g:id>
@@ -10184,7 +10190,7 @@
     <g:gender>unisex</g:gender>
     <g:price>625.00 UAH</g:price>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Осінь &gt; Костюм утеплений</g:product_type>
+    <g:product_type>Осінь &gt; Костюм утеплений &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>259</g:id>
@@ -10286,7 +10292,7 @@
     <g:price>625.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>360</g:id>
@@ -10423,7 +10429,7 @@
     <g:price>660.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>357</g:id>
@@ -10457,7 +10463,7 @@
     <g:price>665.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>369</g:id>
@@ -10493,7 +10499,7 @@
     <g:price>670.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>356</g:id>
@@ -10542,7 +10548,7 @@
     <g:price>775.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>616</g:id>
@@ -10982,7 +10988,7 @@
     <g:price>700.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>781</g:id>
@@ -10999,7 +11005,7 @@
     <g:price>700.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>783</g:id>
@@ -11016,7 +11022,7 @@
     <g:price>700.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>811</g:id>
@@ -11067,7 +11073,7 @@
     <g:price>745.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>939</g:id>
@@ -11090,7 +11096,7 @@
     <g:price>745.00 UAH</g:price>
     <g:color>Бордо</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>941</g:id>
@@ -11113,7 +11119,7 @@
     <g:price>745.00 UAH</g:price>
     <g:color>Сірий темний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>947</g:id>
@@ -11132,7 +11138,7 @@
     <g:price>710.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>167</g:id>
@@ -11197,7 +11203,7 @@
     <g:price>760.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>122</g:id>
@@ -11216,7 +11222,7 @@
     <g:price>760.00 UAH</g:price>
     <g:color>Бордо</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>123</g:id>
@@ -11237,7 +11243,7 @@
     <g:price>760.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>124</g:id>
@@ -11258,7 +11264,7 @@
     <g:price>760.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>810</g:id>
@@ -11394,7 +11400,7 @@
     <g:price>850.00 UAH</g:price>
     <g:color>Оливковий</g:color>
     <g:size>62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>441</g:id>
@@ -11974,7 +11980,7 @@
     <g:price>925.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>126</g:id>
@@ -11991,7 +11997,7 @@
     <g:price>845.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>127</g:id>
@@ -12012,7 +12018,7 @@
     <g:price>845.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>128</g:id>
@@ -12033,7 +12039,7 @@
     <g:price>845.00 UAH</g:price>
     <g:color>Ніжно-рожевому</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>129</g:id>
@@ -12053,7 +12059,7 @@
     <g:price>845.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>388</g:id>
@@ -12089,7 +12095,7 @@
     <g:price>845.00 UAH</g:price>
     <g:color>Бордо</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>166</g:id>
@@ -12276,7 +12282,7 @@
     <g:price>860.00 UAH</g:price>
     <g:color>Бордо</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>437</g:id>
@@ -12591,7 +12597,7 @@
     <g:price>895.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Одяг &gt; Одяг для Хрещення &gt; Костюм утеплений &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Одяг для Хрещення &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>991</g:id>
@@ -12608,7 +12614,7 @@
     <g:price>925.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Одяг &gt; Костюм утеплений &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>992</g:id>
@@ -12625,7 +12631,7 @@
     <g:price>925.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Одяг &gt; Костюм утеплений &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>849</g:id>
@@ -12681,7 +12687,7 @@
     <g:price>945.00 UAH</g:price>
     <g:color>Бордо</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>132</g:id>
@@ -12703,7 +12709,7 @@
     <g:price>915.00 UAH</g:price>
     <g:color>Гірчичний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>133</g:id>
@@ -12725,7 +12731,7 @@
     <g:price>970.00 UAH</g:price>
     <g:color>Малиновий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>137</g:id>
@@ -12748,7 +12754,7 @@
     <g:price>915.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>462</g:id>
@@ -13014,7 +13020,7 @@
     <g:price>1000.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>153</g:id>
@@ -13035,7 +13041,7 @@
     <g:price>1000.00 UAH</g:price>
     <g:color>Ніжно-рожевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>905</g:id>
@@ -13086,7 +13092,7 @@
     <g:price>970.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>852</g:id>
@@ -13390,7 +13396,7 @@
     <g:price>1100.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>942</g:id>
@@ -13407,7 +13413,7 @@
     <g:price>1100.00 UAH</g:price>
     <g:color>Ніжно-рожевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>944</g:id>
@@ -13424,7 +13430,7 @@
     <g:price>1100.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>339</g:id>
@@ -13595,7 +13601,7 @@
     <g:gender>male</g:gender>
     <g:price>35.00 UAH</g:price>
     <g:size>6-12міс/12-18міс</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>567</g:id>
@@ -13612,7 +13618,7 @@
     <g:price>58.00 UAH</g:price>
     <g:color>Блакитний</g:color>
     <g:size>0-12міс/12-24міс</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>306</g:id>
@@ -13767,7 +13773,7 @@
     <g:sale_price>350.00 UAH</g:sale_price>
     <g:color>Білий</g:color>
     <g:size>36-38</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>377</g:id>
@@ -13903,7 +13909,7 @@
     <g:price>570.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>62/68/74/80/86/92</g:size>
-    <g:product_type>Осінь &gt; Боді &gt; Боді-гольф</g:product_type>
+    <g:product_type>Осінь &gt; Боді &gt; Боді-гольф &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1025</g:id>
@@ -15205,7 +15211,7 @@
     <g:price>495.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>0-6міс(10см)/6-9міс(11см)/9-12міс(12см)</g:size>
-    <g:product_type>Осінь &gt; Чобітки утеплені</g:product_type>
+    <g:product_type>Осінь &gt; Чобітки утеплені &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1093</g:id>
@@ -15399,7 +15405,7 @@
     <g:sale_price>750.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>98</g:size>
-    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1107</g:id>
@@ -15472,7 +15478,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Сірий меланж</g:color>
     <g:size>52-54</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1111</g:id>
@@ -15492,7 +15498,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Сірий меланж</g:color>
     <g:size>36-38</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1112</g:id>
@@ -15512,7 +15518,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Сірий меланж</g:color>
     <g:size>42-44</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1113</g:id>
@@ -15534,7 +15540,7 @@
     <g:sale_price>235.00 UAH</g:sale_price>
     <g:color>Сірий меланж</g:color>
     <g:size>44-46/46-48/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1114</g:id>
@@ -15555,7 +15561,7 @@
     <g:sale_price>350.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>48-50</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1115</g:id>
@@ -15607,7 +15613,7 @@
     <g:price>72.00 UAH</g:price>
     <g:color>Пудровий</g:color>
     <g:size>3-5р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1118</g:id>
@@ -15625,7 +15631,7 @@
     <g:price>72.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>0-1р/1-2р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Гольфи &gt; Носки</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Гольфи &gt; Носки &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1119</g:id>
@@ -15643,7 +15649,7 @@
     <g:price>72.00 UAH</g:price>
     <g:color>Цегляний</g:color>
     <g:size>2-3р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1120</g:id>
@@ -15661,7 +15667,7 @@
     <g:price>54.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>1-2р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1121</g:id>
@@ -15677,7 +15683,7 @@
     <g:gender>unisex</g:gender>
     <g:price>105.00 UAH</g:price>
     <g:size>0-6міс</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1122</g:id>
@@ -15693,7 +15699,7 @@
     <g:gender>unisex</g:gender>
     <g:price>105.00 UAH</g:price>
     <g:size>0-6міс</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1123</g:id>
@@ -15729,7 +15735,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Гірчичний</g:color>
     <g:size>42-44/38-40/40-42</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1125</g:id>
@@ -15747,7 +15753,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>42-44/44-46</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1126</g:id>
@@ -15765,7 +15771,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Блакитний</g:color>
     <g:size>38-40</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1127</g:id>
@@ -15783,7 +15789,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Білий з малюнками</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1128</g:id>
@@ -15801,7 +15807,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Блакитний</g:color>
     <g:size>42-44</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1129</g:id>
@@ -15819,7 +15825,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Зірки</g:color>
     <g:size>44-46</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1130</g:id>
@@ -15837,7 +15843,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Динозавр</g:color>
     <g:size>46-48</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1131</g:id>
@@ -15855,7 +15861,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Блакитний</g:color>
     <g:size>48-50</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1132</g:id>
@@ -15873,7 +15879,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Блакитний</g:color>
     <g:size>50-52</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1133</g:id>
@@ -15892,7 +15898,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>50-52/44-46/46-48/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1134</g:id>
@@ -15911,7 +15917,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Бежевий</g:color>
     <g:size>44-46</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1135</g:id>
@@ -15930,7 +15936,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>44-46/36-38/40-42/46-48/48-50</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1136</g:id>
@@ -15949,7 +15955,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Сірий темний</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1137</g:id>
@@ -15968,7 +15974,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Молочний</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1138</g:id>
@@ -15987,7 +15993,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Ніжно-рожевий</g:color>
     <g:size>52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1139</g:id>
@@ -16007,7 +16013,7 @@
     <g:price>52.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>1-2р/0-1р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1140</g:id>
@@ -16027,7 +16033,7 @@
     <g:price>52.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>1-2р/0-1р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1141</g:id>
@@ -16044,7 +16050,7 @@
     <g:price>570.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>62/68/74/80/86/92</g:size>
-    <g:product_type>Осінь &gt; Боді &gt; Боді-гольф</g:product_type>
+    <g:product_type>Осінь &gt; Боді &gt; Боді-гольф &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1142</g:id>
@@ -16061,7 +16067,7 @@
     <g:price>570.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>62/68/74/80/86/92</g:size>
-    <g:product_type>Осінь &gt; Боді &gt; Боді-гольф</g:product_type>
+    <g:product_type>Осінь &gt; Боді &gt; Боді-гольф &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1143</g:id>
@@ -16097,7 +16103,7 @@
     <g:price>100.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1145</g:id>
@@ -16116,7 +16122,7 @@
     <g:price>100.00 UAH</g:price>
     <g:color>Гірчичний</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1146</g:id>
@@ -16135,7 +16141,7 @@
     <g:price>100.00 UAH</g:price>
     <g:color>Бордо</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1147</g:id>
@@ -16152,7 +16158,7 @@
     <g:price>92.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>6-10р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1148</g:id>
@@ -16171,7 +16177,7 @@
     <g:price>100.00 UAH</g:price>
     <g:color>Сині</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1149</g:id>
@@ -16190,7 +16196,7 @@
     <g:price>100.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1151</g:id>
@@ -16209,7 +16215,7 @@
     <g:price>130.00 UAH</g:price>
     <g:color>Синій</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1152</g:id>
@@ -16226,7 +16232,7 @@
     <g:price>130.00 UAH</g:price>
     <g:color>Зелений</g:color>
     <g:size>4-6р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1153</g:id>
@@ -16243,7 +16249,7 @@
     <g:price>130.00 UAH</g:price>
     <g:color>Блакитний</g:color>
     <g:size>3-5р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1154</g:id>
@@ -16260,7 +16266,7 @@
     <g:price>130.00 UAH</g:price>
     <g:color>Бірюзовий</g:color>
     <g:size>3-5р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1155</g:id>
@@ -16277,7 +16283,7 @@
     <g:price>130.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>3-5р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1156</g:id>
@@ -16294,7 +16300,7 @@
     <g:price>125.00 UAH</g:price>
     <g:color>Беж</g:color>
     <g:size>2-4р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1157</g:id>
@@ -16311,7 +16317,7 @@
     <g:price>125.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1158</g:id>
@@ -16328,7 +16334,7 @@
     <g:price>100.00 UAH</g:price>
     <g:color>Білий</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1160</g:id>
@@ -16347,7 +16353,7 @@
     <g:price>100.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1161</g:id>
@@ -16366,7 +16372,7 @@
     <g:price>100.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1162</g:id>
@@ -16385,7 +16391,7 @@
     <g:price>100.00 UAH</g:price>
     <g:color>Брудно-рожевий</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1163</g:id>
@@ -16404,7 +16410,7 @@
     <g:price>290.00 UAH</g:price>
     <g:color>Білий</g:color>
     <g:size>1-2р/3-4р/5-6р</g:size>
-    <g:product_type>Осінь &gt; Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Осінь &gt; Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1164</g:id>
@@ -16423,7 +16429,7 @@
     <g:price>290.00 UAH</g:price>
     <g:color>Бордовий</g:color>
     <g:size>1-2р/3-4р/5-6р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1165</g:id>
@@ -16441,7 +16447,7 @@
     <g:price>315.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>3-4р/5-6р/7-8р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1166</g:id>
@@ -16460,7 +16466,7 @@
     <g:price>290.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>1-2р/3-4р/5-6р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1167</g:id>
@@ -16479,7 +16485,7 @@
     <g:price>290.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>1-2р/3-4р/5-6р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1168</g:id>
@@ -16498,7 +16504,7 @@
     <g:price>290.00 UAH</g:price>
     <g:color>Білий</g:color>
     <g:size>1-2р/3-4р/5-6р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1169</g:id>
@@ -16515,7 +16521,7 @@
     <g:price>270.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>6-12міс/12-18міс/0-6міс</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1170</g:id>
@@ -16532,7 +16538,7 @@
     <g:price>270.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>6-12міс/12-18міс/0-6міс</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1171</g:id>
@@ -16619,7 +16625,7 @@
     <g:price>875.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Одяг &gt; Костюм утеплений &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1176</g:id>
@@ -16637,7 +16643,7 @@
     <g:price>330.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>5-6р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1177</g:id>
@@ -16655,7 +16661,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>7-8р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1180</g:id>
@@ -16672,7 +16678,7 @@
     <g:price>125.00 UAH</g:price>
     <g:color>Персик</g:color>
     <g:size>2-4р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1181</g:id>
@@ -16693,7 +16699,7 @@
     <g:price>760.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Осінь &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1182</g:id>
@@ -16714,7 +16720,7 @@
     <g:price>790.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Осінь &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1183</g:id>
@@ -16800,7 +16806,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Чорний</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1187</g:id>
@@ -16819,7 +16825,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Чорний</g:color>
     <g:size>40-42/42-44/46-48/48-50</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1188</g:id>
@@ -16839,7 +16845,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Бордо</g:color>
     <g:size>44-46</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1189</g:id>
@@ -16859,7 +16865,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Блакитний меланж</g:color>
     <g:size>40-42/46-48</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1190</g:id>
@@ -16879,7 +16885,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Бордовий</g:color>
     <g:size>52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1191</g:id>
@@ -16902,7 +16908,7 @@
     <g:price>450.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1192</g:id>
@@ -16925,7 +16931,7 @@
     <g:price>465.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1193</g:id>
@@ -16948,7 +16954,7 @@
     <g:price>465.00 UAH</g:price>
     <g:color>Пудровий</g:color>
     <g:size>44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1194</g:id>
@@ -16971,7 +16977,7 @@
     <g:price>450.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1195</g:id>
@@ -16994,7 +17000,7 @@
     <g:price>450.00 UAH</g:price>
     <g:color>Бордо</g:color>
     <g:size>44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1196</g:id>
@@ -17011,7 +17017,7 @@
     <g:price>98.00 UAH</g:price>
     <g:color>Коричневий</g:color>
     <g:size>3-5р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1197</g:id>
@@ -17030,7 +17036,7 @@
     <g:price>100.00 UAH</g:price>
     <g:color>Синій</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1198</g:id>
@@ -17047,7 +17053,7 @@
     <g:price>142.00 UAH</g:price>
     <g:color>Беж</g:color>
     <g:size>3-5р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1199</g:id>
@@ -17064,7 +17070,7 @@
     <g:price>142.00 UAH</g:price>
     <g:color>Беж</g:color>
     <g:size>3-5р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1200</g:id>
@@ -17083,7 +17089,7 @@
     <g:price>395.00 UAH</g:price>
     <g:color>Коричневий</g:color>
     <g:size>68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Одяг &gt; Джинси, штани, кофтини</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Джинси, штани, кофтини &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1201</g:id>
@@ -17102,7 +17108,7 @@
     <g:price>395.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Одяг &gt; Джинси, штани, кофтини</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Джинси, штани, кофтини &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1202</g:id>
@@ -17122,7 +17128,7 @@
     <g:price>65.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>1-2р/0-1р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1203</g:id>
@@ -17139,7 +17145,7 @@
     <g:price>350.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Одяг &gt; Джинси, штани, кофтини</g:product_type>
+    <g:product_type>Одяг &gt; Джинси, штани, кофтини &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1204</g:id>
@@ -17156,7 +17162,7 @@
     <g:price>925.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1205</g:id>
@@ -17173,7 +17179,7 @@
     <g:price>100.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1206</g:id>
@@ -17190,7 +17196,7 @@
     <g:price>100.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1207</g:id>
@@ -17209,7 +17215,7 @@
     <g:price>660.00 UAH</g:price>
     <g:color>Бежевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1208</g:id>
@@ -17228,7 +17234,7 @@
     <g:price>660.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1209</g:id>
@@ -17247,7 +17253,7 @@
     <g:price>660.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1210</g:id>
@@ -17266,7 +17272,7 @@
     <g:price>660.00 UAH</g:price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1211</g:id>
@@ -17286,7 +17292,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Бежевий</g:color>
     <g:size>44-46/46-48</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1212</g:id>
@@ -17307,7 +17313,7 @@
     <g:price>845.00 UAH</g:price>
     <g:color>Молочний</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1213</g:id>
@@ -17328,7 +17334,7 @@
     <g:price>845.00 UAH</g:price>
     <g:color>Пудровий</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1214</g:id>
@@ -17347,7 +17353,7 @@
     <g:sale_price>310.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>42-44</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1215</g:id>
@@ -17367,7 +17373,7 @@
     <g:sale_price>310.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>42-44</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1216</g:id>
@@ -17387,7 +17393,7 @@
     <g:sale_price>310.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>40-42/44-46</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1217</g:id>
@@ -17407,7 +17413,7 @@
     <g:sale_price>310.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1218</g:id>
@@ -17427,7 +17433,7 @@
     <g:price>495.00 UAH</g:price>
     <g:color>Фіолетовий</g:color>
     <g:size>0-6міс(10см)/6-9міс(11см)/9-12міс(12см)</g:size>
-    <g:product_type>Осінь &gt; Чобітки утеплені</g:product_type>
+    <g:product_type>Осінь &gt; Чобітки утеплені &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1219</g:id>
@@ -17451,7 +17457,7 @@
     <g:sale_price>475.00 UAH</g:sale_price>
     <g:color>Пудра</g:color>
     <g:size>46-48/48-50/50-52</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1220</g:id>
@@ -17475,7 +17481,7 @@
     <g:sale_price>375.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>46-48/48-50/50-52</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1221</g:id>
@@ -17495,7 +17501,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Пудровий</g:color>
     <g:size>9-12міс(12см)</g:size>
-    <g:product_type>Осінь &gt; Чобітки утеплені</g:product_type>
+    <g:product_type>Осінь &gt; Чобітки утеплені &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1222</g:id>
@@ -17515,7 +17521,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>9-12міс(12см)</g:size>
-    <g:product_type>Осінь &gt; Чобітки утеплені</g:product_type>
+    <g:product_type>Осінь &gt; Чобітки утеплені &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1223</g:id>
@@ -17531,7 +17537,7 @@
     <g:gender>male</g:gender>
     <g:price>150.00 UAH</g:price>
     <g:size>0-6міс/12-18міс</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Носки &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1224</g:id>
@@ -17553,7 +17559,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Сірий меланж</g:color>
     <g:size>44-46/46-48/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1225</g:id>
@@ -17589,7 +17595,7 @@
     <g:price>290.00 UAH</g:price>
     <g:color>Чорний</g:color>
     <g:size>1-2р/3-4р/5-6р</g:size>
-    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи</g:product_type>
+    <g:product_type>Колготи, шкарпетки, гольфи &gt; Колготи &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1227</g:id>
@@ -17664,7 +17670,7 @@
     <g:price>790.00 UAH</g:price>
     <g:color>Блакитний</g:color>
     <g:size>62/68/74/80/86/92/98/104</g:size>
-    <g:product_type>Осінь &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1231</g:id>
@@ -17797,7 +17803,7 @@
     <g:gender>unisex</g:gender>
     <g:price>925.00 UAH</g:price>
     <g:size>62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Одяг &gt; Костюм утеплений &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1237</g:id>
@@ -17917,7 +17923,7 @@
     <g:price>100.00 UAH</g:price>
     <g:color>Блакитний</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1244</g:id>
@@ -17934,7 +17940,7 @@
     <g:price>98.00 UAH</g:price>
     <g:color>Верхні</g:color>
     <g:size>3-5р</g:size>
-    <g:product_type>Рукавички</g:product_type>
+    <g:product_type>Рукавички &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1245</g:id>
@@ -17951,7 +17957,7 @@
     <g:price>925.00 UAH</g:price>
     <g:color>Рожевий</g:color>
     <g:size>62/68/74/80/86/92/98/104/110/116</g:size>
-    <g:product_type>Осінь &gt; Одяг &gt; Костюм утеплений &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1246</g:id>
