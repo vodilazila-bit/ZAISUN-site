@@ -16139,9 +16139,9 @@
     <g:age_group>toddler</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>100.00 UAH</g:price>
-    <g:color>Бордо</g:color>
+    <g:color>Бірюза</g:color>
     <g:size>1-3р</g:size>
-    <g:product_type>Рукавички &gt; Зима</g:product_type>
+    <g:product_type>Зима &gt; Рукавички</g:product_type>
   </item>
   <item>
     <g:id>1147</g:id>
