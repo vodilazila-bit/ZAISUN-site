@@ -507,7 +507,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=484" as="script">
+<link rel="preload" href="data-lite.js?v=485" as="script">
 <link rel="preload" href="hero-winter.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -805,7 +805,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=484"></script>
+<script src="data-lite.js?v=485"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -932,7 +932,7 @@ let MENU_DEF = [
   {k:'zyma',          n:'Зима', c:['Зима']},
   {k:'osin',          n:'Осінь-зима', c:['Осінь']},
   {k:'novyirik',      n:'Новий рік', c:['Новий Рік'], rank:nyRank},
-  {k:'shapky',        n:'Шапки', c:['Шапки']},
+  {k:'shapky',        n:'Шапки', c:['Шапки','Рукавички'], extra:{'Рукавички':'Зима'}},
   {k:'bodi',          n:'Боді', c:['Боді','Боді-гольф','Комплекти з боді']},
   {k:'kostiumy',      n:'Костюми', c:['Костюм','Костюм утеплений']},
   {k:'sukni',         n:'Сукні/сарафани', c:['Сукні','сарафан'], subs:{'Сукні':'Сукні','сарафан':'Сарафани'}},
@@ -1007,6 +1007,14 @@ function openMenuCat(idx){
   curProds = PL.filter(p=>p.cats.some(c=>ids.has(c)));
   curBase = curProds.slice();
   curSubs = subsFromNames(def.c, def.subs);
+  // extra: підкатегорія з іншого розділу як окремий підрозділ (Рукавички з «Аксесуарів» у «Шапках»,
+  // одразу після підрозділу «Зима»). В адмінці категорія лишається де була.
+  if(def.extra) for(const [nm, after] of Object.entries(def.extra)){
+    const c = TREE.flatMap(x=>x.children||[]).find(c=>(c.raw===nm || c.name===nm) && c.n>0);
+    if(!c || curSubs.some(s=>s.id===c.id)) continue;
+    const i = curSubs.findIndex(s=>s.name===after);
+    curSubs.splice(i>=0 ? i+1 : curSubs.length, 0, {id:c.id, name:c.name, n:c.n});
+  }
   curSub = '';
   curCatName = def.n;
   initCat(def.n, def.rank);
@@ -3282,7 +3290,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=484'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=485'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
