@@ -12687,7 +12687,7 @@
     <g:price>945.00 UAH</g:price>
     <g:color>Бордо</g:color>
     <g:size>36-38/38-40/40-42/42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима &gt; Зима</g:product_type>
+    <g:product_type>Зима</g:product_type>
   </item>
   <item>
     <g:id>132</g:id>
@@ -13387,7 +13387,7 @@
     <g:description>Дитяча зимова шапка в комплекті з шарфиком з помпонами у рожевому кольорі Помпони - натуральний єнот Помпон з&apos;ємний, на кнопочці Матеріал - королівська євроангора, підклад - фліс</g:description>
     <g:link>https://zaisun.com.ua/?p=154</g:link>
     <g:image_link>https://zaisun.com.ua/images/dytiachyi_komplekt_shapka_zi_snudom_rozhevyi_z_naturalnymy_p_154_ms92oyef_0.jpg</g:image_link>
-    <g:availability>in stock</g:availability>
+    <g:availability>out of stock</g:availability>
     <g:condition>new</g:condition>
     <g:brand>ZaiSun</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
@@ -16968,7 +16968,7 @@
 На вушках додаткові нашивки з утеплювачем</g:description>
     <g:link>https://zaisun.com.ua/?p=1194</g:link>
     <g:image_link>https://zaisun.com.ua/images/dytiacha_zymova_shapka_sholom_u_rozhevomu_kolori_1194_muy5sfw1_0.jpg</g:image_link>
-    <g:availability>in stock</g:availability>
+    <g:availability>out of stock</g:availability>
     <g:condition>new</g:condition>
     <g:brand>ZaiSun</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
@@ -17343,7 +17343,7 @@
 матеріал: ангора на флісовому пікладі Погода: зима Орієнтовно до -15•</g:description>
     <g:link>https://zaisun.com.ua/?p=1214</g:link>
     <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_na_zymu_na_flisovomu_pidkladi_1214_mvl9kd9l_0.jpg</g:image_link>
-    <g:availability>out of stock</g:availability>
+    <g:availability>in stock</g:availability>
     <g:condition>new</g:condition>
     <g:brand>ZaiSun</g:brand>
     <g:identifier_exists>no</g:identifier_exists>
