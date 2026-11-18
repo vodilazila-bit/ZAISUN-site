@@ -303,6 +303,23 @@ a.back{width:fit-content;text-decoration:none}
 .fbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-family:inherit;font-size:.88rem;font-weight:500;color:var(--ink);cursor:pointer}
 .fbtn .bdg{background:var(--rose-d);color:#fff;min-width:19px;height:19px;border-radius:10px;font-size:.66rem;display:none;place-items:center;padding:0 5px}
 .fbtn .bdg.show{display:grid}
+.zsel{position:relative;flex:none}
+.zsel-native{display:none!important}
+.zsel-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:11px 12px 11px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;font-family:inherit;font-size:.85rem;font-weight:500;color:var(--ink);cursor:pointer;white-space:nowrap;transition:border-color .15s,box-shadow .15s}
+.zsel-btn span{overflow:hidden;text-overflow:ellipsis}
+.zsel-btn svg{flex:none;color:var(--rose-d);transition:transform .2s}
+.zsel.open .zsel-btn{border-color:var(--rose-d);box-shadow:0 0 0 3px rgba(194,130,106,.12)}
+.zsel.open .zsel-btn svg{transform:rotate(180deg)}
+.zsel-list{position:absolute;right:0;top:calc(100% + 6px);z-index:30;min-width:max(100%,200px);padding:6px;background:#fff;border:1px solid var(--blush);border-radius:14px;box-shadow:0 12px 32px rgba(107,93,80,.18);opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .15s,transform .15s}
+.zsel.open .zsel-list{opacity:1;transform:none;pointer-events:auto}
+.zsel-it{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 12px;border-radius:10px;font-size:.9rem;color:var(--ink);cursor:pointer;white-space:nowrap}
+.zsel-it:hover{background:var(--petal)}
+.zsel-it.on{font-weight:600;color:var(--rose-d);background:var(--petal)}
+.zsel-it svg{flex:none;visibility:hidden}.zsel-it.on svg{visibility:visible}
+.ctrls .zsel,.zsel.grow{flex:1}
+.zsel.grow .zsel-btn{height:100%;padding:12px;font-size:.88rem}
+.so-top .zsel-btn{padding:11px 12px}
+@media(max-width:420px){.so-top .zsel{max-width:38vw}}
 .sortsel{flex:1;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-family:inherit;font-size:.85rem;color:var(--ink);outline:none;-webkit-appearance:none;text-align:center}
 .fpills{display:flex;gap:6px;padding:0 18px 10px;overflow-x:auto;scrollbar-width:none}
 .fpills::-webkit-scrollbar{display:none}
@@ -521,7 +538,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=490" as="script">
+<link rel="preload" href="data-lite.js?v=491" as="script">
 <link rel="preload" href="hero-winter.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -820,7 +837,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=490"></script>
+<script src="data-lite.js?v=491"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -3174,11 +3191,54 @@ if(heroSlides.length){
     .catch(()=>{});
 })();
 
+// Гарний випадний список замість системного <select> (той виглядав як зі старого сайту).
+// Сам <select> лишається прихованим: код далі читає й ставить його value, а onchange
+// спрацьовує як раніше. Підпис кнопки оновлюється й тоді, коли value ставить код.
+function zsSelect(sel, grow){
+  const wrap = document.createElement('div'); wrap.className = 'zsel' + (grow ? ' grow' : '');
+  sel.parentNode.insertBefore(wrap, sel); wrap.appendChild(sel); sel.classList.add('zsel-native');
+  const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zsel-btn';
+  btn.setAttribute('aria-haspopup', 'listbox'); btn.setAttribute('aria-expanded', 'false');
+  const list = document.createElement('div'); list.className = 'zsel-list'; list.setAttribute('role', 'listbox');
+  wrap.appendChild(btn); wrap.appendChild(list);
+  const CHK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  const sync = () => {
+    const o = sel.options[sel.selectedIndex];
+    btn.innerHTML = `<span>${escH(o ? o.text : '')}</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>`;
+    list.innerHTML = [...sel.options].map((o, i) => `<div class="zsel-it${i === sel.selectedIndex ? ' on' : ''}" role="option" data-i="${i}">${escH(o.text)}${CHK}</div>`).join('');
+  };
+  const close = () => { wrap.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = !wrap.classList.contains('open');
+    document.querySelectorAll('.zsel.open').forEach(w => w.classList.remove('open'));
+    if(open){ sync(); wrap.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+  });
+  list.addEventListener('click', e => {
+    e.stopPropagation();
+    const it = e.target.closest('.zsel-it'); if(!it) return;
+    const i = +it.dataset.i; close();
+    if(i !== sel.selectedIndex){ sel.selectedIndex = i; sync(); sel.dispatchEvent(new Event('change', {bubbles: true})); }
+  });
+  document.addEventListener('click', close);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
+  const d = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value');
+  Object.defineProperty(sel, 'value', {configurable: true, get(){ return d.get.call(sel); }, set(v){ d.set.call(sel, v); sync(); }});
+  new MutationObserver(sync).observe(sel, {subtree: true, childList: true, characterData: true});
+  sync();
+}
+try{ zsSelect(document.getElementById('sortsel'), true); zsSelect(document.getElementById('soSort')); }catch(e){}
+
 buildMenu(); buildHome(); buildNew(); buildIG(); buildTop(); popLoad(); heroLinks();
 
 // ═══ Свайп назад / кнопка назад: інтеграція з історією браузера ═══
 function closeProd(){ if(curCatId) go('cat'); else goHome(); }
 let NAVSILENT = false, NAVDEPTH = 0, LASTVIEW = {v:'home'}, OVERLAYON = false;
+// Позицію прокрутки при «назад» повертаємо самі (st.sy). Якщо лишити це й браузеру
+// (режим auto), Safari/Chrome на iPhone після жесту «назад» тримають поверх сторінки
+// знімок попереднього екрана, поки не дочекаються своєї прокрутки, — до 2–3 секунд.
+// Увесь цей час перший дотик іде в знімок і нічого не відкриває.
+try{ if('scrollRestoration' in history) history.scrollRestoration = 'manual'; }catch(e){}
 const SITE_ORIGIN = 'https://zaisun.com.ua';
 // та сама транслітерація, що в tools/gen_pages.js — щоб canonical збігався зі статичною сторінкою
 const _TR = {'а':'a','б':'b','в':'v','г':'h','ґ':'g','д':'d','е':'e','є':'ie','ж':'zh','з':'z','и':'y','і':'i','ї':'i','й':'i','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ф':'f','х':'kh','ц':'ts','ч':'ch','ш':'sh','щ':'shch','ь':'','ю':'iu','я':'ia','ы':'y','э':'e','ё':'e','ъ':''};
@@ -3334,7 +3394,8 @@ window.addEventListener('popstate', e => {
   LASTVIEW = {v:st.v||'home', m:st.m, id:st.id, i:st.i, sub:st.sub};
   NAVSILENT = true;
   try{
-    _closeMenu0(); _closeSheet0(); _closeCart0(); _closeOrder0();
+    _closeMenu0(); _closeCart0(); _closeOrder0();
+    if(document.getElementById('sheet').classList.contains('open')) _closeSheet0();
     if(st.v !== 'search') _closeSearch0();
     if(st.v === 'search'){
       _openSearch();
@@ -3429,7 +3490,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=490'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=491'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
