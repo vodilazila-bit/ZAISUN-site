@@ -521,7 +521,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=489" as="script">
+<link rel="preload" href="data-lite.js?v=490" as="script">
 <link rel="preload" href="hero-winter.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -820,7 +820,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=489"></script>
+<script src="data-lite.js?v=490"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -1017,6 +1017,7 @@ function subsFromNames(names, labels){
 function openMenuCat(idx){
   const def = MENU_DEF[idx];
   closeMenuUI();
+  CATKEY = 'k' + def.k;
   const ids = findIdsByNames(def.c);
   curCatId = '__multi__';
   curProds = PL.filter(p=>p.cats.some(c=>ids.has(c)));
@@ -1175,6 +1176,7 @@ function catAndChildren(id){
 }
 function openCat(id){
   closeMenuUI();
+  CATKEY = String(id);
   curCatId = id;
   const ids = new Set(catAndChildren(id));
   curProds = PL.filter(p=>p.cats.some(c=>ids.has(c)));
@@ -1189,6 +1191,7 @@ function openCat(id){
 }
 function openCatAll(){
   closeMenuUI();
+  CATKEY = 'all';
   curCatId = '__all__';
   curProds = PL.slice();
   curBase = curProds.slice();
@@ -1275,6 +1278,74 @@ function initCat(nm, rank){
 // як текст («104» перед «56»).
 const SIZE_F = ['Розмір','Обхват голови','Вік'];
 let FMEM = {};          // обрані фільтри по розділах — щоб «назад» з картки їх не скидав
+// ─── Фільтри й пошук в адресі сторінки ───
+// Обране в розділі (розмір, колір, ціна, сортування, пошук у розділі) і глобальний пошук
+// пишемо в адресу, щоб посиланням можна було поділитись: ?cat=kshapky&size=44-46&color=Рожевий,
+// /?search=шапка&sort=cheap. Адресу оновлюємо із затримкою 0,5 с — під час набору тексту
+// не смикаємо історію (і аналітику) на кожну літеру. Перед будь-яким переходом — одразу (urlFlush).
+let CATKEY = '';        // значення cat= для розділу, що зараз відкритий
+let URLT = 0, URLFN = null;
+const CAT_SORTS = ['pop','new','oldest','asc','desc'], SO_SORTS = ['pop','cheap','exp'];
+const CAT_PARAMS = ['size','color','o','pmin','pmax','sort','q'];
+function urlSoon(fn){ clearTimeout(URLT); URLFN = fn; URLT = setTimeout(urlFlush, 500); }
+function urlFlush(){ clearTimeout(URLT); const fn = URLFN; URLFN = null; if(fn) try{ fn(); }catch(e){} }
+function urlSet(st, url){ if(url !== location.pathname + location.search) history.replaceState(st, '', url); }
+function catUrlNow(){
+  const st = history.state || {};
+  if(st.v !== 'cat' || st.o) return;                       // інший екран або відкрита накладка
+  if(!document.getElementById('pgCat').classList.contains('show')) return;
+  const cur = new URLSearchParams(location.search);
+  if((cur.get('cat') || '') !== CATKEY) return;            // запис історії ще від попереднього розділу
+  const q = new URLSearchParams();
+  q.set('cat', CATKEY);
+  if(cur.get('sub')) q.set('sub', cur.get('sub'));
+  for(const [fn, vals] of Object.entries(fSel)){
+    if(!vals || !vals.size) continue;
+    if(SIZE_F.includes(fn)) vals.forEach(v=>q.append('size', v));
+    else if(fn === 'Колір') vals.forEach(v=>q.append('color', v));
+    else vals.forEach(v=>q.append('o', fn + ':' + v));
+  }
+  const [a, b] = priceRange();
+  if(a !== null) q.set('pmin', a);
+  if(b !== null) q.set('pmax', b);
+  const srt = document.getElementById('sortsel').value;
+  if(CAT_SORTS.includes(srt)) q.set('sort', srt);
+  const cq = (document.getElementById('catQ').value || '').trim();
+  if(cq) q.set('q', cq);
+  urlSet(st, location.pathname + '?' + q.toString());
+}
+// Відкрили посилання з фільтрами — ставимо їх у розділ
+function catParamsLoad(q){
+  if(!CAT_PARAMS.some(k=>q.has(k))) return;
+  if(!document.getElementById('pgCat').classList.contains('show')) return;
+  fSel = {}; pFrom = null; pTo = null;
+  const add = (k, v) => (fSel[k] = fSel[k] || new Set()).add(v);
+  q.getAll('size').forEach(v=>{ const k = sizeKind(v); if(k) add(k, v); });
+  q.getAll('color').forEach(v=>{ if(v) add('Колір', v); });
+  q.getAll('o').forEach(x=>{
+    const i = x.indexOf(':'), n = x.slice(0, i), v = x.slice(i + 1);
+    if(i > 0 && v && !SIZE_F.includes(n) && n !== 'Колір') add(n, v);
+  });
+  const num = k => { const v = parseInt(q.get(k), 10); return isFinite(v) && v >= 0 ? v : null; };
+  pFrom = num('pmin'); pTo = num('pmax');
+  if(CAT_SORTS.includes(q.get('sort'))) document.getElementById('sortsel').value = q.get('sort');
+  if(q.get('q')) document.getElementById('catQ').value = q.get('q');
+  apply();
+}
+function searchUrlNow(){
+  const st = history.state || {};
+  if(st.v !== 'search') return;
+  const raw = (document.getElementById('soInput').value || '').trim();
+  const srt = (document.getElementById('soSort') || {}).value || 'rel';
+  let url = location.pathname;
+  if(raw){
+    const q = new URLSearchParams();
+    q.set('search', raw);
+    if(SO_SORTS.includes(srt)) q.set('sort', srt);
+    url += '?' + q.toString();
+  }
+  urlSet({...st, q: raw, so: srt}, url);
+}
 function catMemKey(){ return curCatId + '|' + curCatName; }
 function escH(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 // Розмір, якого «Немає», не рахується — так само, як у картці товару
@@ -1576,6 +1647,7 @@ function apply(){
     if(curCatName) FMEM[catMemKey()] = {f:Object.fromEntries(Object.entries(fSel).map(([k,v])=>[k,[...v]])),
       a:pFrom, b:pTo, s:document.getElementById('sortsel').value, q:document.getElementById('catQ').value};
   }catch(e){}
+  urlSoon(catUrlNow);
   document.getElementById('cnt').textContent=r.length+' товарів';
   renderPills(); updBdg();
   const el=document.getElementById('grid');
@@ -2765,12 +2837,12 @@ function checkoutCart(){
 
 // ═══ SEARCH ═══
 let SO_T = 0;
-function openSearch(){
+function openSearch(noFocus){
   clearTimeout(SO_T);
   document.getElementById('searchOvl').classList.remove('so-out');
   document.getElementById('searchOvl').classList.add('show');
   document.body.style.overflow='hidden';
-  setTimeout(()=>document.getElementById('soInput').focus(), 60);
+  if(!noFocus) setTimeout(()=>document.getElementById('soInput').focus(), 60);
 }
 function closeSearch(){
   // Плавно гасимо вікно, а клас show знімаємо після анімації (160 мс).
@@ -2785,8 +2857,11 @@ function closeSearch(){
 function doSearch(){
   const q = document.getElementById('soInput').value.trim().toLowerCase();
   try{
-    if((history.state||{}).v === 'search')
-      history.replaceState({v:'search', q}, '', location.pathname + location.search);
+    const st = history.state || {};
+    if(st.v === 'search'){
+      history.replaceState({...st, q: document.getElementById('soInput').value.trim(), so: document.getElementById('soSort').value}, '', location.pathname + location.search);
+      urlSoon(searchUrlNow);
+    }
   }catch(e){}
   const grid = document.getElementById('soGrid'), hint = document.getElementById('soHint');
   if(q.length<2){ grid.innerHTML=''; hint.style.display='block'; hint.textContent='Почни вводити назву товару'; return; }
@@ -3149,9 +3224,10 @@ function goHomeBack(){
     setTimeout(back, 90); setTimeout(back, 240);
   }
 }
-function pushNav(st, url){ if(NAVSILENT) return; saveScrollNav(); NAVSAVED = false; NAVDEPTH++; LASTVIEW = st.o ? LASTVIEW : st; history.pushState(st,'', url||location.pathname); OVERLAYON = !!st.o; }
+function pushNav(st, url){ if(NAVSILENT) return; urlFlush(); saveScrollNav(); NAVSAVED = false; NAVDEPTH++; LASTVIEW = st.o ? LASTVIEW : st; history.pushState(st,'', url||(location.pathname+location.search)); OVERLAYON = !!st.o; }
 function navTo(st, url){
   if(NAVSILENT) return;
+  urlFlush();
   if(OVERLAYON){ NAVSAVED = false; LASTVIEW = st; history.replaceState(st,'', url||location.pathname); OVERLAYON = false; }
   else pushNav(st, url);
 }
@@ -3168,6 +3244,8 @@ openMenuCat = function(i){ saveScrollNav(); _openMenuCat(i); const k = '?cat=k' 
 openProd = function(id){
   // Кладемо позицію прокрутки в поточний запис історії — щоб при поверненні
   // з картки товару список відкрився на тому самому місці, а не з початку.
+  urlFlush();
+  let from = '';
   try{
     // З пошуку раніше викликали closeSearch() перед openProd — новий closeSearch
     // робить history.back() і через гонку з popstate кидає на головну.
@@ -3175,6 +3253,7 @@ openProd = function(id){
     const sov = document.getElementById('searchOvl');
     if(sov && sov.classList.contains('show')) _closeSearch0();
     const cur = history.state || LASTVIEW || {v:'home'};
+    from = cur.v || '';
     if(!cur.o){
       const y = window.scrollY||window.pageYOffset||0;
       if(cur.v !== 'prod') LASTLISTY = y;   // для кнопки «Назад до каталогу»
@@ -3182,7 +3261,8 @@ openProd = function(id){
       NAVSAVED = true;   // pushNav не має перезаписати цю позицію нулем після відкриття картки
     }
   }catch(e){}
-  _openProd(id); setCanon(prodCanon(id)); navTo({v:'prod', id}, location.pathname + '?p=' + id);
+  _openProd(id); setCanon(prodCanon(id));
+  navTo(from === 'cat' ? {v:'prod', id, fc:1} : {v:'prod', id}, location.pathname + '?p=' + id);
 };
 // накладки: пушимо стан-дублікат поточного екрана з позначкою o (overlay),
 // щоб жест "назад" закривав накладку і лишав той самий екран
@@ -3204,7 +3284,7 @@ openCart = function(){ _openCart(); pushNav({...LASTVIEW, o:1}); };
 // Пошук — повноцінний екран, а не накладка: інакше при відкритті товару
 // з результатів його запис затирався, і «назад» вело одразу на головну.
 const _closeSearch0 = closeSearch;
-openSearch = function(){ _openSearch(); navTo({v:'search', q:''}, location.pathname); };
+openSearch = function(noFocus){ _openSearch(noFocus); navTo({v:'search', q:''}, location.pathname); try{ searchUrlNow(); }catch(e){} };
 closeSearch = function(){
   if(!NAVSILENT && NAVDEPTH > 0 && (history.state||{}).v === 'search'){ history.back(); return; }
   _closeSearch0();
@@ -3215,6 +3295,12 @@ checkoutCart = function(){ _checkoutCart(); if(CART.length) pushNav({...LASTVIEW
 closeProd = function(){
   if(NAVDEPTH > 0) history.back();
   else _closeProd();
+};
+const _backToCat0 = backToCat;
+backToCat = function(){
+  const st = history.state || {};
+  if(st.v === 'prod' && st.fc && NAVDEPTH > 0){ history.back(); return; }
+  _backToCat0();
 };
 const _subSel0 = subSel;
 subSel = function(id){
@@ -3253,6 +3339,7 @@ window.addEventListener('popstate', e => {
     if(st.v === 'search'){
       _openSearch();
       const inp = document.getElementById('soInput');
+      const so = document.getElementById('soSort'); if(so) so.value = st.so || 'rel';
       if(inp){ inp.value = st.q || ''; if(st.q) doSearch(); }
     }
     else if(st.v === 'prod'){ _openProd(st.id); setCanon(prodCanon(st.id)); }
@@ -3285,7 +3372,14 @@ window.addEventListener('popstate', e => {
   const pid = parseInt(q.get('p'));
   const cat = q.get('cat');
   const sub = q.get('sub');
+  const sq = q.get('search');
   if(pid) setCanon(prodCanon(pid)); else if(cat) setCanon('?cat=' + cat); else setCanon('');
+  // Сторінки пошуку й фільтрів не індексуємо: canonical і так веде на розділ або головну,
+  // а noindex не дає Google збирати сотні дублів з різними комбінаціями фільтрів.
+  if(!pid && (sq !== null || (cat && CAT_PARAMS.some(k=>q.has(k))))){
+    const m = document.createElement('meta'); m.name = 'robots'; m.content = 'noindex,follow';
+    document.head.appendChild(m);
+  }
   history.replaceState({v:'home'}, '', location.pathname);
   if(pid && P.find(p=>p.id===pid)){ openProd(pid); reopenOrder(); return; }
   if(cat){
@@ -3293,6 +3387,15 @@ window.addEventListener('popstate', e => {
     else if(cat.charAt(0) === 'm' || cat.charAt(0) === 'k'){ const mi = menuIdxFromParam(cat); if(mi >= 0) openMenuCat(mi); }
     else openCat(cat);
     if(sub){ try{ subSel(sub); }catch(e){} }
+    try{ catParamsLoad(q); urlFlush(); }catch(e){}
+  } else if(sq !== null){
+    try{
+      openSearch(true);
+      const so = document.getElementById('soSort');
+      if(so) so.value = SO_SORTS.includes(q.get('sort')) ? q.get('sort') : 'rel';
+      document.getElementById('soInput').value = sq;
+      doSearch(); urlFlush();
+    }catch(e){}
   }
   reopenOrder();
 
@@ -3326,7 +3429,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=489'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=490'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
