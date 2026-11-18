@@ -511,7 +511,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=487" as="script">
+<link rel="preload" href="data-lite.js?v=488" as="script">
 <link rel="preload" href="hero-winter.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -651,8 +651,8 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 <!-- SIZE TABLE -->
 <div id="sizeOvl" style="position:fixed;inset:0;z-index:950;background:rgba(58,48,40,.45);display:none;align-items:center;justify-content:center;padding:40px 18px" onclick="if(event.target===this)closeSizeTable()">
   <div style="background:var(--cream);border-radius:18px;max-width:420px;width:100%;max-height:calc(100vh - 80px);max-height:calc(100dvh - 80px);overflow-y:auto;overscroll-behavior:contain;padding:22px 20px 20px;position:relative">
-    <button onclick="closeSizeTable()" style="position:absolute;top:12px;right:12px;background:none;border:none;color:var(--ink);padding:6px;cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-    <div style="font-family:var(--serif);font-weight:700;font-size:1.15rem;color:var(--ink);text-align:center;margin-bottom:4px">Таблиця розмірів шапок</div>
+    <button onclick="closeSizeTable()" aria-label="Закрити" style="position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:-10px -8px -34px auto;background:var(--rose-d);border:none;border-radius:50%;color:#fff;padding:0;cursor:pointer;box-shadow:0 3px 10px rgba(107,93,80,.3)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <div style="font-family:var(--serif);font-weight:700;font-size:1.15rem;color:var(--ink);text-align:center;margin-bottom:4px;padding:0 40px">Таблиця розмірів шапок</div>
     <img src="/images/how-measure.webp" alt="Як виміряти обхват голови дитини сантиметровою стрічкою" width="900" height="740" loading="lazy" style="width:100%;height:auto;border-radius:14px;display:block;margin:6px 0 10px">
     <div style="font-size:.82rem;color:var(--mid);text-align:center;margin-bottom:14px">Стрічка проходить посередині лоба, над вушками і по найвипуклішій частині потилиці. Отримане число в см — це розмір шапки.</div>
     <table style="width:100%;border-collapse:collapse;font-size:.92rem;color:var(--ink)">
@@ -810,7 +810,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=487"></script>
+<script src="data-lite.js?v=488"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -3299,7 +3299,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=487'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=488'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
