@@ -73,6 +73,16 @@ html,body{max-width:100%;touch-action:pan-y pinch-zoom}
 /* SEARCH overlay */
 .search-ovl{position:fixed;inset:0;z-index:950;background:#FDFAF6;display:none;flex-direction:column}
 .search-ovl.show{display:flex}
+@keyframes soIn{from{opacity:0}to{opacity:1}}
+@keyframes soOut{to{opacity:0}}
+@keyframes soDown{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+@keyframes soUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.search-ovl.show{animation:soIn .22s ease-out}
+.search-ovl.show .so-top{animation:soDown .32s cubic-bezier(.2,.8,.2,1)}
+.search-ovl.show .so-hint{animation:soUp .4s .12s ease-out both}
+.search-ovl.so-out{animation:soOut .16s ease-in forwards;pointer-events:none}
+#soGrid .so-new{animation:soUp .35s cubic-bezier(.2,.8,.2,1) both}
+@media(prefers-reduced-motion:reduce){.search-ovl,.search-ovl *{animation:none!important}}
 .so-top{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);background:#FBEFE1}
 .so-top input{flex:1 1 auto;min-width:0;padding:12px 16px;border:1.5px solid var(--line);border-radius:30px;font-family:inherit;font-size:1rem;outline:none;background:#fff}
 .so-top input:focus{border-color:var(--rose-d)}
@@ -511,7 +521,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=488" as="script">
+<link rel="preload" href="data-lite.js?v=489" as="script">
 <link rel="preload" href="hero-winter.webp" as="image" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -810,7 +820,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=488"></script>
+<script src="data-lite.js?v=489"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -2754,14 +2764,23 @@ function checkoutCart(){
 }
 
 // ═══ SEARCH ═══
+let SO_T = 0;
 function openSearch(){
+  clearTimeout(SO_T);
+  document.getElementById('searchOvl').classList.remove('so-out');
   document.getElementById('searchOvl').classList.add('show');
   document.body.style.overflow='hidden';
   setTimeout(()=>document.getElementById('soInput').focus(), 60);
 }
 function closeSearch(){
-  document.getElementById('searchOvl').classList.remove('show');
+  // Плавно гасимо вікно, а клас show знімаємо після анімації (160 мс).
+  const o = document.getElementById('searchOvl');
   document.body.style.overflow='';
+  clearTimeout(SO_T);
+  if(!o.classList.contains('show')) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ o.classList.remove('show'); return; }
+  o.classList.add('so-out');
+  SO_T = setTimeout(()=>o.classList.remove('show','so-out'), 160);
 }
 function doSearch(){
   const q = document.getElementById('soInput').value.trim().toLowerCase();
@@ -2794,7 +2813,15 @@ function doSearch(){
   // Малюємо порціями: 60 плиток одразу тягнули ~3,4 МБ фото одним залпом,
   // і нижні зʼявлялись із затримкою 2–3 с. Тепер перші 24, решта при прокрутці.
   SO_REST = r.slice(24);
+  // Плитки, яких ще не було, з'являються з легким підйомом по черзі;
+  // ті, що лишились після нової літери, не блимають.
+  const was = new Set([...grid.querySelectorAll('a.pc')].map(a=>a.getAttribute('href')));
   grid.innerHTML = soTiles(r.slice(0, 24));
+  let k = 0;
+  grid.querySelectorAll('a.pc').forEach(a=>{
+    if(was.has(a.getAttribute('href'))) return;
+    a.classList.add('so-new'); a.style.animationDelay = Math.min(k++, 10)*35 + 'ms';
+  });
 }
 function soTiles(list){
   return list.map(p=>{
@@ -3299,7 +3326,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=488'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=489'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
