@@ -18264,5 +18264,22 @@
     <g:size>40-42</g:size>
     <g:product_type>Зима</g:product_type>
   </item>
+  <item>
+    <g:id>1291</g:id>
+    <g:title>Зимова шапочка дитяча 48-50см</g:title>
+    <g:description>Дитяча двошарова з утеплювачем шапочка в принтах на утеплювачі слімтекс Погода: зима Тканина: трикотаж 95% бавовна, 5% еластан</g:description>
+    <g:link>https://zaisun.com.ua/?p=1291</g:link>
+    <g:image_link>https://zaisun.com.ua/images/zymova_shapochka_dytiacha_48_50sm_1291_mwowaeej_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>newborn</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>350.00 UAH</g:price>
+    <g:sale_price>225.00 UAH</g:sale_price>
+    <g:size>48-50</g:size>
+    <g:product_type>Зима</g:product_type>
+  </item>
 </channel>
 </rss>
