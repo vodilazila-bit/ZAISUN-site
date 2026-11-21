@@ -569,7 +569,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=550" as="script">
+<link rel="preload" href="data-lite.js?v=551" as="script">
 <link rel="preload" href="hero-winter.webp" as="image" imagesrcset="hero-winter.webp 1280w, hero-winter-2560.webp 2560w" imagesizes="(max-width: 700px) 300px, 100vw" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -868,7 +868,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=550"></script>
+<script src="data-lite.js?v=551"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -3165,8 +3165,10 @@ function heroApplySlide(from, dir){
   heroOutT = setTimeout(()=>heroSlides.forEach(el=>el.classList.remove('out','back')), 1250);
   heroRenderDots();
 }
-function heroGo(i){ if(i===heroIdx) return; const f=heroIdx; heroIdx=i; heroApplySlide(f, i>f?1:-1); heroResetAuto(); }
-function heroNav(d){ const f=heroIdx; heroIdx=(heroIdx+d+heroSlides.length)%heroSlides.length; heroApplySlide(f, d); heroResetAuto(); }
+// Після ручного перемикання (свайп, стрілка, крапка) автопрокрутка чекає 15 с, а не 6,5 —
+// інакше слайд сам перегортався, поки людина ще роздивлялась той, що вибрала.
+function heroGo(i){ if(i===heroIdx) return; const f=heroIdx; heroIdx=i; heroApplySlide(f, i>f?1:-1); heroResetAuto(15000); }
+function heroNav(d, auto){ const f=heroIdx; heroIdx=(heroIdx+d+heroSlides.length)%heroSlides.length; heroApplySlide(f, d); heroResetAuto(auto ? 0 : 15000); }
 // Гортання пальцем: горизонтальний свайп ≥ 40 px перемикає слайд.
 // Вертикальний рух не чіпаємо — сторінка прокручується як завжди.
 (function(){
@@ -3185,15 +3187,16 @@ function heroNav(d){ const f=heroIdx; heroIdx=(heroIdx+d+heroSlides.length)%hero
   }, {passive:true});
   el.addEventListener('touchcancel', ()=>{ x0 = null; }, {passive:true});
 })();
-let heroAuto;
-function heroResetAuto(){
-  clearInterval(heroAuto);
+let heroAuto, heroWait;
+function heroResetAuto(firstDelay){
+  clearInterval(heroAuto); clearTimeout(heroWait);
+  if(firstDelay > 6500){ heroWait = setTimeout(()=>heroResetAuto(), firstDelay - 6500); return; }
   heroAuto = setInterval(()=>{
     // наступний слайд показуємо лише тоді, коли його фото вже завантажилось
     const nx = heroSlides[(heroIdx+1)%heroSlides.length], im = nx && nx.querySelector('.fgimg img');
     if(im && !im.getAttribute('src') && im.dataset.hsrc){ im.src = im.dataset.hsrc; return; }
     if(im && !im.complete) return;
-    heroNav(1);
+    heroNav(1, true);
   }, 6500);
 }
 if(heroSlides.length){
@@ -3207,7 +3210,7 @@ if(heroSlides.length){
   })();
   const heroEl = document.getElementById('herosl');
   if(heroEl){
-    heroEl.addEventListener('mouseenter', ()=>clearInterval(heroAuto));
+    heroEl.addEventListener('mouseenter', ()=>{ clearInterval(heroAuto); clearTimeout(heroWait); });
     heroEl.addEventListener('mouseleave', heroResetAuto);
   }
 }
@@ -3564,7 +3567,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=550'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=551'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
