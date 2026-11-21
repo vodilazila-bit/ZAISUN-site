@@ -91,6 +91,7 @@ html,body{max-width:100%;touch-action:pan-y pinch-zoom}
 .so-xi{display:grid;place-items:center;width:40px;height:40px;padding:0;margin-left:-4px}
 @media(max-width:420px){.so-top{gap:8px;padding:12px 10px 12px 12px}.so-top input{padding:11px 14px}.so-top select{padding:10px 8px!important;max-width:34vw!important}}
 .so-body{overflow-y:auto;flex:1;padding:14px 0 40px}
+body.so-open .page *{animation-play-state:paused!important}
 .so-hint{text-align:center;color:var(--soft);padding:50px 30px;font-size:.9rem}
 /* CART sheet */
 .cart-sheet{position:fixed;bottom:0;left:50%;transform:translate(-50%,100%);width:100%;max-width:560px;z-index:520;background:#FDFAF6;border-radius:24px 24px 0 0;transition:transform .35s cubic-bezier(.32,.72,0,1);max-height:86vh;display:flex;flex-direction:column;box-shadow:0 -10px 40px -10px rgba(58,48,40,.25)}
@@ -568,7 +569,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=549" as="script">
+<link rel="preload" href="data-lite.js?v=550" as="script">
 <link rel="preload" href="hero-winter.webp" as="image" imagesrcset="hero-winter.webp 1280w, hero-winter-2560.webp 2560w" imagesizes="(max-width: 700px) 300px, 100vw" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -867,7 +868,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=549"></script>
+<script src="data-lite.js?v=550"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -1954,10 +1955,20 @@ document.addEventListener('change', e=>{
   if(e.target && e.target.name === 'payway'){ PAY_PICKED = true; saveForm(); }
 }, true);
 
+// Мінімальна сума замовлення. Перевіряємо при відкритті форми (щоб не заповнювали дарма)
+// і ще раз при надсиланні.
+const MIN_ORDER = 200;
+function belowMin(total, inCart){
+  if(!(total > 0) || total >= MIN_ORDER) return false;
+  alert(`Мінімальна сума замовлення — ${MIN_ORDER} грн. Зараз ${inCart ? 'у кошику ' : ''}${total} грн.\n` +
+        (inCart ? 'Додайте, будь ласка, ще щось 🙂' : 'Додайте товар у кошик і доберіть ще щось 🙂'));
+  return true;
+}
 function openOrder(){
   try{ if(ORDER_SENT){ ORDER_SENT = false; ORDER_TOUCHED = false; } }catch(e){}
   if(cur && cur.stock===false){ alert('Цього товару зараз немає в наявності 🙈'); return; }
   if(cur && needColor()) return;
+  try{ const v0 = selSize && cur.var && cur.var[selSize] ? cur.var[selSize] : {p:cur.price}; if(belowMin(v0.p + curOptUp(), false)) return; }catch(e){}
   cartMode = false;
   const ph=document.getElementById('fPhone'); if(ph && !ph.value.trim()) ph.value='+380';
   if(ph) phoneFix(ph);
@@ -2352,6 +2363,7 @@ async function submitOrder(){
     alert('У замовленні немає доступних товарів — схоже, їх уже немає в наявності. Оберіть товар ще раз.');
     return;
   }
+  if(belowMin(total, cartMode)) return;
   const btn=document.getElementById('osubBtn');
   btn.disabled=true; btn.textContent='Надсилаю…';
   try{
@@ -2862,6 +2874,7 @@ function cartFixPicks(){
 function checkoutCart(){
   if(!CART.length) return;
   if(cartFixPicks()) return;
+  if(belowMin(CART.reduce((s,it)=>s+cartPrice(it)*it.qty,0), true)) return;
   cartMode = true;
   // ВАЖЛИВО: саме сирий закривач. Обгортка closeCart робить history.back(),
   // і popstate закривав би форму замовлення, яка відкривається наступним рядком —
@@ -2891,12 +2904,14 @@ function openSearch(noFocus){
   document.getElementById('searchOvl').classList.remove('so-out');
   document.getElementById('searchOvl').classList.add('show');
   document.body.style.overflow='hidden';
+  document.body.classList.add('so-open');
   if(!noFocus) setTimeout(()=>document.getElementById('soInput').focus(), 60);
 }
 function closeSearch(){
   // Плавно гасимо вікно, а клас show знімаємо після анімації (160 мс).
   const o = document.getElementById('searchOvl');
   document.body.style.overflow='';
+  document.body.classList.remove('so-open');
   clearTimeout(SO_T);
   if(!o.classList.contains('show')) return;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){ o.classList.remove('show'); return; }
@@ -2945,11 +2960,12 @@ function doSearch(){
   grid.querySelectorAll('a.pc').forEach(a=>{
     if(was.has(a.getAttribute('href'))) return;
     a.classList.add('so-new'); a.style.animationDelay = Math.min(k++, 10)*35 + 'ms';
+    a.addEventListener('animationend', ()=>{ a.classList.remove('so-new'); a.style.animationDelay = ''; }, {once:true});
   });
 }
 function soTiles(list){
   return list.map(p=>{
-    const img = p.photo ? tImg(p.photo) : '<div class="noimg">ФОТО СКОРО</div>';
+    const img = p.photo ? tImg(p.photo).replace('loading="lazy"', 'loading="eager"') : '<div class="noimg">ФОТО СКОРО</div>';
     return `<a class="pc" href="?p=${p.id}" onclick="spaClick(event,()=>openProd(${p.id}))">
       <div class="pt">${img}</div><div class="pn">${p.name}</div><div class="pp">${priceFrom(p)}${money(p.price)}</div></a>`;
   }).join('');
@@ -3548,7 +3564,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=549'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=550'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
