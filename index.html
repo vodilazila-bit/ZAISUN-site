@@ -137,8 +137,24 @@ html,body{max-width:100%;touch-action:pan-y pinch-zoom}
 
 /* ═══ HOME ═══ */
 .herosl{position:relative;overflow:hidden;touch-action:pan-y;height:min(82vh,780px);min-height:560px;background:#FDFAF6}
-.herosl .hs{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .5s ease}
-.herosl .hs.on{opacity:1;visibility:visible;z-index:2}
+.herosl .hs{position:absolute;inset:0;visibility:hidden}
+.herosl .hs.on{visibility:visible;z-index:3}
+.herosl .hs.out{visibility:visible;z-index:2}
+/* Перемикання: новий слайд «шторкою» наїжджає поверх старого — фон банера не просвічує */
+.herosl .hs.on.anim{animation:hsIn 1.15s cubic-bezier(.77,0,.18,1) both}
+.herosl .hs.on.anim.back{animation-name:hsInB}
+.herosl .hs.on.anim .fgimg{animation:hsZoom 1.6s cubic-bezier(.22,.61,.36,1) both}
+.herosl .hs.on.anim.back .fgimg{animation-name:hsZoomB}
+.herosl .hs.out .fgimg{animation:hsOut 1.15s cubic-bezier(.77,0,.18,1) both}
+.herosl .hs.out.back .fgimg{animation-name:hsOutB}
+.herosl .hs.out .eyebrow,.herosl .hs.out .stitle,.herosl .hs.out .ssub,.herosl .hs.out .sbtn{opacity:1;transform:none;filter:none;animation:tOut .45s ease forwards}
+@keyframes hsIn{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0)}}
+@keyframes hsInB{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
+@keyframes hsZoom{from{transform:scale(1.14) translateX(5%)}to{transform:none}}
+@keyframes hsZoomB{from{transform:scale(1.14) translateX(-5%)}to{transform:none}}
+@keyframes hsOut{to{transform:translateX(-14%) scale(1.03);filter:brightness(.55)}}
+@keyframes hsOutB{to{transform:translateX(14%) scale(1.03);filter:brightness(.55)}}
+@keyframes tOut{to{opacity:0;transform:translateY(-12px);filter:blur(3px)}}
 /* Поки фото слайда не завантажилось — без затемнення, тексту й стрілок, інакше видно сірий банер */
 .herosl .hs:not(.ld) .scrim,.herosl .hs:not(.ld) .stxt{opacity:0}
 .herosl:not(.ready) .harrow,.herosl:not(.ready) .hdots{opacity:0;pointer-events:none}
@@ -180,6 +196,8 @@ html,body{max-width:100%;touch-action:pan-y pinch-zoom}
   .herosl .scrim{background:linear-gradient(180deg, rgba(15,12,9,.15) 0%, rgba(15,12,9,.1) 35%, rgba(15,12,9,.7) 100%)}
 }
 @media (prefers-reduced-motion:reduce){
+  .herosl .hs.on.anim,.herosl .hs.on.anim .fgimg,.herosl .hs.out .fgimg{animation:none}
+  .herosl .hs.out{visibility:hidden}
   .herosl .fgimg img.kb{animation:none;transform:scale(1.05)}
   .herosl .eyebrow,.herosl .stitle,.herosl .ssub,.herosl .sbtn{animation:none;opacity:1;transform:none;filter:none}
 }
@@ -538,7 +556,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=541" as="script">
+<link rel="preload" href="data-lite.js?v=542" as="script">
 <link rel="preload" href="hero-winter.webp" as="image" imagesrcset="hero-winter.webp 1280w, hero-winter-2560.webp 2560w" imagesizes="(max-width: 700px) 300px, 100vw" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
 <script>
@@ -837,7 +855,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=541"></script>
+<script src="data-lite.js?v=542"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -3092,10 +3110,14 @@ function heroRenderDots(){
   d.innerHTML = Array.from(heroSlides).map((_,i)=>
     `<span class="${i===heroIdx?'on':''}" onclick="heroGo(${i})"></span>`).join('');
 }
-function heroApplySlide(){
+let heroOutT;
+function heroApplySlide(from, dir){
+  clearTimeout(heroOutT);
   heroSlides.forEach((el,i)=>{
+    el.classList.remove('anim','back','out');
     if(i===heroIdx){
       el.classList.add('on');
+      if(from!=null && from!==i){ void el.offsetWidth; el.classList.add('anim'); if(dir<0) el.classList.add('back'); }
       el.querySelectorAll('.eyebrow,.stitle,.ssub,.sbtn').forEach(node=>{
         node.style.animation='none'; void node.offsetWidth; node.style.animation='';
       });
@@ -3103,14 +3125,18 @@ function heroApplySlide(){
       // перемкнули вручну раніше, ніж фото встигло завантажитись, — вантажимо зараз
       if(img && !img.getAttribute('src') && img.dataset.hsrc) img.src = img.dataset.hsrc;
       if(img){ img.style.animation='none'; void img.offsetWidth; img.style.animation=''; }
+    } else if(i===from){
+      el.classList.remove('on'); el.classList.add('out'); if(dir<0) el.classList.add('back');
     } else {
       el.classList.remove('on');
     }
   });
+  // старий слайд лежить під новим, поки шторка не закриє його повністю
+  heroOutT = setTimeout(()=>heroSlides.forEach(el=>el.classList.remove('out','back')), 1250);
   heroRenderDots();
 }
-function heroGo(i){ heroIdx=i; heroApplySlide(); heroResetAuto(); }
-function heroNav(d){ heroIdx=(heroIdx+d+heroSlides.length)%heroSlides.length; heroApplySlide(); heroResetAuto(); }
+function heroGo(i){ if(i===heroIdx) return; const f=heroIdx; heroIdx=i; heroApplySlide(f, i>f?1:-1); heroResetAuto(); }
+function heroNav(d){ const f=heroIdx; heroIdx=(heroIdx+d+heroSlides.length)%heroSlides.length; heroApplySlide(f, d); heroResetAuto(); }
 // Гортання пальцем: горизонтальний свайп ≥ 40 px перемикає слайд.
 // Вертикальний рух не чіпаємо — сторінка прокручується як завжди.
 (function(){
@@ -3508,7 +3534,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=541'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=542'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
