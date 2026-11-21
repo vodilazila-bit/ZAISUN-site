@@ -2243,7 +2243,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>125.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1008</g:id>
@@ -2263,7 +2263,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>125.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1009</g:id>
@@ -2283,7 +2283,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>125.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1010</g:id>
@@ -2303,7 +2303,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>125.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1011</g:id>
@@ -2323,7 +2323,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>125.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1015</g:id>
@@ -2343,7 +2343,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>125.00 UAH</g:sale_price>
     <g:size>36-38</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>261</g:id>
@@ -2564,7 +2564,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>145.00 UAH</g:sale_price>
     <g:color>Серця</g:color>
-    <g:product_type>Тепла осінь/весна &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>21</g:id>
@@ -2582,7 +2582,7 @@
     <g:sale_price>145.00 UAH</g:sale_price>
     <g:color>Бірюза</g:color>
     <g:size>44-46</g:size>
-    <g:product_type>Осінь &gt; Тепла осінь/весна</g:product_type>
+    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>266</g:id>
@@ -2702,7 +2702,7 @@
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:color>Квіти</g:color>
     <g:size>40</g:size>
-    <g:product_type>Літо &gt; Панама</g:product_type>
+    <g:product_type>Літо &gt; Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>217</g:id>
@@ -2720,7 +2720,7 @@
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:color>Динозаври</g:color>
     <g:size>42</g:size>
-    <g:product_type>Літо &gt; Панама</g:product_type>
+    <g:product_type>Літо &gt; Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>218</g:id>
@@ -2738,7 +2738,7 @@
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:color>Блакитна</g:color>
     <g:size>44</g:size>
-    <g:product_type>Літо &gt; Панама</g:product_type>
+    <g:product_type>Літо &gt; Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>219</g:id>
@@ -2756,7 +2756,7 @@
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:color>Горох</g:color>
     <g:size>46</g:size>
-    <g:product_type>Панама &gt; Літо</g:product_type>
+    <g:product_type>Панама &gt; Літо &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>220</g:id>
@@ -2774,7 +2774,7 @@
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:color>Квіти верхні</g:color>
     <g:size>48</g:size>
-    <g:product_type>Літо &gt; Панама</g:product_type>
+    <g:product_type>Літо &gt; Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>227</g:id>
@@ -2792,7 +2792,7 @@
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:color>Єдиноріг</g:color>
     <g:size>50</g:size>
-    <g:product_type>Панама &gt; Літо</g:product_type>
+    <g:product_type>Панама &gt; Літо &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>228</g:id>
@@ -2810,7 +2810,7 @@
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:color>Пальми</g:color>
     <g:size>52</g:size>
-    <g:product_type>Панама &gt; Літо</g:product_type>
+    <g:product_type>Панама &gt; Літо &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>405</g:id>
@@ -3031,7 +3031,7 @@
     <g:price>285.00 UAH</g:price>
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>408</g:id>
@@ -3250,7 +3250,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>159.00 UAH</g:sale_price>
     <g:size>52</g:size>
-    <g:product_type>Панама &gt; Літо</g:product_type>
+    <g:product_type>Панама &gt; Літо &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>211</g:id>
@@ -3300,7 +3300,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>168.00 UAH</g:sale_price>
     <g:color>Серця</g:color>
-    <g:product_type>Тепла осінь/весна &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>17</g:id>
@@ -3317,7 +3317,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>168.00 UAH</g:sale_price>
     <g:color>Собачка</g:color>
-    <g:product_type>Тепла осінь/весна &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>20</g:id>
@@ -3334,7 +3334,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>168.00 UAH</g:sale_price>
     <g:color>Акула</g:color>
-    <g:product_type>Тепла осінь/весна &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>475</g:id>
@@ -3385,7 +3385,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Пудрова</g:color>
-    <g:product_type>Тепла осінь/весна &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>25</g:id>
@@ -3402,7 +3402,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>М&apos;ятна</g:color>
-    <g:product_type>Тепла осінь/весна &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>26</g:id>
@@ -3419,7 +3419,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Графіті</g:color>
-    <g:product_type>Тепла осінь/весна &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>27</g:id>
@@ -3436,7 +3436,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Графіті</g:color>
-    <g:product_type>Тепла осінь/весна &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>28</g:id>
@@ -3453,7 +3453,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Планети</g:color>
-    <g:product_type>Тепла осінь/весна &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>29</g:id>
@@ -3471,7 +3471,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Гірчична</g:color>
     <g:size>46-48</g:size>
-    <g:product_type>Осінь &gt; Тепла осінь/весна</g:product_type>
+    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>30</g:id>
@@ -3488,7 +3488,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>М&apos;ятна</g:color>
-    <g:product_type>Тепла осінь/весна &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>31</g:id>
@@ -3505,7 +3505,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Пудра</g:color>
-    <g:product_type>Тепла осінь/весна &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1013</g:id>
@@ -3525,7 +3525,7 @@
     <g:price>375.00 UAH</g:price>
     <g:sale_price>190.00 UAH</g:sale_price>
     <g:size>36-38</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>477</g:id>
@@ -3645,7 +3645,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>36-38/40-42/42-44/44-46/46-48/48-50</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>11</g:id>
@@ -3663,7 +3663,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>50-52</g:size>
-    <g:product_type>Осінь &gt; Зима</g:product_type>
+    <g:product_type>Осінь &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>84</g:id>
@@ -3681,7 +3681,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>48-52</g:size>
-    <g:product_type>Зима &gt; Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>489</g:id>
@@ -3698,7 +3698,7 @@
     <g:price>300.00 UAH</g:price>
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:size>42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1012</g:id>
@@ -3718,7 +3718,7 @@
     <g:price>375.00 UAH</g:price>
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>159</g:id>
@@ -3787,7 +3787,7 @@
     <g:sale_price>214.00 UAH</g:sale_price>
     <g:color>Пудра</g:color>
     <g:size>46-48</g:size>
-    <g:product_type>Літо &gt; Панама</g:product_type>
+    <g:product_type>Літо &gt; Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>466</g:id>
@@ -3804,7 +3804,7 @@
     <g:price>395.00 UAH</g:price>
     <g:sale_price>217.00 UAH</g:sale_price>
     <g:size>56</g:size>
-    <g:product_type>Ромпер &gt; Літо</g:product_type>
+    <g:product_type>Ромпер &gt; Літо &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>315</g:id>
@@ -3907,7 +3907,7 @@
     <g:sale_price>233.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>50-52/52-54</g:size>
-    <g:product_type>Осінь</g:product_type>
+    <g:product_type>Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>200</g:id>
@@ -3925,6 +3925,24 @@
     <g:color>Бежевий</g:color>
     <g:size>56/62/68/74/80/86/92/98/104</g:size>
     <g:product_type>Осінь &gt; Одяг &gt; Джинси, штани, кофтини</g:product_type>
+  </item>
+  <item>
+    <g:id>205</g:id>
+    <g:title>2 шт Лосіни базові широкий рубчик</g:title>
+    <g:description>Особливості моделі: • м&apos;яка еластична резинка • еластична тканина — зручно для активних рухів Переваги: • не колеться, не подразнює шкіру • добре тримає форму після прання • ідеально підходить як базовий шар та для святкових образів Для кого: дівчаткам і хлопчикам від 0 до 2 років Догляд: прання 30°C, не відбілювати, сушити горизонтально
+Матеріал: трикотаж мустанг Склад: поліестер (55), віскоза (35) та спандекс (5))</g:description>
+    <g:link>https://zaisun.com.ua/?p=205</g:link>
+    <g:image_link>https://zaisun.com.ua/images/2_sht_losiny_bazovi_shyrokyi_rubchyk_205_mwokcq9s_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>500.00 UAH</g:price>
+    <g:sale_price>375.00 UAH</g:sale_price>
+    <g:size>74/80/86</g:size>
+    <g:product_type>Black Friday</g:product_type>
   </item>
   <item>
     <g:id>206</g:id>
@@ -4027,7 +4045,7 @@
     <g:sale_price>240.00 UAH</g:sale_price>
     <g:color>Пудровий</g:color>
     <g:size>42-44/46-48/48-50</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>229</g:id>
@@ -4045,7 +4063,7 @@
     <g:sale_price>241.00 UAH</g:sale_price>
     <g:color>Червоний</g:color>
     <g:size>43-45</g:size>
-    <g:product_type>Літо &gt; Панама</g:product_type>
+    <g:product_type>Літо &gt; Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>10</g:id>
@@ -4062,7 +4080,7 @@
     <g:price>325.00 UAH</g:price>
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:size>48-50</g:size>
-    <g:product_type>Панама</g:product_type>
+    <g:product_type>Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>15</g:id>
@@ -4080,7 +4098,7 @@
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>42-44/44-46/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>39</g:id>
@@ -4097,7 +4115,7 @@
     <g:price>325.00 UAH</g:price>
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:size>48-50</g:size>
-    <g:product_type>Панама</g:product_type>
+    <g:product_type>Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>40</g:id>
@@ -4114,7 +4132,7 @@
     <g:price>325.00 UAH</g:price>
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:size>46-48/48-50</g:size>
-    <g:product_type>Панама</g:product_type>
+    <g:product_type>Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>41</g:id>
@@ -4131,7 +4149,7 @@
     <g:price>325.00 UAH</g:price>
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:size>52-54</g:size>
-    <g:product_type>Панама</g:product_type>
+    <g:product_type>Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>43</g:id>
@@ -4148,7 +4166,7 @@
     <g:price>325.00 UAH</g:price>
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:size>54-56</g:size>
-    <g:product_type>Панама</g:product_type>
+    <g:product_type>Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>45</g:id>
@@ -4165,7 +4183,7 @@
     <g:price>325.00 UAH</g:price>
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:size>56-58</g:size>
-    <g:product_type>Панама</g:product_type>
+    <g:product_type>Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>46</g:id>
@@ -4182,7 +4200,7 @@
     <g:price>325.00 UAH</g:price>
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:size>56-58</g:size>
-    <g:product_type>Панама</g:product_type>
+    <g:product_type>Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>47</g:id>
@@ -4199,7 +4217,7 @@
     <g:price>325.00 UAH</g:price>
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:size>54-56/56-58</g:size>
-    <g:product_type>Панама</g:product_type>
+    <g:product_type>Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>48</g:id>
@@ -4216,7 +4234,7 @@
     <g:price>325.00 UAH</g:price>
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:size>44-46/46-48/48-50</g:size>
-    <g:product_type>Панама</g:product_type>
+    <g:product_type>Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>49</g:id>
@@ -4233,7 +4251,7 @@
     <g:price>325.00 UAH</g:price>
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:size>46-48</g:size>
-    <g:product_type>Панама</g:product_type>
+    <g:product_type>Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>50</g:id>
@@ -4250,7 +4268,7 @@
     <g:price>325.00 UAH</g:price>
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:size>46-48</g:size>
-    <g:product_type>Панама</g:product_type>
+    <g:product_type>Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>51</g:id>
@@ -4267,7 +4285,7 @@
     <g:price>325.00 UAH</g:price>
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:size>48-50</g:size>
-    <g:product_type>Панама</g:product_type>
+    <g:product_type>Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>52</g:id>
@@ -4285,7 +4303,7 @@
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>54-56/56-58</g:size>
-    <g:product_type>Панама</g:product_type>
+    <g:product_type>Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>176</g:id>
@@ -4473,7 +4491,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>50-52</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>488</g:id>
@@ -4490,7 +4508,7 @@
     <g:price>320.00 UAH</g:price>
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:size>42-44/38-40/40-42</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>590</g:id>
@@ -4751,7 +4769,7 @@
     <g:sale_price>273.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Осінь</g:product_type>
+    <g:product_type>Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>604</g:id>
@@ -4836,7 +4854,7 @@
     <g:price>500.00 UAH</g:price>
     <g:sale_price>290.00 UAH</g:sale_price>
     <g:color>2шапки</g:color>
-    <g:product_type>Тепла осінь/весна &gt; Осінь</g:product_type>
+    <g:product_type>Тепла осінь/весна &gt; Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>187</g:id>
@@ -5200,7 +5218,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Чорний</g:color>
     <g:size>40-42/42-44/46-48</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>3</g:id>
@@ -5218,7 +5236,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Молочний</g:color>
     <g:size>42-44/44-46/46-48/48-50/50-52/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>4</g:id>
@@ -5236,7 +5254,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Молочний</g:color>
     <g:size>40-42/42-44/44-46/46-48/48-50/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>5</g:id>
@@ -5254,7 +5272,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>36-38/38-40/40-42/42-44/48-50/52-54</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>32</g:id>
@@ -5272,7 +5290,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Пудровий</g:color>
     <g:size>44-46/52-54/42-44</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>33</g:id>
@@ -5290,7 +5308,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>46-48</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>36</g:id>
@@ -5308,7 +5326,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Фіолетовий</g:color>
     <g:size>48-50</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>148</g:id>
@@ -5581,7 +5599,7 @@
     <g:sale_price>320.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42</g:size>
-    <g:product_type>Зима &gt; Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>595</g:id>
@@ -6053,7 +6071,7 @@
     <g:sale_price>350.00 UAH</g:sale_price>
     <g:color>Пудровий</g:color>
     <g:size>42-44/44-46</g:size>
-    <g:product_type>Зима &gt; Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>8</g:id>
@@ -6071,7 +6089,7 @@
     <g:sale_price>350.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>42-44/46-48</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>125</g:id>
@@ -6088,7 +6106,7 @@
     <g:price>550.00 UAH</g:price>
     <g:sale_price>350.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Зима &gt; Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>155</g:id>
@@ -6106,7 +6124,7 @@
     <g:sale_price>390.00 UAH</g:sale_price>
     <g:color>Чорний</g:color>
     <g:size>36-38</g:size>
-    <g:product_type>Зима &gt; Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>491</g:id>
@@ -6350,7 +6368,7 @@
     <g:price>545.00 UAH</g:price>
     <g:sale_price>354.00 UAH</g:sale_price>
     <g:size>56</g:size>
-    <g:product_type>Літо &gt; Сукні</g:product_type>
+    <g:product_type>Літо &gt; Сукні &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1019</g:id>
@@ -6564,7 +6582,7 @@
     <g:sale_price>387.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/48-50/52-54</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>963</g:id>
@@ -7314,7 +7332,7 @@
     <g:sale_price>436.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>42-44/44-46/50-52/52-54/48-50</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Осінь &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>743</g:id>
@@ -7483,7 +7501,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>44-46/42-44</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>926</g:id>
@@ -7606,7 +7624,7 @@
     <g:sale_price>480.00 UAH</g:sale_price>
     <g:color>Молочний</g:color>
     <g:size>68/86</g:size>
-    <g:product_type>Літо &gt; Ромпер</g:product_type>
+    <g:product_type>Літо &gt; Ромпер &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>755</g:id>
@@ -7758,7 +7776,7 @@
     <g:sale_price>490.00 UAH</g:sale_price>
     <g:color>Білий</g:color>
     <g:size>56</g:size>
-    <g:product_type>Літо &gt; Ромпер</g:product_type>
+    <g:product_type>Літо &gt; Ромпер &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>156</g:id>
@@ -8042,7 +8060,7 @@
     <g:price>565.00 UAH</g:price>
     <g:sale_price>508.00 UAH</g:sale_price>
     <g:size>68/98</g:size>
-    <g:product_type>Літо &gt; Сукні</g:product_type>
+    <g:product_type>Літо &gt; Сукні &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>493</g:id>
@@ -9664,7 +9682,7 @@
     <g:price>705.00 UAH</g:price>
     <g:sale_price>589.00 UAH</g:sale_price>
     <g:size>68/80</g:size>
-    <g:product_type>Літо &gt; Подарункові комплекти &gt; Ромпер &gt; Одяг для Хрещення</g:product_type>
+    <g:product_type>Літо &gt; Подарункові комплекти &gt; Ромпер &gt; Одяг для Хрещення &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>7</g:id>
@@ -9682,7 +9700,7 @@
     <g:sale_price>590.00 UAH</g:sale_price>
     <g:color>Пудровий</g:color>
     <g:size>52-54</g:size>
-    <g:product_type>Зима &gt; Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>161</g:id>
@@ -9919,7 +9937,7 @@
     <g:sale_price>608.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>36-38/38-40/40-42/42-44/48-50/52-54</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>120</g:id>
@@ -10105,7 +10123,7 @@
     <g:price>680.00 UAH</g:price>
     <g:sale_price>618.00 UAH</g:sale_price>
     <g:size>86</g:size>
-    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
+    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>233</g:id>
@@ -10139,7 +10157,7 @@
     <g:price>690.00 UAH</g:price>
     <g:sale_price>621.00 UAH</g:sale_price>
     <g:size>68</g:size>
-    <g:product_type>Літо &gt; Панама &gt; Шорти, футболки</g:product_type>
+    <g:product_type>Літо &gt; Панама &gt; Шорти, футболки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>240</g:id>
@@ -10156,7 +10174,7 @@
     <g:price>690.00 UAH</g:price>
     <g:sale_price>621.00 UAH</g:sale_price>
     <g:size>68</g:size>
-    <g:product_type>Літо &gt; Панама &gt; Шорти, футболки</g:product_type>
+    <g:product_type>Літо &gt; Панама &gt; Шорти, футболки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>171</g:id>
@@ -10463,7 +10481,7 @@
     <g:price>720.00 UAH</g:price>
     <g:sale_price>670.00 UAH</g:sale_price>
     <g:size>80/86</g:size>
-    <g:product_type>Осінь &gt; Одяг &gt; Костюм</g:product_type>
+    <g:product_type>Осінь &gt; Одяг &gt; Костюм &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>945</g:id>
@@ -10886,7 +10904,7 @@
     <g:sale_price>695.00 UAH</g:sale_price>
     <g:color>Персиковий</g:color>
     <g:size>92</g:size>
-    <g:product_type>Одяг &gt; Костюм &gt; Осінь</g:product_type>
+    <g:product_type>Одяг &gt; Костюм &gt; Осінь &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>352</g:id>
@@ -12180,7 +12198,7 @@
     <g:price>910.00 UAH</g:price>
     <g:sale_price>819.00 UAH</g:sale_price>
     <g:size>68</g:size>
-    <g:product_type>Літо &gt; Сукні</g:product_type>
+    <g:product_type>Літо &gt; Сукні &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>465</g:id>
@@ -12198,7 +12216,7 @@
     <g:sale_price>819.00 UAH</g:sale_price>
     <g:color>Айворі</g:color>
     <g:size>62</g:size>
-    <g:product_type>Ромпер &gt; Літо &gt; Подарункові комплекти &gt; Одяг для Хрещення</g:product_type>
+    <g:product_type>Ромпер &gt; Літо &gt; Подарункові комплекти &gt; Одяг для Хрещення &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>453</g:id>
@@ -13704,7 +13722,7 @@
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:color>Чорничка</g:color>
     <g:size>48</g:size>
-    <g:product_type>Літо &gt; Панама</g:product_type>
+    <g:product_type>Літо &gt; Панама &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>287</g:id>
@@ -13756,7 +13774,7 @@
     <g:sale_price>350.00 UAH</g:sale_price>
     <g:color>Білий</g:color>
     <g:size>36-38</g:size>
-    <g:product_type>Зима &gt; Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>377</g:id>
@@ -14273,7 +14291,7 @@
     <g:sale_price>285.00 UAH</g:sale_price>
     <g:color>Жовтий</g:color>
     <g:size>6-9міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1047</g:id>
@@ -14295,7 +14313,7 @@
     <g:sale_price>285.00 UAH</g:sale_price>
     <g:color>Ніжно-рожевий</g:color>
     <g:size>6-9міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1048</g:id>
@@ -14317,7 +14335,7 @@
     <g:sale_price>190.00 UAH</g:sale_price>
     <g:color>М&apos;ятний</g:color>
     <g:size>6-9міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1049</g:id>
@@ -14339,7 +14357,7 @@
     <g:sale_price>325.00 UAH</g:sale_price>
     <g:color>Квіти</g:color>
     <g:size>6-9міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1050</g:id>
@@ -14361,7 +14379,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Малиновий</g:color>
     <g:size>6-9міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1051</g:id>
@@ -14382,7 +14400,7 @@
     <g:price>350.00 UAH</g:price>
     <g:sale_price>190.00 UAH</g:sale_price>
     <g:size>6-9міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1052</g:id>
@@ -14404,7 +14422,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Квіти</g:color>
     <g:size>6-9міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1053</g:id>
@@ -14425,7 +14443,7 @@
     <g:price>390.00 UAH</g:price>
     <g:sale_price>325.00 UAH</g:sale_price>
     <g:size>6-9міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1054</g:id>
@@ -14446,7 +14464,7 @@
     <g:price>340.00 UAH</g:price>
     <g:sale_price>190.00 UAH</g:sale_price>
     <g:size>6-9міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1055</g:id>
@@ -14479,7 +14497,7 @@
     <g:sale_price>210.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>0-3міс/3-6міс/6-9міс/9-12міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1056</g:id>
@@ -14499,7 +14517,7 @@
     <g:price>200.00 UAH</g:price>
     <g:sale_price>100.00 UAH</g:sale_price>
     <g:size>6-9міс</g:size>
-    <g:product_type>Пінетки</g:product_type>
+    <g:product_type>Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1057</g:id>
@@ -14519,7 +14537,7 @@
     <g:price>250.00 UAH</g:price>
     <g:sale_price>145.00 UAH</g:sale_price>
     <g:size>6-9міс</g:size>
-    <g:product_type>Пінетки</g:product_type>
+    <g:product_type>Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1058</g:id>
@@ -14540,7 +14558,7 @@
     <g:sale_price>160.00 UAH</g:sale_price>
     <g:color>Ніжно-рожевий</g:color>
     <g:size>6-9міс</g:size>
-    <g:product_type>Пінетки</g:product_type>
+    <g:product_type>Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1059</g:id>
@@ -14557,7 +14575,7 @@
     <g:price>410.00 UAH</g:price>
     <g:sale_price>246.00 UAH</g:sale_price>
     <g:size>42-44</g:size>
-    <g:product_type>Пов&apos;язки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1060</g:id>
@@ -14574,7 +14592,7 @@
     <g:price>435.00 UAH</g:price>
     <g:sale_price>282.00 UAH</g:sale_price>
     <g:size>42-44</g:size>
-    <g:product_type>Пов&apos;язки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1061</g:id>
@@ -14591,7 +14609,7 @@
     <g:price>435.00 UAH</g:price>
     <g:sale_price>282.00 UAH</g:sale_price>
     <g:size>42-44</g:size>
-    <g:product_type>Пов&apos;язки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1062</g:id>
@@ -14612,7 +14630,7 @@
     <g:sale_price>160.00 UAH</g:sale_price>
     <g:color>Білий</g:color>
     <g:size>0-3міс</g:size>
-    <g:product_type>Пінетки</g:product_type>
+    <g:product_type>Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1063</g:id>
@@ -14634,7 +14652,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Білий</g:color>
     <g:size>0-3міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1064</g:id>
@@ -14656,7 +14674,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Білий</g:color>
     <g:size>0-3міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1065</g:id>
@@ -14678,7 +14696,7 @@
     <g:sale_price>220.00 UAH</g:sale_price>
     <g:color>Білий</g:color>
     <g:size>0-3міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1066</g:id>
@@ -14699,7 +14717,7 @@
     <g:sale_price>100.00 UAH</g:sale_price>
     <g:color>Білий</g:color>
     <g:size>0-3міс</g:size>
-    <g:product_type>Пінетки</g:product_type>
+    <g:product_type>Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1067</g:id>
@@ -14720,7 +14738,7 @@
     <g:price>405.00 UAH</g:price>
     <g:sale_price>350.00 UAH</g:sale_price>
     <g:size>0-3міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1068</g:id>
@@ -14741,7 +14759,7 @@
     <g:price>355.00 UAH</g:price>
     <g:sale_price>220.00 UAH</g:sale_price>
     <g:size>0-3міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1069</g:id>
@@ -14762,7 +14780,7 @@
     <g:sale_price>100.00 UAH</g:sale_price>
     <g:color>Блакитний</g:color>
     <g:size>9-12міс</g:size>
-    <g:product_type>Пінетки</g:product_type>
+    <g:product_type>Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1070</g:id>
@@ -14784,7 +14802,7 @@
     <g:sale_price>310.00 UAH</g:sale_price>
     <g:color>Білий</g:color>
     <g:size>9-12міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1071</g:id>
@@ -14805,7 +14823,7 @@
     <g:price>390.00 UAH</g:price>
     <g:sale_price>220.00 UAH</g:sale_price>
     <g:size>6-9міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1072</g:id>
@@ -14826,7 +14844,7 @@
     <g:sale_price>145.00 UAH</g:sale_price>
     <g:color>Білий</g:color>
     <g:size>9-12міс</g:size>
-    <g:product_type>Пінетки</g:product_type>
+    <g:product_type>Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1073</g:id>
@@ -14847,7 +14865,7 @@
     <g:sale_price>145.00 UAH</g:sale_price>
     <g:color>Квіти</g:color>
     <g:size>3-6міс</g:size>
-    <g:product_type>Пінетки</g:product_type>
+    <g:product_type>Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1074</g:id>
@@ -14869,7 +14887,7 @@
     <g:sale_price>220.00 UAH</g:sale_price>
     <g:color>Білий</g:color>
     <g:size>3-6міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1075</g:id>
@@ -14891,7 +14909,7 @@
     <g:sale_price>220.00 UAH</g:sale_price>
     <g:color>Білий</g:color>
     <g:size>3-6міс</g:size>
-    <g:product_type>Пов&apos;язки &gt; Пінетки</g:product_type>
+    <g:product_type>Пов&apos;язки &gt; Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1076</g:id>
@@ -14912,7 +14930,7 @@
     <g:sale_price>100.00 UAH</g:sale_price>
     <g:color>Динозавр</g:color>
     <g:size>3-6міс</g:size>
-    <g:product_type>Пінетки</g:product_type>
+    <g:product_type>Пінетки &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1077</g:id>
@@ -15016,7 +15034,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Зелений</g:color>
     <g:size>68</g:size>
-    <g:product_type>Боді</g:product_type>
+    <g:product_type>Боді &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1083</g:id>
@@ -15294,7 +15312,7 @@
     <g:sale_price>175.00 UAH</g:sale_price>
     <g:color>Блакитний</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Осінь &gt; Тепла осінь/весна</g:product_type>
+    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1101</g:id>
@@ -15314,7 +15332,7 @@
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:color>Лаванда</g:color>
     <g:size>52-54</g:size>
-    <g:product_type>Осінь &gt; Тепла осінь/весна</g:product_type>
+    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1102</g:id>
@@ -15334,7 +15352,7 @@
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:color>Молочний</g:color>
     <g:size>36-40</g:size>
-    <g:product_type>Осінь &gt; Тепла осінь/весна</g:product_type>
+    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1104</g:id>
@@ -15388,7 +15406,7 @@
     <g:sale_price>750.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>98</g:size>
-    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм &gt; Зима</g:product_type>
+    <g:product_type>Осінь &gt; Костюм утеплений &gt; Костюм &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1107</g:id>
@@ -15407,7 +15425,7 @@
     <g:price>395.00 UAH</g:price>
     <g:sale_price>355.00 UAH</g:sale_price>
     <g:size>104</g:size>
-    <g:product_type>Осінь &gt; Костюм &gt; Джинси, штани, кофтини</g:product_type>
+    <g:product_type>Осінь &gt; Костюм &gt; Джинси, штани, кофтини &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1108</g:id>
@@ -15461,7 +15479,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Сірий меланж</g:color>
     <g:size>52-54</g:size>
-    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Осінь &gt; Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1111</g:id>
@@ -15481,7 +15499,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Сірий меланж</g:color>
     <g:size>36-38</g:size>
-    <g:product_type>Зима &gt; Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1112</g:id>
@@ -15501,7 +15519,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Сірий меланж</g:color>
     <g:size>42-44</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1113</g:id>
@@ -15523,7 +15541,7 @@
     <g:sale_price>235.00 UAH</g:sale_price>
     <g:color>Сірий меланж</g:color>
     <g:size>44-46/46-48/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1114</g:id>
@@ -15544,7 +15562,7 @@
     <g:sale_price>350.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>48-50</g:size>
-    <g:product_type>Зима &gt; Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1115</g:id>
@@ -15700,7 +15718,7 @@
     <g:sale_price>168.00 UAH</g:sale_price>
     <g:color>Гортензія</g:color>
     <g:size>46-48</g:size>
-    <g:product_type>Осінь &gt; Тепла осінь/весна</g:product_type>
+    <g:product_type>Осінь &gt; Тепла осінь/весна &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1124</g:id>
@@ -15718,7 +15736,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Гірчичний</g:color>
     <g:size>42-44/38-40/40-42</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1125</g:id>
@@ -15736,7 +15754,7 @@
     <g:sale_price>297.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>42-44/44-46</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1126</g:id>
@@ -15754,7 +15772,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Блакитний</g:color>
     <g:size>38-40</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1127</g:id>
@@ -15772,7 +15790,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Білий з малюнками</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1128</g:id>
@@ -15790,7 +15808,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Блакитний</g:color>
     <g:size>42-44</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1129</g:id>
@@ -15808,7 +15826,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Зірки</g:color>
     <g:size>44-46</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1130</g:id>
@@ -15826,7 +15844,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Динозавр</g:color>
     <g:size>46-48</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1131</g:id>
@@ -15844,7 +15862,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Блакитний</g:color>
     <g:size>48-50</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1132</g:id>
@@ -15862,7 +15880,7 @@
     <g:sale_price>187.00 UAH</g:sale_price>
     <g:color>Блакитний</g:color>
     <g:size>50-52</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1133</g:id>
@@ -15881,7 +15899,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>50-52/44-46/46-48/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1134</g:id>
@@ -15900,7 +15918,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Бежевий</g:color>
     <g:size>44-46</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1135</g:id>
@@ -15919,7 +15937,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>44-46/36-38/40-42/46-48/48-50</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1136</g:id>
@@ -15938,7 +15956,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Сірий темний</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1137</g:id>
@@ -15957,7 +15975,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Молочний</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1138</g:id>
@@ -15976,7 +15994,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Ніжно-рожевий</g:color>
     <g:size>52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1139</g:id>
@@ -16789,7 +16807,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Чорний</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1187</g:id>
@@ -16808,7 +16826,7 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Чорний</g:color>
     <g:size>40-42/42-44/46-48/48-50</g:size>
-    <g:product_type>Зима &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Зима &gt; Єврозима/холодна осінь (весна) &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1188</g:id>
@@ -16828,7 +16846,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Бордо</g:color>
     <g:size>44-46</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1189</g:id>
@@ -16848,7 +16866,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Блакитний меланж</g:color>
     <g:size>40-42/46-48</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1190</g:id>
@@ -16868,7 +16886,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Бордовий</g:color>
     <g:size>52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1191</g:id>
@@ -17275,7 +17293,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Бежевий</g:color>
     <g:size>44-46/46-48</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1212</g:id>
@@ -17336,7 +17354,7 @@
     <g:sale_price>310.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>42-44</g:size>
-    <g:product_type>Зима &gt; Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1215</g:id>
@@ -17355,7 +17373,7 @@
     <g:sale_price>310.00 UAH</g:sale_price>
     <g:color>Рожевий</g:color>
     <g:size>42-44</g:size>
-    <g:product_type>Зима &gt; Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Зима &gt; Єврозима/холодна осінь (весна) &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1216</g:id>
@@ -17375,7 +17393,7 @@
     <g:sale_price>310.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>40-42/44-46</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1217</g:id>
@@ -17395,7 +17413,7 @@
     <g:sale_price>310.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Зима &gt; Зима</g:product_type>
+    <g:product_type>Зима &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1218</g:id>
@@ -17501,7 +17519,7 @@
     <g:sale_price>200.00 UAH</g:sale_price>
     <g:color>Сірий меланж</g:color>
     <g:size>44-46/46-48/50-52/52-54</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Зима &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1225</g:id>
@@ -17764,6 +17782,7 @@
     <g:sale_price>245.00 UAH</g:sale_price>
     <g:color>Червоний</g:color>
     <g:size>68</g:size>
+    <g:product_type>Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1238</g:id>
@@ -18022,7 +18041,7 @@
     <g:price>200.00 UAH</g:price>
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1253</g:id>
@@ -18044,7 +18063,7 @@
     <g:price>200.00 UAH</g:price>
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:size>36-40</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1254</g:id>
@@ -18066,7 +18085,7 @@
     <g:price>200.00 UAH</g:price>
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:size>36-40</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1255</g:id>
@@ -18088,7 +18107,7 @@
     <g:price>200.00 UAH</g:price>
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1256</g:id>
@@ -18110,7 +18129,7 @@
     <g:price>200.00 UAH</g:price>
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1257</g:id>
@@ -18132,7 +18151,7 @@
     <g:price>200.00 UAH</g:price>
     <g:sale_price>150.00 UAH</g:sale_price>
     <g:size>36-40</g:size>
-    <g:product_type>Тонкі</g:product_type>
+    <g:product_type>Тонкі &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1258</g:id>
@@ -18152,7 +18171,7 @@
     <g:sale_price>310.00 UAH</g:sale_price>
     <g:color>Бордо</g:color>
     <g:size>36-40/40-42/44-46/48-50</g:size>
-    <g:product_type>Єврозима/холодна осінь (весна)</g:product_type>
+    <g:product_type>Єврозима/холодна осінь (весна) &gt; Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1259</g:id>
@@ -18171,7 +18190,447 @@
     <g:sale_price>250.00 UAH</g:sale_price>
     <g:color>Чорний</g:color>
     <g:size>42-44</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Зима &gt; Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1260</g:id>
+    <g:title>Чобітки дитячі утеплені 6-9міс</g:title>
+    <g:description>Комфортні текстильні чобітки для щоденного носіння. Модель забезпечує м’яку посадку, свободу рухів 
+11см по устілці</g:description>
+    <g:link>https://zaisun.com.ua/?p=1260</g:link>
+    <g:image_link>https://zaisun.com.ua/images/chobitky_dytiachi_utepleni_6_9mis_1260_mwojs6pj_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>395.00 UAH</g:price>
+    <g:sale_price>235.00 UAH</g:sale_price>
+    <g:color>Молочний</g:color>
+    <g:size>6-9міс(11см)</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1261</g:id>
+    <g:title>Чобітки дитячі утеплені 0-6міс</g:title>
+    <g:description>Комфортні текстильні чобітки для щоденного носіння. Модель забезпечує м’яку посадку, свободу рухів 
+10см по устілці</g:description>
+    <g:link>https://zaisun.com.ua/?p=1261</g:link>
+    <g:image_link>https://zaisun.com.ua/images/chobitky_dytiachi_utepleni_0_6mis_1261_mwoju3fn_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>350.00 UAH</g:price>
+    <g:sale_price>150.00 UAH</g:sale_price>
+    <g:color>Блакитний</g:color>
+    <g:size>0-6міс(10см)</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1262</g:id>
+    <g:title>Чобітки дитячі утеплені 0-6міс</g:title>
+    <g:description>Комфортні текстильні чобітки для щоденного носіння. Модель забезпечує м’яку посадку, свободу рухів 
+10см по устілці</g:description>
+    <g:link>https://zaisun.com.ua/?p=1262</g:link>
+    <g:image_link>https://zaisun.com.ua/images/chobitky_dytiachi_utepleni_0_6mis_1262_mwojvnae_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>350.00 UAH</g:price>
+    <g:sale_price>150.00 UAH</g:sale_price>
+    <g:color>Сірий</g:color>
+    <g:size>0-6міс(10см)</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1263</g:id>
+    <g:title>Чобітки дитячі утеплені 0-6міс</g:title>
+    <g:description>Комфортні текстильні чобітки для щоденного носіння. Модель забезпечує м’яку посадку, свободу рухів 
+10см по устілці</g:description>
+    <g:link>https://zaisun.com.ua/?p=1263</g:link>
+    <g:image_link>https://zaisun.com.ua/images/chobitky_dytiachi_utepleni_0_6mis_1263_mwojx4lh_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>300.00 UAH</g:price>
+    <g:sale_price>100.00 UAH</g:sale_price>
+    <g:color>Синій</g:color>
+    <g:size>0-6міс(10см)</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1264</g:id>
+    <g:title>Боді-гольф дитячий з довгим рукавом фіолетовий</g:title>
+    <g:description>Матеріал: ангора Особливості моделі: • високий м’який гольф, що не тисне • довгі рукави • еластична тканина — зручно для активних рухів • округлий виріз • зручні кнопки внизу для легкого переодягання Переваги: • не колеться, не подразнює шкіру • добре тримає форму після прання • ідеально підходить як базовий шар та для святкових образів Для кого: дівчаткам і хлопчикам від 0 до 2 років Догляд: прання 30°C, не відбілювати, сушити горизонтально</g:description>
+    <g:link>https://zaisun.com.ua/?p=1264</g:link>
+    <g:image_link>https://zaisun.com.ua/images/bodi_holf_dytiachyi_z_dovhym_rukavom_fioletovyi_1264_mwojynf9_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>355.00 UAH</g:price>
+    <g:sale_price>250.00 UAH</g:sale_price>
+    <g:size>74</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1265</g:id>
+    <g:title>Дитячий ромпер з ангори 74см</g:title>
+    <g:description>Ніжний та зручний ромпер для дітей, створений з урахуванням потреб малюка з перших днів життя. Лаконічний дизайн у сірому відтінку робить набір універсальним — підходить як для хлопчиків, так і для дівчаток. Матеріал: м’який трикотаж ангора Сезон: осінь/весна/зима Застібка: кнопки по ніжках та спереду Манжети: м’які, не здавлюють Стать: унісекс Догляд: прання при температурі до 30°C делікатний режим не використовувати відбілювач прасувати з вивороту при низькій температурі</g:description>
+    <g:link>https://zaisun.com.ua/?p=1265</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiachyi_romper_z_anhory_74sm_1265_mwok0j1s_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>645.00 UAH</g:price>
+    <g:sale_price>350.00 UAH</g:sale_price>
+    <g:size>74</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1266</g:id>
+    <g:title>Дитяча шапка на зиму на флісовому підкладі 48-50см</g:title>
+    <g:description>Дитяча шапка з ангори — м’яка, тепла та приємна до тіла 
+матеріал: ангора на флісовому пікладі Погода: зима Орієнтовно до -15•</g:description>
+    <g:link>https://zaisun.com.ua/?p=1266</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_na_zymu_na_flisovomu_pidkladi_48_50sm_1266_mwok31s1_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>toddler</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>410.00 UAH</g:price>
+    <g:sale_price>325.00 UAH</g:sale_price>
+    <g:size>48-50</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1267</g:id>
+    <g:title>Дитяча шапка на зиму у молочному кольорі з вушками і завʼязками</g:title>
+    <g:description>Дитяча шапка з ангори — м’яка, тепла та приємна до тіла Підклад: фліс Погода: зима Орієнтовно до -15•</g:description>
+    <g:link>https://zaisun.com.ua/?p=1267</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_na_zymu_u_molochnomu_kolori_z_vushkamy_i_zav_1267_mwok4qc1_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>toddler</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>350.00 UAH</g:price>
+    <g:sale_price>250.00 UAH</g:sale_price>
+    <g:size>44-46/50-52</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1268</g:id>
+    <g:title>Дитяча шапка на холодну осінь/теплу зиму</g:title>
+    <g:description>Дитяча шапка з ангори — м’яка, тепла та приємна до тіла 
+матеріал: подвійна ангора 
+Погода: зима Орієнтовно до 0</g:description>
+    <g:link>https://zaisun.com.ua/?p=1268</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_na_kholodnu_osin_teplu_zymu_1268_mwok7bf8_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>toddler</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>410.00 UAH</g:price>
+    <g:sale_price>295.00 UAH</g:sale_price>
+    <g:size>36-38/48-50/52-54</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1269</g:id>
+    <g:title>Лосіни базові широкий рубчик</g:title>
+    <g:description>Особливості моделі: • м&apos;яка еластична резинка • еластична тканина — зручно для активних рухів Переваги: • не колеться, не подразнює шкіру • добре тримає форму після прання • ідеально підходить як базовий шар та для святкових образів Для кого: дівчаткам і хлопчикам від 0 до 2 років Догляд: прання 30°C, не відбілювати, сушити горизонтально
+Матеріал: трикотаж мустанг Склад: поліестер (55), віскоза (35) та спандекс (5))</g:description>
+    <g:link>https://zaisun.com.ua/?p=1269</g:link>
+    <g:image_link>https://zaisun.com.ua/images/losiny_bazovi_shyrokyi_rubchyk_1269_mwokicqo_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>250.00 UAH</g:price>
+    <g:sale_price>200.00 UAH</g:sale_price>
+    <g:size>74/80/86</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1270</g:id>
+    <g:title>Лосіни базові широкий рубчик</g:title>
+    <g:description>Особливості моделі: • м&apos;яка еластична резинка • еластична тканина — зручно для активних рухів Переваги: • не колеться, не подразнює шкіру • добре тримає форму після прання • ідеально підходить як базовий шар та для святкових образів Для кого: дівчаткам і хлопчикам від 0 до 2 років Догляд: прання 30°C, не відбілювати, сушити горизонтально
+Матеріал: трикотаж мустанг Склад: поліестер (55), віскоза (35) та спандекс (5))</g:description>
+    <g:link>https://zaisun.com.ua/?p=1270</g:link>
+    <g:image_link>https://zaisun.com.ua/images/losiny_bazovi_shyrokyi_rubchyk_1270_mwokjamh_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>235.00 UAH</g:price>
+    <g:sale_price>180.00 UAH</g:sale_price>
+    <g:size>74/80/68</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1271</g:id>
+    <g:title>Дитячий костюм трьохнитка на флісі в оливковому кольорі</g:title>
+    <g:description>М’який і теплий костюм з трьохнитки для дітей, який поєднує комфорт та стиль. 
+
+Трьохнитка на флісі</g:description>
+    <g:link>https://zaisun.com.ua/?p=1271</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiachyi_kostium_trokhnytka_na_flisi_v_olyvkovomu_kolori_1271_mwol57sc_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>950.00 UAH</g:price>
+    <g:sale_price>690.00 UAH</g:sale_price>
+    <g:color>Оливковий</g:color>
+    <g:size>80</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1272</g:id>
+    <g:title>Дитячий костюм трьохнитка на флісі &quot;Ведмедик&quot; 74 см</g:title>
+    <g:description>М’який і теплий костюм з трьохнитки для дітей, який поєднує комфорт та стиль. Верх представлений худі з капюшоном, оздобленим симпатичними вушками ведмедика, що додає образу грайливості та милоти. Низ – зручні штани з еластичною талією та манжетами, які забезпечують свободу рухів та зручність під час активних ігор. Особливості: Матеріал: трьохнитка (м’яка та тепла тканина, не колеться, добре дихає) Худі з капюшоном і декоративними вушками Штани на еластичному поясі з манжетами Стильний та грайливий дизайн для щоденного носіння Підходить для дому, прогулянок і дитячих свят</g:description>
+    <g:link>https://zaisun.com.ua/?p=1272</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiachyi_kostium_trokhnytka_na_flisi_vedmedyk_74_sm_1272_mwol6n5a_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>1025.00 UAH</g:price>
+    <g:color>Бежевий</g:color>
+    <g:size>74</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1273</g:id>
+    <g:title>Дитяча шапка на зиму на флісовому підкладі 44-46</g:title>
+    <g:description>Дитяча шапка з ангори — м’яка, тепла та приємна до тіла 
+матеріал: ангора на флісовому пікладі Погода: зима Орієнтовно до -15•</g:description>
+    <g:link>https://zaisun.com.ua/?p=1273</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_na_zymu_na_flisovomu_pidkladi_44_46_1273_mwooaujr_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>480.00 UAH</g:price>
+    <g:sale_price>325.00 UAH</g:sale_price>
+    <g:size>44-46</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1274</g:id>
+    <g:title>Дитяча шапка на холодну осінь/теплу зиму 46-48 см</g:title>
+    <g:description>Дитяча шапка з ангори — м’яка, тепла та приємна до тіла 
+матеріал: подвійна ангора
+Погода: тепла зима Орієнтовно до 0•</g:description>
+    <g:link>https://zaisun.com.ua/?p=1274</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_na_kholodnu_osin_teplu_zymu_46_48_sm_1274_mwood5av_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>toddler</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>480.00 UAH</g:price>
+    <g:sale_price>325.00 UAH</g:sale_price>
+    <g:size>46-48</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1275</g:id>
+    <g:title>Дитячі штани з вельвету у синьому кольорі</g:title>
+    <g:description>Дитячі штани карго
+Тканина мікровельвет</g:description>
+    <g:link>https://zaisun.com.ua/?p=1275</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiachi_shtany_z_velvetu_u_synomu_kolori_1275_mwop5s5h_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>395.00 UAH</g:price>
+    <g:sale_price>250.00 UAH</g:sale_price>
+    <g:color>Синій</g:color>
+    <g:size>68/80/92</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1276</g:id>
+    <g:title>Дитячі штани з вельвету у рожевому кольорі</g:title>
+    <g:description>Дитячі штани карго
+Тканина мікровельвет</g:description>
+    <g:link>https://zaisun.com.ua/?p=1276</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiachi_shtany_z_velvetu_u_rozhevomu_kolori_1276_mwop6tw5_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>395.00 UAH</g:price>
+    <g:sale_price>250.00 UAH</g:sale_price>
+    <g:size>68/80</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1277</g:id>
+    <g:title>Дитячі штани трьохнитка на флісі 80р</g:title>
+    <g:description>Дитячі штани трьохнитка на флісі</g:description>
+    <g:link>https://zaisun.com.ua/?p=1277</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiachi_shtany_trokhnytka_na_flisi_80r_1277_mwop9iy5_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>445.00 UAH</g:price>
+    <g:sale_price>275.00 UAH</g:sale_price>
+    <g:size>80</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1278</g:id>
+    <g:title>Дитяча шапка на зиму на флісовому підкладі 46-48см</g:title>
+    <g:description>Дитяча шапка з ангори — м’яка, тепла та приємна до тіла 
+матеріал: ангора на флісовому пікладі Погода: зима Орієнтовно до -15•</g:description>
+    <g:link>https://zaisun.com.ua/?p=1278</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_na_zymu_na_flisovomu_pidkladi_46_48sm_1278_mwopgmqp_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>toddler</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>510.00 UAH</g:price>
+    <g:sale_price>350.00 UAH</g:sale_price>
+    <g:size>46-48</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1279</g:id>
+    <g:title>Дитяча зимова шапка з леопардовими вушками</g:title>
+    <g:description>Тепла та стильна дитяча шапка з двома пишними помпонами стане улюбленим аксесуаром маленької модниці в холодну пору року. М’яка флісова підкладка забезпечує комфорт і надійно зберігає тепло, а зав’язки допомагають шапці добре триматися на голові навіть під час активних прогулянок.</g:description>
+    <g:link>https://zaisun.com.ua/?p=1279</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_zymova_shapka_z_leopardovymy_vushkamy_1279_mwopkxrh_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>toddler</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>365.00 UAH</g:price>
+    <g:sale_price>300.00 UAH</g:sale_price>
+    <g:color>Молочний</g:color>
+    <g:size>42-44/44-46/48-50/50-52/52-54</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1280</g:id>
+    <g:title>Дитяча шапка з вушками котика на зав’язках для дівчинки хлопчика (0-4 роки)</g:title>
+    <g:description>Подаруйте малюку тепло та комфорт у прохолодну пору року. Усередині шапка утеплена ніжним флісом, який добре зберігає тепло, не подразнює шкіру та забезпечує комфорт навіть у холодну погоду.
+
+Матеріал - королівська євроангора, підклад - фліс</g:description>
+    <g:link>https://zaisun.com.ua/?p=1280</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_z_vushkamy_kotyka_na_zav_iazkakh_dlia_divchy_1280_mwopnksu_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>toddler</g:age_group>
+    <g:gender>female</g:gender>
+    <g:price>350.00 UAH</g:price>
+    <g:sale_price>290.00 UAH</g:sale_price>
+    <g:size>40-42/42-44/44-46/48-50/50-52/52-54</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1281</g:id>
+    <g:title>Дитяча шапка з вушками ведмедика на зав’язках для дівчинки хлопчика (0-4 роки)</g:title>
+    <g:description>Подаруйте малюку тепло та комфорт у прохолодну пору року. Усередині шапка утеплена ніжним флісом, який добре зберігає тепло, не подразнює шкіру та забезпечує комфорт навіть у холодну погоду.
+
+Матеріал - королівська євроангора, підклад - фліс</g:description>
+    <g:link>https://zaisun.com.ua/?p=1281</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_z_vushkamy_vedmedyka_na_zav_iazkakh_dlia_div_1281_mwoqa3x7_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>toddler</g:age_group>
+    <g:gender>female</g:gender>
+    <g:price>350.00 UAH</g:price>
+    <g:sale_price>290.00 UAH</g:sale_price>
+    <g:size>42-44/50-52/52-54/46-48</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1282</g:id>
+    <g:title>Дитяча шапка з вушками ведмедика на зав’язках для дівчинки (0-4 роки)</g:title>
+    <g:description>Подаруйте малюку тепло та комфорт у прохолодну пору року. Усередині шапка утеплена ніжним флісом, який добре зберігає тепло, не подразнює шкіру та забезпечує комфорт навіть у холодну погоду.
+
+Матеріал - королівська євроангора, підклад - фліс</g:description>
+    <g:link>https://zaisun.com.ua/?p=1282</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_z_vushkamy_vedmedyka_na_zav_iazkakh_dlia_div_1282_mwoqcjsv_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>toddler</g:age_group>
+    <g:gender>female</g:gender>
+    <g:price>350.00 UAH</g:price>
+    <g:sale_price>290.00 UAH</g:sale_price>
+    <g:size>42-44/48-50</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1283</g:id>
+    <g:title>Дитяча шапка з вушками котика на зав’язках для дівчинки хлопчика (0-4 роки)</g:title>
+    <g:description>Подаруйте малюку тепло та комфорт у прохолодну пору року. Усередині шапка утеплена ніжним флісом, який добре зберігає тепло, не подразнює шкіру та забезпечує комфорт навіть у холодну погоду.
+
+Матеріал - королівська євроангора, підклад - фліс</g:description>
+    <g:link>https://zaisun.com.ua/?p=1283</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_z_vushkamy_kotyka_na_zav_iazkakh_dlia_divchy_1283_mwoqs8km_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>infant</g:age_group>
+    <g:gender>female</g:gender>
+    <g:price>350.00 UAH</g:price>
+    <g:sale_price>290.00 UAH</g:sale_price>
+    <g:size>42-44/44-46/48-50</g:size>
+    <g:product_type>Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1284</g:id>
@@ -18193,7 +18652,46 @@
     <g:sale_price>450.00 UAH</g:sale_price>
     <g:color>Ніжно-рожевий</g:color>
     <g:size>42-44/44-46/50-52</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Black Friday &gt; Зима</g:product_type>
+  </item>
+  <item>
+    <g:id>1285</g:id>
+    <g:title>Дитяча шапка з натуральним помпоном на зав’язках для дівчинки (0-4 роки)</g:title>
+    <g:description>Подаруйте малюку тепло та комфорт у прохолодну пору року. Усередині шапка утеплена ніжним флісом, який добре зберігає тепло, не подразнює шкіру та забезпечує комфорт навіть у холодну погоду.
+
+Матеріал - королівська євроангора, підклад - фліс
+
+Помпон - натуральний єнот; помпони зʼємні, на кнопочках</g:description>
+    <g:link>https://zaisun.com.ua/?p=1285</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_shapka_z_naturalnym_pomponom_na_zav_iazkakh_dlia_di_1285_mwos6ag5_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>toddler</g:age_group>
+    <g:gender>female</g:gender>
+    <g:price>610.00 UAH</g:price>
+    <g:sale_price>550.00 UAH</g:sale_price>
+    <g:color>Ніжно-рожевий</g:color>
+    <g:size>48-50</g:size>
+    <g:product_type>Black Friday</g:product_type>
+  </item>
+  <item>
+    <g:id>1286</g:id>
+    <g:title>Дитячі лосіни на флісі 62 см</g:title>
+    <g:description>Дитячі лосіни трьохнитка на флісі</g:description>
+    <g:link>https://zaisun.com.ua/?p=1286</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiachi_losiny_na_flisi_62_sm_1286_mwot4be6_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>newborn</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>350.00 UAH</g:price>
+    <g:sale_price>150.00 UAH</g:sale_price>
+    <g:size>62</g:size>
+    <g:product_type>Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1287</g:id>
@@ -18210,7 +18708,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>190.00 UAH</g:sale_price>
     <g:size>40-42/44-46</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Black Friday &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1288</g:id>
@@ -18227,7 +18725,7 @@
     <g:price>410.00 UAH</g:price>
     <g:sale_price>325.00 UAH</g:sale_price>
     <g:size>44-46</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Black Friday &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1289</g:id>
@@ -18245,7 +18743,7 @@
     <g:sale_price>190.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>46-48</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Black Friday &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1290</g:id>
@@ -18262,7 +18760,7 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>190.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Black Friday &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1291</g:id>
@@ -18279,7 +18777,7 @@
     <g:price>350.00 UAH</g:price>
     <g:sale_price>225.00 UAH</g:sale_price>
     <g:size>48-50</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Black Friday &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1292</g:id>
@@ -18297,7 +18795,7 @@
     <g:sale_price>190.00 UAH</g:sale_price>
     <g:color>Синій</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Black Friday &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1293</g:id>
@@ -18318,7 +18816,25 @@
     <g:sale_price>890.00 UAH</g:sale_price>
     <g:color>Молочний</g:color>
     <g:size>62/68/74/80/86</g:size>
-    <g:product_type>Літо &gt; Подарункові комплекти &gt; Одяг &gt; Сукні</g:product_type>
+    <g:product_type>Black Friday &gt; Літо &gt; Подарункові комплекти &gt; Одяг &gt; Сукні</g:product_type>
+  </item>
+  <item>
+    <g:id>1294</g:id>
+    <g:title>Дитяча сукня-боді з крильцями у рожевому кольорі 62 см</g:title>
+    <g:description>Сукня-боді поєднує комфорт трикотажної основи та декоративну спідничку з велюровими крильцями. Модель забезпечує зручну посадку, не обмежує рухів дитини та підходить для щоденного носіння й святкових образів. Матеріали: • основа: трикотаж 95%бавовна, 5% еластан • спідничка і крильця: велюр Особливості моделі: • м’який та приємний до тіла матеріал • еластична структура для комфортного руху • поєднання практичності та естетичного вигляду</g:description>
+    <g:link>https://zaisun.com.ua/?p=1294</g:link>
+    <g:image_link>https://zaisun.com.ua/images/dytiacha_suknia_bodi_z_kryltsiamy_u_rozhevomu_kolori_62_sm_1294_mwq3hhv5_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>newborn</g:age_group>
+    <g:gender>female</g:gender>
+    <g:price>615.00 UAH</g:price>
+    <g:sale_price>450.00 UAH</g:sale_price>
+    <g:color>Рожевий</g:color>
+    <g:size>62</g:size>
+    <g:product_type>Black Friday</g:product_type>
   </item>
   <item>
     <g:id>1295</g:id>
@@ -18335,7 +18851,7 @@
     <g:price>1065.00 UAH</g:price>
     <g:color>Бірюзовий</g:color>
     <g:size>56/62/68/74/80/86</g:size>
-    <g:product_type>Подарункові комплекти &gt; Боді &gt; Комплекти з боді</g:product_type>
+    <g:product_type>Black Friday &gt; Подарункові комплекти &gt; Боді &gt; Комплекти з боді</g:product_type>
   </item>
   <item>
     <g:id>1296</g:id>
@@ -18352,7 +18868,7 @@
     <g:price>375.00 UAH</g:price>
     <g:sale_price>290.00 UAH</g:sale_price>
     <g:size>44-46</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Black Friday &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1297</g:id>
@@ -18370,7 +18886,7 @@
     <g:sale_price>190.00 UAH</g:sale_price>
     <g:color>Сірий</g:color>
     <g:size>40-42</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Black Friday &gt; Зима</g:product_type>
   </item>
   <item>
     <g:id>1298</g:id>
@@ -18387,7 +18903,24 @@
     <g:price>310.00 UAH</g:price>
     <g:sale_price>190.00 UAH</g:sale_price>
     <g:size>40-42</g:size>
-    <g:product_type>Зима</g:product_type>
+    <g:product_type>Black Friday &gt; Зима</g:product_type>
+  </item>
+  <item>
+    <g:id>1299</g:id>
+    <g:title>Зимова шапочка дитяча 44-46 см зі снудом</g:title>
+    <g:description>Дитяча двошарова з утеплювачем шапочка в принтах на утеплювачі слімтекс Погода: зима Тканина: трикотаж 95% бавовна, 5% еластан</g:description>
+    <g:link>https://zaisun.com.ua/?p=1299</g:link>
+    <g:image_link>https://zaisun.com.ua/images/zymova_shapochka_dytiacha_44_46_sm_zi_snudom_1299_mwq5387q_0.jpg</g:image_link>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>ZaiSun</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:age_group>newborn</g:age_group>
+    <g:gender>unisex</g:gender>
+    <g:price>510.00 UAH</g:price>
+    <g:sale_price>390.00 UAH</g:sale_price>
+    <g:size>44-46</g:size>
+    <g:product_type>Black Friday &gt; Зима</g:product_type>
   </item>
 </channel>
 </rss>
