@@ -5750,6 +5750,7 @@
     <g:age_group>infant</g:age_group>
     <g:gender>unisex</g:gender>
     <g:price>335.00 UAH</g:price>
+    <g:sale_price>302.00 UAH</g:sale_price>
     <g:color>Бірюзовий</g:color>
     <g:size>56/62/68/74/80/86/92</g:size>
     <g:product_type>Боді &gt; Палітра боді</g:product_type>
@@ -18849,6 +18850,7 @@
     <g:age_group>infant</g:age_group>
     <g:gender>female</g:gender>
     <g:price>1065.00 UAH</g:price>
+    <g:sale_price>905.00 UAH</g:sale_price>
     <g:color>Бірюзовий</g:color>
     <g:size>56/62/68/74/80/86</g:size>
     <g:product_type>Black Friday &gt; Подарункові комплекти &gt; Боді &gt; Комплекти з боді</g:product_type>
