@@ -19,7 +19,7 @@
 <meta property="og:url" content="https://zaisun.com.ua/">
 <link rel="canonical" href="https://zaisun.com.ua/">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R0C1CM969C"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-R0C1CM969C');gtag('config','AW-17974157321');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());(function(){var c={};try{var q=location.search,u=navigator.userAgent||'';if(!/[?&](utm_source|gclid|gbraid|wbraid|paid)=/.test(q)&&!sessionStorage.getItem('zs_ga_src')){var a=/Instagram/.test(u)?'instagram':/FBAN|FBAV|FB_IAB|FBIOS/.test(u)?'facebook':'';if(a){c.page_location=location.href+(q?'&':'?')+'utm_source='+a+'&utm_medium=social&utm_content=inapp';}}sessionStorage.setItem('zs_ga_src','1');}catch(e){}gtag('config','G-R0C1CM969C',c);})();gtag('config','AW-17974157321');</script>
 <!-- Meta Pixel: той самий 865748820475938, що використовує NP-CAPI.
      Потрібен для ремаркетингу — серверні події з накладних бачать лише покупців,
      а тут збирається аудиторія тих, хто дивився і пішов. -->
@@ -553,7 +553,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=569" as="script">
+<link rel="preload" href="data-lite.js?v=570" as="script">
 <link rel="preload" href="bf-tall.webp" as="image" media="(max-width:560px)" fetchpriority="high">
 <link rel="preload" href="bf-wide.webp" as="image" media="(min-width:561px)" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
@@ -853,7 +853,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=569"></script>
+<script src="data-lite.js?v=570"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -2253,6 +2253,102 @@ function adsConversion(txId, value, name, phone, email){
   }catch(e){}
 }
 
+// ═══ Звідки приходять покупці ═══
+// Кожен вхід на сайт відносимо до каналу: Google Ads, Meta Ads, Instagram,
+// Google безкоштовно (Покупки/пошук), Facebook, Telegram, прямий… У браузері
+// тримаємо перше джерело, останнє не-пряме і шлях до 12 кроків. Разом із
+// замовленням це йде в таблицю аналітики (ANALYTICS_EP) — релей не чіпаємо.
+const ANALYTICS_EP = '';   // адреса веб-застосунку «ZaiSun Analytics»; порожня — нічого не шлемо
+function zsChannel(t){
+  const s = (t.src || '').toLowerCase(), m = (t.med || '').toLowerCase();
+  const paid = /cpc|ppc|paid|cpm|cpa|ads?$|banner|display|retarget/.test(m);
+  if(t.gc || (s === 'google' && paid)) return 'Google Ads';
+  if(paid && /^(meta|facebook|fb|instagram|ig|an|msg|messenger)$/.test(s)) return 'Meta Ads';
+  if(s){
+    if(/^(instagram|ig)/.test(s)) return 'Instagram';
+    if(/^(facebook|fb)/.test(s)) return 'Facebook';
+    if(s === 'google') return paid ? 'Google Ads' : 'Google (пошук)';
+    if(/telegram|^tg$/.test(s)) return 'Telegram';
+    if(/viber/.test(s)) return 'Viber';
+    if(/tiktok/.test(s)) return 'TikTok';
+    if(/mail|sms|newsletter/.test(s + ' ' + m)) return 'Розсилка';
+    return 'Інше: ' + s;
+  }
+  if(t.ss) return 'Google безкоштовно (Покупки)';
+  if(t.app === 'instagram' || /(^|\.)instagram\.com$/.test(t.ref)) return 'Instagram';
+  if(t.app === 'facebook' || /(^|\.)(facebook\.com|fb\.com|fb\.me)$/.test(t.ref)) return 'Facebook';
+  if(t.app === 'tiktok' || /tiktok/.test(t.ref)) return 'TikTok';
+  if(t.app === 'telegram' || /^(t\.me|telegram\.org|web\.telegram\.org)$/.test(t.ref)) return 'Telegram';
+  if(/viber/.test(t.ref)) return 'Viber';
+  if(/(^|\.)google\.[a-z.]+$/.test(t.ref)) return 'Google (пошук)';
+  if(/bing\.|duckduckgo|yahoo|ecosia/.test(t.ref)) return 'Інший пошук';
+  if(t.ref) return 'Сайт: ' + t.ref;
+  if(t.fb) return 'Instagram/Facebook';
+  return 'Прямий';
+}
+function zsTouch(){
+  const q = new URLSearchParams(location.search);
+  const g = k => (q.get(k) || '').trim().slice(0, 100);
+  const ua = navigator.userAgent || '';
+  let ref = '';
+  try{ if(document.referrer) ref = new URL(document.referrer).hostname.replace(/^www\./, '').toLowerCase(); }catch(e){}
+  // свій сайт і сторінки оплати — не джерело (повернення з mono не має перебивати Instagram чи рекламу)
+  if(ref === location.hostname.replace(/^www\./, '') || /zaisun\.com\.ua|monobank|mbnk\.|liqpay|privat|novapay|portmone|wayforpay|fondy|ipay\.ua|easypay|checkout|pay\./.test(ref)) ref = '';
+  const t = {
+    at: Date.now(),
+    src: g('utm_source'), med: g('utm_medium'), camp: g('utm_campaign'), cont: g('utm_content'), term: g('utm_term'),
+    gc: q.get('gclid') ? 'gclid' : q.get('gbraid') ? 'gbraid' : q.get('wbraid') ? 'wbraid' : '',
+    fb: q.has('fbclid') ? 1 : 0, ss: q.has('srsltid') ? 1 : 0,
+    ref,
+    app: /Instagram/.test(ua) ? 'instagram' : /FBAN|FBAV|FB_IAB|FBIOS/.test(ua) ? 'facebook' : /musical_ly|BytedanceWebview/i.test(ua) ? 'tiktok' : /Telegram/.test(ua) ? 'telegram' : '',
+    land: q.get('p') ? 'p=' + q.get('p') : q.get('cat') ? 'cat=' + q.get('cat') : q.get('search') !== null ? 'search' : 'home',
+    dev: /iPad|Tablet/i.test(ua) ? 'tablet' : /Mobi|Android|iPhone/i.test(ua) ? 'mobile' : 'desktop'
+  };
+  t.ch = zsChannel(t);
+  return t;
+}
+let ZS_SRC = null;
+(function zsTrack(){
+  try{
+    if(/[?&]paid=/.test(location.search)) { ZS_SRC = JSON.parse(localStorage.getItem('zs_src') || 'null'); return; }
+    const t = zsTouch();
+    let st = {};
+    try{ st = JSON.parse(localStorage.getItem('zs_src') || '{}') || {}; }catch(e){}
+    const newSess = !sessionStorage.getItem('zs_sess');
+    if(newSess){ sessionStorage.setItem('zs_sess', '1'); st.n = (st.n || 0) + 1; }
+    const direct = t.ch === 'Прямий';
+    if(!st.first) st.first = t;
+    // останнє джерело — останній НЕ прямий вхід за 90 днів (як у Google Analytics)
+    if(!direct || !st.last || Date.now() - st.last.at > 90 * 864e5) st.last = t;
+    if(newSess || !direct){
+      st.path = st.path || [];
+      const prev = st.path[st.path.length - 1];
+      if(!(prev && prev.ch === t.ch && Date.now() - prev.at < 864e5)) st.path.push({ch: t.ch, at: t.at});
+      if(st.path.length > 12) st.path = st.path.slice(-12);
+    }
+    localStorage.setItem('zs_src', JSON.stringify(st));
+    ZS_SRC = st;
+  }catch(e){}
+})();
+function zsSendSrc(o){
+  if(!ANALYTICS_EP) return;
+  try{
+    const st = ZS_SRC || {}, L = st.last || {}, F = st.first || {};
+    const iso = ms => ms ? new Date(ms).toISOString() : '';
+    const body = {
+      k: 'zs1', oid: o.oid, at: new Date().toISOString(), total: o.total, pay: o.pay, cart: o.cart ? 1 : 0, test: o.test ? 1 : 0,
+      items: o.items,
+      ch: L.ch || 'Прямий', src: L.src || '', med: L.med || '', camp: L.camp || '', cont: L.cont || '', term: L.term || '',
+      gc: L.gc || '', ref: L.ref || '', app: L.app || '', land: L.land || '', dev: L.dev || '', last_at: iso(L.at),
+      ch1: F.ch || '', first_at: iso(F.at), land1: F.land || '',
+      visits: st.n || 1,
+      path: (st.path || []).map(x => x.ch + ' ' + iso(x.at).slice(0, 10)).join(' → ')
+    };
+    fetch(ANALYTICS_EP, {method: 'POST', mode: 'no-cors', credentials: 'omit', keepalive: true,
+      headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify(body)}).catch(()=>{});
+  }catch(e){}
+}
+
 // Рекламний ідентифікатор кліку. Google дописує його до адреси при переході
 // з оголошення (gclid), для iOS та медійних форматів — gbraid / wbraid.
 // Зберігаємо на 90 днів: людина може клікнути сьогодні, а купити через два
@@ -2464,6 +2560,14 @@ async function submitOrder(){
     // Замовлення записалось, лише посилання на оплату не створилось —
     // це не привід лякати клієнта помилкою.
     if(!sent && !payFallback) throw new Error(lastErr);
+    try{
+      zsSendSrc({
+        oid: payload._oid, total, pay: payway, cart: cartMode, test: /тест/i.test(n),
+        items: (cartMode && CART.length)
+          ? CART.map(it=>{ const pr = P.find(x=>x.id===it.id); return {id: it.id, n: pr ? pr.name : '', q: it.qty, p: cartPrice(it), s: it.size || ''}; })
+          : (cur ? [{id: cur.id, n: cur.name, q: 1, p: total, s: size || ''}] : [])
+      });
+    }catch(e){}
     try{
       if(/тест/i.test(n)) throw 'test-order';
       // items для e-commerce
@@ -3551,7 +3655,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=569'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=570'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
