@@ -553,7 +553,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=575" as="script">
+<link rel="preload" href="data-lite.js?v=576" as="script">
 <link rel="preload" href="bf-tall.webp" as="image" media="(max-width:560px)" fetchpriority="high">
 <link rel="preload" href="bf-wide.webp" as="image" media="(min-width:561px)" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
@@ -734,7 +734,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
       Фільтри <span class="bdg" id="fbdg">0</span>
     </button>
     <select class="sortsel" id="sortsel" onchange="apply()">
-      <option value="default">Спочатку новинки</option>
+      <option value="default">Популярні</option>
       <option value="pop">За популярністю</option>
       <option value="new">Найновіші</option>
       <option value="oldest">Найстаріші</option>
@@ -853,7 +853,8 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
-<script src="data-lite.js?v=575"></script>
+<script src="pop.js?v=576"></script>
+<script src="data-lite.js?v=576"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -910,8 +911,47 @@ function rankScore(p){
   // головний ключ — сезон (літо 2 → демі 1 → нейтр 0 → зима -1), домножений, щоб перебивав решту
   return (p.season||0)*1000 + typeBoost(p)*100 + (VIEWS[p.id]||0)*5 + (p.cover?4:0) + (p.old?2:0) + (p.stock?2:0);
 }
+// Популярність — з журналу замовлень (pop.js). Файлу немає — сортування не ламається.
+const POPS = (typeof POP==='object' && POP) ? POP : {};
+function popSales(p){ return POPS[p.id] || 0; }
+// Модель без кольору — щоб поруч не стояли три однакові манішки різних кольорів.
+function modelKey(p){
+  return String(p.name||'').toLowerCase().replace(/[^а-яіїєґa-z ]/g,' ')
+    .split(/\s+/).filter(w=>w.length>2 && !/^(дитяч|для|тепл|зимов|кольор|молоч|бежев|пудров|рожев|сір|чорн|біл|коричнев|гірчич|бордо|червон|зелен|блакит|син|оливк|графіт|рубчик)/.test(w))
+    .slice(0,3).join(' ');
+}
+// Беремо з черги перший товар, чия модель не повторює жодну з 4 щойно показаних
+// (дивимось до 10 позицій вперед), — щоб однакові товари не йшли щільно один за одним.
+function takeVaried(q, recent){
+  for(let i=0;i<Math.min(q.length,10);i++) if(!recent.includes(modelKey(q[i]))) return q.splice(i,1)[0];
+  return q.shift();
+}
+// Порядок розділу за замовчуванням (рішення Володі, 24.11.2026):
+// 1) дорожче 200 грн — через один «популярний / новинка». Популярні — за продажами з журналу
+//    замовлень (свіжі важать більше), далі товари без продажів, новіші вище. Новинки (позначка nw) —
+//    від найсвіжішої. Закінчилась одна черга — йде друга.
+//    Однакові моделі (інший колір, та сама назва) розносимо: не ближче ніж через 4 товари.
+// 2) 200 грн і дешевше (нові теж) — нижче, за продажами, далі новіші.
+// Товари зі знижкою (SALE) після цього опускає в самий кінець filtered(), як і раніше.
+function defaultOrder(list){
+  const byPop = (a,b)=> (popSales(b)-popSales(a)) || (b.id-a.id);
+  const cheap = list.filter(p=>(p.price||0)<=200).sort(byPop);
+  const main  = list.filter(p=>(p.price||0)>200);
+  const qNew  = main.filter(p=>p.nw).sort((a,b)=>b.id-a.id);
+  const qPop  = main.filter(p=>!p.nw).sort(byPop);
+  const out = [], recent = []; let turn = 0;
+  while(qNew.length || qPop.length){
+    const q = turn%2===0 ? (qPop.length?qPop:qNew) : (qNew.length?qNew:qPop);
+    const p = takeVaried(q, recent); out.push(p);
+    recent.push(modelKey(p)); if(recent.length > 4) recent.shift();
+    turn++;
+  }
+  const res = out.concat(cheap);
+  list.length = 0; res.forEach(p=>list.push(p));
+  return list;
+}
 function popScore(p){
-  return (VIEWS[p.id]||0)*5 + (p.cover?4:0) + (p.old?2:0) + (p.stock?2:0) + typeBoost(p);
+  return (POPS[p.id]||0)*20 + (VIEWS[p.id]||0)*5 + (p.cover?4:0) + (p.old?2:0) + (p.stock?2:0) + typeBoost(p);
 }
 let curCatId = null, curCatName = '', curProds = [], cur = null, selSize = null, selColor = null, selOpts = {};
 let fSel = {}, pFrom = null, pTo = null, catMin = 0, catMax = 0;
@@ -1260,7 +1300,7 @@ function renderSubs(){
 function subSel(id){
   curSub = id;
   curProds = id ? curBase.filter(p=>p.cats.includes(id)) : curBase.slice();
-  curProds.sort((a,b)=>b.id-a.id);
+  defaultOrder(curProds);
   calcPriceSpan();
   renderSubs();
   apply();
@@ -1290,15 +1330,15 @@ function initCat(nm, rank){
   let back = false; try{ back = NAVSILENT; }catch(e){}
   const mem = back ? FMEM[catMemKey()] : null;
   const cq=document.getElementById('catQ'); if(cq) cq.value = mem ? mem.q : '';
-  // у розділу може бути свій порядок (rank) — інакше спершу новинки
-  curProds.sort(rank ? (a,b)=>rank(a)-rank(b) || b.id-a.id : (a,b)=>b.id-a.id);
+  // у всіх розділах: популярні й новинки через один, 200 грн і дешевше — нижче (рішення 24.11.2026)
+  defaultOrder(curProds);
   fSel = {}; pFrom=null; pTo=null;
   if(mem){ for(const [k, v] of Object.entries(mem.f)) fSel[k] = new Set(v); pFrom = mem.a; pTo = mem.b; }
   calcPriceSpan();
   document.getElementById('catTitle').textContent = nm;
   document.getElementById('sortsel').value = mem ? mem.s : 'default';
   const o0 = document.querySelector('#sortsel option[value="default"]');
-  if(o0) o0.textContent = rank ? 'Рекомендовані' : 'Спочатку новинки';
+  if(o0) o0.textContent = 'Популярні';
   renderSubs();
   try{
     gtag('event','view_item_list',{item_list_name:nm,items:curProds.slice(0,10).map(p=>({item_id:String(p.id),item_name:p.name,price:p.price}))});
@@ -3655,7 +3695,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=575'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=576'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
