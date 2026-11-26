@@ -83,6 +83,8 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add t sitemap.xml feed.xml data-lite.js data-desc.js index.html
+          if [ -d c ]; then git add c; fi
+          if [ -d images/thumb ]; then git add images/thumb; fi
 
           if git diff --staged --quiet; then
             echo "змін немає"

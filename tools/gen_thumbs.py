@@ -27,7 +27,9 @@ for name in sorted(os.listdir(SRC)):
     if not name.lower().endswith(('.jpg', '.jpeg', '.png', '.webp')):
         continue
     out = os.path.join(DST, os.path.splitext(name)[0] + '.webp')
-    if os.path.exists(out) and os.path.getmtime(out) >= os.path.getmtime(path):
+    # лише відсутні копії: після git checkout час зміни файлів довільний, тож порівнювати за часом не можна;
+    # фото з адмінки завжди отримують нову назву, тож стара копія не може відстати від оригіналу
+    if os.path.exists(out):
         skipped += 1
         continue
     try:
