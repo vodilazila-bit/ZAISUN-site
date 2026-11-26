@@ -208,14 +208,15 @@ body.so-open .page *{animation-play-state:paused!important}
 .hero p{font-size:.9rem;color:var(--mid);line-height:1.65;max-width:30em;margin:0 auto 22px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 30px;border-radius:40px;font-weight:600;font-size:.94rem;background:var(--rose);color:#fff;border:none;width:100%;max-width:340px;cursor:pointer;font-family:inherit}
 .btn:active{background:var(--rose-d)}
-.strip{background:#F8EDE0;overflow:hidden;padding:15px 0;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.strip{background:#F8EDE0;overflow:hidden;padding:18px 0;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 .strip-run{display:flex;width:max-content;animation:stripRun 26s linear infinite}
 .strip:hover .strip-run{animation-play-state:paused}
 @keyframes stripRun{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.strip-run{animation:none}.strip{overflow-x:auto;scrollbar-width:none}.strip::-webkit-scrollbar{display:none}}
-.strip span{white-space:nowrap;font-size:.76rem;color:var(--mid);display:flex;align-items:center;gap:8px;padding:0 11px}
+.strip span{white-space:nowrap;font-size:.92rem;font-weight:500;color:#7E7164;display:flex;align-items:center;gap:13px;padding:0 15px}
+@media(max-width:560px){.strip{padding:15px 0}.strip span{font-size:.84rem;gap:11px;padding:0 12px}}
 .dot{width:auto;height:auto;border-radius:0;background:none;flex:none;color:var(--rose);font-size:.6rem;line-height:1;opacity:.85}
-.strip .dot::before{content:'\2726'}
+.strip .dot{display:block;width:15px;height:15px;opacity:1;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D9A990' stroke-width='2' stroke-linecap='round'><circle cx='12' cy='12' r='4'/><path d='M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8'/></svg>") center/contain no-repeat}
 section{padding:26px 18px 34px}
 .cats-h{font-weight:300;font-size:1.7rem;letter-spacing:.35em;color:#B8B4AE;text-align:center;margin:8px 0 24px;text-indent:.35em}
 .cats-h-lc{letter-spacing:.18em;text-indent:.18em;font-size:1.5rem}
@@ -553,7 +554,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=583" as="script">
+<link rel="preload" href="data-lite.js?v=1" as="script">
 <link rel="preload" href="bf-tall.webp" as="image" media="(max-width:560px)" fetchpriority="high">
 <link rel="preload" href="bf-wide.webp" as="image" media="(min-width:561px)" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
@@ -855,7 +856,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
 <script src="pop.js?v=576"></script>
-<script src="data-lite.js?v=583"></script>
+<script src="data-lite.js?v=1"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -3696,7 +3697,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=583'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=1'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
@@ -3924,6 +3925,37 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js',{scop
     var f = window[n]; if(typeof f !== 'function') return;
     window[n] = function(){ try{ refresh(); }catch(e){} return f.apply(this, arguments); };
   });
+})();
+</script>
+<script>
+// Біжучий рядок: базова швидкість як була (26 с на коло), при скролі вниз розганяється й плавно гасне.
+(function(){
+  var strip=document.querySelector('.strip'), run=strip&&strip.querySelector('.strip-run');
+  if(!run||!window.requestAnimationFrame) return;
+  try{ if(matchMedia('(prefers-reduced-motion: reduce)').matches) return; }catch(e){}
+  run.style.animation='none';
+  var x=0, half=0, base=0, boost=0, lastY=window.scrollY, last=0, vis=true, hover=false;
+  function measure(){ half=run.scrollWidth/2; base=half/26; }
+  measure(); window.addEventListener('resize',measure);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(measure);
+  window.addEventListener('scroll',function(){
+    var d=window.scrollY-lastY; lastY=window.scrollY;
+    if(d>0) boost=Math.min(boost+d*9, base*14);
+  },{passive:true});
+  strip.addEventListener('mouseenter',function(){hover=true});
+  strip.addEventListener('mouseleave',function(){hover=false});
+  if('IntersectionObserver' in window) new IntersectionObserver(function(e){vis=e[0].isIntersecting}).observe(strip);
+  function tick(t){
+    var dt=last?Math.min((t-last)/1000,.05):0; last=t;
+    if(vis&&half){
+      x-=((hover&&!boost?0:base)+boost)*dt;
+      if(-x>=half) x+=half;
+      run.style.transform='translate3d('+x.toFixed(2)+'px,0,0)';
+    }
+    boost*=Math.pow(.12,dt); if(boost<1) boost=0;
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 })();
 </script>
 </body>
