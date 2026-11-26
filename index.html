@@ -180,6 +180,8 @@ body.so-open .page *{animation-play-state:paused!important}
 .herosl:has(.hs.bf.on) .hdots span{background:rgba(35,28,23,.28)}
 .herosl:has(.hs.bf.on) .hdots span.on{background:#231C17}
 @media(max-width:560px){.herosl .hs.bf .fgimg img{object-position:50% 0!important}}
+/* ПК: Black Friday показується цілим (contain), поля в колір фону картинки — інакше на широкому низькому екрані обрізався логотип */
+@media(min-width:561px){.herosl .hs.bf .fgimg{background:#EFE4D1}.herosl .hs.bf .fgimg img{object-fit:contain}}
 .herosl .hdots{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:6}
 .herosl .hdots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55);transition:all .2s;cursor:pointer}
 .herosl .hdots span.on{background:#fff;width:22px;border-radius:4px}
@@ -554,7 +556,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=590" as="script">
+<link rel="preload" href="data-lite.js?v=591" as="script">
 <link rel="preload" href="bf-tall.webp" as="image" media="(max-width:560px)" fetchpriority="high">
 <link rel="preload" href="bf-wide.webp" as="image" media="(min-width:561px)" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
@@ -634,7 +636,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
       </div>
     </div>
     <div class="hs" data-hs="2">
-      <div class="fgimg"><img class="kb" onload="zsHeroLd(this)" onerror="zsHeroLd(this)" data-hsrc="hero2-2560.webp" data-hsrcm="hero2.webp" alt="ZaiSun" style="object-position:70% 30%;transform-origin:70% 35%"></div>
+      <div class="fgimg"><img class="kb" onload="zsHeroLd(this)" onerror="zsHeroLd(this)" data-hsrc="hero2-2560w.webp" data-hsrcm="hero2.webp" alt="ZaiSun" style="object-position:70% 30%;transform-origin:70% 35%"></div>
       <div class="scrim"></div>
       <div class="stxt">
         <div class="eyebrow">ZAISUN · ДИТЯЧИЙ ОДЯГ</div>
@@ -856,7 +858,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
 <script src="pop.js?v=576"></script>
-<script src="data-lite.js?v=590"></script>
+<script src="data-lite.js?v=591"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -3697,7 +3699,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=590'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=591'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
