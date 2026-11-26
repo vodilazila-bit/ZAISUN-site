@@ -187,6 +187,9 @@ footer .fcats{line-height:1.9;max-width:760px;margin-left:auto;margin-right:auto
 .herosl .hs.on .sbtn{animation:tRiseBtn 1s ease forwards;animation-delay:1s}
 @keyframes tRise{to{opacity:1;transform:none;filter:blur(0)}}
 @keyframes tRiseBtn{to{opacity:1}}
+/* ПК: після появи текст банера лишається без filter і transform — інакше Chrome малює його розмитим (filter:blur(0) і translateX(-50%) на дробовому пікселі). Телефон не чіпаємо. */
+@keyframes tRiseD{from{opacity:0;transform:translateY(16px);filter:blur(3px)}to{opacity:1;transform:none;filter:blur(0)}}
+@media(min-width:561px){.herosl .hs.on .eyebrow,.herosl .hs.on .stitle,.herosl .hs.on .ssub{opacity:1;transform:none;filter:none;animation-name:tRiseD;animation-fill-mode:backwards}.herosl .hs.bf .stxt.stxt{left:0;right:0;margin:0 auto;transform:none}}
 .herosl .harrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(251,239,225,.42);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:none;display:grid;place-items:center;cursor:pointer;color:#5A4A3C;z-index:6;transition:background .15s,transform .15s;-webkit-tap-highlight-color:transparent}
 .herosl .harrow:hover{background:rgba(251,239,225,.72);transform:translateY(-50%) scale(1.06)}
 .herosl .harrow.l{left:22px}.herosl .harrow.r{right:22px}
@@ -236,10 +239,10 @@ footer .fcats{line-height:1.9;max-width:760px;margin-left:auto;margin-right:auto
 .strip:hover .strip-run{animation-play-state:paused}
 @keyframes stripRun{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.strip-run{animation:none}.strip{overflow-x:auto;scrollbar-width:none}.strip::-webkit-scrollbar{display:none}}
-.strip span{white-space:nowrap;font-size:1.84rem;font-weight:300;letter-spacing:.01em;color:#8A7D70;display:flex;align-items:center;gap:26px;padding:0 30px}
+.strip span{white-space:nowrap;font-size:.92rem;font-weight:300;letter-spacing:.01em;color:#8A7D70;display:flex;align-items:center;gap:13px;padding:0 15px}
 @media(max-width:560px){.strip{padding:15px 0}.strip span{font-size:.84rem;font-weight:500;letter-spacing:0;color:#7E7164;gap:11px;padding:0 12px}.strip .dot{width:15px!important;height:15px!important}}
 .dot{width:auto;height:auto;border-radius:0;background:none;flex:none;color:var(--rose);font-size:.6rem;line-height:1;opacity:.85}
-.strip .dot{display:block;width:30px;height:30px;opacity:1;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D9A990' stroke-width='2' stroke-linecap='round'><circle cx='12' cy='12' r='4'/><path d='M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8'/></svg>") center/contain no-repeat}
+.strip .dot{display:block;width:15px;height:15px;opacity:1;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D9A990' stroke-width='2' stroke-linecap='round'><circle cx='12' cy='12' r='4'/><path d='M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8'/></svg>") center/contain no-repeat}
 section{padding:26px 18px 34px}
 .cats-h{font-weight:300;font-size:1.7rem;letter-spacing:.35em;color:#B8B4AE;text-align:center;margin:8px 0 24px;text-indent:.35em}
 .cats-h-lc{letter-spacing:.18em;text-indent:.18em;font-size:1.5rem}
@@ -577,7 +580,7 @@ footer p{font-size:.82rem;color:#E2D5C6;margin-bottom:14px}
 
 </style>
 <!-- Швидкий старт: каталог і перше фото банера вантажаться першими -->
-<link rel="preload" href="data-lite.js?v=594" as="script">
+<link rel="preload" href="data-lite.js?v=595" as="script">
 <link rel="preload" href="bf-tall.webp" as="image" media="(max-width:560px)" fetchpriority="high">
 <link rel="preload" href="bf-wide.webp" as="image" media="(min-width:561px)" fetchpriority="high">
 <style>.zs-wait{opacity:.55;transition:opacity .15s}</style>
@@ -881,7 +884,7 @@ window.addEventListener('load',function(){document.querySelectorAll('#herosl .hs
 <!-- Каталог без описів: те, що потрібно для сітки товарів. Описи їдуть
      окремо, у фоні, одразу після першого малювання — див. кінець файлу. -->
 <script src="pop.js?v=576"></script>
-<script src="data-lite.js?v=594"></script>
+<script src="data-lite.js?v=595"></script>
 <script>
 // Фото 2-го і 3-го слайдів банера — через 2,5 с після повного завантаження сторінки.
 // Раніше вони стартували разом із першим слайдом і змагались із ним за інтернет:
@@ -3731,7 +3734,7 @@ window.zsDescReady = function(){
   }catch(e){}
 };
 (function(){
-  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=594'; t.async=true; document.head.appendChild(t); };
+  const go = ()=>{ const t=document.createElement('script'); t.src='data-desc.js?v=595'; t.async=true; document.head.appendChild(t); };
   if(document.readyState==='complete') setTimeout(go,300);
   else window.addEventListener('load', ()=>setTimeout(go,300));
 })();
@@ -3969,7 +3972,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js',{scop
   try{ if(matchMedia('(prefers-reduced-motion: reduce)').matches) return; }catch(e){}
   run.style.animation='none';
   var x=0, half=0, base=0, boost=0, lastY=window.scrollY, last=0, vis=true, hover=false;
-  function measure(){ half=run.scrollWidth/2; base=half/(innerWidth>560?52:26); } // ПК: шрифт ×2, тому коло 52 с — швидкість та сама
+  function measure(){ half=run.scrollWidth/2; base=half/26; }
   measure(); window.addEventListener('resize',measure);
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(measure);
   window.addEventListener('scroll',function(){
